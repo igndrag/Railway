@@ -1,0 +1,12 @@
+package NATrain.controller;
+
+public enum RemoteRequests {
+    GLOBAL_STATE_UPDATE,
+    CHECK_CONNECTION,
+    SWITCH_STATE_CHECK,
+    SWITCH_TO_PLUS,
+    SWITCH_TO_MINUS,
+    SIGNAL_STATE_CHECK,
+    SIGNAL_STATE_CHANGE,
+    TRACK_SECTION_CHECK,
+}
