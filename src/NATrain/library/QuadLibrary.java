@@ -4,16 +4,14 @@ import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class QuadLibrary {
-    private static Map<QuadType, Image> SimpleTrackQuadImgLib;
+    private static SortedMap<QuadType, Image> SimpleTrackQuadImgLib;
 
 
     static {
-        SimpleTrackQuadImgLib = new HashMap<>();
+        SimpleTrackQuadImgLib = new TreeMap<>();
         EnumSet.allOf(QuadType.class).forEach(simpleTrackQuadType -> {
             try (FileInputStream inputStream = new FileInputStream(String.format("src/images/track/%s.png", simpleTrackQuadType))){
                 SimpleTrackQuadImgLib.put(simpleTrackQuadType, new Image(inputStream));

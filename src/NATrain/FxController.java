@@ -1,6 +1,7 @@
 package NATrain;
 
 import NATrain.library.QuadType;
+import NATrain.utils.QuadFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -8,12 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import NATrain.library.QuadLibrary;
@@ -34,7 +33,7 @@ public class FxController {
     private static MainModel mainModel;
     private static Quad selectedQuad;
     private static Stage primaryStage;
-    private static QuadType selectedQuadType = QuadType.STQ1_1;
+    private static QuadType selectedQuadType;
 
     @FXML
     public TextField columnsNumber;
@@ -107,20 +106,24 @@ public class FxController {
 
         //*** left panel initializing ***//
             VBox leftPanelVBox = new VBox();
+            ToggleGroup toggleGroup = new ToggleGroup();
             QuadLibrary.getSimpleTrackQuadImgLib().forEach((quadType, image) -> {
-            Button button = new Button();
+            ToggleButton button = new ToggleButton();
+            button.setToggleGroup(toggleGroup);
             button.setOnAction(event -> {
-                    System.out.println("Ready for choose quad position. " + quadType + " selected.");
-                    selectedQuadType = quadType;}
-                    );
+                    if (button.isSelected()) {
+                        System.out.println("Ready for choose quad position. " + quadType + " selected.");
+                        selectedQuadType = quadType;
+                        } else {
+                        selectedQuadType = null;
+                        System.out.println(quadType + " unselected ");
+                    }
+                    });
             button.setGraphic(new ImageView(image));
             leftPanelVBox.getChildren().add(button);
             }
         );
         simpleTrackSectionIcons.setContent(leftPanelVBox);
-
-
-
 
         //*** grid pane panel initializing ***//
 
@@ -128,9 +131,9 @@ public class FxController {
         //gridPane.setPadding(new Insets(5));
         for (int i = 0; i < raws; i++) {
             for (int j = 0; j < columns; j++) {
-                EmptyQuad emptyQuad = new EmptyQuad(i, j, true);
+                EmptyQuad emptyQuad = new EmptyQuad(i, j);
                 View.getMainGrid()[j][i] = emptyQuad;
-                StackPane quadPane = new StackPane();
+                Pane quadPane = new Pane();
                 quadPane.setPadding(new Insets(5));
                 quadPane.getChildren().add(emptyQuad.getView());
                 configQuadView(emptyQuad.getView(), i, j);
@@ -176,13 +179,15 @@ public class FxController {
     }
 
     private void toQuadConfigurator(int x, int y) throws IOException{
+        if (View.getMainGrid()[y][x] instanceof EmptyQuad)
+            return;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("quadConfigurator.fxml"));
         Stage quadConfigurator = new Stage();
         quadConfigurator.setTitle("Quad configurator");
         quadConfigurator.setScene(new Scene(loader.load(), 400, 300));
         quadConfigurator.setResizable(false);
         QuadConfiguratorController controller = loader.getController();
-        controller.initialize(x, y, selectedQuadType);
+        controller.initialize(x, y);
         quadConfigurator.initModality(Modality.WINDOW_MODAL);
         quadConfigurator.initOwner(primaryStage);
         quadConfigurator.show();
@@ -191,7 +196,11 @@ public class FxController {
     private void configQuadView(Node quadView, int x, int y) {
         quadView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1)
+                if (selectedQuadType == null)
                 selectQuad(x, y);
+                else {
+                    putQuadOnGrid(x, y, selectedQuadType);
+                }
             if (event.getClickCount() == 2) {
                 try {
                     toQuadConfigurator(x, y);
@@ -200,5 +209,15 @@ public class FxController {
                 }
             }
         });
+    }
+
+    private void putQuadOnGrid (int x, int y, QuadType quadType) {
+        Quad newQuad = QuadFactory.createQuad(x, y, selectedQuadType);
+        View.getMainGrid()[y][x] = newQuad;
+        Pane quadPane = new Pane();
+        quadPane.setPadding(new Insets(5));
+        quadPane.getChildren().add(newQuad.getView());
+        configQuadView(newQuad.getView(), x, y);
+        gridPane.add(quadPane, x, y);
     }
 }

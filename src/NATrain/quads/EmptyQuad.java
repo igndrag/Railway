@@ -6,7 +6,7 @@ import javafx.scene.text.TextAlignment;
 
 public class EmptyQuad extends QuadImpl {
 
-    public EmptyQuad(int x, int y, boolean bordered) {
+    public EmptyQuad(int x, int y) {
         super(x, y);
         Text text1 = new Text();
         text1.setX(20);

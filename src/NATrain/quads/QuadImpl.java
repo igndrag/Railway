@@ -68,10 +68,6 @@ public class QuadImpl implements Quad {
         this.y = y;
     }
 
-    public Group getView() {
-        return quadView;
-    }
-
     public Shape getBackground() {
         return background;
     }
@@ -173,7 +169,7 @@ public class QuadImpl implements Quad {
     }
 
     @Override
-    public String getID() {
+    public String getId() {
         return id;
     }
 
@@ -189,6 +185,11 @@ public class QuadImpl implements Quad {
             else if (trackSection.getVacancyState().equals(TrackSectionState.UNDEFINED))
                 trackElement.setFill(UNDEFINED_ELEMENT_COLOR);
         }
+    }
+
+    @Override
+    public Group getView() {
+        return quadView;
     }
 
     private void switchStateRefresh(Switch associatedSwitch, Shape switchPlusElement, Shape switchMinusElement) {
@@ -214,5 +215,7 @@ public class QuadImpl implements Quad {
     private void trackConfigured(TrackSection trackSection, Shape trackElement) {
         if (trackSection != null)
             trackElement.setFill(CONFIGURED_ELEMENT_COLOR);
+        else
+            trackElement.setFill(UNDEFINED_ELEMENT_COLOR);
     }
 }
