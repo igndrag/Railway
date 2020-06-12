@@ -14,8 +14,10 @@ import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
 import NATrain.utils.QuadPainter;
 
+import java.util.Properties;
 
-public class QuadImpl implements Quad {
+
+public class QuadImpl implements Quad, Cloneable {
 
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
     public static final Color SELECTED_BACKGROUND_COLOR = Color.PINK;
@@ -38,7 +40,7 @@ public class QuadImpl implements Quad {
     protected int x;
     protected int y;
 
-    protected Text quadDescription;
+    protected Text description;
     protected Boolean showDescription = true;
     protected Shape trackOneElement;
     protected Shape trackTwoElement;
@@ -49,7 +51,7 @@ public class QuadImpl implements Quad {
     protected Group quadView;
 
     public void setDescription(String description) {
-        quadDescription.setText(description);
+        this.description.setText(description);
     }
 
     public int getX() {
@@ -92,8 +94,8 @@ public class QuadImpl implements Quad {
         this.associatedSwitch = associatedSwitch;
     }
 
-    public void setQuadDescription(Text quadDescription) {
-        this.quadDescription = quadDescription;
+    public void setDescription(Text description) {
+        this.description = description;
     }
 
     public void setShowDescription(Boolean showDescription) {
@@ -157,7 +159,6 @@ public class QuadImpl implements Quad {
 
     }
 
-
     @Override
     public void select() {
         background.setFill(SELECTED_BACKGROUND_COLOR);
@@ -207,15 +208,42 @@ public class QuadImpl implements Quad {
         }
     }
 
+    @Override
+    public Properties getProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("Type", quadType.toString());
+        if (associatedTrackOne != null)
+            properties.setProperty("Track 1", associatedTrackOne.getId());
+        if (associatedTrackTwo != null)
+            properties.setProperty("Track 2", associatedTrackTwo.getId());
+        if (associatedSwitch != null)
+            properties.setProperty("Switch", associatedSwitch.getId());
+        if (associatedSignal != null)
+            properties.setProperty("Signal", associatedSignal.getId());
+        return properties;
+    }
+
     private void signalStateRefresh(Signal signal, Shape signalLampOneElement, Shape signalLampTwoElement) {
         //TODO
         //dont forget to realize blink signal!
     }
 
     private void trackConfigured(TrackSection trackSection, Shape trackElement) {
-        if (trackSection != null)
-            trackElement.setFill(CONFIGURED_ELEMENT_COLOR);
-        else
-            trackElement.setFill(UNDEFINED_ELEMENT_COLOR);
+        if (trackElement != null) {
+            if (trackSection != null)
+                trackElement.setFill(CONFIGURED_ELEMENT_COLOR);
+            else
+                trackElement.setFill(UNDEFINED_ELEMENT_COLOR);
+        }
     }
+
+    public void showDescription() {
+        description.setVisible(true);
+    }
+
+    public void hideDescription() {
+        description.setVisible(false);
+    }
+
+
 }

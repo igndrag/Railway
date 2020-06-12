@@ -47,7 +47,7 @@ public class QuadPainter {
                         15, 0,
                                 35 , 0,
                                 75, 80,
-                                75, 80,
+                                55, 80,
                                 15, 0);
                 trackOneElement.setFill(Color.BLUE);
                 quad.setTrackOneElement(trackOneElement);

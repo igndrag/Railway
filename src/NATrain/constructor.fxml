@@ -79,22 +79,22 @@
       <VBox maxWidth="100.0" minHeight="300.0" minWidth="150.0" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Raws:" />
-            <TextField fx:id="rawsNumber" text="20"/>
+            <TextField fx:id="rawsNumber" text="20" />
             <Label text="Columns" />
-            <TextField fx:id="columnsNumber" text="20"/>
+            <TextField fx:id="columnsNumber" text="20" />
             <AnchorPane prefHeight="24.0" prefWidth="100.0">
                <children>
                   <Button fx:id="testButton" layoutX="98.0" mnemonicParsing="false" onAction="#buttonClicked" text="Button" />
                </children>
             </AnchorPane>
-            <TableView prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="propertyTable" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Property" />
-                <TableColumn prefWidth="75.0" text="Value" />
+                <TableColumn fx:id="propNameCol" prefWidth="75.0" text="Property" />
+                <TableColumn fx:id="propValueCol" prefWidth="75.0" text="Value" />
               </columns>
             </TableView>
-            <Button  fx:id="greenButton" mnemonicParsing="false" onAction="#redButtonClicked" text="Green" />
-            <Button  fx:id="redButton" mnemonicParsing="false"  onAction="#greenButtonClicked" text="Red" />
+            <Button fx:id="greenButton" mnemonicParsing="false" onAction="#redButtonClicked" text="Green" />
+            <Button fx:id="redButton" mnemonicParsing="false" onAction="#greenButtonClicked" text="Red" />
          </children>
       </VBox>
    </right>

@@ -1,13 +1,13 @@
 package NATrain.trackSideObjects;
 
 public abstract class TrackSideObject {
-    private String description;
+    private String id;
 
-    public String getDescription() {
-        return description;
+    public String getId() {
+        return id;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setId(String id) {
+        this.id = id;
     }
 }

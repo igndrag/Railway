@@ -1,8 +1,7 @@
 package NATrain.utils;
 
 import NATrain.library.QuadType;
-import NATrain.model.MainModel;
-import NATrain.quads.Quad;
+import NATrain.model.Model;
 import NATrain.quads.QuadImpl;
 
 public class QuadFactory {
@@ -11,11 +10,11 @@ public class QuadFactory {
     public static QuadImpl createQuad (int x, int y, QuadType quadType) {
         QuadImpl resultQuad = new QuadImpl(x, y);
         resultQuad.setQuadType(quadType);
-        String id = quadType.toString() + "_" + counter;
+        String id = quadType.toString() + "_00" + counter;
         resultQuad.setId(id);
         counter++;
         QuadPainter.paintQuadViewForType(resultQuad, quadType);
-        MainModel.getNotEmptyQuads().put(id, resultQuad);
+        Model.getNotEmptyQuads().put(id, resultQuad);
         return resultQuad;
     }
 

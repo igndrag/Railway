@@ -20,7 +20,7 @@
       <ChoiceBox fx:id="signalChoiceBox" layoutX="220.0" layoutY="158.0" prefWidth="150.0" />
       <Label layoutX="225.0" layoutY="196.0" text="Associated switch" />
       <ChoiceBox fx:id="switchChoiceBox" layoutX="220.0" layoutY="217.0" prefWidth="150.0" />
-      <Button fx:id="saveButton" graphicTextGap="10.0" layoutX="306.0" layoutY="260.0" mnemonicParsing="false" text="Save">
+      <Button fx:id="saveButton" onAction="#saveAndClose" graphicTextGap="10.0" layoutX="306.0" layoutY="260.0" mnemonicParsing="false" text="Save">
          <padding>
             <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
          </padding>
