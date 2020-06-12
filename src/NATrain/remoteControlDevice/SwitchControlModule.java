@@ -1,12 +1,6 @@
 package NATrain.remoteControlDevice;
 
-public class SwitchControlModule implements ControlModule{
+public class SwitchControlModule {
 
-    SwitchControlChannel channel1 = new SwitchControlChannel();
 
-    private static class SwitchControlChannel {
-        RemoteInput switchStateInput;
-        RemoteOutput switchControlOutput;
-
-    }
 }

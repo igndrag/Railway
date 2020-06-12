@@ -16,7 +16,6 @@ public class ConnectionService extends Thread{
     public ConnectionService(String portName) {
         super(portName + " connectionService");
         this.arduino = new Arduino(portName, 9600);
-        this.commandBuffer = new Stack<>();
         this.setDaemon(true);
     }
 
@@ -58,7 +57,7 @@ public class ConnectionService extends Thread{
                         closed = true;
                         closeConnection();
                     } else {
-                        commandBuffer.add(message);
+                        RequestExecutor.responsePool.add(message);
                         System.out.println(message);
                     }
                 }
@@ -66,9 +65,5 @@ public class ConnectionService extends Thread{
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Stack<String> getCommandBuffer() {
-        return commandBuffer;
     }
 }

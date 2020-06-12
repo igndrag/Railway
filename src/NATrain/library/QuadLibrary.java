@@ -9,21 +9,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QuadLibrary {
-    private static Map<SimpleTrackQuadType, Image> SimpleTrackQuadLib;
+    private static Map<QuadType, Image> SimpleTrackQuadImgLib;
 
 
     static {
-        SimpleTrackQuadLib = new HashMap<>();
-        EnumSet.allOf(SimpleTrackQuadType.class).forEach(simpleTrackQuadType -> {
+        SimpleTrackQuadImgLib = new HashMap<>();
+        EnumSet.allOf(QuadType.class).forEach(simpleTrackQuadType -> {
             try (FileInputStream inputStream = new FileInputStream(String.format("src/images/track/%s.png", simpleTrackQuadType))){
-                SimpleTrackQuadLib.put(simpleTrackQuadType, new Image(inputStream));
+                SimpleTrackQuadImgLib.put(simpleTrackQuadType, new Image(inputStream));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
     }
 
-    public static Map<SimpleTrackQuadType, Image> getSimpleTrackQuadLib() {
-        return SimpleTrackQuadLib;
+    public static Map<QuadType, Image> getSimpleTrackQuadImgLib() {
+        return SimpleTrackQuadImgLib;
     }
 }

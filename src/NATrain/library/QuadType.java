@@ -1,6 +1,6 @@
 package NATrain.library;
 
-public enum SimpleTrackQuadType {
+public enum QuadType {
     STQ1_1,
     STQ1_2,
     STQ2_1,

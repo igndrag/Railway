@@ -6,5 +6,7 @@ public enum SignalState {
     YELLOW,
     BLINKED_YELLOW,
     YELLOW_AND_BLINKED_YELLOW,
+    WHITE,
+    BLUE,
     UNDEFINED,
 }
