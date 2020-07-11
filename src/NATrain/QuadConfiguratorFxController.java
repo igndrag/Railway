@@ -1,6 +1,7 @@
 package NATrain;
 
 import NATrain.model.Model;
+import NATrain.quads.AbstractQuad;
 import NATrain.quads.Quad;
 import NATrain.quads.BaseQuad;
 import NATrain.view.View;
@@ -45,6 +46,7 @@ public class QuadConfiguratorFxController {
 
     public void initialize(int x, int y) {
         quadForConfig = (BaseQuad) Model.getMainGrid()[y][x];
+        quadForConfig.getBackground().setFill(AbstractQuad.DEFAULT_BACKGROUND_COLOR);
         parent = (Pane) quadForConfig.getView().getParent();
         quadView.getChildren().add(quadForConfig.getView());
         stage = (Stage) saveButton.getScene().getWindow();

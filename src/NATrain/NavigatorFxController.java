@@ -29,8 +29,10 @@ public class NavigatorFxController {
         trackRedactor.setResizable(true);
         TrackRedactorFxController controller = loader.getController();
         controller.initialize();
+        TrackRedactorFxController.setPrimaryStage(trackRedactor);
         trackRedactor.setOnCloseRequest(event -> primaryStage.show());
         primaryStage.hide();
         trackRedactor.show();
+
     }
 }
