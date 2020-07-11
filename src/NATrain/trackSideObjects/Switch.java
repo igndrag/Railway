@@ -12,6 +12,11 @@ public class Switch extends TrackSideObject{
     private boolean pared = false;
     private boolean interlocked = false;
 
+    public Switch(String id, SwitchState normalState) {
+        super(id);
+        this.normalState = normalState;
+    }
+
     public void setParedSwitch(Switch anotherSwitch) {
         pared = true;
         this.paredSwitch = anotherSwitch;

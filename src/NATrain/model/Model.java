@@ -20,7 +20,7 @@ public class Model implements Serializable {
 
     private static HashMap<Integer, ControlModule> controlModules = new HashMap<>();
 
-    private static HashMap<SignalPare, Route> routeTable = new HashMap<>();
+    private static HashMap<SignalPare, HashSet<Route>> routeTable = new HashMap<>();
 
     private static HashSet<Switch> switches = new HashSet<>();
 
@@ -32,7 +32,7 @@ public class Model implements Serializable {
         return controlModules;
     }
 
-    public static HashMap<SignalPare, Route> getRouteTable() {
+    public static HashMap<SignalPare, HashSet<Route>> getRouteTable() {
         return routeTable;
     }
 

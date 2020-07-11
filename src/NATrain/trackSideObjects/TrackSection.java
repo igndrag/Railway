@@ -8,6 +8,10 @@ public class TrackSection extends TrackSideObject {
     private TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
     private boolean interlocked = false;
 
+    public TrackSection(String id) {
+        super(id);
+    }
+
     public boolean isInterlocked() {
         return interlocked;
     }
