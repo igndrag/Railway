@@ -1,18 +1,15 @@
 package NATrain.quads;
 
-import NATrain.RedactorFxController;
+import NATrain.TrackRedactorFxController;
 import NATrain.controller.SwitchState;
 import NATrain.controller.TrackSectionState;
 import NATrain.library.QuadType;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
-import NATrain.utils.QuadPainter;
 
 import java.util.Properties;
 
@@ -132,7 +129,7 @@ public class BaseQuad extends AbstractQuad{
 
     @Override
     public void refresh() {
-        if (RedactorFxController.isConstructorMode()) {
+        if (TrackRedactorFxController.isConstructorMode()) {
             trackConfigured(firstAssociatedTrack, firstTrackElement);
             trackConfigured(secondAssociatedTrack, secondTrackElement);
             //TODO make switch and signal view refresh

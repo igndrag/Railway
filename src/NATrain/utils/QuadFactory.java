@@ -14,7 +14,7 @@ public class QuadFactory {
         resultQuad.setId(id);
         counter++;
         QuadPainter.paintQuadViewForType(resultQuad, quadType);
-        Model.getNotEmptyQuads().put(id, resultQuad);
+        //Model.getNotEmptyQuads().put(id, resultQuad);
         return resultQuad;
     }
 

@@ -44,9 +44,8 @@ public class QuadConfiguratorFxController {
 
 
     public void initialize(int x, int y) {
-        Quad quadFromGrid = View.getMainGrid()[y][x];
-        quadForConfig = Model.getNotEmptyQuads().get(quadFromGrid.getId());
-        parent = (Pane) quadFromGrid.getView().getParent();
+        quadForConfig = (BaseQuad) Model.getMainGrid()[y][x];
+        parent = (Pane) quadForConfig.getView().getParent();
         quadView.getChildren().add(quadForConfig.getView());
         stage = (Stage) saveButton.getScene().getWindow();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

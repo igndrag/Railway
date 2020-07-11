@@ -2,6 +2,7 @@ package NATrain.model;
 
 import NATrain.controller.Route;
 import NATrain.quads.BaseQuad;
+import NATrain.quads.Quad;
 import NATrain.remoteControlDevice.ControlModule;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
@@ -9,12 +10,13 @@ import NATrain.trackSideObjects.TrackSection;
 import NATrain.utils.SignalPare;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class Model implements Serializable {
 
-    private static BaseQuad[][] mainGrid = new BaseQuad[20][20]; //default size
+    private static Quad[][] mainGrid = new Quad[20][20]; //default size
 
     private static HashMap<Integer, ControlModule> controlModules = new HashMap<>();
 
@@ -46,4 +48,11 @@ public class Model implements Serializable {
         return signals;
     }
 
+    public static Quad[][] getMainGrid() {
+        return mainGrid;
+    }
+
+    public void refreshAll() {
+        Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(Quad::refresh);
+    }
 }

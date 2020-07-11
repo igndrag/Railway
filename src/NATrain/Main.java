@@ -19,7 +19,7 @@ public class Main extends Application {
         primaryStage.setTitle("NATrain");
         primaryStage.setScene(new Scene(root, 900, 140));
         NavigatorFxController controller = loader.getController();
-        RedactorFxController.setPrimaryStage(primaryStage);
+        NavigatorFxController.setPrimaryStage(primaryStage);
         primaryStage.setResizable(false);
         primaryStage.show();
     }

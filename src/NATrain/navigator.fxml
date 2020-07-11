@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="140.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.NavigatorFxController">
    <children>
-      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="28.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Mosaic Redactor" textAlignment="CENTER">
+      <Button fx:id="mosaicRedactorButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="28.0" layoutY="20.0" mnemonicParsing="false" onAction="#toTrackRedactor" prefHeight="100.0" prefWidth="120.0" text="Mosaic Redactor" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -25,13 +26,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-public class RedactorFxController {
+public class TrackRedactorFxController {
 
+    private static Stage primaryStage;
     private static boolean constructorMode = true;
     private static GridPane gridPane;
     private static Model model;
     private static Quad selectedQuad;
-    private static Stage primaryStage;
     private static QuadType selectedQuadType;
 
     @FXML
@@ -71,7 +72,7 @@ public class RedactorFxController {
     private Button greenButton;
 
     public static void setPrimaryStage(Stage mainStage) {
-        RedactorFxController.primaryStage = mainStage;
+        TrackRedactorFxController.primaryStage = mainStage;
     }
 
     public static boolean isConstructorMode() {
@@ -87,7 +88,7 @@ public class RedactorFxController {
     }
 
     public static void setGridPane(GridPane gridPane) {
-        RedactorFxController.gridPane = gridPane;
+        TrackRedactorFxController.gridPane = gridPane;
     }
 
     public static Model getModel() {
@@ -95,7 +96,7 @@ public class RedactorFxController {
     }
 
     public static void setModel(Model model) {
-        RedactorFxController.model = model;
+        TrackRedactorFxController.model = model;
     }
 
     public ScrollPane getWorkArea() {
@@ -108,12 +109,8 @@ public class RedactorFxController {
     }
 
     public void initialize() {
-        int raws = 20;
-        int columns = 20;
-        Model model = ModelMock.getModelMock();
 
-
-        View.setSize(raws, columns);
+        ModelMock.MockModel();
 
         //*** left panel initializing ***//
         VBox leftPanelVBox = new VBox();
@@ -139,15 +136,17 @@ public class RedactorFxController {
         //*** grid pane panel initializing ***//
 
         gridPane = new GridPane();
+        int raws = Model.getMainGrid().length;
+        int columns = Model.getMainGrid()[0].length;
+
         //gridPane.setPadding(new Insets(5));
         for (int i = 0; i < raws; i++) {
             for (int j = 0; j < columns; j++) {
-                EmptyQuad emptyQuad = new EmptyQuad(i, j);
-                View.getMainGrid()[j][i] = emptyQuad;
                 Pane quadPane = new Pane();
                 quadPane.setPadding(new Insets(5));
-                quadPane.getChildren().add(emptyQuad.getView());
-                configQuadView(emptyQuad.getView(), i, j);
+                Group quadView = Model.getMainGrid()[j][i].getView();
+                quadPane.getChildren().add(quadView);
+                configQuadView(quadView, i, j);
                 gridPane.add(quadPane, i, j);
             }
         }
@@ -177,11 +176,11 @@ public class RedactorFxController {
     }
 
     public void onView(int x, int y) {
-        View.getMainGrid()[y][x].refresh();
+        Model.getMainGrid()[y][x].refresh();
     }
 
     private static void selectQuad(int x, int y) {
-        Quad quadForSelect = View.getMainGrid()[y][x];
+        Quad quadForSelect = Model.getMainGrid()[y][x];
         if (selectedQuad != null)
             selectedQuad.unselect();
         quadForSelect.select();
@@ -189,9 +188,9 @@ public class RedactorFxController {
     }
 
     private static void toQuadConfigurator(int x, int y) throws IOException {
-        if (View.getMainGrid()[y][x] instanceof EmptyQuad)
+        if (Model.getMainGrid()[y][x].isEmpty())
             return;
-        FXMLLoader loader = new FXMLLoader(RedactorFxController.class.getResource("quadConfigurator.fxml"));
+        FXMLLoader loader = new FXMLLoader(TrackRedactorFxController.class.getResource("quadConfigurator.fxml"));
         Stage quadConfigurator = new Stage();
         quadConfigurator.setTitle("Quad configurator");
         quadConfigurator.setScene(new Scene(loader.load(), 400, 300));
@@ -225,7 +224,7 @@ public class RedactorFxController {
 
     public static void putQuadOnGrid(int x, int y, QuadType quadType) {
         Quad newQuad = QuadFactory.createQuad(x, y, selectedQuadType);
-        View.getMainGrid()[y][x] = newQuad;
+        Model.getMainGrid()[y][x] = newQuad;
         Pane quadPane = new Pane();
         quadPane.setPadding(new Insets(5));
         quadPane.getChildren().add(newQuad.getView());
