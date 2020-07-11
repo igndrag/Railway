@@ -2,13 +2,13 @@ package NATrain.utils;
 
 import NATrain.library.QuadType;
 import NATrain.model.Model;
-import NATrain.quads.QuadImpl;
+import NATrain.quads.BaseQuad;
 
 public class QuadFactory {
     private static int counter = 0;
 
-    public static QuadImpl createQuad (int x, int y, QuadType quadType) {
-        QuadImpl resultQuad = new QuadImpl(x, y);
+    public static BaseQuad createQuad (int x, int y, QuadType quadType) {
+        BaseQuad resultQuad = new BaseQuad(x, y);
         resultQuad.setQuadType(quadType);
         String id = quadType.toString() + "_00" + counter;
         resultQuad.setId(id);

@@ -2,7 +2,7 @@ package NATrain.utils;
 
 import NATrain.library.QuadType;
 import NATrain.quads.Quad;
-import NATrain.quads.QuadImpl;
+import NATrain.quads.BaseQuad;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
@@ -20,7 +20,7 @@ public class QuadPainter {
         return border;
     }
 
-    protected static void paintQuadViewForType(QuadImpl quad, QuadType quadType) {
+    protected static void paintQuadViewForType(BaseQuad quad, QuadType quadType) {
         Shape trackOneElement;
         Shape trackTwoElement;
         Shape signalLampOneElement;

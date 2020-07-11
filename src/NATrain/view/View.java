@@ -7,8 +7,6 @@ import java.util.Arrays;
 
 public class View {
         private static Quad[][] mainGrid;
-        private static RedactorFxController controller;
-
 
         public static void setSize (int raws, int columns) {
                 mainGrid = new Quad[columns][raws];
@@ -16,10 +14,6 @@ public class View {
 
         public static Quad[][] getMainGrid() {
                 return mainGrid;
-        }
-
-        public static RedactorFxController getController() {
-                return controller;
         }
 
         public void setController (RedactorFxController controller) {

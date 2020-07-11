@@ -1,6 +1,7 @@
 package NATrain;
 
 import NATrain.library.QuadType;
+import NATrain.utils.ModelMock;
 import NATrain.utils.QuadFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -109,6 +110,9 @@ public class RedactorFxController {
     public void initialize() {
         int raws = 20;
         int columns = 20;
+        Model model = ModelMock.getModelMock();
+
+
         View.setSize(raws, columns);
 
         //*** left panel initializing ***//

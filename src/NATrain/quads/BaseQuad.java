@@ -17,16 +17,8 @@ import NATrain.utils.QuadPainter;
 import java.util.Properties;
 
 
-public class QuadImpl implements Quad, Cloneable {
+public class BaseQuad extends AbstractQuad{
 
-    public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
-    public static final Color SELECTED_BACKGROUND_COLOR = Color.PINK;
-    public static final Color CONFIGURED_ELEMENT_COLOR = Color.VIOLET;
-    public static final Color OCCUPIED_ELEMENT_COLOR = Color.RED;
-    public static final Color FREE_ELEMENT_COLOR = Color.GREEN;
-    public static final Color UNDEFINED_ELEMENT_COLOR = Color.BLUE;
-    public static final Color INTERLOCKED_ELEMENT_COLOR = Color.YELLOW;
-    public static Color BLINKER = Color.YELLOW;
 
     protected QuadType quadType;
     protected TrackSection firstAssociatedTrack;
@@ -34,7 +26,7 @@ public class QuadImpl implements Quad, Cloneable {
     protected Signal associatedSignal;
     protected Switch associatedSwitch;
 
-    private Shape background;
+
 
     protected String id;
     protected int x;
@@ -49,8 +41,9 @@ public class QuadImpl implements Quad, Cloneable {
     protected Shape switchPlusElement;
     protected Shape switchMinusElement;
 
-    protected Group quadView;
-
+    public BaseQuad(int x, int y) {
+        super(x, y);
+    }
 
     public void setDescription(String description) {
         this.description.setText(description);
@@ -136,15 +129,6 @@ public class QuadImpl implements Quad, Cloneable {
         this.id = id;
     }
 
-    public QuadImpl(int x, int y) {
-        background = new Rectangle(90, 80);
-        background.setFill(DEFAULT_BACKGROUND_COLOR);
-        quadView = new Group(background);
-        if (RedactorFxController.isConstructorMode())
-            quadView.getChildren().add(QuadPainter.getQuadBoarder());
-        this.x = x;
-        this.y = y;
-    }
 
     @Override
     public void refresh() {
@@ -161,15 +145,6 @@ public class QuadImpl implements Quad, Cloneable {
 
     }
 
-    @Override
-    public void select() {
-        background.setFill(SELECTED_BACKGROUND_COLOR);
-    }
-
-    @Override
-    public void unselect() {
-        background.setFill(DEFAULT_BACKGROUND_COLOR);
-    }
 
     @Override
     public String getId() {
@@ -237,6 +212,11 @@ public class QuadImpl implements Quad, Cloneable {
             else
                 trackElement.setFill(UNDEFINED_ELEMENT_COLOR);
         }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
     }
 
     public void showDescription() {

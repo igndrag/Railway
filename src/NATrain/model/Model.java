@@ -1,21 +1,20 @@
 package NATrain.model;
 
 import NATrain.controller.Route;
-import NATrain.quads.QuadImpl;
+import NATrain.quads.BaseQuad;
 import NATrain.remoteControlDevice.ControlModule;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
 import NATrain.utils.SignalPare;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Model {
+public class Model implements Serializable {
 
-    private static HashMap<String, QuadImpl> notEmptyQuads = new HashMap<>();
-
-    private static QuadImpl[][] mainGrid;
+    private static BaseQuad[][] mainGrid = new BaseQuad[20][20]; //default size
 
     private static HashMap<Integer, ControlModule> controlModules = new HashMap<>();
 
@@ -26,11 +25,6 @@ public class Model {
     private static HashSet<TrackSection> trackSections = new HashSet<>();
 
     private static HashSet<Signal> signals = new HashSet<>();
-
-
-    public static HashMap<String, QuadImpl> getNotEmptyQuads() {
-        return notEmptyQuads;
-    }
 
     public static HashMap<Integer, ControlModule> getControlModules() {
         return controlModules;
@@ -52,7 +46,4 @@ public class Model {
         return signals;
     }
 
-    public static void initialize() {
-
-    }
 }

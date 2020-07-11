@@ -2,7 +2,7 @@ package NATrain;
 
 import NATrain.model.Model;
 import NATrain.quads.Quad;
-import NATrain.quads.QuadImpl;
+import NATrain.quads.BaseQuad;
 import NATrain.view.View;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -38,7 +38,7 @@ public class QuadConfiguratorFxController {
 
     @FXML
     private Pane quadView;
-    private QuadImpl quadForConfig;
+    private BaseQuad quadForConfig;
     private Pane parent;
     private Stage stage;
 
