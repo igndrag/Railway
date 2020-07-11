@@ -29,8 +29,8 @@ public class QuadImpl implements Quad, Cloneable {
     public static Color BLINKER = Color.YELLOW;
 
     protected QuadType quadType;
-    protected TrackSection associatedTrackOne;
-    protected TrackSection associatedTrackTwo;
+    protected TrackSection firstAssociatedTrack;
+    protected TrackSection secondAssociatedTrack;
     protected Signal associatedSignal;
     protected Switch associatedSwitch;
 
@@ -42,13 +42,15 @@ public class QuadImpl implements Quad, Cloneable {
 
     protected Text description;
     protected Boolean showDescription = true;
-    protected Shape trackOneElement;
-    protected Shape trackTwoElement;
-    protected Shape signalLampOneElement;
-    protected Shape signalLampTwoElement;
+    protected Shape firstTrackElement;
+    protected Shape secondTrackElement;
+    protected Shape firstLampElement;
+    protected Shape secondLampElement;
     protected Shape switchPlusElement;
     protected Shape switchMinusElement;
+
     protected Group quadView;
+
 
     public void setDescription(String description) {
         this.description.setText(description);
@@ -78,12 +80,12 @@ public class QuadImpl implements Quad, Cloneable {
         this.quadType = quadType;
     }
 
-    public void setAssociatedTrackOne(TrackSection associatedTrackOne) {
-        this.associatedTrackOne = associatedTrackOne;
+    public void setFirstAssociatedTrack(TrackSection firstAssociatedTrack) {
+        this.firstAssociatedTrack = firstAssociatedTrack;
     }
 
-    public void setAssociatedTrackTwo(TrackSection associatedTrackTwo) {
-        this.associatedTrackTwo = associatedTrackTwo;
+    public void setSecondAssociatedTrack(TrackSection secondAssociatedTrack) {
+        this.secondAssociatedTrack = secondAssociatedTrack;
     }
 
     public void setAssociatedSignal(Signal associatedSignal) {
@@ -102,20 +104,20 @@ public class QuadImpl implements Quad, Cloneable {
         this.showDescription = showDescription;
     }
 
-    public void setTrackOneElement(Shape trackOneElement) {
-        this.trackOneElement = trackOneElement;
+    public void setFirstTrackElement(Shape firstTrackElement) {
+        this.firstTrackElement = firstTrackElement;
     }
 
     public void setTrackTwoElement(Shape trackTwoElement) {
-        this.trackTwoElement = trackTwoElement;
+        this.secondTrackElement = trackTwoElement;
     }
 
-    public void setSignalLampOneElement(Shape signalLampOneElement) {
-        this.signalLampOneElement = signalLampOneElement;
+    public void setFirstLampElement(Shape firstLampElement) {
+        this.firstLampElement = firstLampElement;
     }
 
-    public void setSignalLampTwoElement(Shape signalLampTwoElement) {
-        this.signalLampTwoElement = signalLampTwoElement;
+    public void setSecondLampElement(Shape secondLampElement) {
+        this.secondLampElement = secondLampElement;
     }
 
     public void setSwitchPlusElement(Shape switchPlusElement) {
@@ -147,12 +149,12 @@ public class QuadImpl implements Quad, Cloneable {
     @Override
     public void refresh() {
         if (RedactorFxController.isConstructorMode()) {
-            trackConfigured(associatedTrackOne, trackOneElement);
-            trackConfigured(associatedTrackTwo, trackTwoElement);
+            trackConfigured(firstAssociatedTrack, firstTrackElement);
+            trackConfigured(secondAssociatedTrack, secondTrackElement);
             //TODO make switch and signal view refresh
         } else {
-            trackStateRefresh(associatedTrackOne, trackOneElement);
-            trackStateRefresh(associatedTrackTwo, trackTwoElement);
+            trackStateRefresh(firstAssociatedTrack, firstTrackElement);
+            trackStateRefresh(secondAssociatedTrack, secondTrackElement);
             switchStateRefresh(associatedSwitch, switchPlusElement, switchMinusElement);
             //TODO make signal view refresh
         }
@@ -196,11 +198,11 @@ public class QuadImpl implements Quad, Cloneable {
     private void switchStateRefresh(Switch associatedSwitch, Shape switchPlusElement, Shape switchMinusElement) {
         if (associatedSwitch != null) {
             if (associatedSwitch.getSwitchState().equals(SwitchState.PLUS)) {
-                switchPlusElement.setFill(trackOneElement.getFill());
+                switchPlusElement.setFill(firstTrackElement.getFill());
                 switchMinusElement.setFill(background.getFill());
             } else if (associatedSwitch.getSwitchState().equals(SwitchState.MINUS)) {
                 switchPlusElement.setFill(background.getFill());
-                switchMinusElement.setFill(trackOneElement.getFill());
+                switchMinusElement.setFill(firstTrackElement.getFill());
             } else if (associatedSwitch.getSwitchState().equals(SwitchState.UNDEFINED)) {
                 switchPlusElement.setFill(background.getFill());
                 switchMinusElement.setFill(background.getFill());
@@ -212,10 +214,10 @@ public class QuadImpl implements Quad, Cloneable {
     public Properties getProperties() {
         Properties properties = new Properties();
         properties.setProperty("Type", quadType.toString());
-        if (associatedTrackOne != null)
-            properties.setProperty("Track 1", associatedTrackOne.getId());
-        if (associatedTrackTwo != null)
-            properties.setProperty("Track 2", associatedTrackTwo.getId());
+        if (firstAssociatedTrack != null)
+            properties.setProperty("Track 1", firstAssociatedTrack.getId());
+        if (secondAssociatedTrack != null)
+            properties.setProperty("Track 2", secondAssociatedTrack.getId());
         if (associatedSwitch != null)
             properties.setProperty("Switch", associatedSwitch.getId());
         if (associatedSignal != null)

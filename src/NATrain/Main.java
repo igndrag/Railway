@@ -13,15 +13,15 @@ public class Main extends Application {
       //  ConnectionService service = new ConnectionService("COM8");
       //  service.start();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("constructor.fxml"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("navigator.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("NATrain");
-        primaryStage.setScene(new Scene(root, 800, 800));
-        RedactorFxController controller = loader.getController();
-        controller.initialize();
+        primaryStage.setScene(new Scene(root, 900, 140));
+        NavigatorFxController controller = loader.getController();
         RedactorFxController.setPrimaryStage(primaryStage);
+        primaryStage.setResizable(false);
         primaryStage.show();
-
     }
 
 

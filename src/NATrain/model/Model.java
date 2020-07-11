@@ -51,4 +51,8 @@ public class Model {
     public static HashSet<Signal> getSignals() {
         return signals;
     }
+
+    public static void initialize() {
+
+    }
 }

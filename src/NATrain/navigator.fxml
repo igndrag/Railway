@@ -1,15 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="NATrain.NavigatorFxController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="140.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.NavigatorFxController">
+   <children>
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="28.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Mosaic Redactor" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/puzzles_icon.png" />
+               </image></ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Button>
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="173.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Trackside Elements" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/track_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Routes" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/roots_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="463.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Hardware" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/hardware_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="608.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Control" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/control_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="754.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Settings" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/settings_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+   </children>
 </AnchorPane>
-

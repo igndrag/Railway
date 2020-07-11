@@ -3,7 +3,6 @@ package NATrain.utils;
 import NATrain.library.QuadType;
 import NATrain.quads.Quad;
 import NATrain.quads.QuadImpl;
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
@@ -33,13 +32,13 @@ public class QuadPainter {
             case STQ1_1:
                 trackOneElement = new Rectangle(0, 30, 90 , 20);
                 trackOneElement.setFill(Color.BLUE);
-                quad.setTrackOneElement(trackOneElement);
+                quad.setFirstTrackElement(trackOneElement);
                 addElementToQuadView(quad, trackOneElement);
                 break;
             case STQ1_2:
                 trackOneElement = new Rectangle(35, 0, 20 , 80);
                 trackOneElement.setFill(Color.BLUE);
-                quad.setTrackOneElement(trackOneElement);
+                quad.setFirstTrackElement(trackOneElement);
                 addElementToQuadView(quad, trackOneElement);
                 break;
             case STQ2_1:
@@ -50,7 +49,7 @@ public class QuadPainter {
                                 55, 80,
                                 15, 0);
                 trackOneElement.setFill(Color.BLUE);
-                quad.setTrackOneElement(trackOneElement);
+                quad.setFirstTrackElement(trackOneElement);
                 addElementToQuadView(quad, trackOneElement);
                 break;
             case STQ2_2:
@@ -61,7 +60,7 @@ public class QuadPainter {
                                 15, 80,
                                 55, 0);
                 trackOneElement.setFill(Color.BLUE);
-                quad.setTrackOneElement(trackOneElement);
+                quad.setFirstTrackElement(trackOneElement);
                 addElementToQuadView(quad, trackOneElement);
                 break;
         }
