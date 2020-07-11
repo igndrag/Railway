@@ -25,21 +25,23 @@ public class ModelMock {
             }
         }
 
-        Model.getSignals().add(new Signal("S1", new HashSet<>(
+        Model.getSignals().put("S1", new Signal("S1", new HashSet<>(
                 Arrays.asList(SignalState.GREEN,
                               SignalState.RED,
                               SignalState.YELLOW,
                               SignalState.BLINKED_YELLOW))));
 
-        Model.getSignals().add(new Signal("M1", new HashSet<>(
-                Arrays.asList(SignalState.WHITE,
+
+
+        Model.getSignals().put("M1", new Signal("M1", new HashSet<>(
+                                Arrays.asList(SignalState.WHITE,
                               SignalState.BLUE))));
 
-        Model.getSwitches().add(new Switch("1", SwitchState.PLUS));
-        Model.getSwitches().add(new Switch("3", SwitchState.MINUS));
+        Model.getSwitches().put("1", new Switch("1", SwitchState.PLUS));
+        Model.getSwitches().put("3", new Switch("3", SwitchState.MINUS));
 
-        Model.getTrackSections().add(new TrackSection("1-3SP"));
-        Model.getTrackSections().add(new TrackSection("SP"));
+        Model.getTrackSections().put("1-3SP",new TrackSection("1-3SP"));
+        Model.getTrackSections().put("SP", new TrackSection("SP"));
 
     }
 }

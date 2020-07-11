@@ -5,14 +5,20 @@ import NATrain.quads.AbstractQuad;
 import NATrain.quads.Quad;
 import NATrain.quads.BaseQuad;
 import NATrain.view.View;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import java.util.Observable;
 
 public class QuadConfiguratorFxController {
 
@@ -26,13 +32,13 @@ public class QuadConfiguratorFxController {
     private CheckBox trackSectionBorderCheckBox;
 
     @FXML
-    private ChoiceBox firstTrackSectionChoiceBox;
+    private ChoiceBox<String> firstTrackSectionChoiceBox;
 
     @FXML
-    private ChoiceBox secondTrackSectionChoiceBox;
+    private ChoiceBox<String> secondTrackSectionChoiceBox;
 
     @FXML
-    private ChoiceBox signalChoiceBox;
+    private ChoiceBox<String> signalChoiceBox;
 
     @FXML
     private ChoiceBox switchChoiceBox;
@@ -40,30 +46,22 @@ public class QuadConfiguratorFxController {
     @FXML
     private Pane quadView;
     private BaseQuad quadForConfig;
-    private Pane parent;
     private Stage stage;
 
 
     public void initialize(int x, int y) {
         quadForConfig = (BaseQuad) Model.getMainGrid()[y][x];
         quadForConfig.getBackground().setFill(AbstractQuad.DEFAULT_BACKGROUND_COLOR);
-        parent = (Pane) quadForConfig.getView().getParent();
         quadView.getChildren().add(quadForConfig.getView());
         stage = (Stage) saveButton.getScene().getWindow();
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                saveAndClose();
-            }
-        });
+        firstTrackSectionChoiceBox.getItems().addAll(Model.getSwitches().keySet());
+        stage.setOnCloseRequest(event -> saveAndClose());
         // receive track side element lists TODO
     }
 
     @FXML
     private void saveAndClose() {
         quadForConfig.refresh();
-        parent.getChildren().add(quadForConfig.getView());
-
         stage.close();
     }
 }
