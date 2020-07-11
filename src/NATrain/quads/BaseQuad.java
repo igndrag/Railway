@@ -126,6 +126,25 @@ public class BaseQuad extends AbstractQuad{
         this.id = id;
     }
 
+    public TrackSection getFirstAssociatedTrack() {
+        return firstAssociatedTrack;
+    }
+
+    public TrackSection getSecondAssociatedTrack() {
+        return secondAssociatedTrack;
+    }
+
+    public Signal getAssociatedSignal() {
+        return associatedSignal;
+    }
+
+    public Switch getAssociatedSwitch() {
+        return associatedSwitch;
+    }
+
+    public Boolean getShowDescription() {
+        return showDescription;
+    }
 
     @Override
     public void refresh() {

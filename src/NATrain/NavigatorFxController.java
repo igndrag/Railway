@@ -25,7 +25,7 @@ public class NavigatorFxController {
         FXMLLoader loader = new FXMLLoader(TrackRedactorFxController.class.getResource("trackRedactor.fxml"));
         Stage trackRedactor = new Stage();
         trackRedactor.setTitle("TrackRedactor");
-        trackRedactor.setScene(new Scene(loader.load(), 800, 800));
+        trackRedactor.setScene(new Scene(loader.load(), 800, 600));
         trackRedactor.setResizable(true);
         TrackRedactorFxController controller = loader.getController();
         controller.initialize();

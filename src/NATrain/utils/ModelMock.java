@@ -4,14 +4,9 @@ import NATrain.controller.SignalState;
 import NATrain.controller.SwitchState;
 import NATrain.model.Model;
 import NATrain.quads.EmptyQuad;
-import NATrain.quads.Quad;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
-import NATrain.view.View;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Pane;
-
 import java.util.Arrays;
 import java.util.HashSet;
 
