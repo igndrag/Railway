@@ -22,10 +22,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Properties;
 
 
-public class FxController {
+public class RedactorFxController {
 
     private static boolean constructorMode = true;
     private static GridPane gridPane;
@@ -71,7 +70,7 @@ public class FxController {
     private Button greenButton;
 
     public static void setPrimaryStage(Stage mainStage) {
-        FxController.primaryStage = mainStage;
+        RedactorFxController.primaryStage = mainStage;
     }
 
     public static boolean isConstructorMode() {
@@ -87,7 +86,7 @@ public class FxController {
     }
 
     public static void setGridPane(GridPane gridPane) {
-        FxController.gridPane = gridPane;
+        RedactorFxController.gridPane = gridPane;
     }
 
     public static Model getModel() {
@@ -95,7 +94,7 @@ public class FxController {
     }
 
     public static void setModel(Model model) {
-        FxController.model = model;
+        RedactorFxController.model = model;
     }
 
     public ScrollPane getWorkArea() {
@@ -188,12 +187,12 @@ public class FxController {
     private static void toQuadConfigurator(int x, int y) throws IOException {
         if (View.getMainGrid()[y][x] instanceof EmptyQuad)
             return;
-        FXMLLoader loader = new FXMLLoader(FxController.class.getResource("quadConfigurator.fxml"));
+        FXMLLoader loader = new FXMLLoader(RedactorFxController.class.getResource("quadConfigurator.fxml"));
         Stage quadConfigurator = new Stage();
         quadConfigurator.setTitle("Quad configurator");
         quadConfigurator.setScene(new Scene(loader.load(), 400, 300));
         quadConfigurator.setResizable(false);
-        QuadConfiguratorController controller = loader.getController();
+        QuadConfiguratorFxController controller = loader.getController();
         controller.initialize(x, y);
         quadConfigurator.initModality(Modality.WINDOW_MODAL);
         quadConfigurator.initOwner(primaryStage);

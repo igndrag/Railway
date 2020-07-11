@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class QuadConfiguratorController {
+public class QuadConfiguratorFxController {
 
     @FXML
     private Button saveButton;

@@ -17,9 +17,9 @@ public class Main extends Application {
         Parent root = loader.load();
         primaryStage.setTitle("NATrain");
         primaryStage.setScene(new Scene(root, 800, 800));
-        FxController controller = loader.getController();
+        RedactorFxController controller = loader.getController();
         controller.initialize();
-        FxController.setPrimaryStage(primaryStage);
+        RedactorFxController.setPrimaryStage(primaryStage);
         primaryStage.show();
 
     }

@@ -1,13 +1,13 @@
 package NATrain.view;
 
-import NATrain.FxController;
+import NATrain.RedactorFxController;
 import NATrain.quads.Quad;
 
 import java.util.Arrays;
 
 public class View {
         private static Quad[][] mainGrid;
-        private static FxController controller;
+        private static RedactorFxController controller;
 
 
         public static void setSize (int raws, int columns) {
@@ -18,11 +18,11 @@ public class View {
                 return mainGrid;
         }
 
-        public static FxController getController() {
+        public static RedactorFxController getController() {
                 return controller;
         }
 
-        public void setController (FxController controller) {
+        public void setController (RedactorFxController controller) {
                 controller = controller;
         }
 

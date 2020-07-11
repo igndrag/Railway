@@ -1,6 +1,6 @@
 package NATrain.quads;
 
-import NATrain.FxController;
+import NATrain.RedactorFxController;
 import NATrain.controller.SwitchState;
 import NATrain.controller.TrackSectionState;
 import NATrain.library.QuadType;
@@ -138,7 +138,7 @@ public class QuadImpl implements Quad, Cloneable {
         background = new Rectangle(90, 80);
         background.setFill(DEFAULT_BACKGROUND_COLOR);
         quadView = new Group(background);
-        if (FxController.isConstructorMode())
+        if (RedactorFxController.isConstructorMode())
             quadView.getChildren().add(QuadPainter.getQuadBoarder());
         this.x = x;
         this.y = y;
@@ -146,7 +146,7 @@ public class QuadImpl implements Quad, Cloneable {
 
     @Override
     public void refresh() {
-        if (FxController.isConstructorMode()) {
+        if (RedactorFxController.isConstructorMode()) {
             trackConfigured(associatedTrackOne, trackOneElement);
             trackConfigured(associatedTrackTwo, trackTwoElement);
             //TODO make switch and signal view refresh

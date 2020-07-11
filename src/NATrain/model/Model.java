@@ -15,6 +15,8 @@ public class Model {
 
     private static HashMap<String, QuadImpl> notEmptyQuads = new HashMap<>();
 
+    private static QuadImpl[][] mainGrid;
+
     private static HashMap<Integer, ControlModule> controlModules = new HashMap<>();
 
     private static HashMap<SignalPare, Route> routeTable = new HashMap<>();
@@ -24,6 +26,7 @@ public class Model {
     private static HashSet<TrackSection> trackSections = new HashSet<>();
 
     private static HashSet<Signal> signals = new HashSet<>();
+
 
     public static HashMap<String, QuadImpl> getNotEmptyQuads() {
         return notEmptyQuads;
