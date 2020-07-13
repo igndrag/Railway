@@ -9,7 +9,7 @@
 
 <Pane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.QuadConfiguratorFxController">
    <children>
-      <Pane fx:id="quadView" layoutX="21.0" layoutY="30.0" prefHeight="160.0" prefWidth="180.0" />
+      <Pane fx:id="quadViewPane" layoutX="21.0" layoutY="30.0" prefHeight="160.0" prefWidth="180.0" />
       <CheckBox fx:id="showDescriptionCheckBox" layoutX="22.0" layoutY="214.0" mnemonicParsing="false" text="Show description" />
       <CheckBox fx:id="trackSectionBorderCheckBox" layoutX="22.0" layoutY="245.0" mnemonicParsing="false" text="Track section border" />
       <ChoiceBox fx:id="firstTrackSectionChoiceBox" layoutX="220.0" layoutY="40.0" prefWidth="150.0" />

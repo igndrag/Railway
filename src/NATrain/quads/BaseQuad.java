@@ -161,7 +161,6 @@ public class BaseQuad extends AbstractQuad{
 
     }
 
-
     @Override
     public String getId() {
         return id;

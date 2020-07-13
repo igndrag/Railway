@@ -202,7 +202,7 @@ public class TrackRedactorFxController {
         quadConfigurator.show();
     }
 
-    private static void configQuadView(Node quadView, int x, int y) {
+    protected static void configQuadView(Node quadView, int x, int y) {
         quadView.setOnMouseClicked(event -> {
             System.out.println(event.getClickCount());
 
