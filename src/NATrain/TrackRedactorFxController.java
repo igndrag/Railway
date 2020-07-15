@@ -24,6 +24,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 
 public class TrackRedactorFxController {
@@ -115,7 +116,7 @@ public class TrackRedactorFxController {
         //*** left panel initializing ***//
         VBox leftPanelVBox = new VBox();
         ToggleGroup toggleGroup = new ToggleGroup();
-        QuadLibrary.getSimpleTrackQuadImgLib().forEach((quadType, image) -> {
+        Arrays.stream(QuadType.values()).forEach(quadType -> {
                     ToggleButton button = new ToggleButton();
                     button.setToggleGroup(toggleGroup);
                     button.setOnAction(event -> {
@@ -127,7 +128,7 @@ public class TrackRedactorFxController {
                             System.out.println(quadType + " unselected ");
                         }
                     });
-                    button.setGraphic(new ImageView(image));
+                    button.setGraphic(QuadFactory.createQuad(0,0, quadType).getView());
                     leftPanelVBox.getChildren().add(button);
                 }
         );
