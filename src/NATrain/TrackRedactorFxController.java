@@ -74,10 +74,6 @@ public class TrackRedactorFxController {
         TrackRedactorFxController.primaryStage = mainStage;
     }
 
-    public static boolean isConstructorMode() {
-        return NavigatorFxController.constructorMode;
-    }
-
     public static void setConstructorMode(boolean mode) {
         NavigatorFxController.constructorMode = mode;
     }

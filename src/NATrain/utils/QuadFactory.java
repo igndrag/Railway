@@ -24,11 +24,11 @@ public class QuadFactory {
     public static BaseQuad createQuad (int x, int y, QuadType quadType) {
         BaseQuad resultQuad = new BaseQuad(x, y);
         resultQuad.setQuadType(quadType);
-        String id = quadType.toString() + "_00" + counter;
+        String id = quadType.toString() + counter;
         resultQuad.setId(id);
         counter++;
         QuadPainter.paintQuadViewForType(resultQuad, quadType);
-        //Model.getNotEmptyQuads().put(id, resultQuad);
+
         return resultQuad;
     }
 

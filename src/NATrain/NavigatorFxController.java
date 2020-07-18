@@ -12,7 +12,7 @@ import java.io.IOException;
 public class NavigatorFxController {
 
     private static Stage primaryStage;
-    static boolean constructorMode = true;
+    public static boolean constructorMode = true;
 
     @FXML
     private Button mosaicRedactorButton;

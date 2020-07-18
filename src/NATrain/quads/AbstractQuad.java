@@ -1,6 +1,6 @@
 package NATrain.quads;
 
-import NATrain.TrackRedactorFxController;
+import NATrain.NavigatorFxController;
 import NATrain.utils.QuadPainter;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -28,7 +28,7 @@ public abstract class AbstractQuad implements Quad{
         background = new Rectangle(90, 80);
         background.setFill(DEFAULT_BACKGROUND_COLOR);
         quadView = new Group(background);
-        if (TrackRedactorFxController.isConstructorMode())
+        if (NavigatorFxController.constructorMode)
             quadView.getChildren().add(QuadPainter.getQuadBoarder());
         this.x = x;
         this.y = y;
