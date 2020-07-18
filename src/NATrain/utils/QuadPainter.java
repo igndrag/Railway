@@ -1,10 +1,8 @@
 package NATrain.utils;
 
-import NATrain.library.QuadType;
+import NATrain.quads.QuadType;
 import NATrain.quads.Quad;
 import NATrain.quads.BaseQuad;
-import javafx.geometry.VPos;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
@@ -41,8 +39,7 @@ public class QuadPainter {
                 trackOneElement.setFill(Color.BLUE);
                 quad.setFirstTrackElement(trackOneElement);
                 addElementToQuadView(quad, trackOneElement);
-
-                trackLabel = new Text(quad.getId());
+                trackLabel = new Text();
                 trackLabel.setTextAlignment(TextAlignment.CENTER);
                 trackLabel.setWrappingWidth(90);
                 trackLabel.setX(0);

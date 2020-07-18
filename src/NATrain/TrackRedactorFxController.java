@@ -1,6 +1,6 @@
 package NATrain;
 
-import NATrain.library.QuadType;
+import NATrain.quads.QuadType;
 import NATrain.utils.ModelMock;
 import NATrain.utils.QuadFactory;
 import javafx.event.ActionEvent;
@@ -11,16 +11,11 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import NATrain.library.QuadLibrary;
 import NATrain.model.Model;
-import NATrain.quads.EmptyQuad;
 import NATrain.quads.Quad;
-import NATrain.view.View;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -31,11 +26,13 @@ import java.util.Arrays;
 public class TrackRedactorFxController {
 
     private static Stage primaryStage;
-    private static boolean constructorMode = true;
     private static GridPane gridPane;
     private static Model model;
     private static Quad selectedQuad;
     private static QuadType selectedQuadType;
+
+    @FXML
+    private TitledPane CustomElementIcons;
 
     @FXML
     private TableColumn propNameCol;
@@ -78,11 +75,11 @@ public class TrackRedactorFxController {
     }
 
     public static boolean isConstructorMode() {
-        return constructorMode;
+        return NavigatorFxController.constructorMode;
     }
 
     public static void setConstructorMode(boolean mode) {
-        constructorMode = mode;
+        NavigatorFxController.constructorMode = mode;
     }
 
     public static GridPane getGridPane() {
@@ -115,7 +112,12 @@ public class TrackRedactorFxController {
         ModelMock.MockModel();
 
         //*** left panel initializing ***//
-        VBox leftPanelVBox = new VBox();
+        VBox STQVBox = new VBox();
+        VBox DTQVBox = new VBox();
+        VBox SWQVBox = new VBox();
+        VBox SIQVBox = new VBox();
+        VBox DSIQVBox = new VBox();
+
         ToggleGroup toggleGroup = new ToggleGroup();
         Arrays.stream(QuadType.values()).forEach(quadType -> {
                     ToggleButton button = new ToggleButton();
@@ -130,10 +132,32 @@ public class TrackRedactorFxController {
                         }
                     });
                     button.setGraphic(QuadFactory.createQuad(0,0, quadType).getView());
-                    leftPanelVBox.getChildren().add(button);
+                    switch (quadType.toString().substring(0, 3)) {
+                        case ("STQ") :
+                            STQVBox.getChildren().add(button);
+                            break;
+                        case ("DTQ") :
+                            DTQVBox.getChildren().add(button);
+                            break;
+                        case ("SWQ") :
+                            SWQVBox.getChildren().add(button);
+                            break;
+                        case ("SIQ") :
+                            SIQVBox.getChildren().add(button);
+                            break;
+                        case ("DSI") :
+                            DSIQVBox.getChildren().add(button);
+                            break;
+                    }
+
                 }
         );
-        simpleTrackSectionIcons.setContent(leftPanelVBox);
+        simpleTrackSectionIcons.setContent(STQVBox);
+        doubleTrackSectionIcons.setContent(DTQVBox);
+        switchIcons.setContent(SWQVBox);
+        signalIcons.setContent(SIQVBox);
+        doubleSignalIcons.setContent(DSIQVBox);
+
 
         //*** grid pane panel initializing ***//
 

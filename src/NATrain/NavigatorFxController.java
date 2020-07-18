@@ -12,6 +12,7 @@ import java.io.IOException;
 public class NavigatorFxController {
 
     private static Stage primaryStage;
+    static boolean constructorMode = true;
 
     @FXML
     private Button mosaicRedactorButton;
@@ -22,6 +23,7 @@ public class NavigatorFxController {
     }
 
     public void toTrackRedactor(ActionEvent actionEvent) throws IOException {
+        constructorMode = true;
         FXMLLoader loader = new FXMLLoader(TrackRedactorFxController.class.getResource("trackRedactor.fxml"));
         Stage trackRedactor = new Stage();
         trackRedactor.setTitle("TrackRedactor");
@@ -33,6 +35,5 @@ public class NavigatorFxController {
         trackRedactor.setOnCloseRequest(event -> primaryStage.show());
         primaryStage.hide();
         trackRedactor.show();
-
     }
 }

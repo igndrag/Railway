@@ -1,7 +1,6 @@
 package NATrain.utils;
 
-import NATrain.library.QuadType;
-import NATrain.model.Model;
+import NATrain.quads.QuadType;
 import NATrain.quads.BaseQuad;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
@@ -16,7 +15,7 @@ public class QuadFactory {
     static {
         redactorModeQuadView.getChildren().add(QuadPainter.getQuadBoarder());
         Text text = new Text("Configuring...");
-        text.setY(40);
+        text.setY(45);
         text.setWrappingWidth(90);
         text.setTextAlignment(TextAlignment.CENTER);
         redactorModeQuadView.getChildren().add(text);

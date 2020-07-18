@@ -3,7 +3,6 @@ package NATrain.quads;
 import NATrain.TrackRedactorFxController;
 import NATrain.controller.SwitchState;
 import NATrain.controller.TrackSectionState;
-import NATrain.library.QuadType;
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;

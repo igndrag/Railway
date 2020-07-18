@@ -73,6 +73,7 @@ public class QuadConfiguratorFxController {
         firstTrackSectionChoiceBox.setOnAction(event -> {
             String choiceBoxValue = firstTrackSectionChoiceBox.getValue();
             if (choiceBoxValue.equals("none")) {
+                quadForConfig.getTrackLabel().setText("");
                 quadForConfig.setFirstAssociatedTrack(null);
             } else {
                 quadForConfig.setFirstAssociatedTrack(Model.getTrackSections().get(firstTrackSectionChoiceBox.getValue()));
@@ -106,6 +107,7 @@ public class QuadConfiguratorFxController {
         signalChoiceBox.setOnAction(event -> {
             String choiceBoxValue = signalChoiceBox.getValue();
             if (choiceBoxValue.equals("none")) {
+                quadForConfig.getSignalLabel().setText("");
                 quadForConfig.setAssociatedSignal(null);
             } else {
                 quadForConfig.setAssociatedSignal(Model.getSignals().get(signalChoiceBox.getValue()));
@@ -123,6 +125,7 @@ public class QuadConfiguratorFxController {
         switchChoiceBox.setOnAction(event -> {
             String choiceBoxValue = switchChoiceBox.getValue();
             if (choiceBoxValue.equals("none")) {
+                quadForConfig.getSwitchLabel().setText("");
                 quadForConfig.setAssociatedSwitch(null);
             } else {
                 quadForConfig.setAssociatedSwitch(Model.getSwitches().get(switchChoiceBox.getValue()));
@@ -131,6 +134,7 @@ public class QuadConfiguratorFxController {
         });
 
         ///*** show description init
+        showDescriptionCheckBox.setSelected(quadForConfig.getShowDescription());
         showDescriptionCheckBox.setOnMouseClicked(event -> {
             if (quadForConfig.getTrackLabel() != null)
                 quadForConfig.getTrackLabel().setVisible(showDescriptionCheckBox.isSelected());
@@ -139,6 +143,7 @@ public class QuadConfiguratorFxController {
             if (quadForConfig.getSignalLabel() != null) {
                 quadForConfig.getSignalLabel().setVisible(showDescriptionCheckBox.isSelected());
             }
+            quadForConfig.setShowDescription(showDescriptionCheckBox.isSelected());
         });
 
         ///*** show track borders
