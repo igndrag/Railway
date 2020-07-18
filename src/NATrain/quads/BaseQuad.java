@@ -37,6 +37,15 @@ public class BaseQuad extends AbstractQuad{
     protected Shape secondLampElement;
     protected Shape switchPlusElement;
     protected Shape switchMinusElement;
+    private Text trackLabel;
+
+    public Text getTrackLabel() {
+        return trackLabel;
+    }
+
+    public void setTrackLabel(Text trackLabel) {
+        this.trackLabel = trackLabel;
+    }
 
     public BaseQuad(int x, int y) {
         super(x, y);

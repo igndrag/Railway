@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import NATrain.library.QuadLibrary;
 import NATrain.model.Model;
@@ -209,8 +210,11 @@ public class TrackRedactorFxController {
 
             if (event.getClickCount() == 1) {
                 selectQuad(x, y);
-                if (selectedQuadType != null)
+                if (selectedQuadType != null) {
                     putQuadOnGrid(x, y, selectedQuadType);
+                    Pane parent = (Pane)quadView.getParent();
+                    parent.getChildren().clear();
+                }
             }
 
             if (event.getClickCount() == 2) {

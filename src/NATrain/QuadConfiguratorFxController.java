@@ -3,14 +3,18 @@ package NATrain;
 import NATrain.model.Model;
 import NATrain.quads.AbstractQuad;
 import NATrain.quads.BaseQuad;
+import NATrain.utils.QuadFactory;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class QuadConfiguratorFxController {
@@ -52,6 +56,8 @@ public class QuadConfiguratorFxController {
         quadView = quadForConfig.getView();
         parent = (Pane) quadView.getParent();
         quadForConfig.getBackground().setFill(AbstractQuad.DEFAULT_BACKGROUND_COLOR);
+        parent.getChildren().clear();
+        parent.getChildren().add(QuadFactory.redactorModeQuadView);
         quadViewPane.getChildren().add(quadView);
         stage = (Stage) saveButton.getScene().getWindow();
         stage.setOnCloseRequest(event -> saveAndClose());
@@ -70,6 +76,7 @@ public class QuadConfiguratorFxController {
                 quadForConfig.setFirstAssociatedTrack(null);
             } else {
                 quadForConfig.setFirstAssociatedTrack(Model.getTrackSections().get(firstTrackSectionChoiceBox.getValue()));
+                quadForConfig.getTrackLabel().setText(quadForConfig.getFirstAssociatedTrack().getId());
             }
             quadForConfig.refresh();
         });
@@ -122,10 +129,31 @@ public class QuadConfiguratorFxController {
             }
             quadForConfig.refresh();
         });
+
+        ///*** show description init
+        showDescriptionCheckBox.setOnMouseClicked(event -> {
+
+            if (showDescriptionCheckBox.isSelected()) {
+                quadForConfig.getTrackLabel().setTextAlignment(TextAlignment.LEFT);
+            } else {
+                quadForConfig.getTrackLabel().setTextAlignment(TextAlignment.RIGHT);
+            }
+
+        });
+
+        ///*** show track borders
+
+        trackSectionBorderCheckBox.setOnMouseClicked(event -> {
+            if (trackSectionBorderCheckBox.isSelected()) {
+
+            }
+        });
+
     }
 
     @FXML
     private void saveAndClose() {
+        parent.getChildren().clear();
         parent.getChildren().add(quadForConfig.getView());
         quadForConfig.getView().setOnMouseClicked(eventHandler);
         stage.close();

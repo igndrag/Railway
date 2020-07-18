@@ -3,8 +3,12 @@ package NATrain.utils;
 import NATrain.library.QuadType;
 import NATrain.quads.Quad;
 import NATrain.quads.BaseQuad;
+import javafx.geometry.VPos;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 
 public class QuadPainter {
@@ -27,6 +31,9 @@ public class QuadPainter {
         Shape signalLampTwoElement;
         Shape switchPlusElement;
         Shape switchMinusElement;
+        Text trackLabel;
+        Text signalLabel;
+        Text switchLabel;
 
         switch (quadType) {
             case STQ1_1:
@@ -34,6 +41,14 @@ public class QuadPainter {
                 trackOneElement.setFill(Color.BLUE);
                 quad.setFirstTrackElement(trackOneElement);
                 addElementToQuadView(quad, trackOneElement);
+
+                trackLabel = new Text(quad.getId());
+                trackLabel.setTextAlignment(TextAlignment.CENTER);
+                trackLabel.setWrappingWidth(90);
+                trackLabel.setX(0);
+                trackLabel.setY(25);
+                quad.setTrackLabel(trackLabel);
+                addElementToQuadView(quad,trackLabel);
                 break;
             case STQ1_2:
                 trackOneElement = new Rectangle(35, 0, 20 , 80);
