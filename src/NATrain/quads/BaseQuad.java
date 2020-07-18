@@ -38,6 +38,24 @@ public class BaseQuad extends AbstractQuad{
     protected Shape switchPlusElement;
     protected Shape switchMinusElement;
     private Text trackLabel;
+    private Text switchLabel;
+    private Text signalLabel;
+
+    public Text getSwitchLabel() {
+        return switchLabel;
+    }
+
+    public void setSwitchLabel(Text switchLabel) {
+        this.switchLabel = switchLabel;
+    }
+
+    public Text getSignalLabel() {
+        return signalLabel;
+    }
+
+    public void setSignalLabel(Text signalLabel) {
+        this.signalLabel = signalLabel;
+    }
 
     public Text getTrackLabel() {
         return trackLabel;

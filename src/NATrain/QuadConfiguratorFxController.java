@@ -132,13 +132,13 @@ public class QuadConfiguratorFxController {
 
         ///*** show description init
         showDescriptionCheckBox.setOnMouseClicked(event -> {
-
-            if (showDescriptionCheckBox.isSelected()) {
-                quadForConfig.getTrackLabel().setTextAlignment(TextAlignment.LEFT);
-            } else {
-                quadForConfig.getTrackLabel().setTextAlignment(TextAlignment.RIGHT);
+            if (quadForConfig.getTrackLabel() != null)
+                quadForConfig.getTrackLabel().setVisible(showDescriptionCheckBox.isSelected());
+            if (quadForConfig.getSwitchLabel() != null)
+                quadForConfig.getSwitchLabel().setVisible(showDescriptionCheckBox.isSelected());
+            if (quadForConfig.getSignalLabel() != null) {
+                quadForConfig.getSignalLabel().setVisible(showDescriptionCheckBox.isSelected());
             }
-
         });
 
         ///*** show track borders
