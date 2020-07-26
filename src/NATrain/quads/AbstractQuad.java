@@ -9,7 +9,7 @@ import javafx.scene.shape.Shape;
 
 public abstract class AbstractQuad implements Quad{
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
-    public static final Color SELECTED_BACKGROUND_COLOR = Color.PINK;
+    public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final Color CONFIGURED_ELEMENT_COLOR = Color.VIOLET;
     public static final Color OCCUPIED_ELEMENT_COLOR = Color.RED;
     public static final Color FREE_ELEMENT_COLOR = Color.GREEN;

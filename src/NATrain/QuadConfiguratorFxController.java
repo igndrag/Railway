@@ -73,11 +73,15 @@ public class QuadConfiguratorFxController {
         firstTrackSectionChoiceBox.setOnAction(event -> {
             String choiceBoxValue = firstTrackSectionChoiceBox.getValue();
             if (choiceBoxValue.equals("none")) {
-                quadForConfig.getTrackLabel().setText("");
+                if (quadForConfig.getTrackLabel() != null) {
+                    quadForConfig.getTrackLabel().setText("");
+                }
                 quadForConfig.setFirstAssociatedTrack(null);
             } else {
                 quadForConfig.setFirstAssociatedTrack(Model.getTrackSections().get(firstTrackSectionChoiceBox.getValue()));
-                quadForConfig.getTrackLabel().setText(quadForConfig.getFirstAssociatedTrack().getId());
+                if (quadForConfig.getTrackLabel() != null) {
+                    quadForConfig.getTrackLabel().setText(quadForConfig.getFirstAssociatedTrack().getId());
+                }
             }
             quadForConfig.refresh();
         });
@@ -107,10 +111,15 @@ public class QuadConfiguratorFxController {
         signalChoiceBox.setOnAction(event -> {
             String choiceBoxValue = signalChoiceBox.getValue();
             if (choiceBoxValue.equals("none")) {
-                quadForConfig.getSignalLabel().setText("");
+                if (quadForConfig.getSignalLabel() != null) {
+                    quadForConfig.getSignalLabel().setText("");
+                }
                 quadForConfig.setAssociatedSignal(null);
             } else {
                 quadForConfig.setAssociatedSignal(Model.getSignals().get(signalChoiceBox.getValue()));
+                if (quadForConfig.getSignalLabel() != null) {
+                    quadForConfig.getSignalLabel().setText(quadForConfig.getAssociatedSignal().getId());
+                }
             }
             quadForConfig.refresh();
         });

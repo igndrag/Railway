@@ -143,7 +143,6 @@ public class BaseQuad extends AbstractQuad{
         this.switchMinusElement = switchMinusElement;
     }
 
-
     public void setQuadView(Group quadView) {
         this.quadView = quadView;
     }
@@ -180,11 +179,40 @@ public class BaseQuad extends AbstractQuad{
         this.borderElement = borderElement;
     }
 
+    public Shape getFirstTrackElement() {
+        return firstTrackElement;
+    }
+
+    public Shape getSecondTrackElement() {
+        return secondTrackElement;
+    }
+
+    public void setSecondTrackElement(Shape secondTrackElement) {
+        this.secondTrackElement = secondTrackElement;
+    }
+
+    public Shape getFirstLampElement() {
+        return firstLampElement;
+    }
+
+    public Shape getSecondLampElement() {
+        return secondLampElement;
+    }
+
+    public Shape getSwitchPlusElement() {
+        return switchPlusElement;
+    }
+
+    public Shape getSwitchMinusElement() {
+        return switchMinusElement;
+    }
+
     @Override
     public void refresh() {
         if (NavigatorFxController.constructorMode) {
             trackConfigured(firstAssociatedTrack, firstTrackElement);
             trackConfigured(secondAssociatedTrack, secondTrackElement);
+            signalConfigured(associatedSignal, firstLampElement, secondLampElement);
             //TODO make switch and signal view refresh
         } else {
             trackStateRefresh(firstAssociatedTrack, firstTrackElement);
@@ -194,6 +222,7 @@ public class BaseQuad extends AbstractQuad{
         }
 
     }
+
 
     @Override
     public String getId() {
@@ -260,6 +289,20 @@ public class BaseQuad extends AbstractQuad{
                 trackElement.setFill(CONFIGURED_ELEMENT_COLOR);
             else
                 trackElement.setFill(UNDEFINED_ELEMENT_COLOR);
+        }
+    }
+
+    private void signalConfigured(Signal associatedSignal, Shape firstLampElement, Shape secondLampElement) {
+        if (associatedSignal != null) {
+            if (firstLampElement != null)
+                firstLampElement.setFill(CONFIGURED_ELEMENT_COLOR);
+            if (secondLampElement != null)
+                secondLampElement.setFill(CONFIGURED_ELEMENT_COLOR);
+        } else {
+            if (firstLampElement != null)
+                firstLampElement.setFill(UNDEFINED_ELEMENT_COLOR);
+            if (secondLampElement != null)
+                secondLampElement.setFill(UNDEFINED_ELEMENT_COLOR);
         }
     }
 
