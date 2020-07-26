@@ -15,6 +15,7 @@ public abstract class AbstractQuad implements Quad{
     public static final Color FREE_ELEMENT_COLOR = Color.GREEN;
     public static final Color UNDEFINED_ELEMENT_COLOR = Color.BLUE;
     public static final Color INTERLOCKED_ELEMENT_COLOR = Color.YELLOW;
+    public static final Color ISOLATOR_ELEMENT_COLOR = Color.BROWN;
     public static Color BLINKER = Color.YELLOW;
 
     protected String id;

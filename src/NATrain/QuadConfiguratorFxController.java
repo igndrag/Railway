@@ -161,11 +161,10 @@ public class QuadConfiguratorFxController {
         });
 
         ///*** show track borders
-        if (quadForConfig.getBorderElement() != null) {
+        if (quadForConfig.getBorderElement() != null && quadForConfig.getIsolatorElement() != null) {
             trackSectionBorderCheckBox.setOnMouseClicked(event -> {
-                if (quadForConfig.getBorderElement() != null) {
                     quadForConfig.getBorderElement().setVisible(trackSectionBorderCheckBox.isSelected());
-                }
+                    quadForConfig.getIsolatorElement().setVisible(trackSectionBorderCheckBox.isSelected());
             });
         } else trackSectionBorderCheckBox.setDisable(true);
 

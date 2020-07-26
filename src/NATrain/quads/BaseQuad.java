@@ -35,6 +35,7 @@ public class BaseQuad extends AbstractQuad{
     protected Shape switchPlusElement;
     protected Shape switchMinusElement;
     protected Shape borderElement;
+    protected Shape isolatorElement;
     private Text trackLabel;
     private Text switchLabel;
     private Text signalLabel;
@@ -205,6 +206,14 @@ public class BaseQuad extends AbstractQuad{
 
     public Shape getSwitchMinusElement() {
         return switchMinusElement;
+    }
+
+    public Shape getIsolatorElement() {
+        return isolatorElement;
+    }
+
+    public void setIsolatorElement(Shape isolatorElement) {
+        this.isolatorElement = isolatorElement;
     }
 
     @Override

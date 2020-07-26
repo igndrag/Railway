@@ -1,5 +1,6 @@
 package NATrain.utils;
 
+import NATrain.quads.AbstractQuad;
 import NATrain.quads.QuadType;
 import NATrain.quads.Quad;
 import NATrain.quads.BaseQuad;
@@ -123,16 +124,17 @@ public class QuadPainter {
             case STQ5_1:
                 firstTrackElement = new Polygon(
                         0, 30,
-                        30, 30,
-                        55, 80,
-                        35, 80,
-                        20, 50,
-                        0, 50,
-                        0, 30
+                                30, 30,
+                                55, 80,
+                                35, 80,
+                                20, 50,
+                                0, 50,
+                                0, 30
                         );
                 firstTrackElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
                 quad.setFirstTrackElement(firstTrackElement);
                 addElementToQuadView(quad, firstTrackElement);
+
                 borderElement = new Polygon(
                     30, 70,
                             50, 70,
@@ -144,6 +146,13 @@ public class QuadPainter {
                 borderElement.setVisible(false);
                 quad.setBorderElement(borderElement);
                 addElementToQuadView(quad, borderElement);
+
+                Shape isolator = new Rectangle(35, 78, 20 , 2);
+                isolator.setFill(AbstractQuad.ISOLATOR_ELEMENT_COLOR);
+                isolator.setVisible(false);
+                quad.setIsolatorElement(isolator);
+                addElementToQuadView(quad, isolator);
+
                 trackLabel = new Text();
                 trackLabel.setTextAlignment(TextAlignment.LEFT);
                 trackLabel.setWrappingWidth(80);
