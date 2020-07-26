@@ -149,8 +149,8 @@ public class QuadConfiguratorFxController {
         ///*** show track borders
 
         trackSectionBorderCheckBox.setOnMouseClicked(event -> {
-            if (trackSectionBorderCheckBox.isSelected()) {
-
+            if (quadForConfig.getBorderElement() != null) {
+                quadForConfig.getBorderElement().setVisible(trackSectionBorderCheckBox.isSelected());
             }
         });
 

@@ -23,22 +23,23 @@ public class QuadPainter {
     }
 
     protected static void paintQuadViewForType(BaseQuad quad, QuadType quadType) {
-        Shape trackOneElement;
-        Shape trackTwoElement;
-        Shape signalLampOneElement;
-        Shape signalLampTwoElement;
+        Shape firstTrackElement;
+        Shape secondTrackElement;
+        Shape firstLampElement;
+        Shape secondLampElement;
         Shape switchPlusElement;
         Shape switchMinusElement;
+        Shape borderElement;
         Text trackLabel;
         Text signalLabel;
         Text switchLabel;
 
         switch (quadType) {
             case STQ1_1:
-                trackOneElement = new Rectangle(0, 30, 90 , 20);
-                trackOneElement.setFill(Color.BLUE);
-                quad.setFirstTrackElement(trackOneElement);
-                addElementToQuadView(quad, trackOneElement);
+                firstTrackElement = new Rectangle(0, 30, 90 , 20);
+                firstTrackElement.setFill(Color.BLUE);
+                quad.setFirstTrackElement(firstTrackElement);
+                addElementToQuadView(quad, firstTrackElement);
                 trackLabel = new Text();
                 trackLabel.setTextAlignment(TextAlignment.CENTER);
                 trackLabel.setWrappingWidth(90);
@@ -48,32 +49,89 @@ public class QuadPainter {
                 addElementToQuadView(quad,trackLabel);
                 break;
             case STQ1_2:
-                trackOneElement = new Rectangle(35, 0, 20 , 80);
-                trackOneElement.setFill(Color.BLUE);
-                quad.setFirstTrackElement(trackOneElement);
-                addElementToQuadView(quad, trackOneElement);
+                firstTrackElement = new Rectangle(35, 0, 20 , 80);
+                firstTrackElement.setFill(Color.BLUE);
+                quad.setFirstTrackElement(firstTrackElement);
+                addElementToQuadView(quad, firstTrackElement);
+                trackLabel = new Text();
+                trackLabel.setTextAlignment(TextAlignment.LEFT);
+                trackLabel.setWrappingWidth(30);
+                trackLabel.setX(60);
+                trackLabel.setY(40);
+                quad.setTrackLabel(trackLabel);
+                addElementToQuadView(quad,trackLabel);
                 break;
             case STQ2_1:
-                trackOneElement = new Polygon(
+                firstTrackElement = new Polygon(
                         15, 0,
                                 35 , 0,
                                 75, 80,
                                 55, 80,
                                 15, 0);
-                trackOneElement.setFill(Color.BLUE);
-                quad.setFirstTrackElement(trackOneElement);
-                addElementToQuadView(quad, trackOneElement);
+                firstTrackElement.setFill(Color.BLUE);
+                quad.setFirstTrackElement(firstTrackElement);
+                addElementToQuadView(quad, firstTrackElement);
+
+                trackLabel = new Text();
+                trackLabel.setTextAlignment(TextAlignment.LEFT);
+                trackLabel.setWrappingWidth(40);
+                trackLabel.setX(50);
+                trackLabel.setY(20);
+                quad.setTrackLabel(trackLabel);
+                addElementToQuadView(quad,trackLabel);
                 break;
             case STQ2_2:
-                trackOneElement = new Polygon(
+                firstTrackElement = new Polygon(
                         55, 0,
                                 75 , 0,
                                 35, 80,
                                 15, 80,
                                 55, 0);
-                trackOneElement.setFill(Color.BLUE);
-                quad.setFirstTrackElement(trackOneElement);
-                addElementToQuadView(quad, trackOneElement);
+                firstTrackElement.setFill(Color.BLUE);
+                quad.setFirstTrackElement(firstTrackElement);
+                addElementToQuadView(quad, firstTrackElement);
+
+                trackLabel = new Text();
+                trackLabel.setTextAlignment(TextAlignment.RIGHT);
+                trackLabel.setWrappingWidth(40);
+                trackLabel.setX(0);
+                trackLabel.setY(20);
+                quad.setTrackLabel(trackLabel);
+                addElementToQuadView(quad,trackLabel);
+                break;
+
+            case STQ5_1:
+                firstTrackElement = new Polygon(
+                        0, 30,
+                        30, 30,
+                        55, 80,
+                        35, 80,
+                        20, 50,
+                        0, 50,
+                        30, 30,
+                        0, 30
+                        );
+                firstTrackElement.setFill(Color.BLUE);
+                quad.setFirstTrackElement(firstTrackElement);
+                addElementToQuadView(quad, firstTrackElement);
+                borderElement = new Polygon(
+                    30, 70,
+                            50, 70,
+                            55, 80,
+                            35, 80,
+                            30, 70
+                    );
+                borderElement.setFill(Color.WHITE);
+                borderElement.setVisible(false);
+                quad.setBorderElement(borderElement);
+                addElementToQuadView(quad, borderElement);
+                trackLabel = new Text();
+                trackLabel.setTextAlignment(TextAlignment.LEFT);
+                trackLabel.setWrappingWidth(80);
+                trackLabel.setX(0);
+                trackLabel.setY(10);
+                quad.setTrackLabel(trackLabel);
+                addElementToQuadView(quad,trackLabel);
                 break;
         }
 

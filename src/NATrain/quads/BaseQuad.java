@@ -1,5 +1,6 @@
 package NATrain.quads;
 
+import NATrain.NavigatorFxController;
 import NATrain.TrackRedactorFxController;
 import NATrain.controller.SwitchState;
 import NATrain.controller.TrackSectionState;
@@ -15,14 +16,11 @@ import java.util.Properties;
 
 public class BaseQuad extends AbstractQuad{
 
-
     protected QuadType quadType;
     protected TrackSection firstAssociatedTrack;
     protected TrackSection secondAssociatedTrack;
     protected Signal associatedSignal;
     protected Switch associatedSwitch;
-
-
 
     protected String id;
     protected int x;
@@ -36,6 +34,7 @@ public class BaseQuad extends AbstractQuad{
     protected Shape secondLampElement;
     protected Shape switchPlusElement;
     protected Shape switchMinusElement;
+    protected Shape borderElement;
     private Text trackLabel;
     private Text switchLabel;
     private Text signalLabel;
@@ -144,6 +143,7 @@ public class BaseQuad extends AbstractQuad{
         this.switchMinusElement = switchMinusElement;
     }
 
+
     public void setQuadView(Group quadView) {
         this.quadView = quadView;
     }
@@ -172,9 +172,17 @@ public class BaseQuad extends AbstractQuad{
         return showDescription;
     }
 
+    public Shape getBorderElement() {
+        return borderElement;
+    }
+
+    public void setBorderElement(Shape borderElement) {
+        this.borderElement = borderElement;
+    }
+
     @Override
     public void refresh() {
-        if (TrackRedactorFxController.isConstructorMode()) {
+        if (NavigatorFxController.constructorMode) {
             trackConfigured(firstAssociatedTrack, firstTrackElement);
             trackConfigured(secondAssociatedTrack, secondTrackElement);
             //TODO make switch and signal view refresh
