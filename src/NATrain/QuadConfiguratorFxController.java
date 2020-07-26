@@ -87,60 +87,64 @@ public class QuadConfiguratorFxController {
         });
 
         // *** second track choice box init
-        if (quadForConfig.getSecondAssociatedTrack() != null) {
-            secondTrackSectionChoiceBox.setValue(quadForConfig.getSecondAssociatedTrack().getId());
-        }
-        secondTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().keySet());
-        secondTrackSectionChoiceBox.getItems().add("none");
-        secondTrackSectionChoiceBox.setOnAction(event -> {
-            String choiceBoxValue = secondTrackSectionChoiceBox.getValue();
-            if (choiceBoxValue.equals("none")) {
-               quadForConfig.setSecondAssociatedTrack(null);
-            } else {
-               quadForConfig.setSecondAssociatedTrack(Model.getTrackSections().get(secondTrackSectionChoiceBox.getValue()));
+        if (quadForConfig.getSecondTrackElement() != null) {
+            if (quadForConfig.getSecondAssociatedTrack() != null) {
+                secondTrackSectionChoiceBox.setValue(quadForConfig.getSecondAssociatedTrack().getId());
             }
-            quadForConfig.refresh();
-        });
+            secondTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().keySet());
+            secondTrackSectionChoiceBox.getItems().add("none");
+            secondTrackSectionChoiceBox.setOnAction(event -> {
+                String choiceBoxValue = secondTrackSectionChoiceBox.getValue();
+                if (choiceBoxValue.equals("none")) {
+                    quadForConfig.setSecondAssociatedTrack(null);
+                } else {
+                    quadForConfig.setSecondAssociatedTrack(Model.getTrackSections().get(secondTrackSectionChoiceBox.getValue()));
+                }
+                quadForConfig.refresh();
+            });
+        } else
+            secondTrackSectionChoiceBox.setDisable(true);
 
         // *** signal choice box init
-        if (quadForConfig.getAssociatedSignal() != null) {
-            signalChoiceBox.setValue(quadForConfig.getAssociatedSignal().getId());
-        }
-        signalChoiceBox.getItems().addAll(Model.getSignals().keySet());
-        signalChoiceBox.getItems().add("none");
-        signalChoiceBox.setOnAction(event -> {
-            String choiceBoxValue = signalChoiceBox.getValue();
-            if (choiceBoxValue.equals("none")) {
-                if (quadForConfig.getSignalLabel() != null) {
+        if (quadForConfig.getFirstLampElement() != null) {
+            if (quadForConfig.getAssociatedSignal() != null) {
+                signalChoiceBox.setValue(quadForConfig.getAssociatedSignal().getId());
+            }
+            signalChoiceBox.getItems().addAll(Model.getSignals().keySet());
+            signalChoiceBox.getItems().add("none");
+            signalChoiceBox.setOnAction(event -> {
+                String choiceBoxValue = signalChoiceBox.getValue();
+                if (choiceBoxValue.equals("none")) {
                     quadForConfig.getSignalLabel().setText("");
-                }
-                quadForConfig.setAssociatedSignal(null);
-            } else {
-                quadForConfig.setAssociatedSignal(Model.getSignals().get(signalChoiceBox.getValue()));
-                if (quadForConfig.getSignalLabel() != null) {
+                    quadForConfig.setAssociatedSignal(null);
+                } else {
+                    quadForConfig.setAssociatedSignal(Model.getSignals().get(signalChoiceBox.getValue()));
                     quadForConfig.getSignalLabel().setText(quadForConfig.getAssociatedSignal().getId());
                 }
-            }
-            quadForConfig.refresh();
-        });
+                quadForConfig.refresh();
+            });
+        } else
+            switchChoiceBox.setDisable(true);
 
 
         // *** switch choice box init
-        if (quadForConfig.getAssociatedSwitch() != null) {
-            switchChoiceBox.setValue(quadForConfig.getAssociatedSwitch().getId());
-        }
-        switchChoiceBox.getItems().addAll(Model.getSwitches().keySet());
-        switchChoiceBox.getItems().add("none");
-        switchChoiceBox.setOnAction(event -> {
-            String choiceBoxValue = switchChoiceBox.getValue();
-            if (choiceBoxValue.equals("none")) {
-                quadForConfig.getSwitchLabel().setText("");
-                quadForConfig.setAssociatedSwitch(null);
-            } else {
-                quadForConfig.setAssociatedSwitch(Model.getSwitches().get(switchChoiceBox.getValue()));
+        if (quadForConfig.getSwitchPlusElement() != null && quadForConfig.getSwitchMinusElement() != null) {
+            if (quadForConfig.getAssociatedSwitch() != null) {
+                switchChoiceBox.setValue(quadForConfig.getAssociatedSwitch().getId());
             }
-            quadForConfig.refresh();
-        });
+            switchChoiceBox.getItems().addAll(Model.getSwitches().keySet());
+            switchChoiceBox.getItems().add("none");
+            switchChoiceBox.setOnAction(event -> {
+                String choiceBoxValue = switchChoiceBox.getValue();
+                if (choiceBoxValue.equals("none")) {
+                    quadForConfig.getSwitchLabel().setText("");
+                    quadForConfig.setAssociatedSwitch(null);
+                } else {
+                    quadForConfig.setAssociatedSwitch(Model.getSwitches().get(switchChoiceBox.getValue()));
+                }
+                quadForConfig.refresh();
+            });
+        } else switchChoiceBox.setDisable(true);
 
         ///*** show description init
         showDescriptionCheckBox.setSelected(quadForConfig.getShowDescription());
@@ -156,12 +160,13 @@ public class QuadConfiguratorFxController {
         });
 
         ///*** show track borders
-
-        trackSectionBorderCheckBox.setOnMouseClicked(event -> {
-            if (quadForConfig.getBorderElement() != null) {
-                quadForConfig.getBorderElement().setVisible(trackSectionBorderCheckBox.isSelected());
-            }
-        });
+        if (quadForConfig.getBorderElement() != null) {
+            trackSectionBorderCheckBox.setOnMouseClicked(event -> {
+                if (quadForConfig.getBorderElement() != null) {
+                    quadForConfig.getBorderElement().setVisible(trackSectionBorderCheckBox.isSelected());
+                }
+            });
+        } else trackSectionBorderCheckBox.setDisable(true);
 
     }
 
