@@ -3,7 +3,7 @@ package NATrain.trackSideObjects;
 import NATrain.controller.SwitchState;
 
 
-public class Switch extends TrackSideObject{
+public class Switch extends TrackSideObject {
 
     private SwitchState normalState = SwitchState.PLUS;
     private SwitchState switchState = SwitchState.UNDEFINED;
@@ -57,6 +57,18 @@ public class Switch extends TrackSideObject{
 
     public boolean isPared() {
         return pared;
+    }
+
+    public void changePosition() {
+        if (switchState == SwitchState.PLUS)
+            switchState = SwitchState.MINUS;
+        else if (switchState == SwitchState.MINUS)
+            switchState = SwitchState.PLUS;
+        if (pared) paredSwitch.changePosition();
+    }
+
+    public SwitchState getState() {
+        return switchState;
     }
 
 }
