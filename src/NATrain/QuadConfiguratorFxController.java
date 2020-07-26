@@ -124,7 +124,7 @@ public class QuadConfiguratorFxController {
                 quadForConfig.refresh();
             });
         } else
-            switchChoiceBox.setDisable(true);
+            signalChoiceBox.setDisable(true);
 
 
         // *** switch choice box init
