@@ -27,15 +27,17 @@ public class QuadPainter {
 
     public static void addGridLines(Group quadView) {
        //vertical lines
-        Stream.iterate(0, i -> i + 10).limit(9).forEach(i -> {
+        Stream.iterate(0, i -> i + 10).limit(10).forEach(i -> {
             Line line = new Line(i, 0, i, 80);
-            line.setStroke(Color.GRAY);
+            line.setStroke(Color.LIGHTGRAY);
+            line.setStrokeType(StrokeType.OUTSIDE);
             quadView.getChildren().add(line);
         });
         //horizontal lines
-        Stream.iterate(0, i -> i + 10).limit(8).forEach(i -> {
+        Stream.iterate(0, i -> i + 10).limit(9).forEach(i -> {
             Line line = new Line(0, i, 90, i);
-            line.setStroke(Color.GRAY);
+            line.setStroke(Color.LIGHTGRAY);
+            line.setStrokeType(StrokeType.OUTSIDE);
             quadView.getChildren().add(line);
         });
     }

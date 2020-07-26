@@ -158,6 +158,8 @@ public class TrackRedactorFxController {
         //*** grid pane panel initializing ***//
 
         gridPane = new GridPane();
+        gridPane.setCache(false);
+        gridPane.setPadding(new Insets(1.0));
         int raws = Model.getMainGrid().length;
         int columns = Model.getMainGrid()[0].length;
 
@@ -165,7 +167,7 @@ public class TrackRedactorFxController {
         for (int i = 0; i < raws; i++) {
             for (int j = 0; j < columns; j++) {
                 Pane quadPane = new Pane();
-                quadPane.setPadding(new Insets(5));
+                //quadPane.setPadding(new Insets(5));
                 Group quadView = Model.getMainGrid()[j][i].getView();
                 quadPane.getChildren().add(quadView);
                 configQuadView(quadView, i, j);
@@ -251,7 +253,7 @@ public class TrackRedactorFxController {
         Quad newQuad = QuadFactory.createQuad(x, y, selectedQuadType);
         Model.getMainGrid()[y][x] = newQuad;
         Pane quadPane = new Pane();
-        quadPane.setPadding(new Insets(5));
+      //  quadPane.setPadding(new Insets(5));
         quadPane.getChildren().add(newQuad.getView());
         configQuadView(newQuad.getView(), x, y);
         gridPane.add(quadPane, x, y);
