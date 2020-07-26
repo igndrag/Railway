@@ -161,7 +161,6 @@ public class QuadPainter {
                 secondTrackElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
                 quad.setSecondTrackElement(secondTrackElement);
                 addElementToQuadView(quad, secondTrackElement);
-
                 break;
 
             case SIQ1_1:
