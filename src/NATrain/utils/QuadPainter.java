@@ -179,7 +179,7 @@ public class QuadPainter {
                 addElementToQuadView(quad,signalLabel);
                 break;
 
-            case SWQ1_1:Q1_1:
+            case SWQ1_1:
                 firstTrackElement = new Polygon(
                         0, 30,
                                 70, 30,
@@ -194,10 +194,45 @@ public class QuadPainter {
                 quad.setFirstTrackElement(firstTrackElement);
                 addElementToQuadView(quad, firstTrackElement);
 
+                switchPlusElement = new Polygon(
+                        60, 30,
+                                70, 30,
+                                80, 50,
+                                70, 50,
+                                60, 30
+                );
+                switchPlusElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
+                quad.setSwitchPlusElement(switchPlusElement);
+                addElementToQuadView(quad, switchPlusElement);
+
+                switchMinusElement = new Polygon(
+                        65, 20,
+                               85, 20,
+                                90, 30,
+                                70, 30,
+                                65,20
+                );
+                switchMinusElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
+                quad.setSwitchMinusElement(switchMinusElement);
+                addElementToQuadView(quad, switchMinusElement);
+
+                borderElement = new Polygon(
+                        55, 0,
+                                75, 0,
+                                80, 10,
+                                60, 10,
+                                55, 0
+                );
+
+                borderElement.setFill(BaseQuad.DEFAULT_BACKGROUND_COLOR);
+                borderElement.setVisible(false);
+                quad.setBorderElement(borderElement);
+                addElementToQuadView(quad, borderElement);
+
                 switchLabel = new Text();
                 switchLabel.setTextAlignment(TextAlignment.RIGHT);
                 switchLabel.setWrappingWidth(50);
-                switchLabel.setX(50);
+                switchLabel.setX(0);
                 switchLabel.setY(20);
                 quad.setSwitchLabel(switchLabel);
                 addElementToQuadView(quad, switchLabel);

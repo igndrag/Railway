@@ -213,7 +213,7 @@ public class BaseQuad extends AbstractQuad{
             trackConfigured(firstAssociatedTrack, firstTrackElement);
             trackConfigured(secondAssociatedTrack, secondTrackElement);
             signalConfigured(associatedSignal, firstLampElement, secondLampElement);
-            //TODO make switch and signal view refresh
+            switchConfigured(associatedSwitch, switchPlusElement, switchMinusElement);
         } else {
             trackStateRefresh(firstAssociatedTrack, firstTrackElement);
             trackStateRefresh(secondAssociatedTrack, secondTrackElement);
@@ -222,7 +222,6 @@ public class BaseQuad extends AbstractQuad{
         }
 
     }
-
 
     @Override
     public String getId() {
@@ -252,13 +251,13 @@ public class BaseQuad extends AbstractQuad{
         if (associatedSwitch != null) {
             if (associatedSwitch.getSwitchState().equals(SwitchState.PLUS)) {
                 switchPlusElement.setFill(firstTrackElement.getFill());
-                switchMinusElement.setFill(background.getFill());
+                switchMinusElement.setFill(BaseQuad.DEFAULT_BACKGROUND_COLOR);
             } else if (associatedSwitch.getSwitchState().equals(SwitchState.MINUS)) {
-                switchPlusElement.setFill(background.getFill());
+                switchPlusElement.setFill(BaseQuad.DEFAULT_BACKGROUND_COLOR);
                 switchMinusElement.setFill(firstTrackElement.getFill());
             } else if (associatedSwitch.getSwitchState().equals(SwitchState.UNDEFINED)) {
-                switchPlusElement.setFill(background.getFill());
-                switchMinusElement.setFill(background.getFill());
+                switchPlusElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
+                switchMinusElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
             }
         }
     }
@@ -305,6 +304,26 @@ public class BaseQuad extends AbstractQuad{
                 secondLampElement.setFill(UNDEFINED_ELEMENT_COLOR);
         }
     }
+
+    private void switchConfigured(Switch associatedSwitch, Shape switchPlusElement, Shape switchMinusElement) {
+        if (associatedSwitch != null) {
+            if (associatedSwitch.getNormalState() == SwitchState.PLUS) {
+                switchPlusElement.setFill(CONFIGURED_ELEMENT_COLOR);
+                switchMinusElement.setFill(DEFAULT_BACKGROUND_COLOR);
+            } else {
+                switchPlusElement.setFill(DEFAULT_BACKGROUND_COLOR);
+                switchMinusElement.setFill(CONFIGURED_ELEMENT_COLOR);
+            }
+        } else {
+            if (switchPlusElement != null)
+                switchPlusElement.setFill(UNDEFINED_ELEMENT_COLOR);
+            if (switchMinusElement != null)
+                switchMinusElement.setFill(UNDEFINED_ELEMENT_COLOR);
+        }
+
+
+    }
+
 
     @Override
     public boolean isEmpty() {

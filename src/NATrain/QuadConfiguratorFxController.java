@@ -141,6 +141,7 @@ public class QuadConfiguratorFxController {
                     quadForConfig.setAssociatedSwitch(null);
                 } else {
                     quadForConfig.setAssociatedSwitch(Model.getSwitches().get(switchChoiceBox.getValue()));
+                    quadForConfig.getSwitchLabel().setText(quadForConfig.getAssociatedSwitch().getId());
                 }
                 quadForConfig.refresh();
             });
