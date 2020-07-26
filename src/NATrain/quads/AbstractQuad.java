@@ -30,6 +30,7 @@ public abstract class AbstractQuad implements Quad{
         quadView = new Group(background);
         if (NavigatorFxController.constructorMode)
             quadView.getChildren().add(QuadPainter.getQuadBoarder());
+            QuadPainter.addGridLines(quadView);
         this.x = x;
         this.y = y;
     }
