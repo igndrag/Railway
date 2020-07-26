@@ -3,10 +3,12 @@ package NATrain;
 import NATrain.quads.QuadType;
 import NATrain.utils.ModelMock;
 import NATrain.utils.QuadFactory;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -16,6 +18,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import NATrain.model.Model;
 import NATrain.quads.Quad;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -30,6 +34,9 @@ public class TrackRedactorFxController {
     private static Model model;
     private static Quad selectedQuad;
     private static QuadType selectedQuadType;
+
+    @FXML
+    public TextFlow textFlowPanel;
 
     @FXML
     private TitledPane CustomElementIcons;
@@ -62,7 +69,7 @@ public class TrackRedactorFxController {
     private TitledPane doubleSignalIcons;
 
     @FXML
-    private TitledPane simpleTrackSectionIcons;
+    private ScrollPane simpleTrackSectionIcons;
 
     @FXML
     private Button redButton;
@@ -120,11 +127,12 @@ public class TrackRedactorFxController {
                     button.setToggleGroup(toggleGroup);
                     button.setOnAction(event -> {
                         if (button.isSelected()) {
-                            System.out.println("Ready for choose quad position. " + quadType + " selected.");
+                            log("Ready for choose quad position. " + quadType + " selected.");
+                            System.out.println(quadType + " selected.");
                             selectedQuadType = quadType;
                         } else {
                             selectedQuadType = null;
-                            System.out.println(quadType + " unselected ");
+                            log(quadType + " unselected");
                         }
                     });
                     button.setGraphic(QuadFactory.createQuad(0,0, quadType).getView());
@@ -148,6 +156,7 @@ public class TrackRedactorFxController {
 
                 }
         );
+        STQVBox.setPadding(new Insets(0,0,0,15));
         simpleTrackSectionIcons.setContent(STQVBox);
         doubleTrackSectionIcons.setContent(DTQVBox);
         switchIcons.setContent(SWQVBox);
@@ -159,7 +168,6 @@ public class TrackRedactorFxController {
 
         gridPane = new GridPane();
         gridPane.setCache(false);
-        gridPane.setPadding(new Insets(1.0));
         int raws = Model.getMainGrid().length;
         int columns = Model.getMainGrid()[0].length;
 
@@ -175,6 +183,10 @@ public class TrackRedactorFxController {
             }
         }
         workArea.setContent(gridPane);
+
+
+        log("Track redactor initialized.");
+        log("Choice quad from left panel.");
     }
 
     @FXML
@@ -192,15 +204,12 @@ public class TrackRedactorFxController {
 
     @FXML
     public void redButtonClicked(ActionEvent actionEvent) {
-
+        textFlowPanel.getChildren().clear();
+        log("Red button clicked");
     }
 
     @FXML
     public void greenButtonClicked(ActionEvent actionEvent) {
-    }
-
-    public void onView(int x, int y) {
-        Model.getMainGrid()[y][x].refresh();
     }
 
     private static void selectQuad(int x, int y) {
@@ -257,6 +266,16 @@ public class TrackRedactorFxController {
         quadPane.getChildren().add(newQuad.getView());
         configQuadView(newQuad.getView(), x, y);
         gridPane.add(quadPane, x, y);
+    }
+
+    private void log(String message) {
+        //https://stackoverflow.com/questions/40822806/add-elements-on-textflow-using-external-thread-in-javafx
+        Platform.runLater(() -> {
+            if (textFlowPanel.getChildren().size() > 4) {
+                textFlowPanel.getChildren().remove(0);
+            }
+            textFlowPanel.getChildren().add(new Text(message + System.lineSeparator()));
+        });
     }
 }
 
