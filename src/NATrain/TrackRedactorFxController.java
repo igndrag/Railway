@@ -235,7 +235,7 @@ public class TrackRedactorFxController {
         quadConfigurator.show();
     }
 
-    protected static void configQuadView(Node quadView, int x, int y) {
+    protected void configQuadView(Node quadView, int x, int y) {
         quadView.setOnMouseClicked(event -> {
             System.out.println(event.getClickCount());
 
@@ -258,7 +258,7 @@ public class TrackRedactorFxController {
         });
     }
 
-    public static void putQuadOnGrid(int x, int y, QuadType quadType) {
+    public void putQuadOnGrid(int x, int y, QuadType quadType) {
         Quad newQuad = QuadFactory.createQuad(x, y, selectedQuadType);
         Model.getMainGrid()[y][x] = newQuad;
         Pane quadPane = new Pane();
@@ -266,6 +266,7 @@ public class TrackRedactorFxController {
         quadPane.getChildren().add(newQuad.getView());
         configQuadView(newQuad.getView(), x, y);
         gridPane.add(quadPane, x, y);
+        log(String.format("%s quad type located to x = %d, y = %d position", selectedQuadType.toString(), x, y));
     }
 
     private void log(String message) {
