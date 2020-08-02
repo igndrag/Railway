@@ -9,7 +9,5 @@ public interface Quad {
     void refresh();
     void select();
     void unselect();
-    String getId();
     Group getView();
-    Properties getProperties();
 }

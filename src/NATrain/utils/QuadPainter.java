@@ -66,7 +66,7 @@ public class QuadPainter {
                 trackLabel.setWrappingWidth(90);
                 trackLabel.setX(0);
                 trackLabel.setY(25);
-                quad.setTrackLabel(trackLabel);
+             //   quad.setTrackLabel(trackLabel);
                 addElementToQuadView(quad,trackLabel);
                 break;
             case STQ1_2:
@@ -79,7 +79,7 @@ public class QuadPainter {
                 trackLabel.setWrappingWidth(30);
                 trackLabel.setX(60);
                 trackLabel.setY(40);
-                quad.setTrackLabel(trackLabel);
+//                quad.setTrackLabel(trackLabel);
                 addElementToQuadView(quad,trackLabel);
                 break;
             case STQ2_1:
@@ -98,7 +98,7 @@ public class QuadPainter {
                 trackLabel.setWrappingWidth(40);
                 trackLabel.setX(50);
                 trackLabel.setY(20);
-                quad.setTrackLabel(trackLabel);
+//                quad.setTrackLabel(trackLabel);
                 addElementToQuadView(quad,trackLabel);
                 break;
             case STQ2_2:
@@ -117,7 +117,7 @@ public class QuadPainter {
                 trackLabel.setWrappingWidth(40);
                 trackLabel.setX(0);
                 trackLabel.setY(20);
-                quad.setTrackLabel(trackLabel);
+//                quad.setTrackLabel(trackLabel);
                 addElementToQuadView(quad,trackLabel);
                 break;
 
@@ -158,7 +158,7 @@ public class QuadPainter {
                 trackLabel.setWrappingWidth(80);
                 trackLabel.setX(10);
                 trackLabel.setY(20);
-                quad.setTrackLabel(trackLabel);
+//                quad.setTrackLabel(trackLabel);
                 addElementToQuadView(quad,trackLabel);
                 break;
 

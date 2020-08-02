@@ -8,7 +8,6 @@ import java.util.Properties;
 
 public class EmptyQuad extends AbstractQuad {
 
-
     public EmptyQuad(int x, int y) {
         super(x, y);
         Text text1 = new Text();
@@ -18,7 +17,6 @@ public class EmptyQuad extends AbstractQuad {
         text1.setText("x = " + x + " y = " + y);
         quadView.getChildren().add(text1);
     }
-
 
     @Override
     public Group getView() {
@@ -31,18 +29,5 @@ public class EmptyQuad extends AbstractQuad {
     }
 
     @Override
-    public void refresh() {
-
-    }
-
-
-    @Override
-    public String getId() {
-        return null;
-    }
-
-    @Override
-    public Properties getProperties() {
-        return null;
-    }
+    public void refresh() { }
 }

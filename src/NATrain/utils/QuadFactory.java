@@ -22,13 +22,14 @@ public class QuadFactory {
     }
 
     public static BaseQuad createQuad (int x, int y, QuadType quadType) {
+        if (quadType == QuadType.STQ1_1)
+            return SimpleTrackQuadFactory.createQuad(x, y, quadType);
         BaseQuad resultQuad = new BaseQuad(x, y);
         resultQuad.setQuadType(quadType);
         String id = quadType.toString() + counter;
         resultQuad.setId(id);
         counter++;
         QuadPainter.paintQuadViewForType(resultQuad, quadType);
-
         return resultQuad;
     }
 

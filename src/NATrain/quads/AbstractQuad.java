@@ -45,7 +45,4 @@ public abstract class AbstractQuad implements Quad{
     public void unselect() {
         background.setFill(DEFAULT_BACKGROUND_COLOR);
     }
-
-
-
 }

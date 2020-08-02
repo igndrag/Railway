@@ -1,9 +1,11 @@
 package NATrain;
 
+import NATrain.quads.BaseQuad;
 import NATrain.quads.QuadType;
 import NATrain.utils.ModelMock;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,10 +44,10 @@ public class TrackRedactorFxController {
     private TitledPane CustomElementIcons;
 
     @FXML
-    private TableColumn propNameCol;
+    private TableColumn<BaseQuad, String> propNameCol;
 
     @FXML
-    private TableColumn propValueCol;
+    private TableColumn<BaseQuad, String> propValueCol;
 
     @FXML
     private TextField columnsNumber;
@@ -54,7 +56,7 @@ public class TrackRedactorFxController {
     private TextField rawsNumber;
 
     @FXML
-    private TableView propertyTable;
+    private TableView<BaseQuad> propertyTable;
 
     @FXML
     private TitledPane doubleTrackSectionIcons;
@@ -246,6 +248,7 @@ public class TrackRedactorFxController {
                     Pane parent = (Pane)quadView.getParent();
                     parent.getChildren().clear();
                 }
+
             }
 
             if (event.getClickCount() == 2) {

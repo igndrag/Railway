@@ -1,7 +1,6 @@
 package NATrain.quads;
 
 import NATrain.NavigatorFxController;
-import NATrain.TrackRedactorFxController;
 import NATrain.controller.SwitchState;
 import NATrain.controller.TrackSectionState;
 import javafx.scene.Group;
@@ -10,11 +9,12 @@ import javafx.scene.text.Text;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
+import javafx.util.Pair;
 
 import java.util.Properties;
 
 
-public class BaseQuad extends AbstractQuad{
+public class BaseQuad extends AbstractQuad {
 
     protected QuadType quadType;
     protected TrackSection firstAssociatedTrack;
@@ -26,7 +26,6 @@ public class BaseQuad extends AbstractQuad{
     protected int x;
     protected int y;
 
-    protected Text description;
     protected Boolean showDescription = true;
     protected Shape firstTrackElement;
     protected Shape secondTrackElement;
@@ -36,9 +35,13 @@ public class BaseQuad extends AbstractQuad{
     protected Shape switchMinusElement;
     protected Shape borderElement;
     protected Shape isolatorElement;
-    private Text trackLabel;
-    private Text switchLabel;
-    private Text signalLabel;
+    protected Text switchLabel;
+    protected Text signalLabel;
+    protected Text trackLabel;
+
+    public Text getTrackLabel() {
+        return trackLabel;
+    }
 
     public Text getSwitchLabel() {
         return switchLabel;
@@ -56,20 +59,8 @@ public class BaseQuad extends AbstractQuad{
         this.signalLabel = signalLabel;
     }
 
-    public Text getTrackLabel() {
-        return trackLabel;
-    }
-
-    public void setTrackLabel(Text trackLabel) {
-        this.trackLabel = trackLabel;
-    }
-
     public BaseQuad(int x, int y) {
         super(x, y);
-    }
-
-    public void setDescription(String description) {
-        this.description.setText(description);
     }
 
     public int getX() {
@@ -110,10 +101,6 @@ public class BaseQuad extends AbstractQuad{
 
     public void setAssociatedSwitch(Switch associatedSwitch) {
         this.associatedSwitch = associatedSwitch;
-    }
-
-    public void setDescription(Text description) {
-        this.description = description;
     }
 
     public void setShowDescription(Boolean showDescription) {
@@ -216,7 +203,7 @@ public class BaseQuad extends AbstractQuad{
         this.isolatorElement = isolatorElement;
     }
 
-    @Override
+
     public void refresh() {
         if (NavigatorFxController.constructorMode) {
             trackConfigured(firstAssociatedTrack, firstTrackElement);
@@ -229,15 +216,15 @@ public class BaseQuad extends AbstractQuad{
             switchStateRefresh(associatedSwitch, switchPlusElement, switchMinusElement);
             //TODO make signal view refresh
         }
-
     }
 
-    @Override
+
+
     public String getId() {
         return id;
     }
 
-    private void trackStateRefresh(TrackSection trackSection, Shape trackElement) {
+    protected void trackStateRefresh(TrackSection trackSection, Shape trackElement) {
         if (trackSection != null) {
             if (trackSection.getVacancyState().equals(TrackSectionState.FREE)) {
                 if (trackSection.isInterlocked())
@@ -256,7 +243,7 @@ public class BaseQuad extends AbstractQuad{
         return quadView;
     }
 
-    private void switchStateRefresh(Switch associatedSwitch, Shape switchPlusElement, Shape switchMinusElement) {
+    protected void switchStateRefresh(Switch associatedSwitch, Shape switchPlusElement, Shape switchMinusElement) {
         if (associatedSwitch != null) {
             if (associatedSwitch.getSwitchState().equals(SwitchState.PLUS)) {
                 switchPlusElement.setFill(firstTrackElement.getFill());
@@ -271,7 +258,6 @@ public class BaseQuad extends AbstractQuad{
         }
     }
 
-    @Override
     public Properties getProperties() {
         Properties properties = new Properties();
         properties.setProperty("Type", quadType.toString());
@@ -283,15 +269,17 @@ public class BaseQuad extends AbstractQuad{
             properties.setProperty("Switch", associatedSwitch.getId());
         if (associatedSignal != null)
             properties.setProperty("Signal", associatedSignal.getId());
+        Pair<String, String> prop = new Pair<>("Type", quadType.toString());
         return properties;
     }
+
 
     private void signalStateRefresh(Signal signal, Shape signalLampOneElement, Shape signalLampTwoElement) {
         //TODO
         //dont forget to realize blink signal!
     }
 
-    private void trackConfigured(TrackSection trackSection, Shape trackElement) {
+    protected void trackConfigured(TrackSection trackSection, Shape trackElement) {
         if (trackElement != null) {
             if (trackSection != null)
                 trackElement.setFill(CONFIGURED_ELEMENT_COLOR);
@@ -300,7 +288,7 @@ public class BaseQuad extends AbstractQuad{
         }
     }
 
-    private void signalConfigured(Signal associatedSignal, Shape firstLampElement, Shape secondLampElement) {
+    protected void signalConfigured(Signal associatedSignal, Shape firstLampElement, Shape secondLampElement) {
         if (associatedSignal != null) {
             if (firstLampElement != null)
                 firstLampElement.setFill(CONFIGURED_ELEMENT_COLOR);
@@ -314,7 +302,7 @@ public class BaseQuad extends AbstractQuad{
         }
     }
 
-    private void switchConfigured(Switch associatedSwitch, Shape switchPlusElement, Shape switchMinusElement) {
+    protected void switchConfigured(Switch associatedSwitch, Shape switchPlusElement, Shape switchMinusElement) {
         if (associatedSwitch != null) {
             if (associatedSwitch.getNormalState() == SwitchState.PLUS) {
                 switchPlusElement.setFill(CONFIGURED_ELEMENT_COLOR);
@@ -329,23 +317,11 @@ public class BaseQuad extends AbstractQuad{
             if (switchMinusElement != null)
                 switchMinusElement.setFill(UNDEFINED_ELEMENT_COLOR);
         }
-
-
     }
-
 
     @Override
     public boolean isEmpty() {
         return false;
     }
-
-    public void showDescription() {
-        description.setVisible(true);
-    }
-
-    public void hideDescription() {
-        description.setVisible(false);
-    }
-
 
 }
