@@ -2,6 +2,7 @@ package NATrain.quads;
 
 import NATrain.NavigatorFxController;
 import NATrain.trackSideObjects.ControlAction;
+import NATrain.trackSideObjects.TrackSideObject;
 import NATrain.utils.QuadPainter;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -9,9 +10,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractQuad implements Quad, Selectable{
+public abstract class AbstractQuad implements Quad{
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
     public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final Color CONFIGURED_ELEMENT_COLOR = Color.VIOLET;
@@ -29,17 +31,35 @@ public abstract class AbstractQuad implements Quad, Selectable{
     protected Shape background;
     protected Group quadView;
 
-    private List<ControlAction> availableActions = new ArrayList<>();
+    private List<ControlAction> availableActions;
 
     public AbstractQuad(int x, int y) {
         background = new Rectangle(90, 80);
         background.setFill(DEFAULT_BACKGROUND_COLOR);
         quadView = new Group(background);
         if (NavigatorFxController.constructorMode)
-          //  quadView.getChildren().add(QuadPainter.getQuadBoarder());
             QuadPainter.addGridLines(quadView);
         this.x = x;
         this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    protected void addToQuadView(Shape shape) {
+        quadView.getChildren().add(shape);
+    }
+
+    @Override
+    public List<ControlAction> getAvailableActions() {
+        if (availableActions == null)
+            return Collections.emptyList();
+        return availableActions;
     }
 
     @Override
@@ -50,5 +70,10 @@ public abstract class AbstractQuad implements Quad, Selectable{
     @Override
     public void unselect() {
         background.setFill(DEFAULT_BACKGROUND_COLOR);
+    }
+
+    @Override
+    public Group getView() {
+        return quadView;
     }
 }

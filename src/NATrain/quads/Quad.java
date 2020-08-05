@@ -9,6 +9,8 @@ import java.util.Properties;
 public interface Quad {
     boolean isEmpty();
     void refresh();
+    void select();
+    void unselect();
     Group getView();
     List<ControlAction> getAvailableActions();
 

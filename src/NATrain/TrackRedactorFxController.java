@@ -107,7 +107,6 @@ public class TrackRedactorFxController {
         return workArea;
     }
 
-
     public static void changeGridSize(int x, int y) {
 
     }

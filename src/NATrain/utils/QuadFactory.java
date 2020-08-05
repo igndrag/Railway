@@ -1,7 +1,12 @@
 package NATrain.utils;
 
+import NATrain.quads.DTQ.DTQ1_1;
 import NATrain.quads.QuadType;
 import NATrain.quads.BaseQuad;
+import NATrain.quads.STQ.STQ1_1;
+import NATrain.quads.STQ.STQ1_2;
+import NATrain.quads.STQ.STQ2_1;
+import NATrain.quads.STQ.STQ2_2;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -22,8 +27,18 @@ public class QuadFactory {
     }
 
     public static BaseQuad createQuad (int x, int y, QuadType quadType) {
-        if (quadType == QuadType.STQ1_1)
-            return SimpleTrackQuadFactory.createQuad(x, y, quadType);
+       switch (quadType) {
+           case STQ1_1:
+               return new STQ1_1(x, y);
+           case STQ1_2:
+               return new STQ1_2(x, y);
+           case STQ2_1:
+               return new STQ2_1(x, y);
+           case STQ2_2:
+               return new STQ2_2(x, y);
+           case DTQ1_1:
+               return new DTQ1_1(x, y);
+       }
         BaseQuad resultQuad = new BaseQuad(x, y);
         resultQuad.setQuadType(quadType);
         String id = quadType.toString() + counter;
