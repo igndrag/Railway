@@ -22,10 +22,6 @@ public class BaseQuad extends AbstractQuad {
     protected Signal associatedSignal;
     protected Switch associatedSwitch;
 
-    protected String id;
-    protected int x;
-    protected int y;
-
     protected Boolean showDescription = true;
     protected Shape firstTrackElement;
     protected Shape secondTrackElement;

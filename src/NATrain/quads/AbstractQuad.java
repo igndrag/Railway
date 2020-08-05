@@ -1,13 +1,17 @@
 package NATrain.quads;
 
 import NATrain.NavigatorFxController;
+import NATrain.trackSideObjects.ControlAction;
 import NATrain.utils.QuadPainter;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public abstract class AbstractQuad implements Quad{
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class AbstractQuad implements Quad, Selectable{
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
     public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final Color CONFIGURED_ELEMENT_COLOR = Color.VIOLET;
@@ -24,6 +28,8 @@ public abstract class AbstractQuad implements Quad{
 
     protected Shape background;
     protected Group quadView;
+
+    private List<ControlAction> availableActions = new ArrayList<>();
 
     public AbstractQuad(int x, int y) {
         background = new Rectangle(90, 80);
