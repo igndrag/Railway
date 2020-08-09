@@ -6,8 +6,7 @@ import NATrain.controller.SwitchState;
 public class Switch extends TrackSideObject {
 
     private SwitchState normalState = SwitchState.PLUS;
-    private SwitchState switchState = SwitchState.UNDEFINED;
-    private TrackSection trackSection;
+    transient private SwitchState switchState = SwitchState.UNDEFINED;
     private Switch paredSwitch;
     private boolean pared = false;
     private boolean interlocked = false;
@@ -25,14 +24,6 @@ public class Switch extends TrackSideObject {
     public void deleteParedSwitch(Switch paredSwitch) {
         pared = false;
         this.paredSwitch = null;
-    }
-
-    public TrackSection getTrackSection() {
-        return trackSection;
-    }
-
-    public void setTrackSection(TrackSection trackSection) {
-        this.trackSection = trackSection;
     }
 
     public Switch getParedSwitch() {

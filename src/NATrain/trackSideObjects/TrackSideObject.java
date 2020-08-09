@@ -1,10 +1,11 @@
 package NATrain.trackSideObjects;
 
-import java.util.Comparator;
+import NATrain.quads.Quad;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class TrackSideObject {
-
-    public static Comparator<TrackSideObject> idComparator = Comparator.comparing(TrackSideObject::getId);
 
     public TrackSideObject(String id) {
         this.id = id;
@@ -19,4 +20,5 @@ public abstract class TrackSideObject {
     public void setId(String id) {
         this.id = id;
     }
+
 }

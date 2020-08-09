@@ -8,7 +8,7 @@ import javafx.scene.text.Text;
 
 public abstract class SimpleTrackQuad extends BaseQuad implements Quad, Paintable, Configurable, FirstTrackConfigurable {
 
-    private TrackSection firstAssociatedTrack;
+    protected TrackSection firstAssociatedTrack;
     protected Shape firstTrackElement;
     protected Text trackLabel;
     protected Shape borderElement;
@@ -16,6 +16,7 @@ public abstract class SimpleTrackQuad extends BaseQuad implements Quad, Paintabl
 
     public SimpleTrackQuad(int x, int y) {
         super(x, y);
+        paintView();
     }
 
     @Override
@@ -32,7 +33,10 @@ public abstract class SimpleTrackQuad extends BaseQuad implements Quad, Paintabl
                     firstTrackElement.setFill(UNDEFINED_ELEMENT_COLOR);
                     break;
                 case FREE:
-                    firstTrackElement.setFill(FREE_ELEMENT_COLOR);
+                    if (firstAssociatedTrack.isInterlocked())
+                        firstTrackElement.setFill(INTERLOCKED_ELEMENT_COLOR);
+                    else
+                        firstTrackElement.setFill(FREE_ELEMENT_COLOR);
                     break;
                 case OCCUPIED:
                     firstTrackElement.setFill(OCCUPIED_ELEMENT_COLOR);

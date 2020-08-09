@@ -29,4 +29,9 @@ public abstract class DoubleTrackQuad extends SimpleTrackQuad implements FirstTr
     public void setSecondAssociatedTrack(TrackSection trackSection) {
         this.secondAssociatedTrack = trackSection;
     }
+
+    @Override
+    public void showDescription(boolean show) {
+        //show nothing
+    }
 }

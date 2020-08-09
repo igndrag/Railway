@@ -10,7 +10,6 @@ public class STQ1_1 extends SimpleTrackQuad {
 
     public STQ1_1(int x, int y) {
         super(x, y);
-        paintView();
     }
 
     @Override

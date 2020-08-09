@@ -22,7 +22,8 @@ public abstract class AbstractQuad implements Quad{
     public static final Color UNDEFINED_ELEMENT_COLOR = Color.BLUE;
     public static final Color INTERLOCKED_ELEMENT_COLOR = Color.YELLOW;
     public static final Color ISOLATOR_ELEMENT_COLOR = Color.BROWN;
-    public static Color BLINKER = Color.YELLOW;
+    public static Color YELLOW_BLINKER = Color.YELLOW;
+    public static Color WHITE_BLINKER = Color.WHITE;
 
     protected String id;
     protected int x;
@@ -49,6 +50,10 @@ public abstract class AbstractQuad implements Quad{
 
     public int getY() {
         return y;
+    }
+
+    public Shape getBackground() {
+        return background;
     }
 
     protected void addToQuadView(Shape shape) {
