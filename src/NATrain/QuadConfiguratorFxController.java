@@ -3,6 +3,10 @@ package NATrain;
 import NATrain.model.Model;
 import NATrain.quads.AbstractQuad;
 import NATrain.quads.BaseQuad;
+import NATrain.quads.Quad;
+import NATrain.quads.configurableInterfaces.FirstTrackConfigurable;
+import NATrain.quads.configurableInterfaces.SecondTrackConfigurable;
+import NATrain.trackSideObjects.TrackSection;
 import NATrain.utils.QuadFactory;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -44,7 +48,7 @@ public class QuadConfiguratorFxController {
     private Pane quadViewPane;
     private Group quadView;
 
-    private BaseQuad quadForConfig;
+    private Quad quadForConfig;
     private Stage stage;
     private Pane parent;
     private EventHandler<? super MouseEvent> eventHandler;
@@ -55,7 +59,7 @@ public class QuadConfiguratorFxController {
         quadForConfig = (BaseQuad) Model.getMainGrid()[y][x];
         quadView = quadForConfig.getView();
         parent = (Pane) quadView.getParent();
-        quadForConfig.getBackground().setFill(AbstractQuad.DEFAULT_BACKGROUND_COLOR);
+        quadForConfig.unselect();
         parent.getChildren().clear();
         parent.getChildren().add(QuadFactory.redactorModeQuadView);
         quadViewPane.getChildren().add(quadView);
@@ -65,29 +69,27 @@ public class QuadConfiguratorFxController {
         quadView.setOnMouseClicked(null);
 
         // *** first track choice box init
-        if (quadForConfig.getFirstAssociatedTrack() != null) {
-            firstTrackSectionChoiceBox.setValue(quadForConfig.getFirstAssociatedTrack().getId());
+        if (quadForConfig instanceof FirstTrackConfigurable) {
+            FirstTrackConfigurable firstTrackConfigurable = (FirstTrackConfigurable) quadForConfig;
+            firstTrackSectionChoiceBox.setValue(firstTrackConfigurable.getFirstAssociatedTrack().getId());
+            firstTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().keySet());
+            firstTrackSectionChoiceBox.getItems().add("none");
+            firstTrackSectionChoiceBox.setOnAction(event -> {
+                String choiceBoxValue = firstTrackSectionChoiceBox.getValue();
+                if (choiceBoxValue.equals("none")) {
+                    firstTrackConfigurable.setFirstAssociatedTrack(TrackSection.EMPTY_TRACK_SECTION);
+                } else {
+                    firstTrackConfigurable.setFirstAssociatedTrack(Model.getTrackSections().get(firstTrackSectionChoiceBox.getValue()));
+                }
+                quadForConfig.refresh();
+            });
+        } else {
+            firstTrackSectionChoiceBox.setDisable(true);
         }
-        firstTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().keySet());
-        firstTrackSectionChoiceBox.getItems().add("none");
-        firstTrackSectionChoiceBox.setOnAction(event -> {
-            String choiceBoxValue = firstTrackSectionChoiceBox.getValue();
-            if (choiceBoxValue.equals("none")) {
-                if (quadForConfig.getTrackLabel() != null) {
-                    quadForConfig.getTrackLabel().setText("");
-                }
-                quadForConfig.setFirstAssociatedTrack(null);
-            } else {
-                quadForConfig.setFirstAssociatedTrack(Model.getTrackSections().get(firstTrackSectionChoiceBox.getValue()));
-                if (quadForConfig.getTrackLabel() != null) {
-                    quadForConfig.getTrackLabel().setText(quadForConfig.getFirstAssociatedTrack().getId());
-                }
-            }
-            quadForConfig.refresh();
-        });
-
+       /*
         // *** second track choice box init
-        if (quadForConfig.getSecondTrackElement() != null) {
+        if (quadForConfig instanceof SecondTrackConfigurable) {
+            SecondTrackConfigurable secondTrackConfigurable = (SecondTrackConfigurable)quadForConfig;
             if (quadForConfig.getSecondAssociatedTrack() != null) {
                 secondTrackSectionChoiceBox.setValue(quadForConfig.getSecondAssociatedTrack().getId());
             }
@@ -168,7 +170,11 @@ public class QuadConfiguratorFxController {
             });
         } else trackSectionBorderCheckBox.setDisable(true);
 
+
+        */
     }
+
+
 
     @FXML
     private void saveAndClose() {

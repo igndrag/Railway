@@ -5,6 +5,8 @@ import NATrain.controller.SwitchState;
 
 public class Switch extends TrackSideObject {
 
+    public static final Switch EMPTY_SWITCH = new Switch("", SwitchState.PLUS);
+
     private SwitchState normalState = SwitchState.PLUS;
     transient private SwitchState switchState = SwitchState.UNDEFINED;
     private Switch paredSwitch;

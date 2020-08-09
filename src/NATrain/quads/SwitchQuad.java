@@ -8,11 +8,10 @@ import javafx.scene.text.Text;
 
 public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfigurable {
 
-    private Switch associatedSwitch;
+    private Switch associatedSwitch = Switch.EMPTY_SWITCH;
     protected Shape switchPlusElement;
     protected Shape switchMinusElement;
     protected Text switchLabel;
-
 
     @Override
     public Switch getAssociatedSwitch() {
@@ -32,6 +31,7 @@ public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfig
     public void refresh() {
         refreshTrackSectionState(firstAssociatedTrack);
         refreshSwitchState();
+        trackLabel.setText(associatedSwitch.getId());
     }
 
     @Override
@@ -40,7 +40,7 @@ public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfig
     }
 
     private void refreshSwitchState() {
-        if (associatedSwitch != null) {
+        if (associatedSwitch != Switch.EMPTY_SWITCH) {
             switch (associatedSwitch.getState()) {
                 case UNDEFINED:
                     if (associatedSwitch.getNormalState() == SwitchState.PLUS) {  //normal state always defined plus or minus

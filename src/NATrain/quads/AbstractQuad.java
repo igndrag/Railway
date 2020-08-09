@@ -12,6 +12,7 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public abstract class AbstractQuad implements Quad{
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
@@ -32,7 +33,7 @@ public abstract class AbstractQuad implements Quad{
     protected Shape background;
     protected Group quadView;
 
-    private List<ControlAction> availableActions;
+    protected List<ControlAction> availableActions = new ArrayList<>();
 
     public AbstractQuad(int x, int y) {
         background = new Rectangle(90, 80);

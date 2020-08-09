@@ -5,6 +5,8 @@ import NATrain.controller.TrackSectionState;
 
 public class TrackSection extends TrackSideObject {
 
+    public static final TrackSection EMPTY_TRACK_SECTION = new TrackSection("");
+
     private TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
     private boolean interlocked = false;
 

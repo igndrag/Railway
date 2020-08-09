@@ -1,6 +1,7 @@
 package NATrain.quads;
 
 import NATrain.quads.configurableInterfaces.SignalConfigurable;
+import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.Signal;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
@@ -8,7 +9,7 @@ import javafx.scene.text.Text;
 
 public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfigurable {
 
-    private Signal associatedSignal;
+    private Signal associatedSignal = Signal.EMPTY_SIGNAL;
 
     protected Shape firstLampElement;
     protected Shape secondLampElement;
@@ -27,14 +28,18 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
     public SignalQuad(int x, int y) {
         super(x, y);
         paintView();
-    }
+        availableActions.add(ControlAction.SET_ROUT_FROM); // may be realize it in Signal Configurator?
+        availableActions.add(ControlAction.SET_ROUT_BEHIND);
+        availableActions.add(ControlAction.SET_ROUT_TO);
 
+    }
 
     @Override
     public void refresh() {
         refreshTrackSectionState(firstAssociatedTrack);
         refreshTrackSectionState(secondAssociatedTrack);
         refreshSignalState();
+        signalLabel.setText(associatedSignal.getId());
     }
 
     @Override
@@ -43,7 +48,7 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
     }
 
     private void refreshSignalState() {
-        if (associatedSignal != null) {
+        if (associatedSignal != Signal.EMPTY_SIGNAL) {
             switch (associatedSignal.getSignalState()) {
                 case UNDEFINED:
                     firstLampElement.setFill(CONFIGURED_ELEMENT_COLOR);

@@ -16,7 +16,7 @@ public abstract class DoubleTrackQuad extends SimpleTrackQuad implements FirstTr
 
     @Override
     public void refresh() {
-        super.refresh();
+        refreshTrackSectionState(firstAssociatedTrack);
         refreshTrackSectionState(secondAssociatedTrack);
     }
 
