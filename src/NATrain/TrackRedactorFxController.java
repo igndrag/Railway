@@ -129,7 +129,6 @@ public class TrackRedactorFxController {
                     button.setOnAction(event -> {
                         if (button.isSelected()) {
                             log("Ready for choose quad position. " + quadType + " selected.");
-                            System.out.println(quadType + " selected.");
                             selectedQuadType = quadType;
                         } else {
                             selectedQuadType = null;
@@ -150,7 +149,7 @@ public class TrackRedactorFxController {
                         case ("SIQ") :
                             SIQVBox.getChildren().add(button);
                             break;
-                        case ("DSI") :
+                        case ("DSQ") :
                             DSIQVBox.getChildren().add(button);
                             break;
                     }
@@ -199,7 +198,7 @@ public class TrackRedactorFxController {
 
     @FXML
     private void buttonClicked() {
-        System.out.println("Clicked");
+
         //workArea.setContent(new EmptyQuad(0, 0).getView());
     }
 
@@ -238,8 +237,6 @@ public class TrackRedactorFxController {
 
     protected void configQuadView(Node quadView, int x, int y) {
         quadView.setOnMouseClicked(event -> {
-            System.out.println(event.getClickCount());
-
             if (event.getClickCount() == 1) {
                 selectQuad(x, y);
                 if (selectedQuadType != null) {

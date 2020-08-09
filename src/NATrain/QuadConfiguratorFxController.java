@@ -4,8 +4,9 @@ import NATrain.model.Model;
 import NATrain.quads.AbstractQuad;
 import NATrain.quads.BaseQuad;
 import NATrain.quads.Quad;
-import NATrain.quads.configurableInterfaces.FirstTrackConfigurable;
-import NATrain.quads.configurableInterfaces.SecondTrackConfigurable;
+import NATrain.quads.configurableInterfaces.*;
+import NATrain.trackSideObjects.Signal;
+import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
 import NATrain.utils.QuadFactory;
 import javafx.event.EventHandler;
@@ -74,6 +75,7 @@ public class QuadConfiguratorFxController {
             firstTrackSectionChoiceBox.setValue(firstTrackConfigurable.getFirstAssociatedTrack().getId());
             firstTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().keySet());
             firstTrackSectionChoiceBox.getItems().add("none");
+
             firstTrackSectionChoiceBox.setOnAction(event -> {
                 String choiceBoxValue = firstTrackSectionChoiceBox.getValue();
                 if (choiceBoxValue.equals("none")) {
@@ -86,21 +88,20 @@ public class QuadConfiguratorFxController {
         } else {
             firstTrackSectionChoiceBox.setDisable(true);
         }
-       /*
+
         // *** second track choice box init
         if (quadForConfig instanceof SecondTrackConfigurable) {
             SecondTrackConfigurable secondTrackConfigurable = (SecondTrackConfigurable)quadForConfig;
-            if (quadForConfig.getSecondAssociatedTrack() != null) {
-                secondTrackSectionChoiceBox.setValue(quadForConfig.getSecondAssociatedTrack().getId());
-            }
+            secondTrackSectionChoiceBox.setValue(secondTrackConfigurable.getSecondAssociatedTrack().getId());
             secondTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().keySet());
             secondTrackSectionChoiceBox.getItems().add("none");
+
             secondTrackSectionChoiceBox.setOnAction(event -> {
                 String choiceBoxValue = secondTrackSectionChoiceBox.getValue();
                 if (choiceBoxValue.equals("none")) {
-                    quadForConfig.setSecondAssociatedTrack(null);
+                    secondTrackConfigurable.setSecondAssociatedTrack(TrackSection.EMPTY_TRACK_SECTION);
                 } else {
-                    quadForConfig.setSecondAssociatedTrack(Model.getTrackSections().get(secondTrackSectionChoiceBox.getValue()));
+                    secondTrackConfigurable.setSecondAssociatedTrack(Model.getTrackSections().get(secondTrackSectionChoiceBox.getValue()));
                 }
                 quadForConfig.refresh();
             });
@@ -108,73 +109,65 @@ public class QuadConfiguratorFxController {
             secondTrackSectionChoiceBox.setDisable(true);
 
         // *** signal choice box init
-        if (quadForConfig.getFirstLampElement() != null) {
-            if (quadForConfig.getAssociatedSignal() != null) {
-                signalChoiceBox.setValue(quadForConfig.getAssociatedSignal().getId());
-            }
+        if (quadForConfig instanceof SignalConfigurable) {
+            SignalConfigurable signalConfigurable = (SignalConfigurable) quadForConfig;
+            signalChoiceBox.setValue(signalConfigurable.getAssociatedSignal().getId());
             signalChoiceBox.getItems().addAll(Model.getSignals().keySet());
             signalChoiceBox.getItems().add("none");
+
             signalChoiceBox.setOnAction(event -> {
                 String choiceBoxValue = signalChoiceBox.getValue();
                 if (choiceBoxValue.equals("none")) {
-                    quadForConfig.getSignalLabel().setText("");
-                    quadForConfig.setAssociatedSignal(null);
+                    signalConfigurable.setAssociatedSignal(Signal.EMPTY_SIGNAL);
                 } else {
-                    quadForConfig.setAssociatedSignal(Model.getSignals().get(signalChoiceBox.getValue()));
-                    quadForConfig.getSignalLabel().setText(quadForConfig.getAssociatedSignal().getId());
+                    signalConfigurable.setAssociatedSignal(Model.getSignals().get(signalChoiceBox.getValue()));
                 }
                 quadForConfig.refresh();
             });
         } else
             signalChoiceBox.setDisable(true);
 
-
         // *** switch choice box init
-        if (quadForConfig.getSwitchPlusElement() != null && quadForConfig.getSwitchMinusElement() != null) {
-            if (quadForConfig.getAssociatedSwitch() != null) {
-                switchChoiceBox.setValue(quadForConfig.getAssociatedSwitch().getId());
-            }
+        if (quadForConfig instanceof SwitchConfigurable) {
+            SwitchConfigurable switchConfigurable = (SwitchConfigurable) quadForConfig;
+            switchChoiceBox.setValue(switchConfigurable.getAssociatedSwitch().getId());
             switchChoiceBox.getItems().addAll(Model.getSwitches().keySet());
             switchChoiceBox.getItems().add("none");
+
             switchChoiceBox.setOnAction(event -> {
                 String choiceBoxValue = switchChoiceBox.getValue();
                 if (choiceBoxValue.equals("none")) {
-                    quadForConfig.getSwitchLabel().setText("");
-                    quadForConfig.setAssociatedSwitch(null);
+                    switchConfigurable.setAssociatedSwitch(Switch.EMPTY_SWITCH);
                 } else {
-                    quadForConfig.setAssociatedSwitch(Model.getSwitches().get(switchChoiceBox.getValue()));
-                    quadForConfig.getSwitchLabel().setText(quadForConfig.getAssociatedSwitch().getId());
+                    switchConfigurable.setAssociatedSwitch(Model.getSwitches().get(switchChoiceBox.getValue()));
                 }
                 quadForConfig.refresh();
             });
         } else switchChoiceBox.setDisable(true);
 
         ///*** show description init
-        showDescriptionCheckBox.setSelected(quadForConfig.getShowDescription());
-        showDescriptionCheckBox.setOnMouseClicked(event -> {
-            if (quadForConfig.getTrackLabel() != null)
-                quadForConfig.getTrackLabel().setVisible(showDescriptionCheckBox.isSelected());
-            if (quadForConfig.getSwitchLabel() != null)
-                quadForConfig.getSwitchLabel().setVisible(showDescriptionCheckBox.isSelected());
-            if (quadForConfig.getSignalLabel() != null) {
-                quadForConfig.getSignalLabel().setVisible(showDescriptionCheckBox.isSelected());
-            }
-            quadForConfig.setShowDescription(showDescriptionCheckBox.isSelected());
-        });
+        Configurable configurable = (Configurable) quadForConfig;
+        if (configurable.hasDescription()) {
+            showDescriptionCheckBox.setSelected(configurable.isDescriptionShown());
+            showDescriptionCheckBox.setOnMouseClicked(event -> {
+                configurable.showDescription(showDescriptionCheckBox.isSelected());
+            });
+        } else {
+            showDescriptionCheckBox.setDisable(true);
+        }
 
         ///*** show track borders
-        if (quadForConfig.getBorderElement() != null && quadForConfig.getIsolatorElement() != null) {
+        if (configurable.hasBorder()) {
+            trackSectionBorderCheckBox.setSelected(configurable.isBorderShown());
             trackSectionBorderCheckBox.setOnMouseClicked(event -> {
-                    quadForConfig.getBorderElement().setVisible(trackSectionBorderCheckBox.isSelected());
-                    quadForConfig.getIsolatorElement().setVisible(trackSectionBorderCheckBox.isSelected());
+                configurable.showTrackBorder(trackSectionBorderCheckBox.isSelected());
             });
-        } else trackSectionBorderCheckBox.setDisable(true);
+        } else {
+            trackSectionBorderCheckBox.setDisable(true);
+        }
 
 
-        */
     }
-
-
 
     @FXML
     private void saveAndClose() {

@@ -1,4 +1,4 @@
-package NATrain.quads.SIQ;
+package NATrain.quads.DSQ;
 
 import NATrain.quads.BaseQuad;
 import NATrain.quads.SignalQuad;
@@ -8,8 +8,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class SIQ1_1 extends SignalQuad {
-    public SIQ1_1(int x, int y) {
+public class DSQ1_1 extends SignalQuad {
+    public DSQ1_1(int x, int y) {
         super(x, y);
         paintView();
     }
@@ -28,16 +28,26 @@ public class SIQ1_1 extends SignalQuad {
         signalBottom.setStrokeWidth(2);
         addToQuadView(signalBottom);
 
-        Circle signalBorder = new Circle(20, 65, 10);
+        Line signalStand = new Line (10, 65, 20, 65);
+        signalStand.setStrokeWidth(2);
+        addToQuadView(signalStand);
+
+        Circle signalBorder = new Circle(30, 65, 10);
         addToQuadView(signalBorder);
 
-        firstLampElement = new Circle(20, 65, 8, BaseQuad.UNDEFINED_ELEMENT_COLOR);
+        signalBorder = new Circle(50, 65, 10);
+        addToQuadView(signalBorder);
+
+        firstLampElement = new Circle(30, 65, 8, BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(firstLampElement);
+
+        secondLampElement = new Circle(50, 65, 8, BaseQuad.UNDEFINED_ELEMENT_COLOR);
+        addToQuadView(secondLampElement);
 
         descriptionLabel = new Text();
         descriptionLabel.setTextAlignment(TextAlignment.LEFT);
-        descriptionLabel.setWrappingWidth(50);
-        descriptionLabel.setX(35);
+        descriptionLabel.setWrappingWidth(25);
+        descriptionLabel.setX(65);
         descriptionLabel.setY(70);
         addToQuadView(descriptionLabel);
     }

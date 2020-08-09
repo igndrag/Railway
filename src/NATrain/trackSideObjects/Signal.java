@@ -11,6 +11,7 @@ public class Signal extends TrackSideObject{
 
     public static final Signal EMPTY_SIGNAL = new Signal("", Collections.emptySet(), SignalType.EMPTY_SIGNAL);
 
+
     Set<SignalState> approvedSignals;
     transient SignalState signalState = SignalState.UNDEFINED;
     SignalType signalType;

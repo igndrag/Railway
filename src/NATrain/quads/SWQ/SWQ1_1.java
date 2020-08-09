@@ -58,11 +58,11 @@ public class SWQ1_1 extends SwitchQuad {
         borderElement.setVisible(false);
         addToQuadView(borderElement);
 
-        switchLabel = new Text();
-        switchLabel.setTextAlignment(TextAlignment.RIGHT);
-        switchLabel.setWrappingWidth(50);
-        switchLabel.setX(0);
-        switchLabel.setY(20);
-        addToQuadView(switchLabel);
+        descriptionLabel = new Text();
+        descriptionLabel.setTextAlignment(TextAlignment.RIGHT);
+        descriptionLabel.setWrappingWidth(50);
+        descriptionLabel.setX(0);
+        descriptionLabel.setY(20);
+        addToQuadView(descriptionLabel);
     }
 }

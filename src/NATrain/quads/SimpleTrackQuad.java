@@ -4,13 +4,11 @@ import NATrain.quads.configurableInterfaces.Configurable;
 import NATrain.quads.configurableInterfaces.FirstTrackConfigurable;
 import NATrain.trackSideObjects.TrackSection;
 import javafx.scene.shape.Shape;
-import javafx.scene.text.Text;
 
 public abstract class SimpleTrackQuad extends BaseQuad implements Quad, Paintable, Configurable, FirstTrackConfigurable {
 
     protected TrackSection firstAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
     protected Shape firstTrackElement;
-    protected Text trackLabel;
     protected Shape borderElement;
     protected Shape isolatorElement;
 
@@ -22,26 +20,26 @@ public abstract class SimpleTrackQuad extends BaseQuad implements Quad, Paintabl
 
     @Override
     public void refresh() {
-        refreshTrackSectionState(firstAssociatedTrack);
-        trackLabel.setText(firstAssociatedTrack.getId());
+        refreshTrackSectionState(firstAssociatedTrack, firstTrackElement);
+        descriptionLabel.setText(firstAssociatedTrack.getId());
     }
 
-    void refreshTrackSectionState(TrackSection associatedTrack) {
+    void refreshTrackSectionState(TrackSection associatedTrack, Shape trackSectionElement) {
         if (associatedTrack == TrackSection.EMPTY_TRACK_SECTION) {
-            firstTrackElement.setFill(UNDEFINED_ELEMENT_COLOR);
+            trackSectionElement.setFill(UNDEFINED_ELEMENT_COLOR);
         } else {
             switch (associatedTrack.getVacancyState()) {
                 case UNDEFINED:
-                    firstTrackElement.setFill(CONFIGURED_ELEMENT_COLOR);
+                    trackSectionElement.setFill(CONFIGURED_ELEMENT_COLOR);
                     break;
                 case FREE:
                     if (firstAssociatedTrack.isInterlocked())
-                        firstTrackElement.setFill(INTERLOCKED_ELEMENT_COLOR);
+                        trackSectionElement.setFill(INTERLOCKED_ELEMENT_COLOR);
                     else
-                        firstTrackElement.setFill(FREE_ELEMENT_COLOR);
+                        trackSectionElement.setFill(FREE_ELEMENT_COLOR);
                     break;
                 case OCCUPIED:
-                    firstTrackElement.setFill(OCCUPIED_ELEMENT_COLOR);
+                    trackSectionElement.setFill(OCCUPIED_ELEMENT_COLOR);
                     break;
             }
         }
@@ -59,8 +57,7 @@ public abstract class SimpleTrackQuad extends BaseQuad implements Quad, Paintabl
 
     @Override
     public void showDescription(boolean show) {
-        if (trackLabel != null)
-            trackLabel.setVisible(show);
+            descriptionLabel.setVisible(show);
     }
 
     @Override
@@ -69,6 +66,21 @@ public abstract class SimpleTrackQuad extends BaseQuad implements Quad, Paintabl
             borderElement.setVisible(show);
         if (isolatorElement != null)
             isolatorElement.setVisible(show);
+    }
+
+    @Override
+    public boolean isBorderShown() {
+        return borderElement.isVisible();
+    }
+
+    @Override
+    public boolean hasDescription() {
+        return true;
+    }
+
+    @Override
+    public boolean hasBorder() {
+        return borderElement != null;
     }
 }
 

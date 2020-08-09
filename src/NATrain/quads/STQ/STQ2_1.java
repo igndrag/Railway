@@ -3,7 +3,6 @@ package NATrain.quads.STQ;
 import NATrain.quads.BaseQuad;
 import NATrain.quads.SimpleTrackQuad;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -23,11 +22,11 @@ public class STQ2_1 extends SimpleTrackQuad {
                 15, 0);
         firstTrackElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(firstTrackElement);
-        trackLabel = new Text();
-        trackLabel.setTextAlignment(TextAlignment.LEFT);
-        trackLabel.setWrappingWidth(40);
-        trackLabel.setX(50);
-        trackLabel.setY(20);
-        addToQuadView(trackLabel);
+        descriptionLabel = new Text();
+        descriptionLabel.setTextAlignment(TextAlignment.LEFT);
+        descriptionLabel.setWrappingWidth(40);
+        descriptionLabel.setX(50);
+        descriptionLabel.setY(20);
+        addToQuadView(descriptionLabel);
     }
 }

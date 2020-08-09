@@ -22,11 +22,11 @@ public class STQ2_2 extends SimpleTrackQuad {
                 55, 0);
         firstTrackElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(firstTrackElement);
-        trackLabel = new Text();
-        trackLabel.setTextAlignment(TextAlignment.RIGHT);
-        trackLabel.setWrappingWidth(40);
-        trackLabel.setX(0);
-        trackLabel.setY(20);
-        addToQuadView(trackLabel);
+        descriptionLabel = new Text();
+        descriptionLabel.setTextAlignment(TextAlignment.RIGHT);
+        descriptionLabel.setWrappingWidth(40);
+        descriptionLabel.setX(0);
+        descriptionLabel.setY(20);
+        addToQuadView(descriptionLabel);
     }
 }

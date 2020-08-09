@@ -45,11 +45,11 @@ public class STQ5_1 extends SimpleTrackQuad {
         isolator.setVisible(false);
         addToQuadView(isolator);
 
-        trackLabel = new Text();
-        trackLabel.setTextAlignment(TextAlignment.LEFT);
-        trackLabel.setWrappingWidth(80);
-        trackLabel.setX(10);
-        trackLabel.setY(20);
-        addToQuadView(trackLabel);
+        descriptionLabel = new Text();
+        descriptionLabel.setTextAlignment(TextAlignment.LEFT);
+        descriptionLabel.setWrappingWidth(80);
+        descriptionLabel.setX(10);
+        descriptionLabel.setY(20);
+        addToQuadView(descriptionLabel);
     }
 }

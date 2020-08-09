@@ -5,7 +5,6 @@ import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.Signal;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import javafx.scene.text.Text;
 
 public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfigurable {
 
@@ -13,7 +12,6 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
 
     protected Shape firstLampElement;
     protected Shape secondLampElement;
-    protected Text signalLabel;
 
     @Override
     public Signal getAssociatedSignal() {
@@ -36,15 +34,25 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
 
     @Override
     public void refresh() {
-        refreshTrackSectionState(firstAssociatedTrack);
-        refreshTrackSectionState(secondAssociatedTrack);
+        refreshTrackSectionState(firstAssociatedTrack, firstTrackElement);
+        refreshTrackSectionState(secondAssociatedTrack, secondTrackElement);
         refreshSignalState();
-        signalLabel.setText(associatedSignal.getId());
+        descriptionLabel.setText(associatedSignal.getId());
+    }
+
+    @Override
+    public boolean hasDescription() {
+        return true;
     }
 
     @Override
     public void showDescription(boolean show) {
-        signalLabel.setVisible(show);
+        descriptionLabel.setVisible(show);
+    }
+
+    @Override
+    public boolean hasBorder() {
+        return false;
     }
 
     private void refreshSignalState() {
@@ -54,27 +62,38 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
                     firstLampElement.setFill(CONFIGURED_ELEMENT_COLOR);
                     if (secondLampElement != null)
                         secondLampElement.setFill(CONFIGURED_ELEMENT_COLOR);
+                    break;
                 case RED:
                     firstLampElement.setFill(Color.RED);
+                    break;
                 case BLUE:
                     firstLampElement.setFill(Color.BLUE);
+                    break;
                 case GREEN:
                     firstLampElement.setFill(Color.GREEN);
+                    break;
                 case WHITE:
                     firstLampElement.setFill(Color.WHITE);
+                    break;
                 case YELLOW:
                     firstLampElement.setFill(Color.YELLOW);
+                    break;
                 case BLINKED_YELLOW:
                     firstLampElement.setFill(YELLOW_BLINKER);
+                    break;
                 case BLINKED_WHITE:
                     firstLampElement.setFill(WHITE_BLINKER);
+                    break;
                 case YELLOW_AND_BLINKED_YELLOW:
                     firstLampElement.setFill(Color.YELLOW);
+                    if (secondLampElement != null)
                     secondLampElement.setFill(YELLOW_BLINKER);
+                    break;
                 case NOT_LIGHT:
                     firstLampElement.setFill(DEFAULT_BACKGROUND_COLOR);
                     if (secondLampElement != null)
                         secondLampElement.setFill(DEFAULT_BACKGROUND_COLOR);
+                    break;
             }
         } else {
             firstLampElement.setFill(UNDEFINED_ELEMENT_COLOR);

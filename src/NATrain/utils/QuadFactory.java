@@ -1,14 +1,13 @@
 package NATrain.utils;
 
+import NATrain.quads.DSQ.DSQ1_1;
 import NATrain.quads.DTQ.DTQ1_1;
+import NATrain.quads.EmptyQuad;
+import NATrain.quads.Quad;
 import NATrain.quads.QuadType;
-import NATrain.quads.BaseQuad;
-import NATrain.quads.SIQ.SIQ1_1;
-import NATrain.quads.STQ.STQ1_1;
-import NATrain.quads.STQ.STQ1_2;
-import NATrain.quads.STQ.STQ2_1;
-import NATrain.quads.STQ.STQ2_2;
-import NATrain.quads.SWQ.SWQ1_1;
+import NATrain.quads.SIQ.*;
+import NATrain.quads.STQ.*;
+import NATrain.quads.SWQ.*;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -27,7 +26,7 @@ public class QuadFactory {
         redactorModeQuadView.getChildren().add(text);
     }
 
-    public static BaseQuad createQuad (int x, int y, QuadType quadType) {
+    public static Quad createQuad (int x, int y, QuadType quadType) {
        switch (quadType) {
            case STQ1_1:
                return new STQ1_1(x, y);
@@ -37,15 +36,18 @@ public class QuadFactory {
                return new STQ2_1(x, y);
            case STQ2_2:
                return new STQ2_2(x, y);
+           case STQ5_1:
+               return new STQ5_1(x,y);
            case DTQ1_1:
                return new DTQ1_1(x, y);
            case SIQ1_1:
                return new SIQ1_1(x, y);
            case SWQ1_1:
                return new SWQ1_1(x, y);
+           case DSQ1_1:
+               return new DSQ1_1(x, y);
        }
-        BaseQuad resultQuad = new BaseQuad(x, y);
-        return resultQuad;
+        return new EmptyQuad(x, y);
     }
 
 
