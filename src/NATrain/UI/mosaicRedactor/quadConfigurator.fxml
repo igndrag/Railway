@@ -9,7 +9,7 @@
 
 
 <?import javafx.scene.layout.StackPane?>
-<Pane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.QuadConfiguratorFxController">
+<Pane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.mosaicRedactor.QuadConfiguratorFxController">
 
    <children>
       <Pane fx:id="quadViewPane" layoutX="20.0" layoutY="30.0" prefHeight="80.0" prefWidth="90" />

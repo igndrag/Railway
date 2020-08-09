@@ -4,6 +4,7 @@ import NATrain.controller.SignalState;
 import NATrain.controller.SwitchState;
 import NATrain.model.Model;
 import NATrain.quads.EmptyQuad;
+import NATrain.remoteControlDevice.TrackControlModule;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
@@ -32,10 +33,16 @@ public class ModelMock {
                                 Arrays.asList(SignalState.WHITE,
                               SignalState.BLUE))));
 
-        Model.getSwitches().put("1", new Switch("1", SwitchState.PLUS));
+        Switch oneSwitch = new Switch("1", SwitchState.PLUS);
+
+        Model.getSwitches().put("1", oneSwitch);
         Model.getSwitches().put("3", new Switch("3", SwitchState.MINUS));
 
-        Model.getTrackSections().put("1-3SP",new TrackSection("1-3SP"));
+        TrackSection oneTrackSection = new TrackSection("1-3SP");
+        oneTrackSection.setControlModule(new TrackControlModule(1));
+        oneTrackSection.setChannel(1);
+        Model.getTrackSections().put("1-3SP", oneTrackSection);
+
         Model.getTrackSections().put("SP", new TrackSection("SP"));
 
     }

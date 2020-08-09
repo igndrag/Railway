@@ -1,18 +1,7 @@
 package NATrain.quads;
 
-import NATrain.NavigatorFxController;
-import NATrain.controller.SwitchState;
-import NATrain.controller.TrackSectionState;
 import NATrain.quads.configurableInterfaces.Configurable;
-import javafx.scene.Group;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.Switch;
-import NATrain.trackSideObjects.TrackSection;
-import javafx.util.Pair;
-
-import java.util.Properties;
 
 
 public abstract class BaseQuad extends AbstractQuad implements Configurable {

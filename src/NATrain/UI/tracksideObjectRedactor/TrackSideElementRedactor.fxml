@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="386.0" prefWidth="294.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab text="Signals">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="348.0" prefWidth="294.0">
+               <children>
+                  <Button fx:id="deleteSignalButton" layoutX="30.0" layoutY="317.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
+                  <Button layoutX="209.0" layoutY="317.0" mnemonicParsing="false" prefWidth="50.0" text="Create" />
+                  <Button layoutX="122.0" layoutY="317.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
+                  <ListView layoutX="24.0" layoutY="14.0" prefHeight="292.0" prefWidth="246.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Switches">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="348.0" prefWidth="294.0">
+               <children>
+                  <Button fx:id="deleteSignalButton1" layoutX="30.0" layoutY="317.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
+                  <Button layoutX="209.0" layoutY="317.0" mnemonicParsing="false" prefWidth="50.0" text="Create" />
+                  <Button layoutX="122.0" layoutY="317.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
+                  <ListView layoutX="24.0" layoutY="14.0" prefHeight="292.0" prefWidth="246.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Tracks">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="348.0" prefWidth="294.0">
+               <children>
+                  <Button fx:id="deleteSignalButton2" layoutX="30.0" layoutY="317.0" mnemonicParsing="false" prefWidth="50.0" text="Delete" />
+                  <Button layoutX="209.0" layoutY="317.0" mnemonicParsing="false" prefWidth="50.0" text="Create" />
+                  <Button layoutX="122.0" layoutY="317.0" mnemonicParsing="false" prefWidth="50.0" text="Edit" />
+                  <ListView layoutX="24.0" layoutY="14.0" prefHeight="292.0" prefWidth="246.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

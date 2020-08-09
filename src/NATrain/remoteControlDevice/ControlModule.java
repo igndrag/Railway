@@ -5,6 +5,8 @@ import NATrain.trackSideObjects.TrackSideObject;
 
 public interface ControlModule {
 
+    Integer getAddress();
+
     void setTrackSideObjectOnChannel (TrackSideObject trackSideObject, int channel);
 
     int refreshObjectState (int channel, int responseCode);

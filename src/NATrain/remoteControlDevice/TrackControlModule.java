@@ -7,7 +7,7 @@ import NATrain.trackSideObjects.TrackSideObject;
 
 import java.util.HashMap;
 
-public class TrackControlModule implements ControlModule{
+public class TrackControlModule extends AbstractModule implements ControlModule{
 
     private static final int TRACK_SECTION_FREE_STATUS_CODE = 1;
     private static final int TRACK_SECTION_OCCUPIED_STATUS_CODE = 2;
@@ -17,6 +17,15 @@ public class TrackControlModule implements ControlModule{
 
     public HashMap<Integer,TrackSection> getChannels() {
         return channels;
+    }
+
+    public TrackControlModule(int address) {
+        super(address);
+    }
+
+    @Override
+    public Integer getAddress() {
+        return address;
     }
 
     @Override

@@ -1,8 +1,6 @@
-package NATrain;
+package NATrain.UI.mosaicRedactor;
 
 import NATrain.model.Model;
-import NATrain.quads.AbstractQuad;
-import NATrain.quads.BaseQuad;
 import NATrain.quads.Quad;
 import NATrain.quads.configurableInterfaces.*;
 import NATrain.trackSideObjects.Signal;
@@ -11,15 +9,10 @@ import NATrain.trackSideObjects.TrackSection;
 import NATrain.utils.QuadFactory;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class QuadConfiguratorFxController {
@@ -57,7 +50,7 @@ public class QuadConfiguratorFxController {
     public void initialize(int x, int y) {
 
         // *** stage init
-        quadForConfig = (BaseQuad) Model.getMainGrid()[y][x];
+        quadForConfig = Model.getMainGrid()[y][x];
         quadView = quadForConfig.getView();
         parent = (Pane) quadView.getParent();
         quadForConfig.unselect();
@@ -91,7 +84,7 @@ public class QuadConfiguratorFxController {
 
         // *** second track choice box init
         if (quadForConfig instanceof SecondTrackConfigurable) {
-            SecondTrackConfigurable secondTrackConfigurable = (SecondTrackConfigurable)quadForConfig;
+            SecondTrackConfigurable secondTrackConfigurable = (SecondTrackConfigurable) quadForConfig;
             secondTrackSectionChoiceBox.setValue(secondTrackConfigurable.getSecondAssociatedTrack().getId());
             secondTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().keySet());
             secondTrackSectionChoiceBox.getItems().add("none");
@@ -149,9 +142,8 @@ public class QuadConfiguratorFxController {
         Configurable configurable = (Configurable) quadForConfig;
         if (configurable.hasDescription()) {
             showDescriptionCheckBox.setSelected(configurable.isDescriptionShown());
-            showDescriptionCheckBox.setOnMouseClicked(event -> {
-                configurable.showDescription(showDescriptionCheckBox.isSelected());
-            });
+            showDescriptionCheckBox.setOnMouseClicked(event ->
+                    configurable.showDescription(showDescriptionCheckBox.isSelected()));
         } else {
             showDescriptionCheckBox.setDisable(true);
         }
@@ -159,14 +151,11 @@ public class QuadConfiguratorFxController {
         ///*** show track borders
         if (configurable.hasBorder()) {
             trackSectionBorderCheckBox.setSelected(configurable.isBorderShown());
-            trackSectionBorderCheckBox.setOnMouseClicked(event -> {
-                configurable.showTrackBorder(trackSectionBorderCheckBox.isSelected());
-            });
+            trackSectionBorderCheckBox.setOnMouseClicked(event ->
+                    configurable.showTrackBorder(trackSectionBorderCheckBox.isSelected()));
         } else {
             trackSectionBorderCheckBox.setDisable(true);
         }
-
-
     }
 
     @FXML

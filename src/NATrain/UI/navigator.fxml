@@ -5,23 +5,23 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="140.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.NavigatorFxController">
+<AnchorPane prefHeight="140.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.NavigatorFxController">
    <children>
       <Button fx:id="mosaicRedactorButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="28.0" layoutY="20.0" mnemonicParsing="false" onAction="#toTrackRedactor" prefHeight="100.0" prefWidth="120.0" text="Mosaic Redactor" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/puzzles_icon.png" />
+                  <Image url="@../../icons/puzzles_icon.png" />
                </image></ImageView>
          </graphic>
          <opaqueInsets>
             <Insets />
          </opaqueInsets></Button>
-      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="173.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Trackside Elements" textAlignment="CENTER">
+      <Button fx:id="trackSideObjectRedactorButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="173.0" layoutY="20.0" mnemonicParsing="false" onAction="#toTracksideObjectRedactor" prefHeight="100.0" prefWidth="120.0" text="Trackside Elements" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/track_icon.png" />
+                  <Image url="@../../icons/track_icon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -33,7 +33,7 @@
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/roots_icon.png" />
+                  <Image url="@../../icons/roots_icon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -45,7 +45,7 @@
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/hardware_icon.png" />
+                  <Image url="@../../icons/hardware_icon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -57,7 +57,7 @@
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/control_icon.png" />
+                  <Image url="@../../icons/control_icon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -69,7 +69,7 @@
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../icons/settings_icon.png" />
+                  <Image url="@../../icons/settings_icon.png" />
                </image>
             </ImageView>
          </graphic>

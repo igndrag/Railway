@@ -5,12 +5,16 @@ import NATrain.trackSideObjects.TrackSideObject;
 
 import java.util.HashMap;
 
-public class SignalControlModule implements ControlModule {
+public class SignalControlModule extends AbstractModule {
 
     private HashMap<Integer, Signal> channels = new HashMap<>();
 
     public HashMap<Integer, Signal> getChannels() {
         return channels;
+    }
+
+    public SignalControlModule(int address) {
+        super(address);
     }
 
     @Override

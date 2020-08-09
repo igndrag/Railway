@@ -1,16 +1,15 @@
-package NATrain;
+package NATrain.UI.mosaicRedactor;
 
+import NATrain.UI.NavigatorFxController;
 import NATrain.quads.BaseQuad;
 import NATrain.quads.QuadType;
 import NATrain.utils.ModelMock;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -29,7 +28,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 
-public class TrackRedactorFxController {
+public class MosaicRedactorFxController {
 
     private static Stage primaryStage;
     private static GridPane gridPane;
@@ -80,11 +79,7 @@ public class TrackRedactorFxController {
     private Button greenButton;
 
     public static void setPrimaryStage(Stage mainStage) {
-        TrackRedactorFxController.primaryStage = mainStage;
-    }
-
-    public static void setConstructorMode(boolean mode) {
-        NavigatorFxController.constructorMode = mode;
+        primaryStage = mainStage;
     }
 
     public static GridPane getGridPane() {
@@ -92,7 +87,7 @@ public class TrackRedactorFxController {
     }
 
     public static void setGridPane(GridPane gridPane) {
-        TrackRedactorFxController.gridPane = gridPane;
+        gridPane = gridPane;
     }
 
     public static Model getModel() {
@@ -100,7 +95,7 @@ public class TrackRedactorFxController {
     }
 
     public static void setModel(Model model) {
-        TrackRedactorFxController.model = model;
+        model = model;
     }
 
     public ScrollPane getWorkArea() {
@@ -112,8 +107,6 @@ public class TrackRedactorFxController {
     }
 
     public void initialize() {
-
-        ModelMock.MockModel();
 
         //*** left panel initializing ***//
         VBox STQVBox = new VBox();
@@ -223,7 +216,7 @@ public class TrackRedactorFxController {
     private static void toQuadConfigurator(int x, int y) throws IOException {
         if (Model.getMainGrid()[y][x].isEmpty())
             return;
-        FXMLLoader loader = new FXMLLoader(TrackRedactorFxController.class.getResource("quadConfigurator.fxml"));
+        FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("quadConfigurator.fxml"));
         Stage quadConfigurator = new Stage();
         quadConfigurator.setTitle("Quad configurator");
         quadConfigurator.setScene(new Scene(loader.load(), 400, 300));
