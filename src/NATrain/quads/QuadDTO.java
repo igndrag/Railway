@@ -1,20 +1,40 @@
 package NATrain.quads;
 
-import NATrain.trackSideObjects.TrackSideObject;
+import NATrain.trackSideObjects.Signal;
+import NATrain.trackSideObjects.Switch;
+import NATrain.trackSideObjects.TrackSection;
+import NATrain.utils.QuadFactory;
+import java.io.Serializable;
 
-import java.util.List;
-
-public class QuadDTO {
+public class QuadDTO implements Serializable {
     int x;
     int y;
-    List<TrackSideObject> trackSideObjects;
     QuadType quadType;
+    private final TrackSection firstAssociatedTrack;
+    private final TrackSection secondAssociatedTrack;
+    private final Switch associatedSwitch;
+    private final Signal associatedSignal;
 
-    public static QuadDTO getDTO(Quad quad) {
-        AbstractQuad originalQuad = (AbstractQuad) quad;
-        QuadDTO quadDTO = new QuadDTO();
-        quadDTO.x = originalQuad.x;
-        quadDTO.y = originalQuad.y;
-        return null;
+    private QuadDTO (BaseQuad originalQuad) {
+        this.x = originalQuad.x;
+        this.y = originalQuad.y;
+        this.quadType = originalQuad.quadType;
+        this.firstAssociatedTrack = originalQuad.firstAssociatedTrack;
+        this.secondAssociatedTrack = originalQuad.secondAssociatedTrack;
+        this.associatedSwitch = originalQuad.associatedSwitch;
+        this.associatedSignal = originalQuad.associatedSignal;
+    }
+
+    public static QuadDTO castToDTO(Quad quad) {
+        return new QuadDTO ((BaseQuad) quad);
+    }
+
+    public static Quad castToQuad(QuadDTO quadDTO) {
+        BaseQuad baseQuad = (BaseQuad) QuadFactory.createQuad(quadDTO.x, quadDTO.y, quadDTO.quadType);
+        baseQuad.firstAssociatedTrack = quadDTO.firstAssociatedTrack;
+        baseQuad.secondAssociatedTrack = quadDTO.secondAssociatedTrack;
+        baseQuad.associatedSwitch = quadDTO.associatedSwitch;
+        baseQuad.associatedSignal = quadDTO.associatedSignal;
+        return baseQuad;
     }
 }

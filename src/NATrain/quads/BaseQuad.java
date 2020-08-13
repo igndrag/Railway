@@ -15,8 +15,6 @@ public abstract class BaseQuad extends AbstractQuad implements Configurable {
     protected Switch associatedSwitch = Switch.EMPTY_SWITCH;
     protected Signal associatedSignal = Signal.EMPTY_SIGNAL;
 
-
-
     protected Text descriptionLabel = new Text("");
 
     public BaseQuad(int x, int y) {
