@@ -8,8 +8,6 @@ import javafx.scene.shape.Shape;
 
 public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfigurable {
 
-    private Signal associatedSignal = Signal.EMPTY_SIGNAL;
-
     protected Shape firstLampElement;
     protected Shape secondLampElement;
 

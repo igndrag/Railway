@@ -2,12 +2,14 @@ package NATrain.quads.DTQ;
 
 import NATrain.quads.BaseQuad;
 import NATrain.quads.DoubleTrackQuad;
+import NATrain.quads.QuadType;
 import javafx.scene.shape.Rectangle;
 
 public class DTQ1_1 extends DoubleTrackQuad {
     public DTQ1_1(int x, int y) {
         super(x, y);
         paintView();
+        quadType = QuadType.DTQ1_1;
     }
 
     @Override

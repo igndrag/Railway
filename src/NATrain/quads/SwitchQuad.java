@@ -7,7 +7,6 @@ import javafx.scene.shape.Shape;
 
 public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfigurable {
 
-    private Switch associatedSwitch = Switch.EMPTY_SWITCH;
     protected Shape switchPlusElement;
     protected Shape switchMinusElement;
 

@@ -7,11 +7,10 @@ import javafx.scene.shape.Shape;
 
 public abstract class DoubleTrackQuad extends SimpleTrackQuad implements FirstTrackConfigurable, SecondTrackConfigurable {
 
-   TrackSection secondAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
+
    protected Shape secondTrackElement;
 
-    public DoubleTrackQuad(int x, int y) {
-        super(x, y);
+    public DoubleTrackQuad(int x, int y) { super(x, y);
     }
 
     @Override

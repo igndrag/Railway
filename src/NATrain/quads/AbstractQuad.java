@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractQuad implements Quad{
+public abstract class AbstractQuad implements Quad {
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
     public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final Color CONFIGURED_ELEMENT_COLOR = Color.VIOLET;
@@ -27,6 +27,7 @@ public abstract class AbstractQuad implements Quad{
     protected String id;
     protected int x;
     protected int y;
+    protected QuadType quadType;
 
     protected Shape background;
     protected Group quadView;

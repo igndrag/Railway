@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TrackSectionRedactorController">
    <children>
-      <Button layoutX="211.0" layoutY="224.0" mnemonicParsing="false" prefWidth="60.0" text="Save" />
-      <ChoiceBox layoutX="121.0" layoutY="159.0" prefWidth="150.0" />
-      <TextField layoutX="124.0" layoutY="31.0" />
-      <Label layoutX="126.0" layoutY="11.0" text="Name" />
-      <RadioButton layoutX="121.0" layoutY="135.0" mnemonicParsing="false" text="Pared with..." />
-      <Label layoutX="126.0" layoutY="68.0" text="Initial position" />
-      <ToggleButton layoutX="121.0" layoutY="92.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="68.0" text="Normal" />
-      <ToggleButton layoutX="203.0" layoutY="92.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="68.0" text="Switched" />
-      <RadioButton layoutX="119.0" layoutY="198.0" mnemonicParsing="false" text="Inverse pared" />
-      <Pane fx:id="switchPreview" layoutX="20.0" layoutY="30.0" prefHeight="78.0" prefWidth="87.0" />
+      <Button layoutX="245.0" layoutY="158.0" mnemonicParsing="false" prefWidth="60.0" text="Save" />
+      <TextField fx:id="trackNameTextField" layoutX="128.0" layoutY="32.0" prefHeight="25.0" prefWidth="178.0" />
+      <Label layoutX="130.0" layoutY="12.0" text="Name" />
+      <Pane fx:id="trackSectionPreview" layoutX="21.0" layoutY="20.0" prefHeight="80.0" prefWidth="90.0" />
+      <Label layoutX="128.0" layoutY="82.0" text="CM Address:" />
+      <Label layoutX="128.0" layoutY="117.0" text="Channel Number:" />
+      <ChoiceBox fx:id="trackControlModuleChoiceBox" layoutX="236.0" layoutY="78.0" prefHeight="23.0" prefWidth="68.0" />
+      <ChoiceBox fx:id="trackChannelChoiceBox" layoutX="236.0" layoutY="113.0" prefHeight="23.0" prefWidth="68.0" />
    </children>
 </Pane>

@@ -1,6 +1,7 @@
 package NATrain.quads.SIQ;
 
 import NATrain.quads.BaseQuad;
+import NATrain.quads.QuadType;
 import NATrain.quads.SignalQuad;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -12,6 +13,7 @@ public class SIQ1_1 extends SignalQuad {
     public SIQ1_1(int x, int y) {
         super(x, y);
         paintView();
+        quadType = QuadType.SIQ1_1;
     }
 
     @Override

@@ -7,7 +7,6 @@ import javafx.scene.shape.Shape;
 
 public abstract class SimpleTrackQuad extends BaseQuad implements Quad, Paintable, Configurable, FirstTrackConfigurable {
 
-    protected TrackSection firstAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
     protected Shape firstTrackElement;
     protected Shape borderElement;
     protected Shape isolatorElement;

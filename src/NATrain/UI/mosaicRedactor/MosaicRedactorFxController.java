@@ -177,9 +177,9 @@ public class MosaicRedactorFxController {
         }
         workArea.setContent(gridPane);
 
-
         log("Track redactor initialized.");
         log("Choice quad from left panel.");
+
     }
 
     @FXML

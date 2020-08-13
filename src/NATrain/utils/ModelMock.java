@@ -38,12 +38,23 @@ public class ModelMock {
         Model.getSwitches().put("1", oneSwitch);
         Model.getSwitches().put("3", new Switch("3", SwitchState.MINUS));
 
-        TrackSection oneTrackSection = new TrackSection("1-3SP");
-        oneTrackSection.setControlModule(new TrackControlModule(1));
+        TrackSection oneTrackSection = new TrackSection ("1-3SP");
+        TrackSection twoTrackSection = new TrackSection ("SP");
+
         oneTrackSection.setChannel(1);
         Model.getTrackSections().put("1-3SP", oneTrackSection);
+        Model.getTrackSections().put("SP", twoTrackSection);
 
-        Model.getTrackSections().put("SP", new TrackSection("SP"));
+        TrackControlModule trackControlModule = new TrackControlModule(0);
+        trackControlModule.getChannels()[0] = oneTrackSection;
+        oneTrackSection.setControlModule(trackControlModule);
 
+        Model.getTrackControlModules().put(trackControlModule.getAddress(), trackControlModule);
+
+        TrackControlModule trackControlModule1 = new TrackControlModule(1);
+        trackControlModule.getChannels()[0] = twoTrackSection;
+        twoTrackSection.setControlModule(trackControlModule1);
+
+        Model.getTrackControlModules().put(trackControlModule1.getAddress(), trackControlModule1);
     }
 }

@@ -14,7 +14,7 @@ public class TrackSection extends TrackSideObject {
         if (controlModule != null)
             return controlModule.getAddress();
         else
-            return 0;
+            return -1;
     }
 
     public static final TrackSection EMPTY_TRACK_SECTION = new TrackSection("");

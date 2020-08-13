@@ -1,6 +1,7 @@
 package NATrain.quads.STQ;
 
 import NATrain.quads.BaseQuad;
+import NATrain.quads.QuadType;
 import NATrain.quads.SimpleTrackQuad;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
@@ -10,6 +11,8 @@ public class STQ2_2 extends SimpleTrackQuad {
 
     public STQ2_2(int x, int y) {
         super(x, y);
+        paintView();
+        quadType = QuadType.STQ2_2;
     }
 
     @Override

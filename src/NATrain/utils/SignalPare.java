@@ -2,9 +2,10 @@ package NATrain.utils;
 
 import NATrain.trackSideObjects.Signal;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class SignalPare {
+public class SignalPare implements Serializable {
     Signal from;
     Signal to;
 

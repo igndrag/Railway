@@ -5,10 +5,11 @@ import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
 import NATrain.utils.SignalPare;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Route {
+public class Route implements Serializable {
     Signal from;
     Signal to;
     SignalPare signalPare;

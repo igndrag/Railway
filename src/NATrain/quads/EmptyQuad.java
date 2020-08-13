@@ -4,12 +4,11 @@ import javafx.scene.Group;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-import java.util.Properties;
-
 public class EmptyQuad extends AbstractQuad {
 
     public EmptyQuad(int x, int y) {
         super(x, y);
+        quadType = QuadType.EMPTY_QUAD;
         Text text1 = new Text();
         text1.setX(20);
         text1.setY(50);

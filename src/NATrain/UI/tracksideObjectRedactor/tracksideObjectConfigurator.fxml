@@ -9,32 +9,19 @@
          <content>
             <Pane prefHeight="490.0" prefWidth="301.0">
                <children>
-                  <TableView fx:id="TrackSectionsTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="302.0">
+                  <TableView fx:id="trackSectionsTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="302.0">
                     <columns>
                         <TableColumn fx:id="trackSectionIdCol" prefWidth="70.0" text="ID" />
                         <TableColumn fx:id="trackSectionControlModuleCol" prefWidth="163.0" text="Control Module Address" />
                       <TableColumn fx:id="trackSectionChannelCol" minWidth="0.0" prefWidth="66.0" text="Channel" />
                     </columns>
                   </TableView>
-                  <Button layoutX="275.0" layoutY="432.0" mnemonicParsing="false" text="Create" />
+                  <Button fx:id="newTrackSectionButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                  <Button fx:id="editTrackSectionButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                  <Button fx:id="deleteTrackSectionButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Remove" />
                </children>
             </Pane>
          </content>
-    </Tab>
-    <Tab text="Switches">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
-    <Tab text="Signals">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
-    <Tab text="Custom Elements">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
     </Tab>
   </tabs>
 </TabPane>

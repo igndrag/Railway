@@ -2,20 +2,29 @@ package NATrain.UI;
 
 import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
+import NATrain.model.Model;
 import NATrain.utils.ModelMock;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 
 public class NavigatorFxController {
 
     private static Stage primaryStage;
     public static boolean constructorMode = false;
+    public static String modelURL = "model.ntm";
+
+    @FXML
+    private Button controlButton;
+
+    @FXML
+    private Button settingButton;
 
     @FXML
     private Button trackSideObjectRedactorButton;
@@ -23,26 +32,30 @@ public class NavigatorFxController {
     @FXML
     private Button mosaicRedactorButton;
 
-
     public static void setPrimaryStage(Stage mainStage) {
         primaryStage = mainStage;
     }
 
     public void initialize() {
+        constructorMode = true;
         ModelMock.MockModel();
+        constructorMode = false;
     }
 
     public void toTrackRedactor(ActionEvent actionEvent) throws IOException {
+       // Model.loadFromDisk();
         constructorMode = true;
         FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("mosaicTrackRedactor.fxml"));
         Stage trackRedactor = new Stage();
+        MosaicRedactorFxController.setPrimaryStage(trackRedactor);
         trackRedactor.setTitle("Mosaic Redactor");
         trackRedactor.setScene(new Scene(loader.load(), 800, 600));
         trackRedactor.setResizable(true);
         //MosaicRedactorFxController controller = loader.getController();
         //controller.initialize();
-        MosaicRedactorFxController.setPrimaryStage(trackRedactor);
+
         trackRedactor.setOnCloseRequest(event -> {
+        //    Model.saveOnDisk();
             primaryStage.show();
             constructorMode = false;
         });
@@ -66,4 +79,15 @@ public class NavigatorFxController {
         primaryStage.hide();
         tracksideObjectRedactor.show();
     }
+
+    @FXML
+    private void saveCollection(MouseEvent mouseEvent) {
+
+    }
+
+    @FXML
+    private void loadCollection(MouseEvent mouseEvent) {
+
+    }
+
 }
