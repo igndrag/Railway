@@ -25,6 +25,14 @@ public class QuadDTO implements Serializable {
         this.associatedSignal = originalQuad.associatedSignal;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     public static QuadDTO castToDTO(Quad quad) {
         return new QuadDTO ((BaseQuad) quad);
     }

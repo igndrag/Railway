@@ -81,4 +81,9 @@ public abstract class AbstractQuad implements Quad {
     public Group getView() {
         return quadView;
     }
+
+    @Override
+    public QuadType getType() {
+        return quadType;
+    }
 }

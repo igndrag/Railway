@@ -160,7 +160,7 @@ public class MosaicRedactorFxController {
         //*** grid pane panel initializing ***//
 
         gridPane = new GridPane();
-        gridPane.setCache(false);
+//        gridPane.setCache(false);
         int raws = Model.getMainGrid().length;
         int columns = Model.getMainGrid()[0].length;
 

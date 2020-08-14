@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Properties;
 
 public interface Quad {
+    QuadType getType();
     boolean isEmpty();
     void refresh();
     void select();

@@ -2,17 +2,16 @@ package NATrain.model;
 
 import NATrain.UI.NavigatorFxController;
 import NATrain.controller.Route;
-import NATrain.quads.AbstractQuad;
-import NATrain.quads.BaseQuad;
-import NATrain.quads.Quad;
+import NATrain.quads.*;
 import NATrain.remoteControlDevice.ControlModule;
+import NATrain.remoteControlDevice.SignalControlModule;
+import NATrain.remoteControlDevice.SwitchControlModule;
 import NATrain.remoteControlDevice.TrackControlModule;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
-import NATrain.trackSideObjects.TrackSideObject;
+import NATrain.utils.QuadFactory;
 import NATrain.utils.SignalPare;
-import javafx.collections.transformation.SortedList;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -23,57 +22,83 @@ public enum Model implements Serializable {
 
     INSTANCE;
 
-    private Quad[][] mainGrid = new Quad[20][20]; //default size yet
+    protected static Integer xSize = 20; //default size
+    protected static Integer ySize = 20;
 
-    private Map<Integer, ControlModule> controlModules = new HashMap<>();
+    private static Quad[][] mainGrid = new Quad[20][20];
 
-    private Map<SignalPare, HashSet<Route>> routeTable = new HashMap<>();
+    private static Map<SignalPare, HashSet<Route>> routeTable = new HashMap<>();
 
-    private Map<String, Switch> switches = new TreeMap();
+    private static Map<String, Switch> switches = new TreeMap();
 
-    private Map<String, Signal> signals =  new TreeMap();
+    private static Map<String, Signal> signals =  new TreeMap();
 
-    private Map<String, TrackSection> trackSections =  new TreeMap();
+    private static Map<String, TrackSection> trackSections =  new TreeMap();
 
-    private Map<Integer, TrackControlModule> trackControlModules = new TreeMap<>();
+    private static Map<Integer, TrackControlModule> trackControlModules = new TreeMap<>();
 
-    public Map<SignalPare, HashSet<Route>> getRouteTable() {
+    private static Map<Integer, SignalControlModule> signalControlModules = new TreeMap<>();
+
+    private static Map<Integer, SwitchControlModule> switchControlModules = new TreeMap<>();
+
+    public static Map<SignalPare, HashSet<Route>> getRouteTable() {
         return routeTable;
     }
 
     public static Map<Integer, TrackControlModule> getTrackControlModules() {
-        return INSTANCE.trackControlModules;
+        return trackControlModules;
     }
 
     public static Quad[][] getMainGrid() {
-        return INSTANCE.mainGrid;
+        return mainGrid;
     }
 
     public static Map<String, Switch> getSwitches() {
-        return INSTANCE.switches;
+        return switches;
     }
 
     public static Map<String, Signal> getSignals() {
-        return INSTANCE.signals;
+        return signals;
     }
 
     public static Map<String, TrackSection> getTrackSections() {
-        return INSTANCE.trackSections;
+        return trackSections;
     }
 
-    public void refreshAll() {
+    public static Map<Integer, SignalControlModule> getSignalControlModules() {
+        return signalControlModules;
+    }
+
+    public static Map<Integer, SwitchControlModule> getSwitchControlModules() {
+        return switchControlModules;
+    }
+
+    public static void refreshAll() {
         Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(Quad::refresh);
     }
 
-
     public static void saveOnDisk() {
         try {
-            ArrayList<Quad> notEmptyQuadDTOS = new ArrayList<>();
+            ArrayList<QuadDTO> notEmptyQuadDTOS = new ArrayList<>();
             File modelFile = new File(NavigatorFxController.modelURL);
             modelFile.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(modelFile);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(INSTANCE.mainGrid);
+            objectOutputStream.writeObject(xSize);
+            objectOutputStream.writeObject(ySize);
+            objectOutputStream.writeObject(trackSections);
+            objectOutputStream.writeObject(signals);
+            objectOutputStream.writeObject(switches);
+            objectOutputStream.writeObject(trackControlModules);
+            objectOutputStream.writeObject(signalControlModules);
+            objectOutputStream.writeObject(switchControlModules);
+
+            Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(quad -> {
+                if (quad.getType() != QuadType.EMPTY_QUAD) {
+                    notEmptyQuadDTOS.add(QuadDTO.castToDTO((BaseQuad)quad));
+                }
+            });
+            objectOutputStream.writeObject(notEmptyQuadDTOS);
             fileOutputStream.flush();
             objectOutputStream.close();
         } catch (IOException e) {
@@ -88,11 +113,33 @@ public enum Model implements Serializable {
                 File modelFile = new File(NavigatorFxController.modelURL);
                 FileInputStream fileInputStream = new FileInputStream(modelFile);
                 ObjectInputStream inputStream = new ObjectInputStream(fileInputStream);
+                xSize = (Integer) inputStream.readObject();
+                ySize  = (Integer) inputStream.readObject();
+                mainGrid = new Quad[ySize][xSize];
+                trackSections = (Map<String, TrackSection>) inputStream.readObject();
+                signals = (Map<String, Signal>) inputStream.readObject();
+                switches = (Map<String, Switch>) inputStream.readObject();
+                trackControlModules = (Map<Integer, TrackControlModule>) inputStream.readObject();
+                signalControlModules = (Map<Integer, SignalControlModule>) inputStream.readObject();
+                switchControlModules = (Map<Integer, SwitchControlModule>) inputStream.readObject();
+                ArrayList<QuadDTO> notEmptyQuadDTOS = (ArrayList<QuadDTO>) inputStream.readObject();
                 inputStream.close();
 
+                notEmptyQuadDTOS.forEach(quadDTO -> {
+                    getMainGrid()[quadDTO.getY()][quadDTO.getX()] = QuadDTO.castToQuad(quadDTO);
+                });
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+        }
+        //fill null elements or refresh loaded quads view
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++) {
+                if (mainGrid[y][x] == null)
+                    mainGrid[y][x] = new EmptyQuad(x, y);
+                else
+                    mainGrid[y][x].refresh();
+            }
         }
     }
 }

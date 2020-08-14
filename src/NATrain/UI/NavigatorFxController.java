@@ -82,12 +82,12 @@ public class NavigatorFxController {
 
     @FXML
     private void saveCollection(MouseEvent mouseEvent) {
-
+        Model.saveOnDisk();
     }
 
     @FXML
     private void loadCollection(MouseEvent mouseEvent) {
-
+        Model.loadFromDisk();
     }
 
 }
