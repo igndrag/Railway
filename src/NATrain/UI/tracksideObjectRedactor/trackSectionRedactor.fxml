@@ -5,13 +5,13 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TrackSectionRedactorController">
    <children>
-      <Button layoutX="245.0" layoutY="158.0" mnemonicParsing="false" prefWidth="60.0" text="Save" />
-      <TextField fx:id="trackNameTextField" layoutX="128.0" layoutY="32.0" prefHeight="25.0" prefWidth="178.0" />
+      <Button fx:id="saveButton" layoutX="245.0" layoutY="158.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
+      <TextField fx:id="textField" layoutX="128.0" layoutY="32.0" prefHeight="25.0" prefWidth="178.0" />
       <Label layoutX="130.0" layoutY="12.0" text="Name" />
       <Pane fx:id="trackSectionPreview" layoutX="21.0" layoutY="20.0" prefHeight="80.0" prefWidth="90.0" />
       <Label layoutX="128.0" layoutY="82.0" text="CM Address:" />
       <Label layoutX="128.0" layoutY="117.0" text="Channel Number:" />
-      <ChoiceBox fx:id="trackControlModuleChoiceBox" layoutX="236.0" layoutY="78.0" prefHeight="23.0" prefWidth="68.0" />
-      <ChoiceBox fx:id="trackChannelChoiceBox" layoutX="236.0" layoutY="113.0" prefHeight="23.0" prefWidth="68.0" />
+      <ChoiceBox fx:id="controlModuleChoiceBox" layoutX="236.0" layoutY="78.0" prefHeight="23.0" prefWidth="68.0" />
+      <ChoiceBox fx:id="channelChoiceBox" layoutX="236.0" layoutY="113.0" prefHeight="23.0" prefWidth="68.0" />
    </children>
 </Pane>

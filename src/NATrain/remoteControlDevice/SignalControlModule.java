@@ -1,5 +1,4 @@
 package NATrain.remoteControlDevice;
-
 import NATrain.trackSideObjects.Signal;
 
 public class SignalControlModule extends AbstractModule {
@@ -8,7 +7,6 @@ public class SignalControlModule extends AbstractModule {
         super(address);
         channels = new Signal[4];
     }
-
 
     @Override
     public void refreshObjectState(int channel, int responseCode) {
@@ -19,5 +17,4 @@ public class SignalControlModule extends AbstractModule {
     public void sendCommand(int channel, int commandCode) {
         //to request pool
     }
-
 }

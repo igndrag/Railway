@@ -14,7 +14,7 @@ public class TrackControlModule extends AbstractModule implements ControlModule{
 
     public TrackControlModule(int address) {
         super(address);
-        channels = new TrackSection[8];
+        channels = new TrackSection[3];
     }
 
     @Override
