@@ -1,6 +1,5 @@
 package NATrain.remoteControlDevice;
 
-import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.TrackSideObject;
 
 import java.io.Serializable;
@@ -30,6 +29,12 @@ public abstract class AbstractModule implements ControlModule, Serializable {
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void deleteTrackSideObjectFromChannel(Integer channel) {
+        if (channel != null)
+        channels[channel] = null;
     }
 
     public AbstractModule(int address) {

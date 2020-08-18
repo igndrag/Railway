@@ -20,54 +20,52 @@ public class TrackSectionRedactorController { //make generic class
     private TextField textField;
     @FXML
     private Pane trackSectionPreview; // just for future
-    @FXML
-    private ChoiceBox<String> controlModuleChoiceBox;
-    @FXML
-    private ChoiceBox<String> channelChoiceBox;
 
     private TableView<TrackSection> tableView;
 
     private TrackSection trackSection;
 
-    void init (TrackSection track, TableView<TrackSection> tableView) {
+    private Boolean edit = false;
+
+    private String initialName;
+
+    void init(TrackSection track, TableView<TrackSection> tableView) {
         this.tableView = tableView;
         this.trackSection = track;
-        TracksideObjectRedactorController.initializeControlModuleCheckBoxes(trackSection, controlModuleChoiceBox, channelChoiceBox);
-        textField.setText(trackSection.getId());
-        if (Model.getTrackSections().containsKey(trackSection.getId()))
-            textField.setDisable(true);
-        else {
-            textField.setOnMouseClicked(event -> {
-                textField.selectAll();
-            });
+
+        if (Model.getTrackSections().containsKey(track.getId())) {
+            initialName = track.getId();
+            edit = true;
+        } else {
+            edit = false;
         }
+        textField.setText(trackSection.getId());
+        textField.setOnMouseClicked(event -> {
+            textField.selectAll();
+        });
     }
 
     @FXML
     private void saveAndClose(ActionEvent actionEvent) {
+        String newTrackName = textField.getText();
+        trackSection.setId(newTrackName);
 
-        if (textField.getText().equals("") || textField.getText().equals("New Track Section")) {
+        if (newTrackName.equals("") || newTrackName.equals("New Track Section")) {
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setContentText("Please type track section name");
             a.show();
             return;
         }
 
-        if (!textField.isDisabled() && Model.getTrackSections().containsKey(trackSection.getId())) {
+        if ((!newTrackName.equals(initialName) || !edit) && Model.getTrackSections().containsKey(newTrackName)) {
             Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setContentText(String.format("Track section with name %s already exists!", textField.getText()));
+            a.setContentText(String.format("Track section with name %s is already exists!", textField.getText()));
             a.show();
             return;
         }
 
-        trackSection.setId(textField.getText());
-        if (!controlModuleChoiceBox.getValue().equals("none")) {
-            ControlModule controlModule = Model.getTrackControlModules().get(Integer.parseInt(controlModuleChoiceBox.getValue()));
-            if (!channelChoiceBox.getValue().equals("none")) {
-                trackSection.setControlModule(controlModule);
-                controlModule.setTrackSideObjectOnChannel(trackSection, Integer.parseInt(channelChoiceBox.getValue()));
-                trackSection.setChannel(Integer.parseInt(channelChoiceBox.getValue()));
-            }
+        if (edit && !textField.getText().equals(initialName)) {
+            Model.getTrackSections().remove(initialName);
         }
 
         Model.getTrackSections().putIfAbsent(trackSection.getId(), trackSection);

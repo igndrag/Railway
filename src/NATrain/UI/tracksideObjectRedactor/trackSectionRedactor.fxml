@@ -9,9 +9,5 @@
       <TextField fx:id="textField" layoutX="128.0" layoutY="32.0" prefHeight="25.0" prefWidth="178.0" />
       <Label layoutX="130.0" layoutY="12.0" text="Name" />
       <Pane fx:id="trackSectionPreview" layoutX="21.0" layoutY="20.0" prefHeight="80.0" prefWidth="90.0" />
-      <Label layoutX="128.0" layoutY="82.0" text="CM Address:" />
-      <Label layoutX="128.0" layoutY="117.0" text="Channel Number:" />
-      <ChoiceBox fx:id="controlModuleChoiceBox" layoutX="236.0" layoutY="78.0" prefHeight="23.0" prefWidth="68.0" />
-      <ChoiceBox fx:id="channelChoiceBox" layoutX="236.0" layoutY="113.0" prefHeight="23.0" prefWidth="68.0" />
    </children>
 </Pane>

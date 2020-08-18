@@ -29,17 +29,17 @@ public enum Model implements Serializable {
 
     private static Map<SignalPare, HashSet<Route>> routeTable = new HashMap<>();
 
-    private static Map<String, Switch> switches = new TreeMap();
+    private static Map<String, Switch> switches = new HashMap<>();
 
-    private static Map<String, Signal> signals =  new TreeMap();
+    private static Map<String, Signal> signals = new HashMap<>();
 
-    private static Map<String, TrackSection> trackSections =  new TreeMap();
+    private static Map<String, TrackSection> trackSections =  new HashMap<>();
 
-    private static Map<Integer, TrackControlModule> trackControlModules = new TreeMap<>();
+    private static Map<Integer, TrackControlModule> trackControlModules = new HashMap<>();
 
-    private static Map<Integer, SignalControlModule> signalControlModules = new TreeMap<>();
+    private static Map<Integer, SignalControlModule> signalControlModules = new HashMap<>();
 
-    private static Map<Integer, SwitchControlModule> switchControlModules = new TreeMap<>();
+    private static Map<Integer, SwitchControlModule> switchControlModules = new HashMap<>();
 
     public static Map<SignalPare, HashSet<Route>> getRouteTable() {
         return routeTable;

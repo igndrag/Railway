@@ -2,7 +2,6 @@ package NATrain.UI.tracksideObjectRedactor;
 
 import NATrain.model.Model;
 import NATrain.trackSideObjects.TrackSection;
-import NATrain.trackSideObjects.TrackSideObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -53,7 +52,7 @@ public class TracksideObjectRedactorController {
     public void initialize() {
         trackSectionIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         trackSectionChannelCol.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        trackSectionControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("ControlModuleAddress"));
+        trackSectionControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("controlModuleAddress"));
         editTrackSectionButton.setDisable(true);
         deleteTrackSectionButton.setDisable(true);
 
@@ -72,8 +71,12 @@ public class TracksideObjectRedactorController {
         });
 
         deleteTrackSectionButton.setOnAction(event -> {
-            trackSectionList.remove(trackSectionsTableView.getSelectionModel().getSelectedItem());
-            Model.getTrackSections().remove(trackSectionsTableView.getSelectionModel().getSelectedItem());
+            TrackSection trackForDelete = trackSectionsTableView.getSelectionModel().getSelectedItem();
+            if (trackForDelete.getControlModule() != null)
+                trackForDelete.getControlModule().deleteTrackSideObjectFromChannel(trackForDelete.getChannel());
+            trackForDelete.setControlModule(null);
+            trackSectionList.remove(trackForDelete);
+            Model.getTrackSections().remove(trackForDelete.getId());
             if (trackSectionList.size() == 0) {
                 editTrackSectionButton.setDisable(true);
                 deleteTrackSectionButton.setDisable(true);
@@ -110,53 +113,4 @@ public class TracksideObjectRedactorController {
         trackSectionRedactor.show();
     }
 
-    protected static void initializeControlModuleCheckBoxes (TrackSideObject trackSideObject, ChoiceBox<String> controlModuleChoiceBox, ChoiceBox<String> channelChoiceBox) {
-        ObservableList<String> controlModuleAddressList = FXCollections.observableArrayList();
-        controlModuleChoiceBox.setItems(controlModuleAddressList);
-
-        ObservableList<String> channelAddressList = FXCollections.observableArrayList();
-        channelChoiceBox.setItems(channelAddressList);
-
-        controlModuleAddressList.add("none");
-        channelAddressList.add("none");
-
-        Model.getTrackControlModules().values().forEach(trackControlModule -> {
-            if (trackControlModule.hasNotConfiguredChannels())
-                controlModuleAddressList.add(trackControlModule.getAddress().toString());
-        });
-
-        if (trackSideObject.getControlModule() != null) {
-            String controlModuleAddress = trackSideObject.getControlModule().getAddress().toString();
-            if (!controlModuleAddressList.contains(controlModuleAddress))
-                controlModuleAddressList.add(controlModuleAddress);
-            controlModuleChoiceBox.setValue(controlModuleAddress);
-            trackSideObject.getControlModule().getNotConfiguredChannels().forEach(chNumber -> {
-                channelAddressList.add(chNumber.toString());
-            });
-        } else controlModuleChoiceBox.setValue("none");
-
-        if (trackSideObject.getChannel() != null) {
-            String channelAddress = trackSideObject.getChannel().toString();
-            channelAddressList.add(channelAddress);
-            channelChoiceBox.setValue(channelAddress);
-        } else channelChoiceBox.setValue("none");
-
-        controlModuleChoiceBox.setOnAction(event -> {
-            channelAddressList.clear();
-            if (!controlModuleChoiceBox.getValue().equals("none"))
-                Model.getTrackControlModules().get(Integer.parseInt(controlModuleChoiceBox.getValue())).getNotConfiguredChannels().forEach(chNumber -> {
-                    channelAddressList.add(chNumber.toString());
-                });
-            channelAddressList.add("none");
-            if (trackSideObject.getControlModule() != null
-                    && controlModuleChoiceBox.getValue()
-                    .equals(trackSideObject.getControlModule().getAddress().toString())
-                    && trackSideObject.getChannel() != null) {
-                String channelAddress = trackSideObject.getChannel().toString();
-                channelAddressList.add(channelAddress);
-                channelChoiceBox.setValue(channelAddress);
-            } else
-            channelChoiceBox.setValue("none");
-        });
-    }
 }

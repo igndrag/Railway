@@ -53,8 +53,6 @@ public class ModelMock {
 
         TrackControlModule trackControlModule1 = new TrackControlModule(1);
         trackControlModule.getChannels()[0] = twoTrackSection;
-        trackControlModule.getChannels()[1] = new TrackSection("SPP");
-        trackControlModule.getChannels()[2] = new TrackSection("SPP2");
         twoTrackSection.setControlModule(trackControlModule1);
 
         Model.getTrackControlModules().put(trackControlModule1.getAddress(), trackControlModule1);

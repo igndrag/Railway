@@ -42,7 +42,6 @@ public abstract class TrackSideObject implements Serializable {
     public Integer getControlModuleAddress() {
         if (controlModule != null)
             return controlModule.getAddress();
-        else
-            return null;
+        return null;
     }
 }

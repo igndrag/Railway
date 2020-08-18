@@ -10,6 +10,8 @@ public interface ControlModule {
 
     void setTrackSideObjectOnChannel (TrackSideObject trackSideObject, int channel);
 
+    void deleteTrackSideObjectFromChannel(Integer channel);
+
     void refreshObjectState(int channel, int responseCode);
 
     void sendCommand(int channel, int commandCode);
