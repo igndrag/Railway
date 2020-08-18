@@ -7,13 +7,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TrackSideObject implements Serializable {
+public abstract class TracksideObject implements Serializable {
 
     ControlModule controlModule;
     Integer channel;
     private String id;
 
-    public TrackSideObject(String id) {
+    public TracksideObject(String id) {
         this.id = id;
     }
 

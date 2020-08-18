@@ -1,7 +1,7 @@
 package NATrain.UI;
 
 import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
-import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
+import NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController;
 import NATrain.model.Model;
 import NATrain.utils.ModelMock;
 import javafx.event.ActionEvent;
@@ -65,14 +65,14 @@ public class NavigatorFxController {
 
 
     public void toTracksideObjectRedactor(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(TracksideObjectRedactorController.class.getResource("tracksideObjectConfigurator.fxml"));
+        FXMLLoader loader = new FXMLLoader(TracksideObjectNavigatorController.class.getResource("tracksideObjectNavigator.fxml"));
         Stage tracksideObjectRedactor = new Stage();
         tracksideObjectRedactor.setTitle("Trackside Object Redactor");
         tracksideObjectRedactor.setScene(new Scene(loader.load(), 350, 500));
         tracksideObjectRedactor.setResizable(false);
         //MosaicRedactorFxController controller = loader.getController();
         //controller.initialize();
-        TracksideObjectRedactorController.setPrimaryStage(tracksideObjectRedactor);
+        TracksideObjectNavigatorController.setPrimaryStage(tracksideObjectRedactor);
         tracksideObjectRedactor.setOnCloseRequest(event -> {
             primaryStage.show();
         });

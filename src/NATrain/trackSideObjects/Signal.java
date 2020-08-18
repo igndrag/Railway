@@ -2,12 +2,11 @@ package NATrain.trackSideObjects;
 
 import NATrain.controller.SignalState;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Signal extends TrackSideObject{
+public class Signal extends TracksideObject {
 
     public static final Signal EMPTY_SIGNAL = new Signal("", Collections.emptySet(), SignalType.EMPTY_SIGNAL);
 

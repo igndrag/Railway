@@ -1,6 +1,6 @@
 package NATrain.remoteControlDevice;
 
-import NATrain.trackSideObjects.TrackSideObject;
+import NATrain.trackSideObjects.TracksideObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,11 +9,11 @@ import java.util.List;
 public abstract class AbstractModule implements ControlModule, Serializable {
 
     protected Integer address;
-    protected TrackSideObject [] channels;
+    protected TracksideObject[] channels;
 
     public AbstractModule(){};
 
-    public TrackSideObject[] getChannels() {
+    public TracksideObject[] getChannels() {
         return channels;
     }
 
@@ -23,7 +23,7 @@ public abstract class AbstractModule implements ControlModule, Serializable {
     }
 
     @Override
-    public void setTrackSideObjectOnChannel(TrackSideObject trackSideObject, int channel) {
+    public void setTrackSideObjectOnChannel(TracksideObject trackSideObject, int channel) {
         try {
             channels[channel] = trackSideObject;
         } catch (IndexOutOfBoundsException e) {
@@ -42,7 +42,7 @@ public abstract class AbstractModule implements ControlModule, Serializable {
     }
 
     public boolean hasNotConfiguredChannels() {
-        for (TrackSideObject channel : channels) {
+        for (TracksideObject channel : channels) {
             if (channel == null) return true;
         }
         return false;

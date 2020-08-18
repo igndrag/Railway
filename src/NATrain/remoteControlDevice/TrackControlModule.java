@@ -2,9 +2,6 @@ package NATrain.remoteControlDevice;
 
 import NATrain.connectionService.RequestExecutor;
 import NATrain.trackSideObjects.TrackSection;
-import NATrain.trackSideObjects.TrackSideObject;
-
-import java.util.HashMap;
 
 public class TrackControlModule extends AbstractModule implements ControlModule{
 

@@ -1,6 +1,6 @@
 package NATrain.remoteControlDevice;
 
-import NATrain.trackSideObjects.TrackSideObject;
+import NATrain.trackSideObjects.TracksideObject;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ public interface ControlModule {
 
     Integer getAddress();
 
-    void setTrackSideObjectOnChannel (TrackSideObject trackSideObject, int channel);
+    void setTrackSideObjectOnChannel (TracksideObject trackSideObject, int channel);
 
     void deleteTrackSideObjectFromChannel(Integer channel);
 

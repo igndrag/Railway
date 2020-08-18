@@ -2,115 +2,85 @@ package NATrain.UI.tracksideObjectRedactor;
 
 import NATrain.model.Model;
 import NATrain.trackSideObjects.TrackSection;
-import javafx.collections.FXCollections;
+import NATrain.trackSideObjects.TracksideObject;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import java.io.IOException;
+
 import java.util.Comparator;
+import java.util.Map;
 
-public class TracksideObjectRedactorController {
-
-    protected static ObservableList<TrackSection> trackSectionList;
-
-    private static Stage primaryStage;
+public abstract class TracksideObjectRedactorController implements TSORedactor {
 
     @FXML
-    private Button newTrackSectionButton;
-
+    protected TextField textField;
     @FXML
-    private Button editTrackSectionButton;
+    protected Pane preview; // just for future
 
-    @FXML
-    private Button deleteTrackSectionButton;
+    private ObservableList<TracksideObject> observableList;
 
-    @FXML
-    private TableColumn<TrackSection, String> trackSectionIdCol;
+    private TableView<TracksideObject> tableView;
 
-    @FXML
-    private TableColumn<TrackSection, Integer> trackSectionControlModuleCol;
+    protected TracksideObject trackSideObject;
 
-    @FXML
-    private TableColumn<TrackSection, Integer> trackSectionChannelCol;
+    protected Boolean edit = false;
 
-    @FXML
-    protected TableView<TrackSection> trackSectionsTableView;
+    protected String initialName;
 
+    void init(TracksideObject tracksideObject, Map <String,? extends TracksideObject> modelMap, TableView<TracksideObject> tableView, ObservableList<TracksideObject> observableList) {
+        this.tableView = tableView;
+        this.trackSideObject = tracksideObject;
+        this.observableList = observableList;
 
-    public static void setPrimaryStage(Stage mainStage) {
-        primaryStage = mainStage;
-    }
-
-    public void initialize() {
-        trackSectionIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        trackSectionChannelCol.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        trackSectionControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("controlModuleAddress"));
-        editTrackSectionButton.setDisable(true);
-        deleteTrackSectionButton.setDisable(true);
-
-
-        trackSectionList = FXCollections.observableArrayList(Model.getTrackSections().values());
-        trackSectionList.sort(Comparator.comparing(TrackSection::getId));
-        trackSectionsTableView.setItems(trackSectionList);
-
-        newTrackSectionButton.setOnMouseClicked(event -> {
-            try {
-                TrackSection trackSection = new TrackSection("New Track Section");
-                toTrackSectionRedactor(trackSection);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        deleteTrackSectionButton.setOnAction(event -> {
-            TrackSection trackForDelete = trackSectionsTableView.getSelectionModel().getSelectedItem();
-            if (trackForDelete.getControlModule() != null)
-                trackForDelete.getControlModule().deleteTrackSideObjectFromChannel(trackForDelete.getChannel());
-            trackForDelete.setControlModule(null);
-            trackSectionList.remove(trackForDelete);
-            Model.getTrackSections().remove(trackForDelete.getId());
-            if (trackSectionList.size() == 0) {
-                editTrackSectionButton.setDisable(true);
-                deleteTrackSectionButton.setDisable(true);
-            }
-        });
-
-        editTrackSectionButton.setOnAction(event -> {
-            try {
-                toTrackSectionRedactor(trackSectionsTableView.getSelectionModel().getSelectedItem());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        trackSectionsTableView.setOnMouseClicked(event -> {
-            if (trackSectionsTableView.getSelectionModel().getSelectedItem() != null) {
-                editTrackSectionButton.setDisable(false);
-                deleteTrackSectionButton.setDisable(false);
-                trackSectionsTableView.setOnMouseClicked(null);
-            }
+        if (modelMap.containsKey(tracksideObject.getId())) {
+            initialName = tracksideObject.getId();
+            edit = true;
+        } else {
+            edit = false;
+        }
+        textField.setText(tracksideObject.getId());
+        textField.setOnMouseClicked(event -> {
+            textField.selectAll();
         });
     }
 
-    private void toTrackSectionRedactor (TrackSection trackSection) throws IOException {
-        FXMLLoader loader = new FXMLLoader(TrackSectionRedactorController.class.getResource("trackSectionRedactor.fxml"));
-        Stage trackSectionRedactor = new Stage();
-        trackSectionRedactor.setTitle("Track Section Redactor");
-        trackSectionRedactor.setScene(new Scene(loader.load(), 325, 200));
-        trackSectionRedactor.setResizable(false);
-        TrackSectionRedactorController controller = loader.getController();
-        controller.init(trackSection, trackSectionsTableView);
-        trackSectionRedactor.initModality(Modality.WINDOW_MODAL);
-        trackSectionRedactor.initOwner(primaryStage);
-        trackSectionRedactor.show();
+    protected <T> void updateModelAndClose(Map<String,T> modelMap) {
+        if (edit && !textField.getText().equals(initialName)) {
+            modelMap.remove(initialName);
+        }
+
+        modelMap.putIfAbsent(trackSideObject.getId(), (T)trackSideObject);
+        if (!observableList.contains(trackSideObject)) {
+            observableList.add(trackSideObject);
+        }
+
+        observableList.sort(Comparator.comparing(TracksideObject::getId));
+        Stage thisStage = (Stage) textField.getScene().getWindow();
+        tableView.refresh();
+        thisStage.close();
     }
 
+    protected boolean isNameValid() {
+        String newName = textField.getText();
+        if (newName.equals("")) {
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setContentText("Please type correct name");
+            a.show();
+            return false;
+        }
+
+        if ((!newName.equals(initialName) || !edit) && Model.getTrackSections().containsKey(newName)) {
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setContentText(String.format("Trackside object with name %s is already exists!", textField.getText()));
+            a.show();
+            return false;
+        }
+        return true;
+    }
 }

@@ -1,11 +1,9 @@
 package NATrain.trackSideObjects;
 
 import NATrain.controller.TrackSectionState;
-import NATrain.remoteControlDevice.ControlModule;
-import NATrain.remoteControlDevice.TrackControlModule;
 
 
-public class TrackSection extends TrackSideObject {
+public class TrackSection extends TracksideObject {
 
     public static final TrackSection EMPTY_TRACK_SECTION = new TrackSection("");
 

@@ -3,7 +3,7 @@ package NATrain.trackSideObjects;
 import NATrain.controller.SwitchState;
 
 
-public class Switch extends TrackSideObject {
+public class Switch extends TracksideObject {
 
     public static final Switch EMPTY_SWITCH = new Switch("", SwitchState.PLUS);
 
