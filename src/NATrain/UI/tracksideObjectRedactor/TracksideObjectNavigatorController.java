@@ -1,5 +1,6 @@
 package NATrain.UI.tracksideObjectRedactor;
 
+import NATrain.UI.tracksideObjectRedactor.TSORedactors.TrackSectionRedactorController;
 import NATrain.model.Model;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
@@ -59,7 +60,6 @@ public class TracksideObjectNavigatorController {
         editTrackSectionButton.setDisable(true);
         deleteTrackSectionButton.setDisable(true);
 
-
         trackSectionList = FXCollections.observableArrayList(Model.getTrackSections().values());
         trackSectionList.sort(Comparator.comparing(TracksideObject::getId));
         trackSectionsTableView.setItems(trackSectionList);
@@ -101,6 +101,8 @@ public class TracksideObjectNavigatorController {
                 trackSectionsTableView.setOnMouseClicked(null);
             }
         });
+
+
     }
 
     private void toTrackSectionRedactor (TrackSection trackSection) throws IOException {
@@ -110,10 +112,14 @@ public class TracksideObjectNavigatorController {
         trackSectionRedactor.setScene(new Scene(loader.load(), 325, 200));
         trackSectionRedactor.setResizable(false);
         TrackSectionRedactorController controller = loader.getController();
-        controller.init(trackSection, Model.getTrackSections(), trackSectionsTableView, trackSectionList);
+        controller.init(trackSection, trackSectionsTableView, trackSectionList);
         trackSectionRedactor.initModality(Modality.WINDOW_MODAL);
         trackSectionRedactor.initOwner(primaryStage);
         trackSectionRedactor.show();
     }
+
+
+
+
 
 }

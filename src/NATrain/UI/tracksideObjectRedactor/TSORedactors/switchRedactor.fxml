@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.SwitchRedactorController">
+   <children>
+      <Button layoutX="246.0" layoutY="181.0" mnemonicParsing="false" prefWidth="60.0" text="Save" />
+      <ChoiceBox fx:id="paredSwitchChoiceBox" layoutX="219.0" layoutY="135.0" prefHeight="25.0" prefWidth="85.0" />
+      <TextField fx:id="textField" layoutX="128.0" layoutY="32.0" prefHeight="25.0" prefWidth="176.0" />
+      <Label layoutX="130.0" layoutY="12.0" text="Name" />
+      <RadioButton fx:id="paredCheckbox" layoutX="126.0" layoutY="138.0" mnemonicParsing="false" text="Pared with..." />
+      <Label layoutX="132.0" layoutY="68.0" text="Initial Position" />
+      <ToggleButton fx:id="normalInitialPositionToggleButton" layoutX="127.0" layoutY="93.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="68.0" text="Normal" />
+      <ToggleButton fx:id="switchedInitialPositionToggleButton" layoutX="237.0" layoutY="94.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="68.0" text="Switched" />
+      <Pane fx:id="switchPreview" layoutX="21.0" layoutY="20.0" prefHeight="80.0" prefWidth="90.0" />
+   </children>
+</Pane>

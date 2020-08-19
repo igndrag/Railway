@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TrackSectionRedactorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.TrackSectionRedactorController">
    <children>
       <Button fx:id="saveButton" layoutX="245.0" layoutY="158.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
       <TextField fx:id="textField" layoutX="128.0" layoutY="32.0" prefHeight="25.0" prefWidth="178.0" />

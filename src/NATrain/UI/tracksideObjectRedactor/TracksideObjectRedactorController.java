@@ -1,5 +1,6 @@
 package NATrain.UI.tracksideObjectRedactor;
 
+import NATrain.UI.tracksideObjectRedactor.TSORedactor;
 import NATrain.model.Model;
 import NATrain.trackSideObjects.TrackSection;
 import NATrain.trackSideObjects.TracksideObject;
@@ -23,21 +24,16 @@ public abstract class TracksideObjectRedactorController implements TSORedactor {
     @FXML
     protected Pane preview; // just for future
 
-    private ObservableList<TracksideObject> observableList;
+    protected ObservableList<TracksideObject> observableList;
 
-    private TableView<TracksideObject> tableView;
-
-    protected TracksideObject trackSideObject;
+    protected TableView<TracksideObject> tableView;
 
     protected Boolean edit = false;
 
     protected String initialName;
 
-    void init(TracksideObject tracksideObject, Map <String,? extends TracksideObject> modelMap, TableView<TracksideObject> tableView, ObservableList<TracksideObject> observableList) {
-        this.tableView = tableView;
-        this.trackSideObject = tracksideObject;
-        this.observableList = observableList;
 
+    protected <T extends TracksideObject> void initTextField (Map <String, T> modelMap, T tracksideObject) {
         if (modelMap.containsKey(tracksideObject.getId())) {
             initialName = tracksideObject.getId();
             edit = true;
@@ -50,7 +46,7 @@ public abstract class TracksideObjectRedactorController implements TSORedactor {
         });
     }
 
-    protected <T> void updateModelAndClose(Map<String,T> modelMap) {
+    protected <T extends TracksideObject> void updateModelAndClose(Map<String,T> modelMap, T trackSideObject) {
         if (edit && !textField.getText().equals(initialName)) {
             modelMap.remove(initialName);
         }
