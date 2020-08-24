@@ -19,10 +19,26 @@ public class QuadDTO implements Serializable {
         this.x = originalQuad.x;
         this.y = originalQuad.y;
         this.quadType = originalQuad.quadType;
-        this.firstAssociatedTrack = originalQuad.firstAssociatedTrack;
-        this.secondAssociatedTrack = originalQuad.secondAssociatedTrack;
-        this.associatedSwitch = originalQuad.associatedSwitch;
-        this.associatedSignal = originalQuad.associatedSignal;
+
+        if (originalQuad.firstAssociatedTrack == TrackSection.EMPTY_TRACK_SECTION)
+            this.firstAssociatedTrack = null;
+        else
+            this.firstAssociatedTrack = originalQuad.firstAssociatedTrack;
+
+        if (originalQuad.secondAssociatedTrack == TrackSection.EMPTY_TRACK_SECTION)
+            this.secondAssociatedTrack = null;
+        else
+            this.secondAssociatedTrack = originalQuad.secondAssociatedTrack;
+
+        if (originalQuad.associatedSwitch == Switch.EMPTY_SWITCH)
+            this.associatedSwitch = null;
+        else
+            this.associatedSwitch = originalQuad.associatedSwitch;
+
+        if (originalQuad.associatedSignal == Signal.EMPTY_SIGNAL)
+            this.associatedSignal = null;
+        else
+            this.associatedSignal = originalQuad.associatedSignal;
     }
 
     public int getX() {
@@ -39,10 +55,25 @@ public class QuadDTO implements Serializable {
 
     public static Quad castToQuad(QuadDTO quadDTO) {
         BaseQuad baseQuad = (BaseQuad) QuadFactory.createQuad(quadDTO.x, quadDTO.y, quadDTO.quadType);
-        baseQuad.firstAssociatedTrack = quadDTO.firstAssociatedTrack;
-        baseQuad.secondAssociatedTrack = quadDTO.secondAssociatedTrack;
-        baseQuad.associatedSwitch = quadDTO.associatedSwitch;
-        baseQuad.associatedSignal = quadDTO.associatedSignal;
+        if (quadDTO.firstAssociatedTrack == null)
+            baseQuad.firstAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
+        else
+            baseQuad.firstAssociatedTrack = quadDTO.firstAssociatedTrack;
+
+        if (quadDTO.secondAssociatedTrack == null)
+            baseQuad.secondAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
+        else
+            baseQuad.secondAssociatedTrack = quadDTO.secondAssociatedTrack;
+
+        if (quadDTO.associatedSwitch == null)
+            baseQuad.associatedSwitch = Switch.EMPTY_SWITCH;
+        else
+            baseQuad.associatedSwitch = quadDTO.associatedSwitch;
+
+        if (quadDTO.associatedSignal == null)
+            baseQuad.associatedSignal = Signal.EMPTY_SIGNAL;
+        else
+            baseQuad.associatedSignal = quadDTO.associatedSignal;
         return baseQuad;
     }
 }

@@ -94,7 +94,7 @@ public enum Model implements Serializable {
 
             Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(quad -> {
                 if (quad.getType() != QuadType.EMPTY_QUAD) {
-                    notEmptyQuadDTOS.add(QuadDTO.castToDTO((BaseQuad)quad));
+                    notEmptyQuadDTOS.add(QuadDTO.castToDTO(quad));
                 }
             });
             objectOutputStream.writeObject(notEmptyQuadDTOS);
@@ -107,6 +107,7 @@ public enum Model implements Serializable {
 
     public static void loadFromDisk() {
         try {
+            NavigatorFxController.constructorMode = true;
             Path path = Paths.get(NavigatorFxController.modelURL);
             if (path.toFile().exists()) {
                 File modelFile = new File(NavigatorFxController.modelURL);
