@@ -5,7 +5,8 @@ import NATrain.controller.SwitchState;
 
 public class Switch extends TracksideObject {
 
-    public static final Switch EMPTY_SWITCH = new Switch("", SwitchState.PLUS);
+    public static final Switch EMPTY_SWITCH = new Switch("");
+    public static final String INITIAL_SWITCH_NAME = "New Switch";
 
     private SwitchState normalState = SwitchState.PLUS;
     transient private SwitchState switchState = SwitchState.UNDEFINED;
@@ -13,14 +14,18 @@ public class Switch extends TracksideObject {
     private boolean pared = false;
     private boolean interlocked = false;
 
-    public Switch(String id, SwitchState normalState) {
+    public Switch(String id) {
         super(id);
-        this.normalState = normalState;
     }
 
     public void setParedSwitch(Switch anotherSwitch) {
-        pared = true;
-        this.paredSwitch = anotherSwitch;
+        if (anotherSwitch == null) {
+            pared = false;
+            paredSwitch = null;
+        } else {
+            pared = true;
+            this.paredSwitch = anotherSwitch;
+        }
     }
 
     public void deleteParedSwitch(Switch paredSwitch) {

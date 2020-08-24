@@ -32,10 +32,9 @@ public abstract class TracksideObjectRedactorController implements TSORedactor {
 
     protected String initialName;
 
-
     protected <T extends TracksideObject> void initTextField (Map <String, T> modelMap, T tracksideObject) {
         if (modelMap.containsKey(tracksideObject.getId())) {
-            initialName = tracksideObject.getId();
+            this.initialName = tracksideObject.getId();
             edit = true;
         } else {
             edit = false;
@@ -43,6 +42,7 @@ public abstract class TracksideObjectRedactorController implements TSORedactor {
         textField.setText(tracksideObject.getId());
         textField.setOnMouseClicked(event -> {
             textField.selectAll();
+            textField.setOnMouseClicked(null);
         });
     }
 
@@ -62,16 +62,16 @@ public abstract class TracksideObjectRedactorController implements TSORedactor {
         thisStage.close();
     }
 
-    protected boolean isNameValid() {
+    protected boolean isNameValid(Map <String,? extends TracksideObject> modelMap, String defaultName) {
         String newName = textField.getText();
-        if (newName.equals("")) {
+        if (newName.equals("") || newName.equals(defaultName)) {
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setContentText("Please type correct name");
             a.show();
             return false;
         }
 
-        if ((!newName.equals(initialName) || !edit) && Model.getTrackSections().containsKey(newName)) {
+        if ((!newName.equals(initialName) || !edit) && modelMap.containsKey(newName)) {
             Alert a = new Alert(Alert.AlertType.WARNING);
             a.setContentText(String.format("Trackside object with name %s is already exists!", textField.getText()));
             a.show();

@@ -25,7 +25,7 @@ public class TrackSectionRedactorController extends TracksideObjectRedactorContr
     @Override
     public void saveAndClose(ActionEvent actionEvent) {
         trackSection.setId(textField.getText());
-        if (!isNameValid())
+        if (!isNameValid(Model.getTrackSections(), TrackSection.INITIAL_TRACK_SECTION_NAME))
             return;
         updateModelAndClose(Model.getTrackSections(), trackSection);
     }

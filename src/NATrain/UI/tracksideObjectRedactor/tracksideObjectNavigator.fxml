@@ -23,5 +23,42 @@
             </Pane>
          </content>
     </Tab>
+      <Tab text="Switches">
+          <content>
+              <Pane prefHeight="490.0" prefWidth="301.0">
+                  <children>
+                      <TableView fx:id="switchTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="302.0">
+                          <columns>
+                              <TableColumn fx:id="switchIdCol" prefWidth="70.0" text="ID" />
+                              <TableColumn fx:id="switchControlModuleCol" prefWidth="163.0" text="Control Module Address" />
+                              <TableColumn fx:id="switchChannelCol" minWidth="0.0" prefWidth="66.0" text="Channel" />
+                          </columns>
+                      </TableView>
+                      <Button fx:id="newSwitchButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editSwitchButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteSwitchButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Remove" />
+                  </children>
+              </Pane>
+          </content>
+      </Tab>
+
+      <Tab text="Signals">
+          <content>
+              <Pane prefHeight="490.0" prefWidth="301.0">
+                  <children>
+                      <TableView fx:id="signalTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="302.0">
+                          <columns>
+                              <TableColumn fx:id="signalIdCol" prefWidth="70.0" text="ID" />
+                              <TableColumn fx:id="signalControlModuleCol" prefWidth="163.0" text="Control Module Address" />
+                              <TableColumn fx:id="signalChannelCol" minWidth="0.0" prefWidth="66.0" text="Channel" />
+                          </columns>
+                      </TableView>
+                      <Button fx:id="newSignalButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editSignalButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteSignalButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Remove" />
+                  </children>
+              </Pane>
+          </content>
+      </Tab>
   </tabs>
 </TabPane>

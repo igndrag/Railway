@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.SignalRedactorController">
+   <children>
+      <Button fx:id="saveButton" layoutX="246.0" layoutY="181.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
+      <TextField fx:id="textField" layoutX="128.0" layoutY="32.0" prefHeight="25.0" prefWidth="176.0" />
+      <Label layoutX="130.0" layoutY="12.0" text="Name" />
+      <Label layoutX="132.0" layoutY="68.0" text="Signal type" />
+      <ToggleButton fx:id="trackToggleButton" layoutX="127.0" layoutY="93.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="68.0" text="Track" />
+      <ToggleButton fx:id="trimmerToggleButton" layoutX="237.0" layoutY="94.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="68.0" text="Trimmer" />
+      <Pane fx:id="signalPreview" layoutX="21.0" layoutY="20.0" prefHeight="80.0" prefWidth="90.0" />
+   </children>
+</Pane>
