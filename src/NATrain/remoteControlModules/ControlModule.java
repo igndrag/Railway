@@ -6,7 +6,13 @@ import java.util.List;
 
 public interface ControlModule {
 
+    String getType();
+
+    String getId();
+
     Integer getAddress();
+
+    TracksideObject[] getChannels();
 
     void setTrackSideObjectOnChannel (TracksideObject trackSideObject, int channel);
 

@@ -21,13 +21,10 @@ import java.util.Comparator;
 
 public class TracksideObjectNavigatorController {
 
-
     protected ObservableList<TracksideObject> trackSectionList;
     protected ObservableList<TracksideObject> switchList;
     protected ObservableList<TracksideObject> signalList;
-
     private static Stage primaryStage;
-
 
     @FXML
     private TableView<TracksideObject> switchTableView;
@@ -43,8 +40,6 @@ public class TracksideObjectNavigatorController {
     private Button editSwitchButton;
     @FXML
     private Button deleteSwitchButton;
-
-
     @FXML
     private Button newTrackSectionButton;
     @FXML
@@ -59,7 +54,6 @@ public class TracksideObjectNavigatorController {
     private TableColumn<TrackSection, Integer> trackSectionChannelCol;
     @FXML
     protected TableView<TracksideObject> trackSectionsTableView;
-
     @FXML
     private TableView<TracksideObject> signalTableView;
     @FXML
@@ -74,7 +68,6 @@ public class TracksideObjectNavigatorController {
     private Button editSignalButton;
     @FXML
     private Button deleteSignalButton;
-
 
     public static void setPrimaryStage(Stage mainStage) {
         primaryStage = mainStage;
@@ -237,7 +230,6 @@ public class TracksideObjectNavigatorController {
         signalControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("controlModuleAddress"));
         editSignalButton.setDisable(true);
         deleteSignalButton.setDisable(true);
-
         signalList = FXCollections.observableArrayList(Model.getSignals().values());
         signalList.sort(Comparator.comparing(TracksideObject::getId));
         signalTableView.setItems(signalList);

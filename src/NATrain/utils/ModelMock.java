@@ -46,12 +46,17 @@ public class ModelMock {
         trackControlModule.getChannels()[0] = oneTrackSection;
         oneTrackSection.setControlModule(trackControlModule);
 
+        Model.getControlModules().put(0, trackControlModule);
+
         Model.getTrackControlModules().put(trackControlModule.getAddress(), trackControlModule);
+
+
 
         TrackControlModule trackControlModule1 = new TrackControlModule(1, "TRMOD_2");
         trackControlModule.getChannels()[0] = twoTrackSection;
         twoTrackSection.setControlModule(trackControlModule1);
 
+        Model.getControlModules().put(1, trackControlModule1);
         Model.getTrackControlModules().put(trackControlModule1.getAddress(), trackControlModule1);
     }
 }

@@ -27,11 +27,14 @@ public abstract class TracksideObject implements Serializable {
     }
     public void setControlModule(ControlModule controlModule) {
         this.controlModule = controlModule;
+        if (controlModule == null)
+            channel = null;
     }
 
     public Integer getChannel() {
         return channel;
     }
+
     public void setChannel(Integer channel) {
         this.channel = channel;
     }

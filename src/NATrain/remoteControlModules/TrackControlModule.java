@@ -28,4 +28,14 @@ public class TrackControlModule extends AbstractModule implements ControlModule{
     public void sendCommand(int channel, int commandCode) {
         RequestExecutor.getRequestPool().add("test_command");
     }
+
+    @Override
+    public String getType() {
+        return "Track Control Module";
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
 }

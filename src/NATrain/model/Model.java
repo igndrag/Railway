@@ -3,6 +3,7 @@ package NATrain.model;
 import NATrain.UI.NavigatorFxController;
 import NATrain.controller.Route;
 import NATrain.quads.*;
+import NATrain.remoteControlModules.ControlModule;
 import NATrain.remoteControlModules.SignalControlModule;
 import NATrain.remoteControlModules.SwitchControlModule;
 import NATrain.remoteControlModules.TrackControlModule;
@@ -33,6 +34,8 @@ public enum Model implements Serializable {
 
     private static Map<String, TrackSection> trackSections =  new HashMap<>();
 
+    private static Map<Integer, ControlModule> controlModules = new HashMap();
+
     private static Map<Integer, TrackControlModule> trackControlModules = new HashMap<>();
 
     private static Map<Integer, SignalControlModule> signalControlModules = new HashMap<>();
@@ -61,6 +64,10 @@ public enum Model implements Serializable {
 
     public static Map<String, TrackSection> getTrackSections() {
         return trackSections;
+    }
+
+    public static Map<Integer, ControlModule> getControlModules() {
+        return controlModules;
     }
 
     public static Map<Integer, SignalControlModule> getSignalControlModules() {

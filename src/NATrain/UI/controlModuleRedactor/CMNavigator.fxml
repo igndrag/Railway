@@ -3,22 +3,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMNavigatorController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMNavigatorController">
    <children>
       <Pane fx:id="previewPane" prefHeight="400.0" prefWidth="161.0" />
-      <Pane prefHeight="400.0" prefWidth="431.0">
+      <Pane prefHeight="415.0" prefWidth="260.0">
          <children>
-            <TableView fx:id="tableView" layoutY="12.0" prefHeight="339.0" prefWidth="400.0">
+            <TableView fx:id="tableView" layoutY="12.0" prefHeight="340.0" prefWidth="249.0">
               <columns>
                 <TableColumn fx:id="typeColumn" prefWidth="141.0" text="Type" />
-                <TableColumn fx:id="idColumn" prefWidth="155.0" text="ID" />
                   <TableColumn fx:id="addressColumn" prefWidth="107.0" text="Address" />
               </columns>
             </TableView>
-            <Button fx:id="newButton" layoutX="340.0" layoutY="368.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
-            <Button fx:id="editButton" layoutX="265.0" layoutY="368.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
-            <Button fx:id="deleteButton" layoutX="188.0" layoutY="368.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+            <Button fx:id="newButton" layoutX="190.0" layoutY="368.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+            <Button fx:id="editButton" layoutX="108.0" layoutY="368.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+            <Button fx:id="deleteButton" layoutX="25.0" layoutY="368.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
          </children>
       </Pane>
    </children>

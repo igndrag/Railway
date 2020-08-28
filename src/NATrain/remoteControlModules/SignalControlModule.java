@@ -17,4 +17,14 @@ public class SignalControlModule extends AbstractModule {
     public void sendCommand(int channel, int commandCode) {
         //to request pool
     }
+
+    @Override
+    public String getType() {
+        return "Signal Control Module";
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
 }
