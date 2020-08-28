@@ -8,7 +8,6 @@ import java.util.List;
 
 public abstract class AbstractModule implements ControlModule, Serializable {
 
-    protected String id;
     protected Integer address;
     protected TracksideObject[] channels;
 
@@ -38,9 +37,8 @@ public abstract class AbstractModule implements ControlModule, Serializable {
         channels[channel] = null;
     }
 
-    public AbstractModule(int address, String id) {
+    public AbstractModule(int address) {
         this.address = address;
-        this.id = id;
     }
 
     public boolean hasNotConfiguredChannels() {

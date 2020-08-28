@@ -66,7 +66,7 @@ public abstract class TracksideObjectRedactorController implements TSORedactor {
         String newName = textField.getText();
         if (newName.equals("") || newName.equals(defaultName)) {
             Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setContentText("Please type correct name");
+            a.setContentText("Please input correct name");
             a.show();
             return false;
         }

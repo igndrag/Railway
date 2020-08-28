@@ -3,8 +3,8 @@ import NATrain.trackSideObjects.Signal;
 
 public class SignalControlModule extends AbstractModule {
 
-    public SignalControlModule(int address, String id) {
-        super(address, id);
+    public SignalControlModule(int address) {
+        super(address);
         channels = new Signal[4];
     }
 
@@ -21,10 +21,5 @@ public class SignalControlModule extends AbstractModule {
     @Override
     public String getType() {
         return "Signal Control Module";
-    }
-
-    @Override
-    public String getId() {
-        return id;
     }
 }

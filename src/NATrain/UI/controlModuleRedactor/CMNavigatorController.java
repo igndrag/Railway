@@ -1,17 +1,22 @@
 package NATrain.UI.controlModuleRedactor;
+
 import NATrain.model.Model;
 import NATrain.remoteControlModules.ControlModule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -86,7 +91,7 @@ public class CMNavigatorController {
                 editButton.setDisable(false);
                 deleteButton.setDisable(false);
                 refreshPreview(tableView.getSelectionModel().getSelectedItem());
-                tableView.setOnMouseClicked( event1 -> {
+                tableView.setOnMouseClicked(event1 -> {
                     refreshPreview(tableView.getSelectionModel().getSelectedItem());
                 });
             }
@@ -97,11 +102,21 @@ public class CMNavigatorController {
 
     }
 
-    private void toControlModuleCreator() throws IOException{
-
+    private void toControlModuleCreator() throws IOException {
+        FXMLLoader loader = new FXMLLoader(CMCreator.class.getResource("CMCreator.fxml"));
+        Stage controlModuleCreator = new Stage();
+        controlModuleCreator.setTitle("Control Module Creator");
+        controlModuleCreator.setScene(new Scene(loader.load(), 250, 270));
+        controlModuleCreator.setResizable(false);
+        CMCreator controller = loader.getController();
+        controller.initialize(tableView, controlModules);
+        controller.setPrimaryStage(controlModuleCreator);
+        controlModuleCreator.initModality(Modality.WINDOW_MODAL);
+        controlModuleCreator.initOwner(primaryStage);
+        controlModuleCreator.show();
     }
 
-    private void refreshPreview (ControlModule controlModule) {
+    private void refreshPreview(ControlModule controlModule) {
         previewPane.getChildren().clear();
         Group preview = new Group();
         for (int i = 0; i < controlModule.getChannels().length; i++) {
@@ -113,7 +128,7 @@ public class CMNavigatorController {
             }
             Text text = new Text(chName.toString());
             text.setX(20);
-            text.setY(40 + 20*i);
+            text.setY(50 + 20 * i);
             preview.getChildren().add(text);
         }
         previewPane.getChildren().add(preview);

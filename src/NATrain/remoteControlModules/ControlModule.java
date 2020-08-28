@@ -8,8 +8,6 @@ public interface ControlModule {
 
     String getType();
 
-    String getId();
-
     Integer getAddress();
 
     TracksideObject[] getChannels();

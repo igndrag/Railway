@@ -9,8 +9,8 @@ public class TrackControlModule extends AbstractModule implements ControlModule{
     private static final int TRACK_SECTION_OCCUPIED_STATUS_CODE = 2;
     private static final int TRACK_SECTION_UNDEFINED_STATUS_CODE = 3;
 
-    public TrackControlModule(int address, String id) {
-        super(address, id);
+    public TrackControlModule(int address) {
+        super(address);
         channels = new TrackSection[3];
     }
 
@@ -32,10 +32,5 @@ public class TrackControlModule extends AbstractModule implements ControlModule{
     @Override
     public String getType() {
         return "Track Control Module";
-    }
-
-    @Override
-    public String getId() {
-        return id;
     }
 }

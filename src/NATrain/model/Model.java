@@ -36,18 +36,9 @@ public enum Model implements Serializable {
 
     private static Map<Integer, ControlModule> controlModules = new HashMap();
 
-    private static Map<Integer, TrackControlModule> trackControlModules = new HashMap<>();
-
-    private static Map<Integer, SignalControlModule> signalControlModules = new HashMap<>();
-
-    private static Map<Integer, SwitchControlModule> switchControlModules = new HashMap<>();
 
     public static Map<SignalPare, HashSet<Route>> getRouteTable() {
         return routeTable;
-    }
-
-    public static Map<Integer, TrackControlModule> getTrackControlModules() {
-        return trackControlModules;
     }
 
     public static Quad[][] getMainGrid() {
@@ -70,14 +61,6 @@ public enum Model implements Serializable {
         return controlModules;
     }
 
-    public static Map<Integer, SignalControlModule> getSignalControlModules() {
-        return signalControlModules;
-    }
-
-    public static Map<Integer, SwitchControlModule> getSwitchControlModules() {
-        return switchControlModules;
-    }
-
     public static void refreshAll() {
         Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(Quad::refresh);
     }
@@ -94,9 +77,7 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(trackSections);
             objectOutputStream.writeObject(signals);
             objectOutputStream.writeObject(switches);
-            objectOutputStream.writeObject(trackControlModules);
-            objectOutputStream.writeObject(signalControlModules);
-            objectOutputStream.writeObject(switchControlModules);
+            objectOutputStream.writeObject(controlModules);
 
             Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(quad -> {
                 if (quad.getType() != QuadType.EMPTY_QUAD) {
@@ -125,9 +106,8 @@ public enum Model implements Serializable {
                 trackSections = (Map<String, TrackSection>) inputStream.readObject();
                 signals = (Map<String, Signal>) inputStream.readObject();
                 switches = (Map<String, Switch>) inputStream.readObject();
-                trackControlModules = (Map<Integer, TrackControlModule>) inputStream.readObject();
-                signalControlModules = (Map<Integer, SignalControlModule>) inputStream.readObject();
-                switchControlModules = (Map<Integer, SwitchControlModule>) inputStream.readObject();
+                controlModules = (Map<Integer, ControlModule>) inputStream.readObject();
+
                 ArrayList<QuadDTO> notEmptyQuadDTOS = (ArrayList<QuadDTO>) inputStream.readObject();
                 inputStream.close();
 
