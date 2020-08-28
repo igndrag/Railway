@@ -1,11 +1,8 @@
 package NATrain.trackSideObjects;
 
-import NATrain.quads.Quad;
-import NATrain.remoteControlDevice.ControlModule;
+import NATrain.remoteControlModules.ControlModule;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class TracksideObject implements Serializable {
 

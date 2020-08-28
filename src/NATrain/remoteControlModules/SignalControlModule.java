@@ -1,10 +1,10 @@
-package NATrain.remoteControlDevice;
+package NATrain.remoteControlModules;
 import NATrain.trackSideObjects.Signal;
 
 public class SignalControlModule extends AbstractModule {
 
-    public SignalControlModule(int address) {
-        super(address);
+    public SignalControlModule(int address, String id) {
+        super(address, id);
         channels = new Signal[4];
     }
 

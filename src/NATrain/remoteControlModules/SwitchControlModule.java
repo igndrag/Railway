@@ -1,4 +1,4 @@
-package NATrain.remoteControlDevice;
+package NATrain.remoteControlModules;
 
 public class SwitchControlModule {
 

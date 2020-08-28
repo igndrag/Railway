@@ -1,4 +1,4 @@
-package NATrain.remoteControlDevice;
+package NATrain.remoteControlModules;
 
 import NATrain.connectionService.RequestExecutor;
 import NATrain.trackSideObjects.TrackSection;
@@ -9,8 +9,8 @@ public class TrackControlModule extends AbstractModule implements ControlModule{
     private static final int TRACK_SECTION_OCCUPIED_STATUS_CODE = 2;
     private static final int TRACK_SECTION_UNDEFINED_STATUS_CODE = 3;
 
-    public TrackControlModule(int address) {
-        super(address);
+    public TrackControlModule(int address, String id) {
+        super(address, id);
         channels = new TrackSection[3];
     }
 

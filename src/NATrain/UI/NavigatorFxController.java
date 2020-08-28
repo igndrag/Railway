@@ -1,5 +1,6 @@
 package NATrain.UI;
 
+import NATrain.UI.controlModuleRedactor.CMNavigatorController;
 import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController;
 import NATrain.model.Model;
@@ -67,7 +68,7 @@ public class NavigatorFxController {
     public void toTracksideObjectRedactor(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(TracksideObjectNavigatorController.class.getResource("tracksideObjectNavigator.fxml"));
         Stage tracksideObjectRedactor = new Stage();
-        tracksideObjectRedactor.setTitle("Trackside Object Redactor");
+        tracksideObjectRedactor.setTitle("Trackside Object Navigator");
         tracksideObjectRedactor.setScene(new Scene(loader.load(), 350, 500));
         tracksideObjectRedactor.setResizable(false);
         //MosaicRedactorFxController controller = loader.getController();
@@ -78,6 +79,22 @@ public class NavigatorFxController {
         });
         primaryStage.hide();
         tracksideObjectRedactor.show();
+    }
+
+    public void toControlModuleRedactor (ActionEvent actionEvent) throws IOException{
+        FXMLLoader loader = new FXMLLoader(CMNavigatorController.class.getResource("CMNavigator.fxml"));
+        Stage controlModuleNavigator = new Stage();
+        controlModuleNavigator.setTitle("Control Module Navigator");
+        controlModuleNavigator.setScene(new Scene(loader.load(), 415, 560));
+        controlModuleNavigator.setResizable(false);
+        CMNavigatorController controller = loader.getController();
+        //controller.initialize();
+        controller.setPrimaryStage(controlModuleNavigator);
+        controlModuleNavigator.setOnCloseRequest(event -> {
+            primaryStage.show();
+        });
+        primaryStage.hide();
+        controlModuleNavigator.show();
     }
 
     @FXML

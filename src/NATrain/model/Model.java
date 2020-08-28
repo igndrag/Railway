@@ -3,13 +3,12 @@ package NATrain.model;
 import NATrain.UI.NavigatorFxController;
 import NATrain.controller.Route;
 import NATrain.quads.*;
-import NATrain.remoteControlDevice.SignalControlModule;
-import NATrain.remoteControlDevice.SwitchControlModule;
-import NATrain.remoteControlDevice.TrackControlModule;
+import NATrain.remoteControlModules.SignalControlModule;
+import NATrain.remoteControlModules.SwitchControlModule;
+import NATrain.remoteControlModules.TrackControlModule;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
-import NATrain.trackSideObjects.TracksideObject;
 import NATrain.utils.SignalPare;
 
 import java.io.*;

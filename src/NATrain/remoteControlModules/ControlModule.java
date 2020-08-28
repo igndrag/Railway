@@ -1,4 +1,4 @@
-package NATrain.remoteControlDevice;
+package NATrain.remoteControlModules;
 
 import NATrain.trackSideObjects.TracksideObject;
 

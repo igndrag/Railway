@@ -1,16 +1,13 @@
 package NATrain.utils;
 
-import NATrain.controller.SignalState;
 import NATrain.controller.SwitchState;
 import NATrain.model.Model;
 import NATrain.quads.EmptyQuad;
-import NATrain.remoteControlDevice.TrackControlModule;
+import NATrain.remoteControlModules.TrackControlModule;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.SignalType;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
-import java.util.Arrays;
-import java.util.HashSet;
 
 public class ModelMock {
 
@@ -45,13 +42,13 @@ public class ModelMock {
         Model.getTrackSections().put("1-3SP", oneTrackSection);
         Model.getTrackSections().put("SP", twoTrackSection);
 
-        TrackControlModule trackControlModule = new TrackControlModule(0);
+        TrackControlModule trackControlModule = new TrackControlModule(0, "TRMOD_1");
         trackControlModule.getChannels()[0] = oneTrackSection;
         oneTrackSection.setControlModule(trackControlModule);
 
         Model.getTrackControlModules().put(trackControlModule.getAddress(), trackControlModule);
 
-        TrackControlModule trackControlModule1 = new TrackControlModule(1);
+        TrackControlModule trackControlModule1 = new TrackControlModule(1, "TRMOD_2");
         trackControlModule.getChannels()[0] = twoTrackSection;
         twoTrackSection.setControlModule(trackControlModule1);
 
