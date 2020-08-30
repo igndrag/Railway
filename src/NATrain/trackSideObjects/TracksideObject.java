@@ -10,6 +10,8 @@ public abstract class TracksideObject implements Serializable {
     Integer channel;
     private String id;
 
+    static final long SerialVersionUID = 1;
+
     public TracksideObject(String id) {
         this.id = id;
     }

@@ -2,6 +2,9 @@ package NATrain.model;
 
 import NATrain.UI.NavigatorFxController;
 import NATrain.controller.Route;
+import NATrain.controller.SignalState;
+import NATrain.controller.SwitchState;
+import NATrain.controller.TrackSectionState;
 import NATrain.quads.*;
 import NATrain.remoteControlModules.ControlModule;
 import NATrain.remoteControlModules.SignalControlModule;
@@ -35,7 +38,6 @@ public enum Model implements Serializable {
     private static Map<String, TrackSection> trackSections =  new HashMap<>();
 
     private static Map<Integer, ControlModule> controlModules = new HashMap();
-
 
     public static Map<SignalPare, HashSet<Route>> getRouteTable() {
         return routeTable;
@@ -104,8 +106,11 @@ public enum Model implements Serializable {
                 ySize  = (Integer) inputStream.readObject();
                 mainGrid = new Quad[ySize][xSize];
                 trackSections = (Map<String, TrackSection>) inputStream.readObject();
+                trackSections.values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.UNDEFINED));
                 signals = (Map<String, Signal>) inputStream.readObject();
+                signals.values().forEach(signal -> signal.setSignalState(SignalState.UNDEFINED));
                 switches = (Map<String, Switch>) inputStream.readObject();
+                switches.values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.UNDEFINED));
                 controlModules = (Map<Integer, ControlModule>) inputStream.readObject();
 
                 ArrayList<QuadDTO> notEmptyQuadDTOS = (ArrayList<QuadDTO>) inputStream.readObject();

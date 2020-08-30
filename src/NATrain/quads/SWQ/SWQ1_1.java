@@ -1,6 +1,7 @@
 package NATrain.quads.SWQ;
 
 import NATrain.quads.BaseQuad;
+import NATrain.quads.QuadType;
 import NATrain.quads.SwitchQuad;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
@@ -9,6 +10,7 @@ import javafx.scene.text.TextAlignment;
 public class SWQ1_1 extends SwitchQuad {
     public SWQ1_1(int x, int y) {
         super(x, y);
+        quadType = QuadType.SWQ1_1;
     }
 
     @Override

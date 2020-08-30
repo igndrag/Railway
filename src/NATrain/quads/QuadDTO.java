@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class QuadDTO implements Serializable {
     int x;
     int y;
-    QuadType quadType;
+    private QuadType quadType;
     private final TrackSection firstAssociatedTrack;
     private final TrackSection secondAssociatedTrack;
     private final Switch associatedSwitch;

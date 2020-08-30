@@ -2,8 +2,10 @@ package NATrain.trackSideObjects;
 
 import NATrain.controller.SwitchState;
 
+import java.io.Serializable;
 
-public class Switch extends TracksideObject {
+
+public class Switch extends TracksideObject implements Serializable {
 
     public static final Switch EMPTY_SWITCH = new Switch("");
     public static final String INITIAL_SWITCH_NAME = "New Switch";

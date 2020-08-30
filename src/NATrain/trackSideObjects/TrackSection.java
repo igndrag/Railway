@@ -8,7 +8,7 @@ public class TrackSection extends TracksideObject {
     public static final TrackSection EMPTY_TRACK_SECTION = new TrackSection("");
     public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
 
-    private TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
+    private transient TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
 
     private boolean interlocked = false;
 
