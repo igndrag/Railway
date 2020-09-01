@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMCreator">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMCreatorController">
    <children>
       <Button onAction="#saveAndClose" layoutX="165.0" layoutY="230.0" mnemonicParsing="false" prefWidth="60.0" text="Save" />
       <Label layoutX="38.0" layoutY="11.0" text="Type" />

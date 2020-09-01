@@ -99,16 +99,25 @@ public class CMNavigatorController {
     }
 
     private void toControlModuleRedactor(ControlModule controlModule) throws IOException {
-
+        FXMLLoader loader = new FXMLLoader(CMEditorController.class.getResource("CMEditor.fxml"));
+        Stage controlModuleEditor = new Stage();
+        controlModuleEditor.setTitle("Control Module Editor");
+        controlModuleEditor.setScene(new Scene(loader.load(), 230, 330));
+        controlModuleEditor.setResizable(false);
+        CMEditorController controller = loader.getController();
+        controller.initialize(controlModule, tableView);
+        controlModuleEditor.initModality(Modality.WINDOW_MODAL);
+        controlModuleEditor.initOwner(primaryStage);
+        controlModuleEditor.show();
     }
 
     private void toControlModuleCreator() throws IOException {
-        FXMLLoader loader = new FXMLLoader(CMCreator.class.getResource("CMCreator.fxml"));
+        FXMLLoader loader = new FXMLLoader(CMCreatorController.class.getResource("CMCreator.fxml"));
         Stage controlModuleCreator = new Stage();
         controlModuleCreator.setTitle("Control Module Creator");
         controlModuleCreator.setScene(new Scene(loader.load(), 250, 270));
         controlModuleCreator.setResizable(false);
-        CMCreator controller = loader.getController();
+        CMCreatorController controller = loader.getController();
         controller.initialize(tableView, controlModules);
         controller.setPrimaryStage(controlModuleCreator);
         controlModuleCreator.initModality(Modality.WINDOW_MODAL);

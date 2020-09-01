@@ -27,6 +27,7 @@ public abstract class TracksideObject implements Serializable {
     public ControlModule getControlModule() {
         return controlModule;
     }
+
     public void setControlModule(ControlModule controlModule) {
         this.controlModule = controlModule;
         if (controlModule == null)

@@ -3,25 +3,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="332.0" prefWidth="230.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="230.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMEditorController">
    <children>
-      <Button fx:id="saveButton" layoutX="150.0" layoutY="292.0" mnemonicParsing="false" prefWidth="60.0" text="Save" />
-      <CheckBox fx:id="checkBoxCh1" layoutX="150.0" layoutY="45.0" mnemonicParsing="false" text="CH1" />
-      <CheckBox fx:id="checkBoxCh2" layoutX="150.0" layoutY="75.0" mnemonicParsing="false" text="CH2" />
-      <CheckBox fx:id="checkBoxCh3" layoutX="150.0" layoutY="105.0" mnemonicParsing="false" text="CH3" />
-      <ChoiceBox fx:id="choiceBoxCh1" layoutX="21.0" layoutY="41.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh2" layoutX="21.0" layoutY="71.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh3" layoutX="21.0" layoutY="101.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh6" layoutX="21.0" layoutY="191.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh5" layoutX="21.0" layoutY="161.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh4" layoutX="21.0" layoutY="131.0" prefHeight="23.0" prefWidth="115.0" />
-      <CheckBox fx:id="checkBoxCh6" layoutX="150.0" layoutY="195.0" mnemonicParsing="false" text="CH6" />
-      <CheckBox fx:id="checkBoxCh5" layoutX="150.0" layoutY="165.0" mnemonicParsing="false" text="CH5" />
-      <CheckBox fx:id="checkBoxCh4" layoutX="150.0" layoutY="135.0" mnemonicParsing="false" text="CH4" />
-      <CheckBox fx:id="checkBoxCh7" layoutX="150.0" layoutY="226.0" mnemonicParsing="false" text="CH7" />
-      <CheckBox fx:id="checkBoxCh8" layoutX="150.0" layoutY="256.0" mnemonicParsing="false" text="CH8" />
-      <ChoiceBox fx:id="choiceBoxCh7" layoutX="21.0" layoutY="222.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh8" layoutX="21.0" layoutY="252.0" prefHeight="23.0" prefWidth="115.0" />
-      <Label layoutX="21.0" layoutY="14.0" text="Control Module Type" />
+      <Label fx:id="CMTypeLabel" layoutX="21.0" layoutY="14.0" text="Control Module Type" />
+      <CheckBox fx:id="checkBoxCh0" layoutX="150.0" layoutY="45.0" mnemonicParsing="false" text="CH0" />
+      <CheckBox fx:id="checkBoxCh1" layoutX="150.0" layoutY="75.0" mnemonicParsing="false" text="CH1" />
+      <CheckBox fx:id="checkBoxCh2" layoutX="150.0" layoutY="105.0" mnemonicParsing="false" text="CH2" />
+      <CheckBox fx:id="checkBoxCh3" layoutX="150.0" layoutY="135.0" mnemonicParsing="false" text="CH3" />
+      <CheckBox fx:id="checkBoxCh4" layoutX="150.0" layoutY="165.0" mnemonicParsing="false" text="CH4" />
+      <CheckBox fx:id="checkBoxCh5" layoutX="150.0" layoutY="195.0" mnemonicParsing="false" text="CH5" />
+      <CheckBox fx:id="checkBoxCh6" layoutX="150.0" layoutY="225.0" mnemonicParsing="false" text="CH6" />
+      <CheckBox fx:id="checkBoxCh7" layoutX="150.0" layoutY="255.0" mnemonicParsing="false" text="CH7" />
+      <ChoiceBox fx:id="choiceBoxCh0" layoutX="20.0" layoutY="40.0" prefHeight="23.0" prefWidth="115.0" />
+      <ChoiceBox fx:id="choiceBoxCh1" layoutX="20.0" layoutY="70.0" prefHeight="23.0" prefWidth="115.0" />
+      <ChoiceBox fx:id="choiceBoxCh2" layoutX="20.0" layoutY="100.0" prefHeight="23.0" prefWidth="115.0" />
+      <ChoiceBox fx:id="choiceBoxCh3" layoutX="20.0" layoutY="130.0" prefHeight="23.0" prefWidth="115.0" />
+      <ChoiceBox fx:id="choiceBoxCh4" layoutX="20.0" layoutY="160.0" prefHeight="23.0" prefWidth="115.0" />
+      <ChoiceBox fx:id="choiceBoxCh5" layoutX="20.0" layoutY="190.0" prefHeight="23.0" prefWidth="115.0" />
+      <ChoiceBox fx:id="choiceBoxCh6" layoutX="20.0" layoutY="220.0" prefHeight="23.0" prefWidth="115.0" />
+      <ChoiceBox fx:id="choiceBoxCh7" layoutX="20.0" layoutY="250.0" prefHeight="23.0" prefWidth="115.0" />
+
+      <Button fx:id="saveButton" onAction="#saveAndClose" layoutX="150.0" layoutY="292.0" mnemonicParsing="false" prefWidth="60.0" text="Save" />
    </children>
 </Pane>
