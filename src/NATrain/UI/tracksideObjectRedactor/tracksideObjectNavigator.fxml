@@ -18,7 +18,7 @@
                   </TableView>
                   <Button fx:id="newTrackSectionButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
                   <Button fx:id="editTrackSectionButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
-                  <Button fx:id="deleteTrackSectionButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Remove" />
+                  <Button fx:id="deleteTrackSectionButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
                </children>
             </Pane>
          </content>
@@ -36,7 +36,7 @@
                       </TableView>
                       <Button fx:id="newSwitchButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
                       <Button fx:id="editSwitchButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
-                      <Button fx:id="deleteSwitchButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Remove" />
+                      <Button fx:id="deleteSwitchButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
                   </children>
               </Pane>
           </content>
@@ -55,7 +55,7 @@
                       </TableView>
                       <Button fx:id="newSignalButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
                       <Button fx:id="editSignalButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
-                      <Button fx:id="deleteSignalButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Remove" />
+                      <Button fx:id="deleteSignalButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
                   </children>
               </Pane>
           </content>

@@ -79,15 +79,15 @@ public class CMEditorController {
         if (controlModule instanceof TrackControlModule) {
             modelMap = Model.getTrackSections();
             CMTypeLabel.setText("Track Control Module");
-            observableList = FXCollections.observableArrayList(Model.getTrackSections().values().stream().filter(trackSection -> trackSection.getControlModule() != null).map(TrackSection::getId).collect(Collectors.toList()));
+            observableList = FXCollections.observableArrayList(Model.getTrackSections().values().stream().filter(trackSection -> trackSection.getChannel() == null).map(TrackSection::getId).collect(Collectors.toList()));
         } else if (controlModule instanceof SwitchControlModule) {
             modelMap = Model.getSwitches();
             CMTypeLabel.setText("Switch Control Module");
-            observableList = FXCollections.observableArrayList(Model.getSwitches().values().stream().filter(aSwitch -> aSwitch.getControlModule() != null).map(Switch::getId).collect(Collectors.toList()));
+            observableList = FXCollections.observableArrayList(Model.getSwitches().values().stream().filter(aSwitch -> aSwitch.getChannel() == null).map(Switch::getId).collect(Collectors.toList()));
         } else if (controlModule instanceof SignalControlModule) {
             modelMap = Model.getSignals();
             CMTypeLabel.setText("Signal Control Module");
-            observableList = FXCollections.observableArrayList(Model.getSignals().values().stream().filter(signal -> signal.getControlModule() != null).map(Signal::getId).collect(Collectors.toList()));
+            observableList = FXCollections.observableArrayList(Model.getSignals().values().stream().filter(signal -> signal.getChannel() == null).map(Signal::getId).collect(Collectors.toList()));
         }
         observableList.add("none");
         for (int i = 0; i < choiceBoxes.length; i++) {
