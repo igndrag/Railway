@@ -1,7 +1,5 @@
 package NATrain.trackSideObjects;
 
-import NATrain.controller.SwitchState;
-
 import java.io.Serializable;
 
 

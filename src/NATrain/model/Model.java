@@ -1,19 +1,15 @@
 package NATrain.model;
 
 import NATrain.UI.NavigatorFxController;
-import NATrain.controller.Route;
-import NATrain.controller.SignalState;
-import NATrain.controller.SwitchState;
-import NATrain.controller.TrackSectionState;
+import NATrain.routes.Route;
+import NATrain.trackSideObjects.SignalState;
+import NATrain.trackSideObjects.SwitchState;
+import NATrain.trackSideObjects.TrackSectionState;
 import NATrain.quads.*;
 import NATrain.remoteControlModules.ControlModule;
-import NATrain.remoteControlModules.SignalControlModule;
-import NATrain.remoteControlModules.SwitchControlModule;
-import NATrain.remoteControlModules.TrackControlModule;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
-import NATrain.utils.SignalPare;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -29,7 +25,7 @@ public enum Model implements Serializable {
 
     private static Quad[][] mainGrid = new Quad[20][20];
 
-    private static Map<SignalPare, HashSet<Route>> routeTable = new HashMap<>();
+    private static HashSet<Route> routeTable = new HashSet<>();
 
     private static Map<String, Switch> switches = new HashMap<>();
 
@@ -39,12 +35,12 @@ public enum Model implements Serializable {
 
     private static Map<Integer, ControlModule> controlModules = new HashMap();
 
-    public static Map<SignalPare, HashSet<Route>> getRouteTable() {
-        return routeTable;
-    }
-
     public static Quad[][] getMainGrid() {
         return mainGrid;
+    }
+
+    public static HashSet<Route> getRouteTable() {
+        return routeTable;
     }
 
     public static Map<String, Switch> getSwitches() {

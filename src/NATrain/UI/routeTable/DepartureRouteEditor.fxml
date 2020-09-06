@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField layoutX="28.0" layoutY="34.0" prefHeight="23.0" prefWidth="213.0" />
+      <Label layoutX="28.0" layoutY="14.0" text="Route Description" />
+      <ChoiceBox layoutX="275.0" layoutY="124.0" prefHeight="23.0" prefWidth="85.0" />
+      <Label layoutX="277.0" layoutY="102.0" text="Signal:" />
+      <Pane fx:id="previewPane" layoutX="275.0" layoutY="26.0" prefHeight="70.0" prefWidth="299.0" style="-fx-background-color: gray;" />
+      <Label layoutX="391.0" layoutY="102.0" text="TVDS1:" />
+      <ChoiceBox layoutX="389.0" layoutY="124.0" prefHeight="23.0" prefWidth="85.0" />
+      <ChoiceBox layoutX="489.0" layoutY="124.0" prefHeight="23.0" prefWidth="85.0" />
+      <Label layoutX="491.0" layoutY="102.0" text="TVDS2:" />
+      <ToggleButton layoutX="392.0" layoutY="167.0" mnemonicParsing="false" prefWidth="85.0" text="TVDS1 test" />
+      <ToggleButton layoutX="490.0" layoutY="167.0" mnemonicParsing="false" prefWidth="85.0" text="TVDS2 test" />
+      <CheckBox layoutX="276.0" layoutY="169.0" mnemonicParsing="false" text="Switch Maneuver" />
+      <Button layoutX="514.0" layoutY="356.0" mnemonicParsing="false" prefWidth="60.0" text="Save" />
+      <Label layoutX="128.0" layoutY="95.0" text="TVDS occupation order" />
+      <ListView layoutX="28.0" layoutY="124.0" prefHeight="200.0" prefWidth="86.0" />
+      <ListView layoutX="161.0" layoutY="124.0" prefHeight="200.0" prefWidth="86.0" />
+      <Button layoutX="121.0" layoutY="167.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="33.0" text="R" />
+      <Button layoutX="121.0" layoutY="200.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="33.0" text="L" />
+      <ChoiceBox layoutX="274.0" layoutY="231.0" prefHeight="23.0" prefWidth="85.0" />
+      <Label layoutX="276.0" layoutY="209.0" text="Switch:" />
+      <Label layoutX="438.0" layoutY="211.0" text="Position in route:" />
+      <ToggleButton layoutX="486.0" layoutY="231.0" mnemonicParsing="false" prefWidth="85.0" text="MINUS" />
+      <ToggleButton layoutX="388.0" layoutY="231.0" mnemonicParsing="false" prefWidth="85.0" text="PLUS" />
+      <ListView layoutX="388.0" layoutY="267.0" prefHeight="70.0" prefWidth="186.0" />
+      <Button layoutX="300.0" layoutY="267.0" mnemonicParsing="false" prefWidth="60.0" text="Add" />
+      <Button layoutX="300.0" layoutY="310.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+   </children>
+</Pane>

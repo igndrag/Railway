@@ -1,4 +1,4 @@
-package NATrain.controller;
+package NATrain.trackSideObjects;
 
 public enum TrackSectionState {
     FREE,

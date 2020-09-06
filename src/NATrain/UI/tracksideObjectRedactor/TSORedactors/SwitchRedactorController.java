@@ -1,7 +1,7 @@
 package NATrain.UI.tracksideObjectRedactor.TSORedactors;
 
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
-import NATrain.controller.SwitchState;
+import NATrain.trackSideObjects.SwitchState;
 import NATrain.model.Model;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TracksideObject;
@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SwitchRedactorController extends TracksideObjectRedactorController {

@@ -1,6 +1,6 @@
 package NATrain.roureExecutor;
 
-import NATrain.controller.Route;
+import NATrain.routes.Route;
 
 public class RouteExecutor {
 

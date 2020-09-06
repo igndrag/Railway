@@ -29,7 +29,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Routes" textAlignment="CENTER">
+      <Button onAction="#toRouteTable" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Routes" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>

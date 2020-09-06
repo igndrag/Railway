@@ -1,12 +1,10 @@
 package NATrain.trackSideObjects;
 
-import NATrain.controller.SignalState;
-
 import java.util.Collections;
 import java.util.Set;
 
-import static NATrain.controller.SignalState.STANDARD_TRACK_SIGNAL_STATES;
-import static NATrain.controller.SignalState.STANDARD_TRIMMER_SIGNAL_STATES;
+import static NATrain.trackSideObjects.SignalState.STANDARD_TRACK_SIGNAL_STATES;
+import static NATrain.trackSideObjects.SignalState.STANDARD_TRIMMER_SIGNAL_STATES;
 
 public class Signal extends TracksideObject {
 

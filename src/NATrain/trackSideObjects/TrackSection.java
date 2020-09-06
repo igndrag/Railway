@@ -1,7 +1,5 @@
 package NATrain.trackSideObjects;
 
-import NATrain.controller.TrackSectionState;
-
 
 public class TrackSection extends TracksideObject {
 

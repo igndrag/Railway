@@ -2,6 +2,7 @@ package NATrain.UI;
 
 import NATrain.UI.controlModuleRedactor.CMNavigatorController;
 import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
+import NATrain.UI.routeTable.RouteTableController;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController;
 import NATrain.model.Model;
 import NATrain.utils.ModelMock;
@@ -43,7 +44,8 @@ public class NavigatorFxController {
         constructorMode = false;
     }
 
-    public void toTrackRedactor(ActionEvent actionEvent) throws IOException {
+    @FXML
+    private void toTrackRedactor(ActionEvent actionEvent) throws IOException {
        // Model.loadFromDisk();
         constructorMode = true;
         FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("mosaicTrackRedactor.fxml"));
@@ -64,8 +66,8 @@ public class NavigatorFxController {
         trackRedactor.show();
     }
 
-
-    public void toTracksideObjectRedactor(ActionEvent actionEvent) throws IOException {
+    @FXML
+    private void toTracksideObjectRedactor(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(TracksideObjectNavigatorController.class.getResource("tracksideObjectNavigator.fxml"));
         Stage tracksideObjectRedactor = new Stage();
         tracksideObjectRedactor.setTitle("Trackside Object Navigator");
@@ -81,7 +83,8 @@ public class NavigatorFxController {
         tracksideObjectRedactor.show();
     }
 
-    public void toControlModuleRedactor (ActionEvent actionEvent) throws IOException{
+    @FXML
+    private void toControlModuleRedactor (ActionEvent actionEvent) throws IOException{
         FXMLLoader loader = new FXMLLoader(CMNavigatorController.class.getResource("CMNavigator.fxml"));
         Stage controlModuleNavigator = new Stage();
         controlModuleNavigator.setTitle("Control Module Navigator");
@@ -95,6 +98,23 @@ public class NavigatorFxController {
         });
         primaryStage.hide();
         controlModuleNavigator.show();
+    }
+
+    @FXML
+    private void toRouteTable() throws IOException{
+        FXMLLoader loader = new FXMLLoader(RouteTableController.class.getResource("RouteTable.fxml"));
+        Stage routeTable = new Stage();
+        routeTable.setTitle("Route Table");
+        routeTable.setScene(new Scene(loader.load(), 600, 350));
+        routeTable.setResizable(false);
+        RouteTableController controller = loader.getController();
+        controller.setPrimaryStage(routeTable);
+        //controller.initialize();
+        routeTable.setOnCloseRequest(event -> {
+            primaryStage.show();
+        });
+        primaryStage.hide();
+        routeTable.show();
     }
 
     @FXML

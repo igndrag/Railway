@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane fx:controller="NATrain.UI.routeTable.RouteTableController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView fx:id="routeTable" layoutX="32.0" layoutY="27.0" prefHeight="268.0" prefWidth="549.0">
+        <columns>
+          <TableColumn fx:id="routeTypeColumn" prefWidth="88.0" text="Route Type" />
+          <TableColumn fx:id="descriptionColumn" prefWidth="187.0" text="Description" />
+            <TableColumn fx:id="signalColumn" prefWidth="77.0" text="Signal" />
+            <TableColumn fx:id="switchPositionsColumn" prefWidth="180.0" text="Switch positions" />
+        </columns>
+      </TableView>
+      <Button fx:id="newButton" layoutX="520.0" layoutY="310.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+      <Button fx:id="editButton" layoutX="445.0" layoutY="310.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+      <Button fx:id="deleteButton" layoutX="370.0" layoutY="310.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+   </children>
+</Pane>

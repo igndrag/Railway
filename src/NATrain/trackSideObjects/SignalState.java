@@ -1,4 +1,4 @@
-package NATrain.controller;
+package NATrain.trackSideObjects;
 
 import java.util.Arrays;
 import java.util.HashSet;

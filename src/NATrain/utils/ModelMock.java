@@ -1,6 +1,9 @@
 package NATrain.utils;
 
-import NATrain.controller.SwitchState;
+import NATrain.routes.ArrivalRoute;
+import NATrain.routes.DepartureRoute;
+import NATrain.routes.Route;
+import NATrain.trackSideObjects.SwitchState;
 import NATrain.model.Model;
 import NATrain.quads.EmptyQuad;
 import NATrain.remoteControlModules.TrackControlModule;
@@ -38,7 +41,7 @@ public class ModelMock {
         TrackSection oneTrackSection = new TrackSection ("1-3SP");
         TrackSection twoTrackSection = new TrackSection ("SP");
 
-        oneTrackSection.setChannel(1);
+        oneTrackSection.setChannel(0);
         Model.getTrackSections().put("1-3SP", oneTrackSection);
         Model.getTrackSections().put("SP", twoTrackSection);
 
@@ -54,5 +57,15 @@ public class ModelMock {
         twoTrackSection.setControlModule(trackControlModule);
 
         Model.getControlModules().put(1, trackControlModule1);
+
+        DepartureRoute routeOne = new DepartureRoute("Test Departure Route one");
+        routeOne.setTVDS1(oneTrackSection);
+        routeOne.setTVDS2(twoTrackSection);
+        routeOne.setSignal(Model.getSignals().get("S1"));
+        routeOne.getSwitchStatePositions().put(oneSwitch, SwitchState.PLUS);
+        routeOne.getSwitchStatePositions().put(twoSwitch, SwitchState.MINUS);
+        routeOne.getSwitchStatePositions().put(threeSwitch, SwitchState.PLUS);
+
+        Model.getRouteTable().add(routeOne);
     }
 }

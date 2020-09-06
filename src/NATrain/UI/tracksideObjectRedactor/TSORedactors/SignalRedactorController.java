@@ -1,20 +1,15 @@
 package NATrain.UI.tracksideObjectRedactor.TSORedactors;
 
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
-import NATrain.controller.SwitchState;
 import NATrain.model.Model;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.SignalType;
-import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TracksideObject;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
-
-import java.util.stream.Collectors;
 
 public class SignalRedactorController extends TracksideObjectRedactorController {
 

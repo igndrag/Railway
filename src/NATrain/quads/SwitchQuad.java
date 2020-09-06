@@ -1,6 +1,6 @@
 package NATrain.quads;
 
-import NATrain.controller.SwitchState;
+import NATrain.trackSideObjects.SwitchState;
 import NATrain.quads.configurableInterfaces.SwitchConfigurable;
 import NATrain.trackSideObjects.Switch;
 import javafx.scene.shape.Shape;
