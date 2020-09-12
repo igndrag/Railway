@@ -2,6 +2,7 @@ package NATrain.UI.routeTable;
 
 import NATrain.UI.controlModuleRedactor.CMEditorController;
 import NATrain.model.Model;
+import NATrain.routes.DepartureRoute;
 import NATrain.routes.Route;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,8 +21,10 @@ import java.util.*;
 
 public class RouteTableController {
 
-    private ObservableList<Route> routeObservableList;
+    protected static ObservableList<Route> routeObservableList;
     private Stage primaryStage;
+
+    private RouteTypeSelectorController selector = new RouteTypeSelectorController();
 
     @FXML
     private TableView<Route> routeTable;
@@ -76,7 +79,16 @@ public class RouteTableController {
         });
 
         editButton.setOnAction(event -> {
-
+            Route selectedRoute = routeTable.getSelectionModel().getSelectedItem();
+            switch (selectedRoute.getRouteType()) {
+                case DEPARTURE:
+                    try {
+                        selector.toDepartureRouteEditor((DepartureRoute) selectedRoute);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
         });
 
         routeTable.setOnMouseClicked(event -> {
@@ -92,10 +104,10 @@ public class RouteTableController {
         FXMLLoader loader = new FXMLLoader(RouteTypeSelectorController.class.getResource("RouteTypeSelector.fxml"));
         Stage routeTypeSelector = new Stage();
         routeTypeSelector.setTitle("Route Type Selector");
-        routeTypeSelector.setScene(new Scene(loader.load(), 155, 220));
+        routeTypeSelector.setScene(new Scene(loader.load(), 155, 185));
         routeTypeSelector.setResizable(false);
         RouteTypeSelectorController controller = loader.getController();
-        //controller.initialize(controlModule, tableView);
+        controller.setRouteTableStage(primaryStage);
         routeTypeSelector.initModality(Modality.WINDOW_MODAL);
         routeTypeSelector.initOwner(primaryStage);
         routeTypeSelector.show();

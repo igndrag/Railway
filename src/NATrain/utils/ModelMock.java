@@ -44,6 +44,8 @@ public class ModelMock {
         oneTrackSection.setChannel(0);
         Model.getTrackSections().put("1-3SP", oneTrackSection);
         Model.getTrackSections().put("SP", twoTrackSection);
+        Model.getTrackSections().put("2-4SP", new TrackSection("2-4SP"));
+        Model.getTrackSections().put("6-8SP", new TrackSection("6-8SP"));
 
         TrackControlModule trackControlModule = new TrackControlModule(0);
         trackControlModule.setTrackSideObjectOnChannel(oneTrackSection, 0);

@@ -2,6 +2,7 @@ package NATrain.quads;
 
 public enum QuadType {
     EMPTY_QUAD,
+    DEMO_QUAD,
 
     STQ1_1,
     STQ1_2,

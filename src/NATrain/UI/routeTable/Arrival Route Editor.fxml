@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField layoutX="28.0" layoutY="34.0" prefHeight="23.0" prefWidth="213.0" />
+      <Label layoutX="28.0" layoutY="14.0" text="Route Description" />
+      <ChoiceBox fx:id="signalChoiceBox" layoutX="264.0" layoutY="123.0" prefHeight="23.0" prefWidth="85.0" />
+      <Label layoutX="266.0" layoutY="102.0" text="Signal:" />
+      <Label layoutX="393.0" layoutY="102.0" text="Next Signal" />
+      <ChoiceBox fx:id="nextSignalChoiceBox" layoutX="392.0" layoutY="124.0" prefHeight="23.0" prefWidth="85.0" />
+      <CheckBox layoutX="265.0" layoutY="169.0" mnemonicParsing="false" text="Switch Maneuver" />
+      <Button fx:id="saveButton" layoutX="475.0" layoutY="356.0" mnemonicParsing="false" prefWidth="60.0" text="Save" />
+      <Label layoutX="127.0" layoutY="97.0" text="TVDS occupation order:" />
+      <ListView layoutX="28.0" layoutY="124.0" prefHeight="200.0" prefWidth="86.0" />
+      <ListView layoutX="161.0" layoutY="124.0" prefHeight="200.0" prefWidth="86.0" />
+      <Button fx:id="rightButton" layoutX="121.0" layoutY="167.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="33.0" text="R" />
+      <Button fx:id="leftButton" layoutX="121.0" layoutY="200.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="33.0" text="L" />
+      <ChoiceBox layoutX="263.0" layoutY="231.0" prefHeight="23.0" prefWidth="85.0" />
+      <Label layoutX="265.0" layoutY="209.0" text="Switch:" />
+      <Label layoutX="412.0" layoutY="211.0" text="Position in route:" />
+      <ToggleButton fx:id="minusToggleButton" layoutX="467.0" layoutY="231.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="60.0" text="MINUS" />
+      <ToggleButton fx:id="plusToggleButton" layoutX="369.0" layoutY="231.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="60.0" text="PLUS" />
+      <ListView layoutX="369.0" layoutY="267.0" prefHeight="70.0" prefWidth="160.0" />
+      <Button fx:id="addSwitchButton" layoutX="289.0" layoutY="267.0" mnemonicParsing="false" prefWidth="60.0" text="Add" />
+      <Button fx:id="deleteSwitchButton" layoutX="289.0" layoutY="310.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+      <Button fx:id="testButton" layoutX="418.0" layoutY="168.0" mnemonicParsing="false" prefWidth="60.0" text="Test" />
+      <HBox layoutX="264.0" layoutY="14.0" prefHeight="80.0" prefWidth="270.0" style="-fx-background-color: gray;" />
+   </children>
+</Pane>
