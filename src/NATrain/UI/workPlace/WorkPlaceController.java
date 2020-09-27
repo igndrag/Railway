@@ -62,6 +62,7 @@ public class WorkPlaceController {
         int raws = Model.getMainGrid().length;
         int columns = Model.getMainGrid()[0].length;
 
+
         for (int i = 0; i < raws; i++) {
             for (int j = 0; j < columns; j++) {
                 Pane quadPane = new Pane();
@@ -74,6 +75,7 @@ public class WorkPlaceController {
                     quadView.getChildren().add(emptyBackground);
                 } else {
                     quad.setGridLineVisible(false);
+                    quad.activateListeners();
                     quadView = quad.getView();
                     configQuadView(quad, i, j);
                 }

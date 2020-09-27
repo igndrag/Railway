@@ -56,4 +56,8 @@ public abstract class TracksideObject implements Serializable {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    @Override
+    public String toString() {
+        return id;
+    }
 }

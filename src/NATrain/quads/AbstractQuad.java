@@ -15,8 +15,8 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractQuad implements Quad, Paintable {
-    public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
-    public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTBLUE;
+    public static final Color DEFAULT_BACKGROUND_COLOR = Color.LIGHTGRAY;
+    public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTPINK;
     public static final Color CONFIGURED_ELEMENT_COLOR = Color.VIOLET;
     public static final Color OCCUPIED_ELEMENT_COLOR = Color.RED;
     public static final Color FREE_ELEMENT_COLOR = Color.GREEN;
@@ -90,4 +90,17 @@ public abstract class AbstractQuad implements Quad, Paintable {
         return quadType;
     }
 
+    public static void blink() {
+        if (YELLOW_BLINKER == Color.YELLOW) {
+            YELLOW_BLINKER = DEFAULT_BACKGROUND_COLOR;
+        } else {
+            YELLOW_BLINKER = Color.YELLOW;
+        }
+
+        if (WHITE_BLINKER == Color.WHITE) {
+            WHITE_BLINKER = DEFAULT_BACKGROUND_COLOR;
+        } else {
+            WHITE_BLINKER = Color.WHITE;
+        }
+    }
 }

@@ -6,7 +6,10 @@ import NATrain.UI.routeTable.RouteTableController;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController;
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
+import NATrain.quads.AbstractQuad;
 import NATrain.utils.ModelMock;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
 
@@ -41,6 +45,15 @@ public class NavigatorFxController {
 
     public void initialize() {
         ModelMock.MockModel();
+        Timeline yellowBlinker = new Timeline(
+                new KeyFrame(Duration.seconds(1),
+                        event -> {
+                            AbstractQuad.blink();
+                            Model.refreshAll();
+                        }
+                ));
+        yellowBlinker.setCycleCount(Timeline.INDEFINITE);
+        yellowBlinker.play();
     }
 
     @FXML

@@ -51,6 +51,7 @@ public class Switch extends TracksideObject implements Serializable {
 
     public void setSwitchState(SwitchState switchState) {
         this.switchState = switchState;
+        propertyChangeSupport.firePropertyChange("switchStateProperty",null, switchState);
     }
 
     public boolean isPared() {

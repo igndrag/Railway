@@ -6,9 +6,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.ActionEmulatorController">
    <children>
       <ToggleButton fx:id="interlockTrackToggleButton" layoutX="20.0" layoutY="78.0" mnemonicParsing="false" prefWidth="70.0" text="Interlock" />
-      <ToggleButton fx:id="unlockTrackToggleButton" layoutX="115.0" layoutY="78.0" mnemonicParsing="false" prefWidth="70.0" text="Unlock" />
-      <ToggleButton fx:id="occupiedTrackToggleButton" layoutX="115.0" layoutY="123.0" mnemonicParsing="false" prefWidth="70.0" text="Occupied" />
-      <ToggleButton fx:id="freeTrackToggleButton" layoutX="20.0" layoutY="123.0" mnemonicParsing="false" prefWidth="70.0" text="Free " />
+      <ToggleButton fx:id="occupiedTrackToggleButton" layoutX="117.0" layoutY="78.0" mnemonicParsing="false" prefWidth="70.0" text="Occupied" />
       <ChoiceBox fx:id="trackChoiceBox" layoutX="20.0" layoutY="39.0" prefHeight="23.0" prefWidth="167.0" />
       <Label layoutX="20.0" layoutY="14.0" text="Track Section:" />
       <Label layoutX="217.0" layoutY="14.0" text="Signal:" />
@@ -19,7 +17,6 @@
       <ChoiceBox fx:id="switchChoiceBox" layoutX="411.0" layoutY="40.0" prefHeight="23.0" prefWidth="167.0" />
       <ToggleButton fx:id="plusToggleButton" layoutX="411.0" layoutY="124.0" mnemonicParsing="false" prefWidth="70.0" text="Plus" />
       <ToggleButton fx:id="minusToggleButton" layoutX="506.0" layoutY="124.0" mnemonicParsing="false" prefWidth="70.0" text="Minus" />
-      <ToggleButton fx:id="unlockSwitchToggleButton" layoutX="506.0" layoutY="79.0" mnemonicParsing="false" prefWidth="70.0" text="Unlock" />
       <ToggleButton fx:id="interlockSwitchToggleButton" layoutX="411.0" layoutY="79.0" mnemonicParsing="false" prefWidth="70.0" text="Interlock" />
    </children>
 </Pane>

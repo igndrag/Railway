@@ -167,7 +167,9 @@ public class MosaicRedactorFxController {
             for (int j = 0; j < columns; j++) {
                 Pane quadPane = new Pane();
                 //quadPane.setPadding(new Insets(5));
-                Group quadView = Model.getMainGrid()[j][i].getView();
+                Quad quad = Model.getMainGrid()[j][i];
+                quad.setGridLineVisible(true);
+                Group quadView = quad.getView();
                 quadPane.getChildren().add(quadView);
                 configQuadView(quadView, i, j);
                 gridPane.add(quadPane, i, j);

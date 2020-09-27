@@ -1,5 +1,6 @@
 package NATrain.utils;
 
+import NATrain.quads.AbstractQuad;
 import NATrain.quads.DSQ.DSQ1_1;
 import NATrain.quads.DTQ.DTQ1_1;
 import NATrain.quads.EmptyQuad;
@@ -9,8 +10,10 @@ import NATrain.quads.SIQ.*;
 import NATrain.quads.STQ.*;
 import NATrain.quads.SWQ.*;
 import javafx.scene.Group;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+
 
 
 public class QuadFactory {
@@ -18,7 +21,9 @@ public class QuadFactory {
     public static Group redactorModeQuadView = new Group();
 
     static {
-        redactorModeQuadView.getChildren().add(QuadPainter.getQuadBoarder());
+        Rectangle background = new Rectangle(90, 80);
+        background.setFill(AbstractQuad.DEFAULT_BACKGROUND_COLOR);
+        redactorModeQuadView.getChildren().add(background);
         Text text = new Text("Configuring...");
         text.setY(45);
         text.setWrappingWidth(90);

@@ -50,6 +50,7 @@ public class Signal extends TracksideObject {
 
     public void setSignalState(SignalState signalState) {
         this.signalState = signalState;
+        propertyChangeSupport.firePropertyChange("signalStateProperty",null, signalState);
     }
 
     public Signal(String id, Set<SignalState> approvedSignals, SignalType signalType) {
