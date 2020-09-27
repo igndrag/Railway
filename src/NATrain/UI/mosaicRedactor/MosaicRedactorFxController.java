@@ -37,7 +37,10 @@ public class MosaicRedactorFxController {
     private static QuadType selectedQuadType;
 
     @FXML
-    public TextFlow textFlowPanel;
+    private TextFlow textFlowPanel;
+
+    @FXML
+    private CheckBox gridLinesCheckBox;
 
     @FXML
     private TitledPane CustomElementIcons;
@@ -72,12 +75,6 @@ public class MosaicRedactorFxController {
     @FXML
     private ScrollPane simpleTrackSectionIcons;
 
-    @FXML
-    private Button redButton;
-
-    @FXML
-    private Button greenButton;
-
     public static void setPrimaryStage(Stage mainStage) {
         primaryStage = mainStage;
     }
@@ -107,6 +104,7 @@ public class MosaicRedactorFxController {
     }
 
     public void initialize() {
+        NavigatorFxController.showGridLines = true;
 
         //*** left panel initializing ***//
         VBox STQVBox = new VBox();
@@ -176,6 +174,8 @@ public class MosaicRedactorFxController {
             }
         }
         workArea.setContent(gridPane);
+
+        gridLinesCheckBox.setSelected(NavigatorFxController.showGridLines);
 
         log("Track redactor initialized.");
         log("Choice quad from left panel.");
@@ -269,6 +269,11 @@ public class MosaicRedactorFxController {
             }
             textFlowPanel.getChildren().add(new Text(message + System.lineSeparator()));
         });
+    }
+    @FXML
+    private void showGridLines() {
+        Model.setGridLinesVisible(gridLinesCheckBox.isSelected());
+        NavigatorFxController.showGridLines = gridLinesCheckBox.isSelected();
     }
 }
 

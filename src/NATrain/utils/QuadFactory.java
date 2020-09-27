@@ -49,6 +49,4 @@ public class QuadFactory {
        }
         return new EmptyQuad(x, y);
     }
-
-
 }

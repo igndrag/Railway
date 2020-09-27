@@ -8,13 +8,7 @@ public class EmptyQuad extends AbstractQuad {
 
     public EmptyQuad(int x, int y) {
         super(x, y);
-        quadType = QuadType.EMPTY_QUAD;
-        Text text1 = new Text();
-        text1.setX(20);
-        text1.setY(50);
-        text1.setTextAlignment(TextAlignment.CENTER);
-        text1.setText("x = " + x + " y = " + y);
-        quadView.getChildren().add(text1);
+        paintView();
     }
 
     @Override
@@ -29,4 +23,20 @@ public class EmptyQuad extends AbstractQuad {
 
     @Override
     public void refresh() { }
+
+    @Override
+    public void paintView() {
+        quadType = QuadType.EMPTY_QUAD;
+        Text text1 = new Text();
+        text1.setX(20);
+        text1.setY(50);
+        text1.setTextAlignment(TextAlignment.CENTER);
+        text1.setText("x = " + x + " y = " + y);
+        quadView.getChildren().add(text1);
+    }
+
+    @Override
+    public void activateListeners() {
+        //do nothing
+    }
 }

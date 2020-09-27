@@ -63,6 +63,10 @@ public enum Model implements Serializable {
         Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(Quad::refresh);
     }
 
+    public static void setGridLinesVisible(Boolean show) {
+        Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(quad -> quad.setGridLineVisible(show));
+    }
+
     public static void saveOnDisk() {
         try {
             ArrayList<QuadDTO> notEmptyQuadDTOS = new ArrayList<>();
@@ -92,7 +96,6 @@ public enum Model implements Serializable {
 
     public static void loadFromDisk() {
         try {
-            NavigatorFxController.constructorMode = true;
             Path path = Paths.get(NavigatorFxController.modelURL);
             if (path.toFile().exists()) {
                 File modelFile = new File(NavigatorFxController.modelURL);

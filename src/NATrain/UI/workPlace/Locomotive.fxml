@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane fx:controller="NATrain.UI.workPlace.LocomotiveController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="215.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="34.0" layoutY="27.0" text="Locomotive ID">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextFlow fx:id="log" layoutX="23.0" layoutY="278.0" prefHeight="85.0" prefWidth="173.0" />
+      <Slider fx:id="speedSlider" layoutX="41.0" layoutY="119.0" />
+      <Label layoutX="41.0" layoutY="144.0" text="Speed: " />
+      <ToggleButton fx:id="forwardToggleButton" layoutX="114.0" layoutY="78.0" mnemonicParsing="false" prefWidth="70.0" text="Forward" />
+      <ToggleButton fx:id="backwardToggleButton" layoutX="32.0" layoutY="78.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="70.0" text="Backward" />
+      <Label fx:id="speedValueLabel" layoutX="81.0" layoutY="144.0" text="speedValue" />
+      <ToggleButton fx:id="lightToggleButton" layoutX="114.0" layoutY="235.0" mnemonicParsing="false" prefWidth="70.0" text="Light" />
+      <Button fx:id="runButton" layoutX="112.0" layoutY="189.0" mnemonicParsing="false" prefWidth="70.0" text="Run" />
+      <Button fx:id="stopButton" layoutX="32.0" layoutY="189.0" mnemonicParsing="false" prefWidth="70.0" text="Stop" />
+      <Button fx:id="hornButton" layoutX="32.0" layoutY="235.0" mnemonicParsing="false" prefWidth="70.0" text="Horn" />
+   </children>
+</Pane>

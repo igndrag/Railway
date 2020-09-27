@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="510.0" minWidth="-Infinity" prefHeight="510.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.WorkPlaceController">
+   <bottom>
+      <TextFlow fx:id="log" prefHeight="100.0" prefWidth="605.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <right>
+      <VBox minHeight="400.0" prefHeight="400.0" prefWidth="274.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="57.0" prefWidth="274.0">
+               <children>
+                  <Label fx:id="timeLabel" layoutX="80.0" layoutY="13.0" text="HH:MM:SS">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <TableView fx:id="routeStatusTableView" prefHeight="303.0" prefWidth="274.0" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn prefWidth="177.0" text="Route" />
+                <TableColumn prefWidth="83.0" text="Status" />
+              </columns>
+            </TableView>
+            <Pane prefHeight="46.0" prefWidth="274.0">
+               <children>
+                  <Button fx:id="routeCancellationButton1" layoutX="172.0" layoutY="12.0" mnemonicParsing="false" text="Clear Selection" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </right>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Connection">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Connect" />
+                  <MenuItem mnemonicParsing="false" text="Disconnect" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Actions">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Cancellation of Route" />
+                  <MenuItem mnemonicParsing="false" text="Global Status Request" />
+               </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="View">
+            <items>
+                  <RadioMenuItem mnemonicParsing="false" text="Locomotive Control Pane" />
+                  <RadioMenuItem mnemonicParsing="false" text="Action Emulator Pane" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <ScrollPane fx:id="workArea" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

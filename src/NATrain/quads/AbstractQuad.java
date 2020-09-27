@@ -8,11 +8,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractQuad implements Quad {
+public abstract class AbstractQuad implements Quad, Paintable {
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
     public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final Color CONFIGURED_ELEMENT_COLOR = Color.VIOLET;
@@ -31,15 +33,20 @@ public abstract class AbstractQuad implements Quad {
 
     protected Shape background;
     protected Group quadView;
+    protected Group gridLines;
+
 
     protected List<ControlAction> availableActions = new ArrayList<>();
 
     public AbstractQuad(int x, int y) {
         background = new Rectangle(90, 80);
         background.setFill(DEFAULT_BACKGROUND_COLOR);
-        quadView = new Group(background);
-        if (NavigatorFxController.constructorMode)
-            QuadPainter.addGridLines(quadView);
+        gridLines = new Group();
+        QuadPainter.addGridLines(gridLines);
+        gridLines.setVisible(NavigatorFxController.showGridLines);
+        quadView = new Group();
+        quadView.getChildren().add(background);
+        quadView.getChildren().add(gridLines);
         this.x = x;
         this.y = y;
     }
@@ -52,12 +59,13 @@ public abstract class AbstractQuad implements Quad {
         return y;
     }
 
-    public Shape getBackground() {
-        return background;
-    }
-
     protected void addToQuadView(Shape shape) {
         quadView.getChildren().add(shape);
+    }
+
+    @Override
+    public void setGridLineVisible(Boolean show) {
+        gridLines.setVisible(show);
     }
 
     @Override
@@ -65,6 +73,11 @@ public abstract class AbstractQuad implements Quad {
         if (availableActions == null)
             return Collections.emptyList();
         return availableActions;
+    }
+
+    @Override
+    public void clearView() {
+        quadView.getChildren().clear();
     }
 
     @Override
@@ -86,4 +99,5 @@ public abstract class AbstractQuad implements Quad {
     public QuadType getType() {
         return quadType;
     }
+
 }

@@ -5,7 +5,7 @@ import NATrain.quads.configurableInterfaces.FirstTrackConfigurable;
 import NATrain.trackSideObjects.TrackSection;
 import javafx.scene.shape.Shape;
 
-public abstract class SimpleTrackQuad extends BaseQuad implements Quad, Paintable, FirstTrackConfigurable {
+public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConfigurable {
 
     protected Shape firstTrackElement;
     protected Shape borderElement;

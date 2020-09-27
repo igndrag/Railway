@@ -6,6 +6,9 @@ import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
 import javafx.scene.text.Text;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 
 public abstract class BaseQuad extends AbstractQuad implements Configurable {
 
@@ -14,7 +17,6 @@ public abstract class BaseQuad extends AbstractQuad implements Configurable {
     protected TrackSection secondAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
     protected Switch associatedSwitch = Switch.EMPTY_SWITCH;
     protected Signal associatedSignal = Signal.EMPTY_SIGNAL;
-
     protected Text descriptionLabel = new Text("");
 
     public BaseQuad(int x, int y) {
@@ -34,5 +36,29 @@ public abstract class BaseQuad extends AbstractQuad implements Configurable {
     @Override
     public boolean isDescriptionShown() {
         return descriptionLabel.isVisible();
+    }
+
+    @Override
+    public void activateListeners() {
+        QuadViewUpdater quadViewUpdater = new QuadViewUpdater();
+        if (firstAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) {
+            firstAssociatedTrack.addPropertyChangeListener(quadViewUpdater);
+        }
+        if (secondAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) {
+            secondAssociatedTrack.addPropertyChangeListener(quadViewUpdater);
+        }
+        if (associatedSwitch != Switch.EMPTY_SWITCH) {
+            associatedSwitch.addPropertyChangeListener(quadViewUpdater);
+        }
+        if (associatedSignal != Signal.EMPTY_SIGNAL) {
+            associatedSignal.addPropertyChangeListener(quadViewUpdater);
+        }
+    }
+
+    private class QuadViewUpdater implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            refresh();
+        }
     }
 }

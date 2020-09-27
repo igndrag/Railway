@@ -14,11 +14,9 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.stream.Collectors;
 
 
 public class DepartureRouteEditorController {

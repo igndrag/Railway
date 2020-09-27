@@ -29,7 +29,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button onAction="#toRouteTable" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Routes" textAlignment="CENTER">
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="20.0" mnemonicParsing="false" onAction="#toRouteTable" prefHeight="100.0" prefWidth="120.0" text="Routes" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -41,7 +41,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button onAction="#toControlModuleRedactor" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="463.0" layoutY="20.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="120.0" text="Hardware" textAlignment="CENTER">
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="463.0" layoutY="20.0" mnemonicParsing="false" onAction="#toControlModuleRedactor" prefHeight="100.0" prefWidth="120.0" text="Hardware" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -53,7 +53,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="controlButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="608.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#loadCollection" prefHeight="100.0" prefWidth="120.0" text="Control" textAlignment="CENTER">
+      <Button fx:id="controlButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="608.0" layoutY="20.0" mnemonicParsing="false" onAction="#toWorkPlace" onMouseClicked="#loadCollection" prefHeight="100.0" prefWidth="120.0" text="Control" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>

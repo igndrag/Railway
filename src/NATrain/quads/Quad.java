@@ -4,7 +4,6 @@ import NATrain.trackSideObjects.ControlAction;
 import javafx.scene.Group;
 
 import java.util.List;
-import java.util.Properties;
 
 public interface Quad {
     QuadType getType();
@@ -13,6 +12,9 @@ public interface Quad {
     void select();
     void unselect();
     Group getView();
+    void setGridLineVisible(Boolean show);
+    void activateListeners();
+
     List<ControlAction> getAvailableActions();
 
 }

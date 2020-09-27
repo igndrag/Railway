@@ -4,6 +4,7 @@ import NATrain.UI.controlModuleRedactor.CMNavigatorController;
 import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.routeTable.RouteTableController;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController;
+import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
 import NATrain.utils.ModelMock;
 import javafx.event.ActionEvent;
@@ -19,7 +20,7 @@ import java.io.*;
 public class NavigatorFxController {
 
     private static Stage primaryStage;
-    public static boolean constructorMode = false;
+    public static Boolean showGridLines = true;
     public static String modelURL = "model.ntm";
 
     @FXML
@@ -39,15 +40,12 @@ public class NavigatorFxController {
     }
 
     public void initialize() {
-        constructorMode = true;
         ModelMock.MockModel();
-        constructorMode = false;
     }
 
     @FXML
     private void toTrackRedactor(ActionEvent actionEvent) throws IOException {
        // Model.loadFromDisk();
-        constructorMode = true;
         FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("mosaicTrackRedactor.fxml"));
         Stage trackRedactor = new Stage();
         MosaicRedactorFxController.setPrimaryStage(trackRedactor);
@@ -60,7 +58,6 @@ public class NavigatorFxController {
         trackRedactor.setOnCloseRequest(event -> {
         //    Model.saveOnDisk();
             primaryStage.show();
-            constructorMode = false;
         });
         primaryStage.hide();
         trackRedactor.show();
@@ -115,6 +112,21 @@ public class NavigatorFxController {
         });
         primaryStage.hide();
         routeTable.show();
+    }
+
+    @FXML
+    private void toWorkPlace () throws IOException {
+        FXMLLoader loader = new FXMLLoader(WorkPlaceController.class.getResource("WorkPlace.fxml"));
+        Stage workPlace = new Stage();
+        workPlace.setTitle("Work Place");
+        workPlace.setScene(new Scene(loader.load(), 800, 510));
+        WorkPlaceController controller = loader.getController();
+        //controller.initialize();
+        workPlace.setOnCloseRequest(event -> {
+            primaryStage.show();
+        });
+        primaryStage.hide();
+        workPlace.show();
     }
 
     @FXML

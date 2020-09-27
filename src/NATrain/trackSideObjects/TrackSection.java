@@ -1,6 +1,9 @@
 package NATrain.trackSideObjects;
 
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 public class TrackSection extends TracksideObject {
 
     public static final TrackSection EMPTY_TRACK_SECTION = new TrackSection("");
@@ -20,6 +23,7 @@ public class TrackSection extends TracksideObject {
 
     public void setInterlocked(boolean interlocked) {
         this.interlocked = interlocked;
+        propertyChangeSupport.firePropertyChange("interlockProperty",null, vacancyState);
     }
 
     public TrackSectionState getVacancyState() {
@@ -27,6 +31,9 @@ public class TrackSection extends TracksideObject {
     }
 
     public void setVacancyState(TrackSectionState vacancyState) {
+        //TrackSectionState oldState = this.vacancyState; //doesn't matter yet
         this. vacancyState = vacancyState;
+        propertyChangeSupport.firePropertyChange("occupationalProperty",null, vacancyState);
     }
+
  }

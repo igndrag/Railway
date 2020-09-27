@@ -2,10 +2,13 @@ package NATrain.trackSideObjects;
 
 import NATrain.remoteControlModules.ControlModule;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
 public abstract class TracksideObject implements Serializable {
 
+    protected transient PropertyChangeSupport propertyChangeSupport;
     ControlModule controlModule;
     Integer channel;
     private String id;
@@ -14,6 +17,7 @@ public abstract class TracksideObject implements Serializable {
 
     public TracksideObject(String id) {
         this.id = id;
+        this.propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
     public String getId() {
@@ -47,4 +51,9 @@ public abstract class TracksideObject implements Serializable {
             return controlModule.getAddress();
         return null;
     }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
 }

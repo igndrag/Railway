@@ -94,8 +94,11 @@
                 <TableColumn fx:id="propValueCol" prefWidth="75.0" text="Value" />
               </columns>
             </TableView>
-            <Button fx:id="greenButton" mnemonicParsing="false" onAction="#greenButtonClicked" text="Green" />
-            <Button fx:id="redButton" mnemonicParsing="false" onAction="#redButtonClicked" text="Red" />
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <CheckBox fx:id="gridLinesCheckBox" onAction="#showGridLines" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Show Grid Lines" />
+               </children>
+            </Pane>
          </children>
       </VBox>
    </right>

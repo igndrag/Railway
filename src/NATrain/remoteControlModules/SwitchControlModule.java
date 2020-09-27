@@ -1,9 +1,12 @@
 package NATrain.remoteControlModules;
 
+import NATrain.trackSideObjects.Switch;
+
 public class SwitchControlModule extends AbstractModule {
 
     public SwitchControlModule(int address) {
         super(address);
+        channels = new Switch[4];
     }
 
     @Override
