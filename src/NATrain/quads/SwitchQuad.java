@@ -1,14 +1,23 @@
 package NATrain.quads;
 
+import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.SwitchState;
 import NATrain.quads.configurableInterfaces.SwitchConfigurable;
 import NATrain.trackSideObjects.Switch;
 import javafx.scene.shape.Shape;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfigurable {
 
     protected Shape switchPlusElement;
     protected Shape switchMinusElement;
+    private static final List<ControlAction> availableActions = new ArrayList<>();
+
+    static {
+        availableActions.add(ControlAction.CHANGE_SWITCH_POSITION);
+    }
 
     @Override
     public Switch getAssociatedSwitch() {
@@ -31,6 +40,10 @@ public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfig
         descriptionLabel.setText(associatedSwitch.getId());
     }
 
+    @Override
+    public List<ControlAction> getAvailableActions() {
+        return availableActions;
+    }
 
     @Override
     public boolean isBorderShown() {

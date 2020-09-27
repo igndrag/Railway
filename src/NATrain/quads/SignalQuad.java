@@ -6,10 +6,21 @@ import NATrain.trackSideObjects.Signal;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfigurable {
 
     protected Shape firstLampElement;
     protected Shape secondLampElement;
+
+    private static final List<ControlAction> availableActions = new ArrayList<>();
+
+    static {
+        availableActions.add(ControlAction.SET_ROUT_FROM);
+        availableActions.add(ControlAction.SET_ROUT_BEHIND);
+        availableActions.add(ControlAction.SET_ROUT_TO);
+    }
 
     @Override
     public Signal getAssociatedSignal() {
@@ -24,10 +35,6 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
     public SignalQuad(int x, int y) {
         super(x, y);
         paintView();
-        availableActions.add(ControlAction.SET_ROUT_FROM); // may be realize it in Signal Configurator?
-        availableActions.add(ControlAction.SET_ROUT_BEHIND);
-        availableActions.add(ControlAction.SET_ROUT_TO);
-
     }
 
     @Override
@@ -36,6 +43,11 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
         refreshTrackSectionState(secondAssociatedTrack, secondTrackElement);
         refreshSignalState();
         descriptionLabel.setText(associatedSignal.getId());
+    }
+
+    @Override
+    public List<ControlAction> getAvailableActions() {
+        return availableActions;
     }
 
     @Override

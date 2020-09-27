@@ -1,8 +1,12 @@
 package NATrain.quads;
 
+import NATrain.trackSideObjects.ControlAction;
 import javafx.scene.Group;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+
+import java.util.Collections;
+import java.util.List;
 
 public class EmptyQuad extends AbstractQuad {
 
@@ -38,5 +42,10 @@ public class EmptyQuad extends AbstractQuad {
     @Override
     public void activateListeners() {
         //do nothing
+    }
+
+    @Override
+    public List<ControlAction> getAvailableActions() {
+        return Collections.emptyList();
     }
 }

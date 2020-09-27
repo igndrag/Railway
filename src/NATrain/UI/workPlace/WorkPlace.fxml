@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="510.0" minWidth="-Infinity" prefHeight="510.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.WorkPlaceController">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="510.0" minWidth="-Infinity" prefHeight="510.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.WorkPlaceController">
    <bottom>
       <TextFlow fx:id="log" prefHeight="100.0" prefWidth="605.0" BorderPane.alignment="CENTER" />
    </bottom>
@@ -51,8 +51,8 @@
             </Menu>
           <Menu mnemonicParsing="false" text="View">
             <items>
-                  <RadioMenuItem mnemonicParsing="false" text="Locomotive Control Pane" />
-                  <RadioMenuItem mnemonicParsing="false" text="Action Emulator Pane" />
+                  <RadioMenuItem fx:id="locomotiveControllerRadioMenuItem" mnemonicParsing="false" text="Locomotive Control Pane" />
+                  <RadioMenuItem onAction="#showActionEmulator" fx:id="actionEmulatorRadioMenuItem" mnemonicParsing="false" text="Action Emulator Pane" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

@@ -1,7 +1,4 @@
-package NATrain.roureExecutor;
-
-import NATrain.routes.Route;
-import NATrain.trackSideObjects.TrackSection;
+package NATrain.executors;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -12,7 +9,9 @@ public class RouteExecutor extends Thread {
 
     Lock lock = new ReentrantLock();
 
-    public void execute(Route route) {
+    @Override
+    public void run() {
+        super.run();
 
     }
 
@@ -24,9 +23,3 @@ public class RouteExecutor extends Thread {
 
     }
 }
-
-
-
-
-
-

@@ -35,9 +35,6 @@ public abstract class AbstractQuad implements Quad, Paintable {
     protected Group quadView;
     protected Group gridLines;
 
-
-    protected List<ControlAction> availableActions = new ArrayList<>();
-
     public AbstractQuad(int x, int y) {
         background = new Rectangle(90, 80);
         background.setFill(DEFAULT_BACKGROUND_COLOR);
@@ -66,13 +63,6 @@ public abstract class AbstractQuad implements Quad, Paintable {
     @Override
     public void setGridLineVisible(Boolean show) {
         gridLines.setVisible(show);
-    }
-
-    @Override
-    public List<ControlAction> getAvailableActions() {
-        if (availableActions == null)
-            return Collections.emptyList();
-        return availableActions;
     }
 
     @Override

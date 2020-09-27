@@ -121,6 +121,7 @@ public class NavigatorFxController {
         workPlace.setTitle("Work Place");
         workPlace.setScene(new Scene(loader.load(), 800, 510));
         WorkPlaceController controller = loader.getController();
+        controller.setPrimaryStage(workPlace);
         //controller.initialize();
         workPlace.setOnCloseRequest(event -> {
             primaryStage.show();

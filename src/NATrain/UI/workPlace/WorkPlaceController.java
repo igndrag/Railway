@@ -1,29 +1,41 @@
 package NATrain.UI.workPlace;
 
 import NATrain.UI.NavigatorFxController;
+import NATrain.executors.ActionExecutor;
 import NATrain.model.Model;
 import NATrain.quads.*;
-import NATrain.trackSideObjects.TrackSection;
-import NATrain.trackSideObjects.TracksideObject;
+import NATrain.trackSideObjects.ControlAction;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
+import java.io.IOException;
+import java.util.List;
 
 public class WorkPlaceController {
 
+
+    @FXML
+    private BorderPane mainPane;
+
+    @FXML
+    private RadioMenuItem actionEmulatorRadioMenuItem;
+    @FXML
+    private RadioMenuItem locomotiveControllerRadioMenuItem;
     @FXML
     private TextFlow log;
     @FXML
@@ -35,7 +47,14 @@ public class WorkPlaceController {
     @FXML
     private ScrollPane workArea;
 
+
+    private Stage primaryStage;
+
     private static GridPane gridPane;
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
 
     public void initialize() {
         NavigatorFxController.showGridLines = false;
@@ -56,32 +75,63 @@ public class WorkPlaceController {
                 } else {
                     quad.setGridLineVisible(false);
                     quadView = quad.getView();
-                    configQuadView(quadView, i, j);
+                    configQuadView(quad, i, j);
                 }
+                quadView.setOnMouseClicked(null); // clear actions from mosaic redactor
                 quadPane.getChildren().add(quadView);
                 gridPane.add(quadPane, i, j);
             }
         }
         workArea.setContent(gridPane);
+
+        log("Work Place initialized");
+        log("Good Lock!!!");
     }
 
 
-    private void configQuadView(Group quadView, int i, int j) {
+    private void configQuadView(Quad quad, int i, int j) {
+        List<ControlAction> availableActions = quad.getAvailableActions();
+        if (availableActions.size() > 0) {
+            ContextMenu contextMenu = new ContextMenu();
+            availableActions.forEach(controlAction -> {
+                MenuItem menuItem = new MenuItem(controlAction.getDescription());
+                menuItem.setOnAction(event -> {
+                    ActionExecutor.executeControlAction(controlAction, quad);
+                });
+                contextMenu.getItems().add(menuItem);
+            });
 
-    }
-
-    private class quadViewUpdater implements PropertyChangeListener {
-        private Quad quad;
-
-        quadViewUpdater(Quad quad) {
-            this.quad = quad;
+            quad.getView().setOnMouseClicked(event -> {
+                contextMenu.show(mainPane, event.getScreenX(), event.getScreenY());
+                event.consume();
+            });
+            mainPane.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+                contextMenu.hide();
+            });
         }
-
-        @Override
-        public void propertyChange(PropertyChangeEvent event) {
-            quad.refresh();
-        }
-
     }
 
+    private void log(String message) {
+        //https://stackoverflow.com/questions/40822806/add-elements-on-textflow-using-external-thread-in-javafx
+        Platform.runLater(() -> {
+            if (log.getChildren().size() > 4) {
+                log.getChildren().remove(0);
+            }
+            log.getChildren().add(new Text(message + System.lineSeparator()));
+        });
+    }
+
+    public void showActionEmulator(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(ActionEmulatorController.class.getResource("ActionEmulator.fxml"));
+        Stage actionEmulator = new Stage();
+        actionEmulator.setTitle("Action Emulator");
+        actionEmulator.setScene(new Scene(loader.load(), 600, 160));
+        ActionEmulatorController controller = loader.getController();
+        //controller.initialize();
+        actionEmulator.setOnCloseRequest(event -> {
+            actionEmulatorRadioMenuItem.setSelected(false);
+        });
+        actionEmulator.show();
+    }
 }
+
