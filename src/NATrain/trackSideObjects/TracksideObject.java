@@ -8,13 +8,12 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 public abstract class TracksideObject implements Serializable {
+    static final long serialVersionUID = 1L;
 
     protected transient PropertyChangeSupport propertyChangeSupport;
     ControlModule controlModule;
     Integer channel;
     private String id;
-
-    static final long SerialVersionUID = 1;
 
     public TracksideObject(String id) {
         this.id = id;

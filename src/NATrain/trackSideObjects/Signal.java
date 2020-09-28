@@ -7,6 +7,7 @@ import static NATrain.trackSideObjects.SignalState.STANDARD_TRACK_SIGNAL_STATES;
 import static NATrain.trackSideObjects.SignalState.STANDARD_TRIMMER_SIGNAL_STATES;
 
 public class Signal extends TracksideObject {
+    static final long serialVersionUID = 1L;
 
     public static final Signal EMPTY_SIGNAL = new Signal("", Collections.emptySet(), SignalType.EMPTY_SIGNAL);
     public static final String INITIAL_SIGNAL_NAME = "New Signal";

@@ -10,46 +10,32 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class STQ5_1 extends SimpleTrackQuad {
+public class STQ4_2 extends SimpleTrackQuad {
 
-    public STQ5_1(int x, int y) {
+    public STQ4_2(int x, int y) {
         super(x, y);
         paintView();
-        quadType = QuadType.STQ5_1;
+        quadType = QuadType.STQ4_2;
     }
 
     @Override
     public void paintView() {
         firstTrackElement = new Polygon(
-                0, 30,
-                30, 30,
+                90, 30,
+                90, 50,
+                70, 50,
+                55, 65,
                 55, 80,
                 35, 80,
-                20, 50,
-                0, 50,
-                0, 30
+                35, 60,
+                65, 30,
+                90, 30
         );
         firstTrackElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(firstTrackElement);
 
-        borderElement = new Polygon(
-                30, 70,
-                50, 70,
-                55, 80,
-                35, 80,
-                30, 70
-        );
-        borderElement.setFill(BaseQuad.DEFAULT_BACKGROUND_COLOR);
-        borderElement.setVisible(false);
-        addToQuadView(borderElement);
-
-        isolatorElement = new Rectangle(35, 78, 20 , 2);
-        isolatorElement.setFill(AbstractQuad.ISOLATOR_ELEMENT_COLOR);
-        isolatorElement.setVisible(false);
-        addToQuadView(isolatorElement);
-
         descriptionLabel = new Text();
-        descriptionLabel.setTextAlignment(TextAlignment.LEFT);
+        descriptionLabel.setTextAlignment(TextAlignment.RIGHT);
         descriptionLabel.setWrappingWidth(80);
         descriptionLabel.setX(10);
         descriptionLabel.setY(20);

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 
 public class Switch extends TracksideObject implements Serializable {
+    static final long serialVersionUID = 1L;
 
     public static final Switch EMPTY_SWITCH = new Switch("");
     public static final String INITIAL_SWITCH_NAME = "New Switch";

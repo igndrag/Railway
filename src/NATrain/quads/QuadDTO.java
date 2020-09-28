@@ -7,6 +7,7 @@ import NATrain.utils.QuadFactory;
 import java.io.Serializable;
 
 public class QuadDTO implements Serializable {
+    static final long serialVersionUID = 1L;
     int x;
     int y;
     private QuadType quadType;
@@ -14,6 +15,8 @@ public class QuadDTO implements Serializable {
     private final TrackSection secondAssociatedTrack;
     private final Switch associatedSwitch;
     private final Signal associatedSignal;
+
+
 
     private QuadDTO (BaseQuad originalQuad) {
         this.x = originalQuad.x;

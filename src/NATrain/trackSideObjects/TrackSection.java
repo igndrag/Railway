@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class TrackSection extends TracksideObject {
+    static final long serialVersionUID = 1L;
 
     public static final TrackSection EMPTY_TRACK_SECTION = new TrackSection("");
     public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
