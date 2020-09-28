@@ -11,6 +11,7 @@ public class Signal extends TracksideObject {
     public static final Signal EMPTY_SIGNAL = new Signal("", Collections.emptySet(), SignalType.EMPTY_SIGNAL);
     public static final String INITIAL_SIGNAL_NAME = "New Signal";
 
+
     Set<SignalState> approvedSignals;
     transient SignalState signalState = SignalState.UNDEFINED;
     private SignalType signalType;
@@ -57,5 +58,9 @@ public class Signal extends TracksideObject {
         super(id);
         this.approvedSignals = approvedSignals;
         this.signalType = signalType;
+    }
+
+    public void setDefaultState() {
+        //TODO create request to control module
     }
 }

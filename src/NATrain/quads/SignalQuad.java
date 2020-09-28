@@ -100,9 +100,9 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
                     secondLampElement.setFill(YELLOW_BLINKER);
                     break;
                 case NOT_LIGHT:
-                    firstLampElement.setFill(DEFAULT_BACKGROUND_COLOR);
+                    firstLampElement.setFill(SIGNAL_LAMP_BACKGROUND_COLOR);
                     if (secondLampElement != null)
-                        secondLampElement.setFill(DEFAULT_BACKGROUND_COLOR);
+                        secondLampElement.setFill(SIGNAL_LAMP_BACKGROUND_COLOR);
                     break;
             }
         } else {

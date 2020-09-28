@@ -37,6 +37,15 @@ public class MosaicRedactorFxController {
     private static QuadType selectedQuadType;
 
     @FXML
+    private MenuItem saveMenuItem;
+
+    @FXML
+    private MenuItem loadMenuItem;
+
+    @FXML
+    private ToggleButton eraserToggleButton;
+
+    @FXML
     private TextFlow textFlowPanel;
 
     @FXML
@@ -106,6 +115,17 @@ public class MosaicRedactorFxController {
     public void initialize() {
         NavigatorFxController.showGridLines = true;
 
+        //** menu initializing **//
+        saveMenuItem.setOnAction(event -> {
+            Model.saveOnDisk();
+        });
+
+        loadMenuItem.setOnAction(event -> {
+            Model.loadFromDisk();
+            initMainGrid();
+
+        });
+
         //*** left panel initializing ***//
         VBox STQVBox = new VBox();
         VBox DTQVBox = new VBox();
@@ -114,6 +134,17 @@ public class MosaicRedactorFxController {
         VBox DSIQVBox = new VBox();
 
         ToggleGroup toggleGroup = new ToggleGroup();
+        eraserToggleButton.setToggleGroup(toggleGroup);
+        eraserToggleButton.setOnAction(event -> {
+            if (eraserToggleButton.isSelected()) {
+                log("Eraser activated");
+                selectedQuadType = QuadType.EMPTY_QUAD;
+            } else {
+                selectedQuadType = null;
+                log("Eraser deactivated");
+            }
+        });
+
         Arrays.stream(QuadType.values()).forEach(quadType -> {
                     ToggleButton button = new ToggleButton();
                     button.setToggleGroup(toggleGroup);
@@ -157,6 +188,16 @@ public class MosaicRedactorFxController {
 
         //*** grid pane panel initializing ***//
 
+        initMainGrid();
+
+        gridLinesCheckBox.setSelected(NavigatorFxController.showGridLines);
+
+        log("Track redactor initialized.");
+        log("Choice quad from left panel.");
+
+    }
+
+    private void initMainGrid() {
         gridPane = new GridPane();
 //        gridPane.setCache(false);
         int raws = Model.getMainGrid().length;
@@ -176,12 +217,6 @@ public class MosaicRedactorFxController {
             }
         }
         workArea.setContent(gridPane);
-
-        gridLinesCheckBox.setSelected(NavigatorFxController.showGridLines);
-
-        log("Track redactor initialized.");
-        log("Choice quad from left panel.");
-
     }
 
     @FXML

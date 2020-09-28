@@ -15,14 +15,16 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractQuad implements Quad, Paintable {
-    public static final Color DEFAULT_BACKGROUND_COLOR = Color.LIGHTGRAY;
-    public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTPINK;
+    public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
+    public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final Color CONFIGURED_ELEMENT_COLOR = Color.VIOLET;
     public static final Color OCCUPIED_ELEMENT_COLOR = Color.RED;
     public static final Color FREE_ELEMENT_COLOR = Color.GREEN;
     public static final Color UNDEFINED_ELEMENT_COLOR = Color.BLUE;
     public static final Color INTERLOCKED_ELEMENT_COLOR = Color.YELLOW;
     public static final Color ISOLATOR_ELEMENT_COLOR = Color.BROWN;
+    public static final Color SIGNAL_LAMP_BACKGROUND_COLOR = Color.GRAY;
+    public static final Color GRID_LINE_COLOR = Color.LIGHTGRAY;
     public static Color YELLOW_BLINKER = Color.YELLOW;
     public static Color WHITE_BLINKER = Color.WHITE;
 
@@ -92,13 +94,13 @@ public abstract class AbstractQuad implements Quad, Paintable {
 
     public static void blink() {
         if (YELLOW_BLINKER == Color.YELLOW) {
-            YELLOW_BLINKER = DEFAULT_BACKGROUND_COLOR;
+            YELLOW_BLINKER = SIGNAL_LAMP_BACKGROUND_COLOR;
         } else {
             YELLOW_BLINKER = Color.YELLOW;
         }
 
         if (WHITE_BLINKER == Color.WHITE) {
-            WHITE_BLINKER = DEFAULT_BACKGROUND_COLOR;
+            WHITE_BLINKER = SIGNAL_LAMP_BACKGROUND_COLOR;
         } else {
             WHITE_BLINKER = Color.WHITE;
         }

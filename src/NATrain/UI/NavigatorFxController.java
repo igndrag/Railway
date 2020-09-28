@@ -39,21 +39,22 @@ public class NavigatorFxController {
     @FXML
     private Button mosaicRedactorButton;
 
+    private static Timeline blinker;
+
     public static void setPrimaryStage(Stage mainStage) {
         primaryStage = mainStage;
     }
 
     public void initialize() {
         ModelMock.MockModel();
-        Timeline yellowBlinker = new Timeline(
+        blinker = new Timeline(
                 new KeyFrame(Duration.seconds(1),
                         event -> {
                             AbstractQuad.blink();
                             Model.refreshAll();
                         }
                 ));
-        yellowBlinker.setCycleCount(Timeline.INDEFINITE);
-        yellowBlinker.play();
+        blinker.setCycleCount(Timeline.INDEFINITE);
     }
 
     @FXML
@@ -119,12 +120,14 @@ public class NavigatorFxController {
         routeTable.setResizable(false);
         RouteTableController controller = loader.getController();
         controller.setPrimaryStage(routeTable);
+        blinker.play();
         //controller.initialize();
         routeTable.setOnCloseRequest(event -> {
             primaryStage.show();
         });
         primaryStage.hide();
         routeTable.show();
+        blinker.pause();
     }
 
     @FXML
@@ -135,9 +138,11 @@ public class NavigatorFxController {
         workPlace.setScene(new Scene(loader.load(), 800, 510));
         WorkPlaceController controller = loader.getController();
         controller.setPrimaryStage(workPlace);
+        blinker.play();
         //controller.initialize();
         workPlace.setOnCloseRequest(event -> {
             primaryStage.show();
+            blinker.pause();
         });
         primaryStage.hide();
         workPlace.show();

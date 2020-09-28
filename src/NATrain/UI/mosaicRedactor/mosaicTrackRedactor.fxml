@@ -48,7 +48,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Save" />
+                  <MenuItem fx:id="loadMenuItem" mnemonicParsing="false" text="Load" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -96,7 +97,8 @@
             </TableView>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <CheckBox fx:id="gridLinesCheckBox" onAction="#showGridLines" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Show Grid Lines" />
+                  <CheckBox fx:id="gridLinesCheckBox" layoutX="23.0" layoutY="125.0" mnemonicParsing="false" onAction="#showGridLines" text="Show Grid Lines" />
+                  <ToggleButton fx:id="eraserToggleButton" layoutX="31.0" layoutY="14.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="88.0" text="Eraser" />
                </children>
             </Pane>
          </children>

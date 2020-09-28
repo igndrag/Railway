@@ -5,6 +5,7 @@ import NATrain.remoteControlModules.ControlModule;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.Arrays;
 
 public abstract class TracksideObject implements Serializable {
 
@@ -17,6 +18,10 @@ public abstract class TracksideObject implements Serializable {
 
     public TracksideObject(String id) {
         this.id = id;
+        this.propertyChangeSupport = new PropertyChangeSupport(this);
+    }
+
+    public void addPropertyChangeSupport() {
         this.propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
@@ -56,8 +61,10 @@ public abstract class TracksideObject implements Serializable {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+
     @Override
     public String toString() {
         return id;
     }
 }
+

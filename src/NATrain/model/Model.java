@@ -2,15 +2,11 @@ package NATrain.model;
 
 import NATrain.UI.NavigatorFxController;
 import NATrain.routes.Route;
-import NATrain.trackSideObjects.SignalState;
-import NATrain.trackSideObjects.SwitchState;
-import NATrain.trackSideObjects.TrackSectionState;
+import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
 import NATrain.remoteControlModules.ControlModule;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.Switch;
-import NATrain.trackSideObjects.TrackSection;
 
+import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -105,10 +101,13 @@ public enum Model implements Serializable {
                 ySize  = (Integer) inputStream.readObject();
                 mainGrid = new Quad[ySize][xSize];
                 trackSections = (Map<String, TrackSection>) inputStream.readObject();
+                trackSections.values().forEach(TracksideObject::addPropertyChangeSupport);
                 trackSections.values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.UNDEFINED));
                 signals = (Map<String, Signal>) inputStream.readObject();
+                signals.values().forEach(TracksideObject::addPropertyChangeSupport);
                 signals.values().forEach(signal -> signal.setSignalState(SignalState.UNDEFINED));
                 switches = (Map<String, Switch>) inputStream.readObject();
+                switches.values().forEach(TracksideObject::addPropertyChangeSupport);
                 switches.values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.UNDEFINED));
                 controlModules = (Map<Integer, ControlModule>) inputStream.readObject();
 
