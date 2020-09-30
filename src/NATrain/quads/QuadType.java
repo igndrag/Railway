@@ -16,9 +16,10 @@ public enum QuadType {
     STQ4_2,
     STQ4_3,
     STQ4_4,
-
     STQ5_1,
     STQ5_2,
+    STQ6_1,
+    STQ6_2,
 
     DTQ1_1,
 

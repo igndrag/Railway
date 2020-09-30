@@ -61,6 +61,10 @@ public class QuadFactory {
                return new STQ5_1(x,y);
            case STQ5_2:
                return new STQ5_2(x, y);
+           case STQ6_1:
+               return new STQ6_1(x, y);
+           case STQ6_2:
+               return new STQ6_2(x, y);
            case DTQ1_1:
                return new DTQ1_1(x, y);
            case SIQ1_1:
