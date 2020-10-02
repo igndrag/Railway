@@ -15,19 +15,20 @@
                     </ScrollPane>
                </content>
           </TitledPane>
-          <TitledPane fx:id="doubleTrackSectionIcons" animated="false" text="Double track section">
+          <TitledPane animated="false" text="Double track section">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <ScrollPane fx:id="doubleTrackSectionIcons" prefHeight="200.0" prefWidth="200.0" >
+                      </ScrollPane>
             </content>
           </TitledPane>
-          <TitledPane fx:id="switchIcons" animated="false" text="Switch">
+          <TitledPane animated="false" text="Switch">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <ScrollPane fx:id="switchIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </TitledPane>
-            <TitledPane fx:id="signalIcons" animated="false" text="Signal">
+            <TitledPane animated="false" text="Signal">
                 <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <ScrollPane fx:id="signalIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                 </content>
             </TitledPane>
             <TitledPane fx:id="doubleSignalIcons" animated="false" text="Double Signal">

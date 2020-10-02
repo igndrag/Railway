@@ -7,22 +7,21 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class SWQ1_1 extends SwitchQuad {
-    public SWQ1_1(int x, int y) {
+public class SWQ2_3 extends SwitchQuad {
+    public SWQ2_3(int x, int y) {
         super(x, y);
-        quadType = QuadType.SWQ1_1;
+        quadType = QuadType.SWQ2_3;
     }
 
     @Override
     public void paintView() {
         firstTrackElement = new Polygon(
                 0, 30,
-                50, 30,
-                35, 0,
-                55, 0,
-                70, 30,
                 90, 30,
                 90, 50,
+                75, 80,
+                55, 80,
+                70, 50,
                 0, 50,
                 0, 30
         );
@@ -30,31 +29,31 @@ public class SWQ1_1 extends SwitchQuad {
         addToQuadView(firstTrackElement);
 
         switchPlusElement = new Polygon(
-                40, 30,
-                50, 30,
+                70, 30,
+                80, 30,
+                70, 50,
                 60, 50,
-                50, 50,
-                40, 30
+                70, 30
         );
         switchPlusElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(switchPlusElement);
 
         switchMinusElement = new Polygon(
-                45, 20,
-                65, 20,
-                70, 30,
-                50, 30,
-                45,20
+                70, 50,
+                90, 50,
+                85, 60,
+                65, 60,
+                70, 50
         );
         switchMinusElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(switchMinusElement);
 
         borderElement = new Polygon(
-                35, 0,
-                55, 0,
-                60, 10,
-                40, 10,
-                35, 0
+                60, 70,
+                80, 70,
+                75, 80,
+                55, 80,
+                60, 70
         );
 
         borderElement.setFill(BaseQuad.DEFAULT_BACKGROUND_COLOR);
@@ -63,9 +62,9 @@ public class SWQ1_1 extends SwitchQuad {
 
         descriptionLabel = new Text();
         descriptionLabel.setTextAlignment(TextAlignment.RIGHT);
-        descriptionLabel.setWrappingWidth(70);
+        descriptionLabel.setWrappingWidth(60);
         descriptionLabel.setX(0);
-        descriptionLabel.setY(65);
+        descriptionLabel.setY(20);
         addToQuadView(descriptionLabel);
     }
 }

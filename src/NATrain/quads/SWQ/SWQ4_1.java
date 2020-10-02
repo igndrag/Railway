@@ -7,20 +7,20 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class SWQ1_1 extends SwitchQuad {
-    public SWQ1_1(int x, int y) {
+public class SWQ4_1 extends SwitchQuad {
+    public SWQ4_1(int x, int y) {
         super(x, y);
-        quadType = QuadType.SWQ1_1;
+        quadType = QuadType.SWQ4_1;
     }
 
     @Override
     public void paintView() {
         firstTrackElement = new Polygon(
                 0, 30,
-                50, 30,
+                30, 30,
+                15, 0,
                 35, 0,
-                55, 0,
-                70, 30,
+                50, 30,
                 90, 30,
                 90, 50,
                 0, 50,
@@ -30,31 +30,31 @@ public class SWQ1_1 extends SwitchQuad {
         addToQuadView(firstTrackElement);
 
         switchPlusElement = new Polygon(
-                40, 30,
-                50, 30,
-                60, 50,
-                50, 50,
-                40, 30
+                20, 30,
+                30, 30,
+                40, 50,
+                30, 50,
+                20, 30
         );
         switchPlusElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(switchPlusElement);
 
         switchMinusElement = new Polygon(
+                25, 20,
                 45, 20,
-                65, 20,
-                70, 30,
                 50, 30,
-                45,20
+                30, 30,
+                25, 20
         );
         switchMinusElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(switchMinusElement);
 
         borderElement = new Polygon(
+                15, 0,
                 35, 0,
-                55, 0,
-                60, 10,
                 40, 10,
-                35, 0
+                30, 10,
+                15, 0
         );
 
         borderElement.setFill(BaseQuad.DEFAULT_BACKGROUND_COLOR);
@@ -62,9 +62,9 @@ public class SWQ1_1 extends SwitchQuad {
         addToQuadView(borderElement);
 
         descriptionLabel = new Text();
-        descriptionLabel.setTextAlignment(TextAlignment.RIGHT);
-        descriptionLabel.setWrappingWidth(70);
-        descriptionLabel.setX(0);
+        descriptionLabel.setTextAlignment(TextAlignment.LEFT);
+        descriptionLabel.setWrappingWidth(50);
+        descriptionLabel.setX(40);
         descriptionLabel.setY(65);
         addToQuadView(descriptionLabel);
     }

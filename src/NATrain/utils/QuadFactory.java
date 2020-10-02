@@ -3,6 +3,9 @@ package NATrain.utils;
 import NATrain.quads.AbstractQuad;
 import NATrain.quads.DSQ.DSQ1_1;
 import NATrain.quads.DTQ.DTQ1_1;
+import NATrain.quads.DTQ.DTQ1_2;
+import NATrain.quads.DTQ.DTQ2_1;
+import NATrain.quads.DTQ.DTQ2_2;
 import NATrain.quads.EmptyQuad;
 import NATrain.quads.Quad;
 import NATrain.quads.QuadType;
@@ -67,10 +70,46 @@ public class QuadFactory {
                return new STQ6_2(x, y);
            case DTQ1_1:
                return new DTQ1_1(x, y);
+           case DTQ1_2:
+               return new DTQ1_2(x, y);
+           case DTQ2_1:
+               return new DTQ2_1(x, y);
+           case DTQ2_2:
+               return new DTQ2_2(x ,y);
            case SIQ1_1:
                return new SIQ1_1(x, y);
            case SWQ1_1:
                return new SWQ1_1(x, y);
+           case SWQ1_2:
+               return new SWQ1_2(x, y);
+           case SWQ1_3:
+               return new SWQ1_3(x, y);
+           case SWQ1_4:
+               return new SWQ1_4(x, y);
+           case SWQ2_1:
+               return new SWQ2_1(x, y);
+           case SWQ2_2:
+               return new SWQ2_2(x, y);
+           case SWQ2_3:
+               return new SWQ2_3(x, y);
+           case SWQ2_4:
+               return new SWQ2_4(x, y);
+           case SWQ3_1:
+               return new SWQ3_1(x, y);
+           case SWQ3_2:
+               return new SWQ3_2(x, y);
+           case SWQ3_3:
+               return new SWQ3_3(x, y);
+           case SWQ3_4:
+               return new SWQ3_4(x, y);
+           case SWQ4_1:
+               return new SWQ4_1(x, y);
+           case SWQ4_2:
+               return new SWQ4_2(x, y);
+           case SWQ4_3:
+               return new SWQ4_3(x, y);
+           case SWQ4_4:
+               return new SWQ4_4(x, y);
            case DSQ1_1:
                return new DSQ1_1(x, y);
        }

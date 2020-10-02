@@ -70,13 +70,13 @@ public class MosaicRedactorFxController {
     private TableView<BaseQuad> propertyTable;
 
     @FXML
-    private TitledPane doubleTrackSectionIcons;
+    private ScrollPane doubleTrackSectionIcons;
 
     @FXML
-    private TitledPane switchIcons;
+    private ScrollPane switchIcons;
 
     @FXML
-    private TitledPane signalIcons;
+    private ScrollPane signalIcons;
 
     @FXML
     private TitledPane doubleSignalIcons;
@@ -125,6 +125,7 @@ public class MosaicRedactorFxController {
             initMainGrid();
 
         });
+
 
         //*** left panel initializing ***//
         VBox STQVBox = new VBox();
@@ -179,6 +180,9 @@ public class MosaicRedactorFxController {
                 }
         );
         STQVBox.setPadding(new Insets(0,0,0,15));
+        DTQVBox.setPadding(new Insets(0,0,0,15));
+        SWQVBox.setPadding(new Insets(0,0,0,15));
+        SIQVBox.setPadding(new Insets(0,0,0,15));
         simpleTrackSectionIcons.setContent(STQVBox);
         doubleTrackSectionIcons.setContent(DTQVBox);
         switchIcons.setContent(SWQVBox);
