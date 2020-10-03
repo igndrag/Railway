@@ -14,6 +14,7 @@ public abstract class Route implements Serializable {
     private Signal signal;
     private ConcurrentMap <Switch, SwitchState> switchStatePositions = new ConcurrentHashMap<>();
     private ConcurrentLinkedQueue <TrackSection> occupationalOrder = new ConcurrentLinkedQueue<>();
+    private TrackSection destination;
 
     public Route (String description) {
         this.description = description;
@@ -33,6 +34,14 @@ public abstract class Route implements Serializable {
 
     public String getSignalName() {
         return signal.getId();
+    }
+
+    public TrackSection getDestination() {
+        return destination;
+    }
+
+    public void setDestination(TrackSection destination) {
+        this.destination = destination;
     }
 
     public String getSwitchPositions() {

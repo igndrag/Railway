@@ -68,6 +68,7 @@ public class WorkPlaceController {
                 Pane quadPane = new Pane();
                 Group quadView;
                 Quad quad = Model.getMainGrid()[j][i];
+                quad.getView().setOnMouseClicked(null); // clear actions from mosaic redactor
                 if (quad.getType() == QuadType.EMPTY_QUAD) {
                     quadView = new Group();
                     Rectangle emptyBackground = new Rectangle(90, 80);
@@ -79,7 +80,6 @@ public class WorkPlaceController {
                     quadView = quad.getView();
                     configQuadView(quad, i, j);
                 }
-                quadView.setOnMouseClicked(null); // clear actions from mosaic redactor
                 quadPane.getChildren().add(quadView);
                 gridPane.add(quadPane, i, j);
             }
@@ -105,7 +105,6 @@ public class WorkPlaceController {
 
             quad.getView().setOnMouseClicked(event -> {
                 contextMenu.show(mainPane, event.getScreenX(), event.getScreenY());
-                event.consume();
             });
             mainPane.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
                 contextMenu.hide();

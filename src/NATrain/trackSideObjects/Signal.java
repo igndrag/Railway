@@ -16,6 +16,7 @@ public class Signal extends TracksideObject {
     Set<SignalState> approvedSignals;
     transient SignalState signalState = SignalState.UNDEFINED;
     private SignalType signalType;
+    private SignalState closedSignalState;
 
     public void setSignalType(SignalType signalType) {
         this.signalType = signalType;
@@ -61,7 +62,7 @@ public class Signal extends TracksideObject {
         this.signalType = signalType;
     }
 
-    public void setDefaultState() {
+    public void closeSignal() {
         //TODO create request to control module
     }
 }

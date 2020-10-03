@@ -12,7 +12,7 @@ public enum ActionExecutor {
     }
 
     public void setRoute (Route route) {
-        RouteExecutor routeExecutor = new RouteExecutor();
+        RouteExecutor routeExecutor = new RouteExecutor(route);
                                                 //TODO
         routeExecutor.start();
     }

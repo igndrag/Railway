@@ -2,10 +2,7 @@ package NATrain.UI.routeTable;
 
 import NATrain.model.Model;
 import NATrain.routes.DepartureRoute;
-import NATrain.trackSideObjects.Switch;
-import NATrain.trackSideObjects.SwitchState;
-import NATrain.trackSideObjects.TrackSection;
-import NATrain.trackSideObjects.TracksideObject;
+import NATrain.trackSideObjects.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,19 +25,19 @@ public class DepartureRouteEditorController {
     @FXML
     private TextField descriptionTextField;
     @FXML
-    private ChoiceBox<String> signalChoiceBox;
+    private ChoiceBox<Signal> signalChoiceBox;
     @FXML
-    private ChoiceBox<String> TVDS1ChoiceBox;
+    private ChoiceBox<TrackSection> TVDS1ChoiceBox;
     @FXML
-    private ChoiceBox<String> TVDS2ChoiceBox;
+    private ChoiceBox<TrackSection> TVDS2ChoiceBox;
     @FXML
     private CheckBox maneuverCheckBox;
     @FXML
-    private ListView<String> allTrackListView;
+    private ListView<TrackSection> allTrackListView;
     @FXML
-    private ListView<String> selectedTrackListView;
+    private ListView<TrackSection> selectedTrackListView;
     @FXML
-    private ChoiceBox<String> switchChoiceBox;
+    private ChoiceBox<Switch> switchChoiceBox;
     @FXML
     private ToggleButton minusToggleButton;
     @FXML
@@ -72,25 +69,25 @@ public class DepartureRouteEditorController {
         });
         switchPositionListView.setItems(switchPositionsObservableList);
 
-        signalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().keySet()));
-        ObservableList<String> trackObservableList = FXCollections.observableArrayList(Model.getTrackSections().keySet());
+        signalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
+        ObservableList<TrackSection> trackObservableList = FXCollections.observableArrayList(Model.getTrackSections().values());
         TVDS1ChoiceBox.setItems(trackObservableList);
         TVDS2ChoiceBox.setItems(trackObservableList);
 
         if (departureRoute.getSignal() != null)
-            signalChoiceBox.setValue(departureRoute.getSignal().getId());
+            signalChoiceBox.setValue(departureRoute.getSignal());
 
         ToggleGroup toggleGroup = new ToggleGroup();
         plusToggleButton.setToggleGroup(toggleGroup);
         minusToggleButton.setToggleGroup(toggleGroup);
         plusToggleButton.setSelected(true);
 
-        switchChoiceBox.setItems(FXCollections.observableArrayList(Model.getSwitches().keySet()));
+        switchChoiceBox.setItems(FXCollections.observableArrayList(Model.getSwitches().values()));
 
         addSwitchPositionButton.setOnAction(event -> {
             if (!switchChoiceBox.getSelectionModel().isEmpty()) {
                 SwitchState switchState;
-                String switchName = switchChoiceBox.getSelectionModel().getSelectedItem();
+                String switchName = switchChoiceBox.getSelectionModel().getSelectedItem().getId();
                 StringBuilder stringBuilder = new StringBuilder();
                 if (plusToggleButton.isSelected()) {
                     stringBuilder.append("+");
@@ -108,14 +105,18 @@ public class DepartureRouteEditorController {
 
         deleteSwitchPositionButton.setOnAction(event -> {
             if (!switchPositionListView.getSelectionModel().isEmpty()) {
-                String switchName = switchPositionListView.getSelectionModel().getSelectedItem();
-                switchPositionListView.getItems().remove(switchName);
-                switchStatePositionsMap.remove(Model.getSwitches().get(switchName));
+                String switchNameWithPosition = switchPositionListView.getSelectionModel().getSelectedItem();
+                String switchName = switchNameWithPosition.substring(1);
+                switchPositionListView.getItems().remove(switchNameWithPosition);
+                Switch aSwitch = Model.getSwitches().get(switchName);
+                switchStatePositionsMap.remove(aSwitch);
+                switchChoiceBox.getItems().add(aSwitch);
+                switchChoiceBox.getItems().sort(Comparator.comparing(TracksideObject::getId));
             }
         });
 
-        ObservableList<String> allTrackSections = FXCollections.observableArrayList(Model.getTrackSections().keySet());
-        allTrackSections.sort(Comparator.naturalOrder());
+        ObservableList<TrackSection> allTrackSections = FXCollections.observableArrayList(Model.getTrackSections().values());
+        allTrackSections.sort(Comparator.comparing(TracksideObject::getId));
         allTrackListView.setItems(allTrackSections);
 
         ObservableList<String> selectedTrackSections = FXCollections.observableArrayList();
@@ -129,19 +130,19 @@ public class DepartureRouteEditorController {
     @FXML
     private void swipeRight() {
         if (!allTrackListView.getSelectionModel().isEmpty()) {
-            String trackName = allTrackListView.getSelectionModel().getSelectedItem();
-            allTrackListView.getItems().remove(trackName);
-            selectedTrackListView.getItems().add(trackName);
+            TrackSection trackSection = allTrackListView.getSelectionModel().getSelectedItem();
+            allTrackListView.getItems().remove(trackSection);
+            selectedTrackListView.getItems().add(trackSection);
         }
     }
 
     @FXML
     private void swipeLeft() {
         if (!selectedTrackListView.getSelectionModel().isEmpty()) {
-            String trackName = selectedTrackListView.getSelectionModel().getSelectedItem();
-            selectedTrackListView.getItems().remove(trackName);
-            allTrackListView.getItems().add(trackName);
-            allTrackListView.getItems().sort(Comparator.naturalOrder());
+            TrackSection trackSection = selectedTrackListView.getSelectionModel().getSelectedItem();
+            selectedTrackListView.getItems().remove(trackSection);
+            allTrackListView.getItems().add(trackSection);
+            allTrackListView.getItems().sort(Comparator.comparing(TracksideObject::getId));
         }
     }
 
@@ -149,14 +150,14 @@ public class DepartureRouteEditorController {
     private void saveAndClose() {
         if (isInputValid()) {
             departureRoute.setDescription(descriptionTextField.getText());
-            departureRoute.setSignal(Model.getSignals().get(signalChoiceBox.getValue()));
+            departureRoute.setSignal(signalChoiceBox.getValue());
             departureRoute.setSwitchStatePositions(switchStatePositionsMap);
             departureRoute.setWithManeuver(maneuverCheckBox.isSelected());
-            departureRoute.setTVDS1(Model.getTrackSections().get(TVDS1ChoiceBox.getValue()));
-            departureRoute.setTVDS2(Model.getTrackSections().get(TVDS2ChoiceBox.getValue()));
-            ConcurrentLinkedQueue<TrackSection> occupationalOrder = new ConcurrentLinkedQueue<>();
-            selectedTrackListView.getItems().stream().map(trackName -> Model.getTrackSections().get(trackName)).forEach(occupationalOrder::add);
+            departureRoute.setTVDS1(TVDS1ChoiceBox.getValue());
+            departureRoute.setTVDS2(TVDS2ChoiceBox.getValue());
+            ConcurrentLinkedQueue<TrackSection> occupationalOrder = new ConcurrentLinkedQueue<>(selectedTrackListView.getItems());
             departureRoute.setOccupationalOrder(occupationalOrder);
+            departureRoute.setDestination(TVDS2ChoiceBox.getValue());
             Model.getRouteTable().add(departureRoute);
             Stage thisStage = (Stage) descriptionTextField.getScene().getWindow();
             thisStage.close();
