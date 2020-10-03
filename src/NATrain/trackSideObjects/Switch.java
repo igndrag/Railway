@@ -66,9 +66,4 @@ public class Switch extends TracksideObject implements Serializable {
             switchState = SwitchState.PLUS;
         if (pared) paredSwitch.changePosition();
     }
-
-    public SwitchState getState() {
-        return switchState;
-    }
-
 }

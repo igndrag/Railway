@@ -57,7 +57,7 @@ public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfig
 
     private void refreshSwitchState() {
         if (associatedSwitch != Switch.EMPTY_SWITCH) {
-            switch (associatedSwitch.getState()) {
+            switch (associatedSwitch.getSwitchState()) {
                 case UNDEFINED:
                     if (associatedSwitch.getNormalState() == SwitchState.PLUS) {  //normal state always defined plus or minus
                         switchPlusElement.setFill(CONFIGURED_ELEMENT_COLOR);

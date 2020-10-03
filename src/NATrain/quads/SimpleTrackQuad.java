@@ -48,7 +48,7 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
                     trackSectionElement.setFill(CONFIGURED_ELEMENT_COLOR);
                     break;
                 case FREE:
-                    if (firstAssociatedTrack.isInterlocked())
+                    if (associatedTrack.isInterlocked())
                         trackSectionElement.setFill(INTERLOCKED_ELEMENT_COLOR);
                     else
                         trackSectionElement.setFill(FREE_ELEMENT_COLOR);

@@ -42,6 +42,7 @@ public class ActionEmulatorController {
             if (!signalChoiceBox.getSelectionModel().isEmpty()) {
                 Signal signal = signalChoiceBox.getSelectionModel().getSelectedItem();
                 signalStateChoiceBox.setItems(FXCollections.observableArrayList(signal.getApprovedSignals()));
+                signalStateChoiceBox.setValue(signal.getSignalState());
             }
         });
 
@@ -50,6 +51,18 @@ public class ActionEmulatorController {
                 Signal signal = signalChoiceBox.getSelectionModel().getSelectedItem();
                 signal.setSignalState(signalStateChoiceBox.getSelectionModel().getSelectedItem());
             }
+        });
+
+        trackChoiceBox.setOnAction(event -> {
+            if (!trackChoiceBox.getSelectionModel().isEmpty()) {
+                TrackSection trackSection = trackChoiceBox.getSelectionModel().getSelectedItem();
+                interlockTrackToggleButton.setSelected(trackSection.isInterlocked());
+                if (trackSection.getVacancyState() == TrackSectionState.OCCUPIED)
+                    occupiedTrackToggleButton.setSelected(true);
+                else
+                    occupiedTrackToggleButton.setSelected(false); //button isn't selected for undefined state
+            }
+
         });
 
         interlockTrackToggleButton.setOnMouseClicked(event -> {
@@ -70,6 +83,14 @@ public class ActionEmulatorController {
             }
         });
 
+        switchChoiceBox.setOnAction(event -> {
+            if (!switchChoiceBox.getSelectionModel().isEmpty()) {
+                Switch aSwitch = switchChoiceBox.getSelectionModel().getSelectedItem();
+                plusToggleButton.setSelected(aSwitch.getSwitchState() == SwitchState.PLUS);
+                minusToggleButton.setSelected(aSwitch.getSwitchState() == SwitchState.MINUS);
+            }
+        });
+
         plusToggleButton.setOnMouseClicked(event -> {
             if (!switchChoiceBox.getSelectionModel().isEmpty()) {
                 Switch aSwitch = switchChoiceBox.getSelectionModel().getSelectedItem();
@@ -83,8 +104,6 @@ public class ActionEmulatorController {
                 aSwitch.setSwitchState(SwitchState.MINUS);
             }
         });
-
-
     }
 
 
