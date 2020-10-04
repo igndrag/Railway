@@ -17,7 +17,7 @@
           </TitledPane>
           <TitledPane animated="false" text="Double track section">
             <content>
-              <ScrollPane fx:id="doubleTrackSectionIcons" prefHeight="200.0" prefWidth="200.0" >
+              <ScrollPane fx:id="doubleTrackSectionIcons" prefHeight="200.0" prefWidth="200.0">
                       </ScrollPane>
             </content>
           </TitledPane>
@@ -29,11 +29,6 @@
             <TitledPane animated="false" text="Signal">
                 <content>
                     <ScrollPane fx:id="signalIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                </content>
-            </TitledPane>
-            <TitledPane fx:id="doubleSignalIcons" animated="false" text="Double Signal">
-                <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                 </content>
             </TitledPane>
             <TitledPane fx:id="CustomElementIcons" animated="false" layoutX="10.0" layoutY="110.0" text="Custom Elements">

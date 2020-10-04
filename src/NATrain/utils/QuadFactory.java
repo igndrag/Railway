@@ -1,7 +1,6 @@
 package NATrain.utils;
 
 import NATrain.quads.AbstractQuad;
-import NATrain.quads.DSQ.DSQ1_1;
 import NATrain.quads.DTQ.DTQ1_1;
 import NATrain.quads.DTQ.DTQ1_2;
 import NATrain.quads.DTQ.DTQ2_1;
@@ -110,8 +109,6 @@ public class QuadFactory {
                return new SWQ4_3(x, y);
            case SWQ4_4:
                return new SWQ4_4(x, y);
-           case DSQ1_1:
-               return new DSQ1_1(x, y);
        }
         return new EmptyQuad(x, y);
     }

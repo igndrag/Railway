@@ -44,6 +44,4 @@ public enum QuadType {
     SWQ4_2,
     SWQ4_3,
     SWQ4_4,
-
-    DSQ1_1,
 }

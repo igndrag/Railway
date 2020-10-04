@@ -79,9 +79,6 @@ public class MosaicRedactorFxController {
     private ScrollPane signalIcons;
 
     @FXML
-    private TitledPane doubleSignalIcons;
-
-    @FXML
     private ScrollPane simpleTrackSectionIcons;
 
     public static void setPrimaryStage(Stage mainStage) {
@@ -132,7 +129,6 @@ public class MosaicRedactorFxController {
         VBox DTQVBox = new VBox();
         VBox SWQVBox = new VBox();
         VBox SIQVBox = new VBox();
-        VBox DSIQVBox = new VBox();
 
         ToggleGroup toggleGroup = new ToggleGroup();
         eraserToggleButton.setToggleGroup(toggleGroup);
@@ -172,9 +168,6 @@ public class MosaicRedactorFxController {
                         case ("SIQ") :
                             SIQVBox.getChildren().add(button);
                             break;
-                        case ("DSQ") :
-                            DSIQVBox.getChildren().add(button);
-                            break;
                     }
 
                 }
@@ -187,8 +180,6 @@ public class MosaicRedactorFxController {
         doubleTrackSectionIcons.setContent(DTQVBox);
         switchIcons.setContent(SWQVBox);
         signalIcons.setContent(SIQVBox);
-        doubleSignalIcons.setContent(DSIQVBox);
-
 
         //*** grid pane panel initializing ***//
 
