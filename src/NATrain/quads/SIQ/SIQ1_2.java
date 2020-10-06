@@ -9,11 +9,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class SIQ1_1 extends SignalQuad {
-    public SIQ1_1(int x, int y) {
+public class SIQ1_2 extends SignalQuad {
+    public SIQ1_2(int x, int y) {
         super(x, y);
         paintView();
-        quadType = QuadType.SIQ1_1;
+        quadType = QuadType.SIQ1_2;
     }
 
     @Override
@@ -26,21 +26,21 @@ public class SIQ1_1 extends SignalQuad {
         secondTrackElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(secondTrackElement);
 
-        Line signalBottom = new Line(45, 55, 45, 75);
+        Line signalBottom = new Line(45, 15, 45, 35);
         signalBottom.setStrokeWidth(2);
         addToQuadView(signalBottom);
 
-        Circle signalBorder = new Circle(55, 65, 10);
+        Circle signalBorder = new Circle(55, 15, 10);
         addToQuadView(signalBorder);
 
-        firstLampElement = new Circle(55, 65, 8, BaseQuad.UNDEFINED_ELEMENT_COLOR);
+        firstLampElement = new Circle(55, 15, 8, BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(firstLampElement);
 
         descriptionLabel = new Text();
-        descriptionLabel.setTextAlignment(TextAlignment.RIGHT);
+        descriptionLabel.setTextAlignment(TextAlignment.LEFT);
         descriptionLabel.setWrappingWidth(40);
-        descriptionLabel.setX(0);
-        descriptionLabel.setY(65);
+        descriptionLabel.setX(50);
+        descriptionLabel.setY(15);
         addToQuadView(descriptionLabel);
     }
 }

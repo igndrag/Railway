@@ -68,7 +68,8 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
     private void refreshSignalState() {
         if (associatedSignal != Signal.EMPTY_SIGNAL) {
             firstLampElement.setFill(SIGNAL_LAMP_BACKGROUND_COLOR);
-            secondLampElement.setFill(SIGNAL_LAMP_BACKGROUND_COLOR);
+            if (secondLampElement != null)
+                secondLampElement.setFill(SIGNAL_LAMP_BACKGROUND_COLOR);
             switch (associatedSignal.getSignalState()) {
                 case UNDEFINED:
                     firstLampElement.setFill(CONFIGURED_ELEMENT_COLOR);
