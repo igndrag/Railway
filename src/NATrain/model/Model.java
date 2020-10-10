@@ -11,6 +11,8 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public enum Model implements Serializable {
 
@@ -21,21 +23,21 @@ public enum Model implements Serializable {
 
     private static Quad[][] mainGrid = new Quad[20][20];
 
-    private static HashSet<Route> routeTable = new HashSet<>();
+    private static Set<Route> routeTable = new CopyOnWriteArraySet<>();
 
-    private static Map<String, Switch> switches = new HashMap<>();
+    private static Map<String, Switch> switches = new ConcurrentHashMap<>();
 
-    private static Map<String, Signal> signals = new HashMap<>();
+    private static Map<String, Signal> signals = new ConcurrentHashMap<>();
 
-    private static Map<String, TrackSection> trackSections =  new HashMap<>();
+    private static Map<String, TrackSection> trackSections =  new ConcurrentHashMap<>();
 
-    private static Map<Integer, ControlModule> controlModules = new HashMap();
+    private static Map<Integer, ControlModule> controlModules = new ConcurrentHashMap<>();
 
     public static Quad[][] getMainGrid() {
         return mainGrid;
     }
 
-    public static HashSet<Route> getRouteTable() {
+    public static Set<Route> getRouteTable() {
         return routeTable;
     }
 

@@ -50,9 +50,9 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         if (!isNameValid(Model.getSignals(), Signal.INITIAL_SIGNAL_NAME))
             return;
         if (trimmerToggleButton.isSelected())
-            signal.setSignalType(SignalType.TRACK);
-        else
             signal.setSignalType(SignalType.TRIMMER);
+        else
+            signal.setSignalType(SignalType.TRACK);
 
         updateModelAndClose(Model.getSignals(), signal);
     }

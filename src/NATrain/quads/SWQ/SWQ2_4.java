@@ -10,7 +10,7 @@ import javafx.scene.text.TextAlignment;
 public class SWQ2_4 extends SwitchQuad {
     public SWQ2_4(int x, int y) {
         super(x, y);
-        quadType = QuadType.SWQ1_4;
+        quadType = QuadType.SWQ2_4;
     }
 
     @Override

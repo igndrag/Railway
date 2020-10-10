@@ -79,6 +79,22 @@ public class QuadFactory {
                return new SIQ1_1(x, y);
            case SIQ1_2:
                return new SIQ1_2(x, y);
+           case SIQ2_1:
+               return new SIQ2_1(x, y);
+           case SIQ2_2:
+               return new SIQ2_2(x, y);
+           case SIQ2_3:
+               return new SIQ2_3(x, y);
+           case SIQ2_4:
+               return new SIQ2_4(x, y);
+           case SIQ3_1:
+               return new SIQ3_1(x, y);
+           case SIQ3_2:
+               return new SIQ3_2(x, y);
+           case SIQ4_1:
+               return new SIQ4_1(x, y);
+           case SIQ4_2:
+               return new SIQ4_2(x, y);
            case SWQ1_1:
                return new SWQ1_1(x, y);
            case SWQ1_2:

@@ -40,7 +40,7 @@ public class SIQ1_1 extends SignalQuad {
         descriptionLabel.setTextAlignment(TextAlignment.RIGHT);
         descriptionLabel.setWrappingWidth(40);
         descriptionLabel.setX(0);
-        descriptionLabel.setY(65);
+        descriptionLabel.setY(70);
         addToQuadView(descriptionLabel);
     }
 }

@@ -34,6 +34,8 @@ public enum QuadType {
     SIQ2_4,
     SIQ3_1,
     SIQ3_2,
+    SIQ4_1,
+    SIQ4_2,
 
     SWQ1_1,
     SWQ1_2,

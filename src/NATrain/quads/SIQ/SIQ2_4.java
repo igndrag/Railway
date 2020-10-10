@@ -9,38 +9,42 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class SIQ1_2 extends SignalQuad {
-    public SIQ1_2(int x, int y) {
+public class SIQ2_4 extends SignalQuad {
+    public SIQ2_4(int x, int y) {
         super(x, y);
         paintView();
-        quadType = QuadType.SIQ1_2;
+        quadType = QuadType.SIQ2_4;
     }
 
     @Override
     public void paintView() {
-        firstTrackElement = new Rectangle(0, 30 , 35, 20);
+        firstTrackElement = new Rectangle(35, 0, 20 , 30);
         firstTrackElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(firstTrackElement);
 
-        secondTrackElement = new Rectangle(55, 30, 35, 20);
+        secondTrackElement = new Rectangle(35, 50, 20 , 30);
         secondTrackElement.setFill(BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(secondTrackElement);
 
-        Line signalBottom = new Line(45, 5, 45, 25);
+        Line signalBottom = new Line(5, 40, 25, 40);
         signalBottom.setStrokeWidth(2);
         addToQuadView(signalBottom);
 
-        Circle signalBorder = new Circle(35, 15, 10);
-        addToQuadView(signalBorder);
+        Line signalStand = new Line(15, 40, 15, 45);
+        signalStand.setStrokeWidth(2);
+        addToQuadView(signalStand);
 
-        firstLampElement = new Circle(35, 15, 8, BaseQuad.UNDEFINED_ELEMENT_COLOR);
+        Circle firstSignalBorder = new Circle(15, 55, 10);
+        addToQuadView(firstSignalBorder);
+
+        firstLampElement = new Circle(15, 55, 8, BaseQuad.UNDEFINED_ELEMENT_COLOR);
         addToQuadView(firstLampElement);
 
         descriptionLabel = new Text();
-        descriptionLabel.setTextAlignment(TextAlignment.LEFT);
-        descriptionLabel.setWrappingWidth(40);
-        descriptionLabel.setX(50);
-        descriptionLabel.setY(20);
+        descriptionLabel.setTextAlignment(TextAlignment.CENTER);
+        descriptionLabel.setWrappingWidth(30);
+        descriptionLabel.setX(15);
+        descriptionLabel.setY(10);
         addToQuadView(descriptionLabel);
     }
 }
