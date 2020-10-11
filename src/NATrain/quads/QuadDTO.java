@@ -15,6 +15,7 @@ public class QuadDTO implements Serializable {
     private final TrackSection secondAssociatedTrack;
     private final Switch associatedSwitch;
     private final Signal associatedSignal;
+    private boolean descriptionShown = false;
 
 
 
@@ -22,6 +23,10 @@ public class QuadDTO implements Serializable {
         this.x = originalQuad.x;
         this.y = originalQuad.y;
         this.quadType = originalQuad.quadType;
+
+        if (originalQuad.descriptionLabel != null && originalQuad.descriptionLabel.isVisible()) {
+            descriptionShown = true;
+        }
 
         if (originalQuad.firstAssociatedTrack == TrackSection.EMPTY_TRACK_SECTION)
             this.firstAssociatedTrack = null;
@@ -77,6 +82,11 @@ public class QuadDTO implements Serializable {
             baseQuad.associatedSignal = Signal.EMPTY_SIGNAL;
         else
             baseQuad.associatedSignal = quadDTO.associatedSignal;
+
+        if (!quadDTO.descriptionShown) {
+            baseQuad.showDescription(false);
+        }
+
         return baseQuad;
     }
 }
