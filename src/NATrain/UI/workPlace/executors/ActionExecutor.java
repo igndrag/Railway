@@ -1,4 +1,4 @@
-package NATrain.executors;
+package NATrain.UI.workPlace.executors;
 
 import NATrain.quads.Quad;
 import NATrain.routes.Route;
@@ -9,6 +9,7 @@ public enum ActionExecutor {
 
     public static void executeControlAction(ControlAction controlAction, Quad quad) {
         System.out.println("Request on " + controlAction.getDescription() + " received from " + quad.getType());
+
     }
 
     public void setRoute (Route route) {

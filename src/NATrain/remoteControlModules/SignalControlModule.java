@@ -2,6 +2,7 @@ package NATrain.remoteControlModules;
 import NATrain.trackSideObjects.Signal;
 
 public class SignalControlModule extends AbstractModule {
+    static final long serialVersionUID = 1L;
 
     public SignalControlModule(int address) {
         super(address);
@@ -14,7 +15,7 @@ public class SignalControlModule extends AbstractModule {
     }
 
     @Override
-    public void sendCommand(int channel, int commandCode) {
+    public void sendCommand(int channel, Command command) {
         //to request pool
     }
 

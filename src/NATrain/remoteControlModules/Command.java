@@ -1,0 +1,11 @@
+package NATrain.remoteControlModules;
+
+public enum Command {
+    SET_SWITCH_TO_PLUS,
+    SET_SWITCH_TO_MINUS,
+
+    SET_SIGNAL_NOT_LIGHT,
+    SET_SIGNAL_CLOSED,
+    SET_SIGNAL_YELLOW,
+    SET_SIGNAL_YELLOW_AND_BLINKED_YELLOW;
+}

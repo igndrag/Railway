@@ -4,6 +4,7 @@ import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
 import NATrain.trackSideObjects.SwitchState;
 import NATrain.model.Model;
 import NATrain.trackSideObjects.Switch;
+import NATrain.trackSideObjects.TrackSection;
 import NATrain.trackSideObjects.TracksideObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,8 @@ import java.util.stream.Collectors;
 
 public class SwitchRedactorController extends TracksideObjectRedactorController {
 
+    @FXML
+    private ChoiceBox<TrackSection> trackSectionChoiceBox;
     @FXML
     private ChoiceBox<String> paredSwitchChoiceBox;
     @FXML
@@ -35,6 +38,16 @@ public class SwitchRedactorController extends TracksideObjectRedactorController 
         this.tableView = tableView;
         this.observableList = observableList;
         initTextField(Model.getSwitches(), mySwitch);
+
+        ObservableList<TrackSection> trackSectionObservableList = FXCollections.observableArrayList(Model.getTrackSections().values());
+        trackSectionChoiceBox.setItems(trackSectionObservableList);
+        if (mySwitch.getTrackSection() != TrackSection.EMPTY_TRACK_SECTION) {
+            trackSectionChoiceBox.setValue(mySwitch.getTrackSection());
+        }
+
+        trackSectionChoiceBox.setOnAction(event -> {
+            mySwitch.setTrackSection(trackSectionChoiceBox.getSelectionModel().getSelectedItem());
+        });
 
         paredCheckbox.setSelected(mySwitch.isPared());
         paredCheckbox.setOnMouseClicked(event -> {
@@ -68,6 +81,12 @@ public class SwitchRedactorController extends TracksideObjectRedactorController 
         mySwitch.setId(textField.getText());
         if (!isNameValid(Model.getSwitches(), Switch.INITIAL_SWITCH_NAME))
             return;
+        if (trackSectionChoiceBox.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("It's necessary to set track section for correct interlock switch in route.");
+            alert.show();
+            return;
+        }
         if (normalInitialPositionToggleButton.isSelected())
             mySwitch.setNormalState(SwitchState.PLUS);
         else

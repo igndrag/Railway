@@ -96,7 +96,7 @@ public class TracksideObjectNavigatorController {
         FXMLLoader loader = new FXMLLoader(SwitchRedactorController.class.getResource("switchRedactor.fxml"));
         Stage switchRedactor = new Stage();
         switchRedactor.setTitle("Switch Redactor");
-        switchRedactor.setScene(new Scene(loader.load(), 330, 220));
+        switchRedactor.setScene(new Scene(loader.load(), 330, 260));
         switchRedactor.setResizable(false);
         SwitchRedactorController controller = loader.getController();
         controller.init(mySwitch, switchTableView, switchList);

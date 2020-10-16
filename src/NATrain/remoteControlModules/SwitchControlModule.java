@@ -3,6 +3,13 @@ package NATrain.remoteControlModules;
 import NATrain.trackSideObjects.Switch;
 
 public class SwitchControlModule extends AbstractModule {
+    static final long serialVersionUID = 1L;
+
+    public static final Integer setToPlusCommandCode = 2;
+    public static final Integer setToMinusCommandCode = 3;
+
+    public static final Integer switchInPlusResponseCode = 2;
+    public static final Integer switchInMinusResponseCode = 3;
 
     public SwitchControlModule(int address) {
         super(address);
@@ -15,7 +22,7 @@ public class SwitchControlModule extends AbstractModule {
     }
 
     @Override
-    public void sendCommand(int channel, int commandCode) {
+    public void sendCommand(int channel, Command command) {
 
     }
 

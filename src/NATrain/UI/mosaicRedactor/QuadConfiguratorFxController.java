@@ -2,6 +2,8 @@ package NATrain.UI.mosaicRedactor;
 
 import NATrain.model.Model;
 import NATrain.quads.Quad;
+import NATrain.quads.SignalQuad;
+import NATrain.quads.SwitchQuad;
 import NATrain.quads.configurableInterfaces.*;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
@@ -76,7 +78,9 @@ public class QuadConfiguratorFxController {
                 } else {
                     firstTrackConfigurable.setFirstAssociatedTrack(Model.getTrackSections().get(firstTrackSectionChoiceBox.getValue()));
                 }
+
                 quadForConfig.refresh();
+
             });
         } else {
             firstTrackSectionChoiceBox.setDisable(true);

@@ -13,7 +13,7 @@ public class Switch extends TracksideObject implements Serializable {
     transient private SwitchState switchState = SwitchState.UNDEFINED;
     private Switch paredSwitch;
     private boolean pared = false;
-    private boolean interlocked = false;
+    private TrackSection trackSection = TrackSection.EMPTY_TRACK_SECTION;
 
     public Switch(String id) {
         super(id);
@@ -28,6 +28,7 @@ public class Switch extends TracksideObject implements Serializable {
             this.paredSwitch = anotherSwitch;
         }
     }
+
 
     public void deleteParedSwitch(Switch paredSwitch) {
         pared = false;
@@ -55,15 +56,28 @@ public class Switch extends TracksideObject implements Serializable {
         propertyChangeSupport.firePropertyChange("switchStateProperty",null, switchState);
     }
 
+    public void setTrackSection(TrackSection trackSection) {
+        this.trackSection = trackSection;
+    }
+
+    public TrackSection getTrackSection() {
+        return trackSection;
+    }
+
     public boolean isPared() {
         return pared;
     }
 
     public void changePosition() {
-        if (switchState == SwitchState.PLUS)
-            switchState = SwitchState.MINUS;
-        else if (switchState == SwitchState.MINUS)
-            switchState = SwitchState.PLUS;
-        if (pared) paredSwitch.changePosition();
+        if (isChangePositionAvailable()) {
+            if (switchState == SwitchState.PLUS)
+                switchState = SwitchState.MINUS;
+            else if (switchState == SwitchState.MINUS)
+                switchState = SwitchState.PLUS;
+        }
+    }
+
+    public boolean isChangePositionAvailable() {
+        return trackSection.getVacancyState() == TrackSectionState.FREE && !trackSection.isInterlocked();
     }
 }

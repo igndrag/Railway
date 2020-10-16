@@ -18,7 +18,7 @@ public interface ControlModule {
 
     void refreshObjectState(int channel, int responseCode);
 
-    void sendCommand(int channel, int commandCode);
+    void sendCommand(int channel, Command command);
 
     boolean hasNotConfiguredChannels();
 

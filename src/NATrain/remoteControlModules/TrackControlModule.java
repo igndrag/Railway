@@ -3,7 +3,8 @@ package NATrain.remoteControlModules;
 import NATrain.connectionService.RequestExecutor;
 import NATrain.trackSideObjects.TrackSection;
 
-public class TrackControlModule extends AbstractModule implements ControlModule{
+public class TrackControlModule extends AbstractModule implements ControlModule {
+    static final long serialVersionUID = 1L;
 
     private static final int TRACK_SECTION_FREE_STATUS_CODE = 1;
     private static final int TRACK_SECTION_OCCUPIED_STATUS_CODE = 2;
@@ -25,7 +26,8 @@ public class TrackControlModule extends AbstractModule implements ControlModule{
     }
 
     @Override
-    public void sendCommand(int channel, int commandCode) {
+    public void sendCommand(int channel, Command command)
+    {
         RequestExecutor.getRequestPool().add("test_command");
     }
 

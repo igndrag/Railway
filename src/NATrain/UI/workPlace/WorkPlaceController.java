@@ -1,7 +1,8 @@
 package NATrain.UI.workPlace;
 
 import NATrain.UI.NavigatorFxController;
-import NATrain.executors.ActionExecutor;
+import NATrain.UI.workPlace.executors.ActionExecutor;
+import NATrain.UI.workPlace.executors.RouteExecutor;
 import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.trackSideObjects.ControlAction;
@@ -21,8 +22,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.List;
 
@@ -57,6 +56,8 @@ public class WorkPlaceController {
     }
 
     public void initialize() {
+        RouteExecutor.setWorkPlaceController(this);
+
         NavigatorFxController.showGridLines = false;
         gridPane = new GridPane();
         int raws = Model.getMainGrid().length;
@@ -112,7 +113,7 @@ public class WorkPlaceController {
         }
     }
 
-    private void log(String message) {
+    public void log(String message) {
         //https://stackoverflow.com/questions/40822806/add-elements-on-textflow-using-external-thread-in-javafx
         Platform.runLater(() -> {
             if (log.getChildren().size() > 4) {
