@@ -3,6 +3,8 @@ package NATrain.routes;
 import NATrain.trackSideObjects.TrackSection;
 
 public class DepartureRoute extends TrackRoute {
+    static final long serialVersionUID = 1L;
+
     private TrackSection TVDS1; //track vacancy detection section
     private TrackSection TVDS2;
 

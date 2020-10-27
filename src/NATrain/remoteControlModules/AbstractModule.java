@@ -11,6 +11,9 @@ public abstract class AbstractModule implements ControlModule, Serializable {
     protected Integer address;
     protected TracksideObject[] channels;
 
+    protected static final int UNDEFINED_RESPONSE_STATUS_CODE = 0;
+    protected static final int NOT_CHANGED_RESPONSE_STATUS_CODE = 1;
+
     public AbstractModule(){};
 
     public TracksideObject[] getChannels() {

@@ -113,7 +113,7 @@ public class WorkPlaceController {
         }
     }
 
-    public void log(String message) {
+    public synchronized void log(String message) {
         //https://stackoverflow.com/questions/40822806/add-elements-on-textflow-using-external-thread-in-javafx
         Platform.runLater(() -> {
             if (log.getChildren().size() > 4) {

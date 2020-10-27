@@ -52,8 +52,10 @@ public class Signal extends TracksideObject {
     }
 
     public void setSignalState(SignalState signalState) {
-        this.signalState = signalState;
-        propertyChangeSupport.firePropertyChange("signalStateProperty",null, signalState);
+        if (approvedSignals.contains(signalState)) {
+            this.signalState = signalState;
+            propertyChangeSupport.firePropertyChange("signalStateProperty", null, signalState);
+        }
     }
 
     public Signal(String id, Set<SignalState> approvedSignals, SignalType signalType) {
@@ -62,7 +64,7 @@ public class Signal extends TracksideObject {
         this.signalType = signalType;
     }
 
-    public void closeSignal() {
-        //TODO create request to control module
+    public void close() {
+        setSignalState(closedSignalState);
     }
 }

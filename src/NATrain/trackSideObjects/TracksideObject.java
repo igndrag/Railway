@@ -60,6 +60,10 @@ public abstract class TracksideObject implements Serializable {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
+
 
     @Override
     public String toString() {

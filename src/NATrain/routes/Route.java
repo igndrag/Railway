@@ -4,16 +4,18 @@ import NATrain.trackSideObjects.*;
 
 import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 
 public abstract class Route implements Serializable {
+    static final long serialVersionUID = 1L;
 
     protected RouteType routeType;
     private String description;
     private Signal signal;
     private ConcurrentMap <Switch, SwitchState> switchStatePositions = new ConcurrentHashMap<>();
-    private ConcurrentLinkedQueue <TrackSection> occupationalOrder = new ConcurrentLinkedQueue<>();
+    private ConcurrentLinkedDeque <TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>();
     private TrackSection destination;
 
     public Route (String description) {
@@ -81,11 +83,11 @@ public abstract class Route implements Serializable {
         this.switchStatePositions = switchStatePositions;
     }
 
-    public ConcurrentLinkedQueue<TrackSection> getOccupationalOrder() {
+    public ConcurrentLinkedDeque<TrackSection> getOccupationalOrder() {
         return occupationalOrder;
     }
 
-    public void setOccupationalOrder(ConcurrentLinkedQueue<TrackSection> occupationalOrder) {
+    public void setOccupationalOrder(ConcurrentLinkedDeque<TrackSection> occupationalOrder) {
         this.occupationalOrder = occupationalOrder;
     }
 }
