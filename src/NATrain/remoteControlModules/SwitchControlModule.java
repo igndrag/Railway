@@ -15,9 +15,9 @@ public class SwitchControlModule extends AbstractModule {
     }
 
     @Override
-    public void refreshObjectState(int channel, int responseCode) {
+    public void refreshObjectState(int channel, int responseStatusCode) {
         Switch aSwitch = (Switch)channels[channel];
-        switch (responseCode) {
+        switch (responseStatusCode) {
             case UNDEFINED_RESPONSE_STATUS_CODE:
                 aSwitch.setSwitchState(SwitchState.UNDEFINED);
                 break;

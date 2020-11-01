@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import java.util.Comparator;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 
@@ -155,7 +156,7 @@ public class DepartureRouteEditorController {
             departureRoute.setWithManeuver(maneuverCheckBox.isSelected());
             departureRoute.setTVDS1(TVDS1ChoiceBox.getValue());
             departureRoute.setTVDS2(TVDS2ChoiceBox.getValue());
-            ConcurrentLinkedQueue<TrackSection> occupationalOrder = new ConcurrentLinkedQueue<>(selectedTrackListView.getItems());
+            ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>(selectedTrackListView.getItems());
             departureRoute.setOccupationalOrder(occupationalOrder);
             departureRoute.setDestination(TVDS2ChoiceBox.getValue());
             Model.getRouteTable().add(departureRoute);

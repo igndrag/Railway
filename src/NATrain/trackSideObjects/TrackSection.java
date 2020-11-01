@@ -24,7 +24,7 @@ public class TrackSection extends TracksideObject {
 
     public void setInterlocked(boolean interlocked) {
         this.interlocked = interlocked;
-        propertyChangeSupport.firePropertyChange("interlockProperty",null, vacancyState);
+        propertyChangeSupport.firePropertyChange("interlockProperty",null, interlocked);
     }
 
     public TrackSectionState getVacancyState() {

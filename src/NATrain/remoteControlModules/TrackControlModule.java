@@ -21,9 +21,9 @@ public class TrackControlModule extends AbstractModule implements ControlModule 
     }
 
     @Override
-    public void refreshObjectState(int channel, int responseCode) {
+    public void refreshObjectState(int channel, int responseStatusCode) {
         TrackSection trackSection = (TrackSection)channels[channel];
-        switch (responseCode) {
+        switch (responseStatusCode) {
             case UNDEFINED_RESPONSE_STATUS_CODE:
                 trackSection.setVacancyState(TrackSectionState.UNDEFINED);
                 break;

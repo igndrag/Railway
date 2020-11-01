@@ -16,7 +16,7 @@ public interface ControlModule {
 
     void deleteTrackSideObjectFromChannel(Integer channel);
 
-    void refreshObjectState(int channel, int responseCode);
+    void refreshObjectState(int channel, int responseStatusCode);
 
     void sendCommand(int channel, Command command);
 

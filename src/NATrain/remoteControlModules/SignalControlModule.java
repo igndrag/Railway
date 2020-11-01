@@ -22,9 +22,9 @@ public class SignalControlModule extends AbstractModule {
     }
 
     @Override
-    public void refreshObjectState(int channel, int responseCode) {
+    public void refreshObjectState(int channel, int responseStatusCode) {
         Signal signal = (Signal)channels[channel];
-        switch (responseCode) {
+        switch (responseStatusCode) {
             case UNDEFINED_RESPONSE_STATUS_CODE:
                 signal.setSignalState(SignalState.UNDEFINED);
                 break;

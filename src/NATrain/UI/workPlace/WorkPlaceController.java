@@ -27,7 +27,6 @@ import java.util.List;
 
 public class WorkPlaceController {
 
-
     @FXML
     private BorderPane mainPane;
 
@@ -35,6 +34,8 @@ public class WorkPlaceController {
     private RadioMenuItem actionEmulatorRadioMenuItem;
     @FXML
     private RadioMenuItem locomotiveControllerRadioMenuItem;
+    @FXML
+    private RadioMenuItem connectionServiceEmulatorRadioMenuItem;
     @FXML
     private TextFlow log;
     @FXML
@@ -134,6 +135,18 @@ public class WorkPlaceController {
             actionEmulatorRadioMenuItem.setSelected(false);
         });
         actionEmulator.show();
+    }
+
+    public void showConnectionServiceEmulator() throws IOException{
+        FXMLLoader loader = new FXMLLoader(ConnectionServiceEmulatorController.class.getResource("ConnectionServiceEmulator.fxml"));
+        Stage connectionServiceEmulator = new Stage();
+        connectionServiceEmulator.setTitle("Connection Service Emulator");
+        connectionServiceEmulator.setScene(new Scene(loader.load(), 550, 300));
+        connectionServiceEmulator.setOnCloseRequest(event -> {
+            connectionServiceEmulatorRadioMenuItem.setSelected(false);
+        });
+        connectionServiceEmulator.show();
+
     }
 }
 

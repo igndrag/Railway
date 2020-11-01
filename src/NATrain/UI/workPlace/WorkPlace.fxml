@@ -52,7 +52,8 @@
           <Menu mnemonicParsing="false" text="View">
             <items>
                   <RadioMenuItem fx:id="locomotiveControllerRadioMenuItem" mnemonicParsing="false" text="Locomotive Control Pane" />
-                  <RadioMenuItem onAction="#showActionEmulator" fx:id="actionEmulatorRadioMenuItem" mnemonicParsing="false" text="Action Emulator Pane" />
+                  <RadioMenuItem fx:id="actionEmulatorRadioMenuItem" mnemonicParsing="false" onAction="#showActionEmulator" text="Action Emulator Pane" />
+                  <RadioMenuItem fx:id="connectionServiceEmulatorRadioMenuItem" mnemonicParsing="false" onAction="#showConnectionServiceEmulator" text="Connection Service Emulator Pane" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
