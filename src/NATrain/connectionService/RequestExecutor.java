@@ -31,7 +31,7 @@ public class RequestExecutor extends Thread{
                             1 - OK
                             2 - wrong request
                             3 - fail or timeout
-            example  1_101_10
+            example  1_110_10
         */
     @Override
     public void run() {

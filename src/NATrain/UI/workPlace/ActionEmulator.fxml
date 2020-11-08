@@ -18,5 +18,6 @@
       <ToggleButton fx:id="plusToggleButton" layoutX="411.0" layoutY="124.0" mnemonicParsing="false" prefWidth="70.0" text="Plus" />
       <ToggleButton fx:id="minusToggleButton" layoutX="506.0" layoutY="124.0" mnemonicParsing="false" prefWidth="70.0" text="Minus" />
       <ToggleButton fx:id="interlockSwitchToggleButton" layoutX="411.0" layoutY="79.0" mnemonicParsing="false" prefWidth="70.0" text="Interlock" />
+      <Button fx:id="allFreeButton" onAction="#setAllSectionsFree" layoutX="117.0" layoutY="121.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="All free" />
    </children>
 </Pane>

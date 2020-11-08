@@ -53,7 +53,7 @@ public class SWQ4_1 extends SwitchQuad {
                 15, 0,
                 35, 0,
                 40, 10,
-                30, 10,
+                20, 10,
                 15, 0
         );
 

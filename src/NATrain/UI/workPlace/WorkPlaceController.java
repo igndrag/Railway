@@ -2,9 +2,12 @@ package NATrain.UI.workPlace;
 
 import NATrain.UI.NavigatorFxController;
 import NATrain.UI.workPlace.executors.ActionExecutor;
+import NATrain.UI.workPlace.executors.AbstractRouteExecutor;
 import NATrain.UI.workPlace.executors.RouteExecutor;
+import NATrain.UI.workPlace.executors.RouteStatus;
 import NATrain.model.Model;
 import NATrain.quads.*;
+import NATrain.routes.Route;
 import NATrain.trackSideObjects.ControlAction;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -13,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -26,6 +30,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class WorkPlaceController {
+
 
     @FXML
     private BorderPane mainPane;
@@ -41,12 +46,17 @@ public class WorkPlaceController {
     @FXML
     private Label timeLabel;
     @FXML
-    private TableView routeStatusTableView;
+    private TableView <RouteExecutor> routeStatusTableView;
     @FXML
-    private Button routeCancellationButton1;
+    private TableColumn<RouteExecutor, String> routeIdColumn;
+    @FXML
+    private TableColumn<RouteExecutor, RouteStatus> routeStatusColumn;
+    @FXML
+    private Button routeCancellationButton;
     @FXML
     private ScrollPane workArea;
 
+    private ActionExecutor actionExecutor = new ActionExecutor(this);
 
     private Stage primaryStage;
 
@@ -57,7 +67,11 @@ public class WorkPlaceController {
     }
 
     public void initialize() {
-        RouteExecutor.setWorkPlaceController(this);
+        routeStatusTableView.setItems(actionExecutor.getActiveRoutes());
+        routeIdColumn.setCellValueFactory(new PropertyValueFactory<>("routeDescription"));
+        routeStatusColumn.setCellValueFactory(new PropertyValueFactory<>("routeStatus"));
+
+        AbstractRouteExecutor.setWorkPlaceController(this);
 
         NavigatorFxController.showGridLines = false;
         gridPane = new GridPane();
@@ -100,7 +114,7 @@ public class WorkPlaceController {
             availableActions.forEach(controlAction -> {
                 MenuItem menuItem = new MenuItem(controlAction.getDescription());
                 menuItem.setOnAction(event -> {
-                    ActionExecutor.executeControlAction(controlAction, quad);
+                    actionExecutor.executeControlAction(controlAction, quad);
                 });
                 contextMenu.getItems().add(menuItem);
             });
@@ -146,7 +160,18 @@ public class WorkPlaceController {
             connectionServiceEmulatorRadioMenuItem.setSelected(false);
         });
         connectionServiceEmulator.show();
-
     }
+
+    public void showLocomotiveController() throws IOException{
+        FXMLLoader loader = new FXMLLoader(ConnectionServiceEmulatorController.class.getResource("LocomotiveController.fxml"));
+        Stage locomotiveController = new Stage();
+        locomotiveController.setTitle("Locomotive Controller");
+        locomotiveController.setScene(new Scene(loader.load(), 220, 380));
+        locomotiveController.setOnCloseRequest(event -> {
+            locomotiveControllerRadioMenuItem.setSelected(false);
+        });
+        locomotiveController.show();
+    }
+
 }
 

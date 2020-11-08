@@ -3,8 +3,7 @@ package NATrain.trackSideObjects;
 import java.util.Collections;
 import java.util.Set;
 
-import static NATrain.trackSideObjects.SignalState.STANDARD_TRACK_SIGNAL_STATES;
-import static NATrain.trackSideObjects.SignalState.STANDARD_TRIMMER_SIGNAL_STATES;
+import static NATrain.trackSideObjects.SignalState.*;
 
 public class Signal extends TracksideObject {
     static final long serialVersionUID = 1L;
@@ -23,9 +22,11 @@ public class Signal extends TracksideObject {
         switch (signalType) {
             case TRACK:
                 approvedSignals = STANDARD_TRACK_SIGNAL_STATES;
+                closedSignalState = RED;
                 break;
             case TRIMMER:
                 approvedSignals = STANDARD_TRIMMER_SIGNAL_STATES;
+                closedSignalState = BLUE;
                 break;
         }
     }

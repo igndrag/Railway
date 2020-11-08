@@ -26,7 +26,9 @@ public class EmptyQuad extends AbstractQuad {
     }
 
     @Override
-    public void refresh() { }
+    public void refresh() {
+        //do nothing
+    }
 
     @Override
     public void paintView() {
@@ -51,4 +53,18 @@ public class EmptyQuad extends AbstractQuad {
     public List<ControlAction> getAvailableActions() {
         return Collections.emptyList();
     }
+
+    @Override
+    public void select() {
+        //do nothing
+    }
+
+    @Override
+    public void unselect() {
+        //do nothing
+    }
+
+
 }
+
+

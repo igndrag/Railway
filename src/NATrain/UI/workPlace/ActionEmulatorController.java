@@ -4,11 +4,14 @@ import NATrain.model.Model;
 import NATrain.trackSideObjects.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 
 public class ActionEmulatorController {
+    @FXML
+    private Button allFreeButton;
     @FXML
     private ToggleButton interlockTrackToggleButton;
     @FXML
@@ -104,6 +107,11 @@ public class ActionEmulatorController {
                 aSwitch.setSwitchState(SwitchState.MINUS);
             }
         });
+    }
+
+    @FXML
+    private void setAllSectionsFree() {
+        Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
     }
 
 

@@ -1,8 +1,6 @@
 package NATrain.UI.routeTable;
 
-import NATrain.UI.controlModuleRedactor.CMEditorController;
 import NATrain.model.Model;
-import NATrain.routes.DepartureRoute;
 import NATrain.routes.Route;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -83,7 +81,7 @@ public class RouteTableController {
             switch (selectedRoute.getRouteType()) {
                 case DEPARTURE:
                     try {
-                        selector.toDepartureRouteEditor((DepartureRoute) selectedRoute);
+                        selector.toDepartureRouteEditor(selectedRoute);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

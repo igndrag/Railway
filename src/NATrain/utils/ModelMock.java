@@ -1,8 +1,7 @@
 package NATrain.utils;
 
-import NATrain.routes.ArrivalRoute;
-import NATrain.routes.DepartureRoute;
 import NATrain.routes.Route;
+import NATrain.routes.RouteType;
 import NATrain.trackSideObjects.SwitchState;
 import NATrain.model.Model;
 import NATrain.quads.EmptyQuad;
@@ -60,7 +59,8 @@ public class ModelMock {
 
         Model.getControlModules().put(1, trackControlModule1);
 
-        DepartureRoute routeOne = new DepartureRoute("Test Departure Route one");
+        Route routeOne = new Route("Test Departure Route one", RouteType.DEPARTURE);
+        routeOne.setRouteType(RouteType.DEPARTURE);
         routeOne.setTVDS1(oneTrackSection);
         routeOne.setTVDS2(twoTrackSection);
         routeOne.setSignal(Model.getSignals().get("S1"));

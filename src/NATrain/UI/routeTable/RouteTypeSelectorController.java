@@ -1,6 +1,7 @@
 package NATrain.UI.routeTable;
 
-import NATrain.routes.DepartureRoute;
+import NATrain.routes.Route;
+import NATrain.routes.RouteType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,14 +30,14 @@ public class RouteTypeSelectorController {
     public void initialize() {
         departureButton.setOnAction(event -> {
                 try {
-                    toDepartureRouteEditor(new DepartureRoute("New Departure Route"));
+                    toDepartureRouteEditor(new Route("New Departure Route", RouteType.DEPARTURE));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
         });
     }
 
-    protected void toDepartureRouteEditor(DepartureRoute departureRoute) throws IOException {
+    protected void toDepartureRouteEditor(Route departureRoute) throws IOException {
         FXMLLoader loader = new FXMLLoader(DepartureRouteEditorController.class.getResource("DepartureRouteEditor.fxml"));
         Stage departureRouteEditor = new Stage();
         departureRouteEditor.setTitle("Departure Route Editor");

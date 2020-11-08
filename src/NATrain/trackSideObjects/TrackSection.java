@@ -13,6 +13,16 @@ public class TrackSection extends TracksideObject {
     private transient TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
 
     private boolean interlocked = false;
+    private boolean occupationFixed = false;
+    private boolean deallocationFixed = false;
+
+    public void fixOccupation() {
+        occupationFixed = true;
+    }
+
+    public void fixDeallocation() {
+        deallocationFixed = true;
+    }
 
     public TrackSection(String id) {
         super(id);
@@ -25,6 +35,10 @@ public class TrackSection extends TracksideObject {
     public void setInterlocked(boolean interlocked) {
         this.interlocked = interlocked;
         propertyChangeSupport.firePropertyChange("interlockProperty",null, interlocked);
+        if (interlocked = false) {
+            occupationFixed = false;
+            deallocationFixed = false;
+        }
     }
 
     public TrackSectionState getVacancyState() {

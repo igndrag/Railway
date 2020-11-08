@@ -18,7 +18,6 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
 
     static {
         availableActions.add(ControlAction.SET_ROUT_FROM);
-        availableActions.add(ControlAction.SET_ROUT_BEHIND);
         availableActions.add(ControlAction.SET_ROUT_TO);
     }
 
@@ -97,10 +96,15 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
                 case BLINKED_WHITE:
                     firstLampElement.setFill(WHITE_BLINKER);
                     break;
+                case YELLOW_AND_YELLOW:
+                    firstLampElement.setFill(Color.YELLOW);
+                    if (secondLampElement != null)
+                        secondLampElement.setFill(Color.YELLOW);
+                    break;
                 case YELLOW_AND_BLINKED_YELLOW:
                     firstLampElement.setFill(Color.YELLOW);
                     if (secondLampElement != null)
-                    secondLampElement.setFill(YELLOW_BLINKER);
+                        secondLampElement.setFill(YELLOW_BLINKER);
                     break;
                 case NOT_LIGHT:
                     firstLampElement.setFill(SIGNAL_LAMP_BACKGROUND_COLOR);

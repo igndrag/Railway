@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<Pane fx:controller="NATrain.UI.workPlace.LocomotiveController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="215.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:controller="NATrain.UI.workPlace.LocomotiveController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="34.0" layoutY="27.0" text="Locomotive ID">
          <font>

@@ -1,7 +1,7 @@
 package NATrain.UI.routeTable;
 
 import NATrain.model.Model;
-import NATrain.routes.DepartureRoute;
+import NATrain.routes.Route;
 import NATrain.trackSideObjects.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,12 +14,11 @@ import java.util.Comparator;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public class DepartureRouteEditorController {
 
-    private DepartureRoute departureRoute;
+    private Route departureRoute;
     private ConcurrentHashMap<Switch, SwitchState> switchStatePositionsMap;
     private String initialName;
 
@@ -52,7 +51,7 @@ public class DepartureRouteEditorController {
     @FXML
     private HBox previewHBox;
 
-    public void initialize(DepartureRoute departureRoute) {
+    public void initialize(Route departureRoute) {
         this.departureRoute = departureRoute;
         switchStatePositionsMap = new ConcurrentHashMap<>(departureRoute.getSwitchStatePositions());
         initialName = departureRoute.getDescription();
@@ -158,7 +157,7 @@ public class DepartureRouteEditorController {
             departureRoute.setTVDS2(TVDS2ChoiceBox.getValue());
             ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>(selectedTrackListView.getItems());
             departureRoute.setOccupationalOrder(occupationalOrder);
-            departureRoute.setDestination(TVDS2ChoiceBox.getValue());
+            departureRoute.setDestinationTrackSection(occupationalOrder.getLast());
             Model.getRouteTable().add(departureRoute);
             Stage thisStage = (Stage) descriptionTextField.getScene().getWindow();
             thisStage.close();

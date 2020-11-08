@@ -22,13 +22,13 @@
             </Pane>
             <TableView fx:id="routeStatusTableView" prefHeight="303.0" prefWidth="274.0" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn prefWidth="177.0" text="Route" />
-                <TableColumn prefWidth="83.0" text="Status" />
+                <TableColumn fx:id="routeIdColumn" prefWidth="177.0" text="Route" />
+                <TableColumn fx:id="routeStatusColumn" prefWidth="83.0" text="Status" />
               </columns>
             </TableView>
             <Pane prefHeight="46.0" prefWidth="274.0">
                <children>
-                  <Button fx:id="routeCancellationButton1" layoutX="172.0" layoutY="12.0" mnemonicParsing="false" text="Clear Selection" />
+                  <Button fx:id="routeCancellationButton" layoutX="172.0" layoutY="12.0" mnemonicParsing="false" text="Clear Selection" />
                </children>
             </Pane>
          </children>
@@ -51,7 +51,7 @@
             </Menu>
           <Menu mnemonicParsing="false" text="View">
             <items>
-                  <RadioMenuItem fx:id="locomotiveControllerRadioMenuItem" mnemonicParsing="false" text="Locomotive Control Pane" />
+                  <RadioMenuItem fx:id="locomotiveControllerRadioMenuItem" mnemonicParsing="false" text="Locomotive Control Pane" onAction="#showLocomotiveController" />
                   <RadioMenuItem fx:id="actionEmulatorRadioMenuItem" mnemonicParsing="false" onAction="#showActionEmulator" text="Action Emulator Pane" />
                   <RadioMenuItem fx:id="connectionServiceEmulatorRadioMenuItem" mnemonicParsing="false" onAction="#showConnectionServiceEmulator" text="Connection Service Emulator Pane" />
             </items>
