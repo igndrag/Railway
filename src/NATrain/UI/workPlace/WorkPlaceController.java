@@ -138,6 +138,10 @@ public class WorkPlaceController {
         });
     }
 
+    public void refreshRouteStatusTable() {
+        routeStatusTableView.refresh();
+    }
+
     public void showActionEmulator(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(ActionEmulatorController.class.getResource("ActionEmulator.fxml"));
         Stage actionEmulator = new Stage();

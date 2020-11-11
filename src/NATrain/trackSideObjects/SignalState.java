@@ -24,6 +24,7 @@ public enum SignalState {
             RED,
             YELLOW,
             BLINKED_YELLOW,
+            YELLOW_AND_YELLOW,
             YELLOW_AND_BLINKED_YELLOW,
             BLINKED_WHITE,
             UNDEFINED

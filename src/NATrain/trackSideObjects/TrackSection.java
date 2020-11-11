@@ -5,9 +5,19 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class TrackSection extends TracksideObject {
+
+
     static final long serialVersionUID = 1L;
 
-    public static final TrackSection EMPTY_TRACK_SECTION = new TrackSection("");
+    public static final TrackSection EMPTY_TRACK_SECTION = new TrackSection("Empty track section");
+
+    static {
+        EMPTY_TRACK_SECTION.setInterlocked(false);
+        EMPTY_TRACK_SECTION.setVacancyState(TrackSectionState.FREE);
+        EMPTY_TRACK_SECTION.occupationFixed = true;
+        EMPTY_TRACK_SECTION.deallocationFixed = true;
+    }
+
     public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
 
     private transient TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
@@ -16,12 +26,20 @@ public class TrackSection extends TracksideObject {
     private boolean occupationFixed = false;
     private boolean deallocationFixed = false;
 
+    public boolean isOccupationFixed() {
+        return occupationFixed;
+    }
+
+    public boolean isDeallocationFixed() {
+        return deallocationFixed;
+    }
+
     public void fixOccupation() {
-        occupationFixed = true;
+        this.occupationFixed = true;
     }
 
     public void fixDeallocation() {
-        deallocationFixed = true;
+        this.deallocationFixed = true;
     }
 
     public TrackSection(String id) {
@@ -32,10 +50,14 @@ public class TrackSection extends TracksideObject {
         return interlocked;
     }
 
+    public boolean notInterlocked() {
+        return !interlocked;
+    }
+
     public void setInterlocked(boolean interlocked) {
         this.interlocked = interlocked;
         propertyChangeSupport.firePropertyChange("interlockProperty",null, interlocked);
-        if (interlocked = false) {
+        if (!interlocked) {
             occupationFixed = false;
             deallocationFixed = false;
         }
@@ -46,9 +68,9 @@ public class TrackSection extends TracksideObject {
     }
 
     public void setVacancyState(TrackSectionState vacancyState) {
-        //TrackSectionState oldState = this.vacancyState; //doesn't matter yet
+        TrackSectionState oldState = this.vacancyState;
         this. vacancyState = vacancyState;
-        propertyChangeSupport.firePropertyChange("occupationalProperty",null, vacancyState);
+        propertyChangeSupport.firePropertyChange("occupationalProperty", oldState, vacancyState);
     }
 
  }

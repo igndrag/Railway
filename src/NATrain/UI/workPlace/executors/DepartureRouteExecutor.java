@@ -14,18 +14,10 @@ public class DepartureRouteExecutor extends AbstractRouteExecutor {
         super(route);
     }
 
-
-    private class TVDSStateListener implements PropertyChangeListener {
-        @Override
-        public void propertyChange(PropertyChangeEvent event) {
-            autoselectSignalState();
-        }
-    }
-
     @Override
     public void autoselectSignalState() {
         Signal signal = route.getSignal();
-        if (routeStatus == RouteStatus.READY && isAllSectionsFree()) {
+        if (routeStatus == RouteStatus.READY && isAllSectionsFree() && route.getTVDS1().getVacancyState() == TrackSectionState.FREE) {
             if (route.getWithManeuver()) {
                 if (route.getTVDS2().getVacancyState() == TrackSectionState.FREE) {
                   //  signal.getControlModule().sendCommand(signal.getChannel(), Command.OPEN_ON_YELLOW_AND_BLINKED_YELLOW);

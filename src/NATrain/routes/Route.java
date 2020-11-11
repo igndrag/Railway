@@ -13,8 +13,9 @@ public class Route implements Serializable {
     protected RouteType routeType;
     private String description;
     private Signal signal;
-    private ConcurrentMap <Switch, SwitchState> switchStatePositions = new ConcurrentHashMap<>();
-    private ConcurrentLinkedDeque <TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>();
+    private ConcurrentMap<Switch, SwitchState> switchStatePositions = new ConcurrentHashMap<>();
+    private ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>();
+    private TrackSection departureTrackSection;
     private TrackSection destinationTrackSection;
     private Signal destinationSignal;
     private TrackAutomationType trackAutomationType;
@@ -23,7 +24,7 @@ public class Route implements Serializable {
     private TrackSection TVDS2;
 
 
-    public Route (String description, RouteType routeType) {
+    public Route(String description, RouteType routeType) {
         this.description = description;
         this.routeType = routeType;
     }
@@ -52,6 +53,14 @@ public class Route implements Serializable {
         return destinationTrackSection;
     }
 
+    public TrackSection getDepartureTrackSection() {
+        return departureTrackSection;
+    }
+
+    public void setDepartureTrackSection(TrackSection departureTrackSection) {
+        this.departureTrackSection = departureTrackSection;
+    }
+
     public Signal getDestinationSignal() {
         return destinationSignal;
     }
@@ -77,7 +86,7 @@ public class Route implements Serializable {
             return "none";
         else {
             StringBuilder stringBuilder = new StringBuilder();
-            switchStatePositions.forEach( (sw, position) -> {
+            switchStatePositions.forEach((sw, position) -> {
                 if (position == SwitchState.PLUS) {
                     stringBuilder.append("+");
                 } else {

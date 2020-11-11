@@ -3,33 +3,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.routeTable.DepartureRouteEditorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.routeTable.DepartureRouteEditorController">
    <children>
       <TextField fx:id="descriptionTextField" layoutX="28.0" layoutY="34.0" prefHeight="23.0" prefWidth="213.0" />
       <Label layoutX="28.0" layoutY="14.0" text="Route Description" />
-      <ChoiceBox fx:id="signalChoiceBox" layoutX="302.0" layoutY="124.0" prefHeight="25.0" prefWidth="102.0" />
-      <Label layoutX="304.0" layoutY="102.0" text="Signal:" />
+      <ChoiceBox fx:id="signalChoiceBox" layoutX="24.0" layoutY="86.0" prefHeight="25.0" prefWidth="102.0" />
+      <Label layoutX="26.0" layoutY="65.0" text="Signal:" />
       <Label layoutX="431.0" layoutY="102.0" text="TVDS1:" />
       <ChoiceBox fx:id="TVDS1ChoiceBox" layoutX="429.0" layoutY="124.0" prefHeight="23.0" prefWidth="85.0" />
       <ChoiceBox fx:id="TVDS2ChoiceBox" layoutX="529.0" layoutY="124.0" prefHeight="23.0" prefWidth="85.0" />
       <Label layoutX="531.0" layoutY="102.0" text="TVDS2:" />
-      <ToggleButton layoutX="429.0" layoutY="167.0" mnemonicParsing="false" prefWidth="85.0" text="TVDS1 test" />
       <ToggleButton layoutX="530.0" layoutY="167.0" mnemonicParsing="false" prefWidth="85.0" text="TVDS2 test" />
-      <CheckBox fx:id="maneuverCheckBox" layoutX="303.0" layoutY="169.0" mnemonicParsing="false" text="Switch Maneuver" />
-      <Button layoutX="553.0" layoutY="356.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
+      <CheckBox fx:id="maneuverCheckBox" layoutX="311.0" layoutY="173.0" mnemonicParsing="false" text="Switch Maneuver" />
+      <Button layoutX="553.0" layoutY="361.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
       <Label layoutX="161.0" layoutY="100.0" text="TVDS occupation order:" />
       <ListView fx:id="allTrackListView" layoutX="24.0" layoutY="124.0" prefHeight="220.0" prefWidth="102.0" />
       <ListView fx:id="selectedTrackListView" layoutX="177.0" layoutY="124.0" prefHeight="220.0" prefWidth="102.0" />
-      <Button fx:id="rightButton" layoutX="136.0" layoutY="167.0" mnemonicParsing="false" onAction="#swipeRight" prefHeight="23.0" prefWidth="33.0" text="R" />
-      <Button fx:id="leftButton" layoutX="136.0" layoutY="200.0" mnemonicParsing="false" onAction="#swipeLeft" prefHeight="23.0" prefWidth="33.0" text="L" />
-      <ChoiceBox fx:id="switchChoiceBox" layoutX="301.0" layoutY="231.0" prefHeight="25.0" prefWidth="102.0" />
-      <Label layoutX="303.0" layoutY="209.0" text="Switch:" />
-      <Label layoutX="458.0" layoutY="211.0" text="Position in route:" />
-      <ToggleButton fx:id="minusToggleButton" layoutX="527.0" layoutY="231.0" mnemonicParsing="false" prefWidth="85.0" text="MINUS" />
-      <ToggleButton fx:id="plusToggleButton" layoutX="430.0" layoutY="231.0" mnemonicParsing="false" prefWidth="85.0" text="PLUS" />
-      <ListView fx:id="switchPositionListView" layoutX="429.0" layoutY="267.0" prefHeight="70.0" prefWidth="184.0" />
-      <Button fx:id="addSwitchPositionButton" layoutX="345.0" layoutY="267.0" mnemonicParsing="false" prefWidth="60.0" text="Add" />
-      <Button fx:id="deleteSwitchPositionButton" layoutX="345.0" layoutY="310.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+      <Button layoutX="136.0" layoutY="167.0" mnemonicParsing="false" onAction="#swipeRight" prefHeight="23.0" prefWidth="33.0" text="R" />
+      <Button layoutX="136.0" layoutY="200.0" mnemonicParsing="false" onAction="#swipeLeft" prefHeight="23.0" prefWidth="33.0" text="L" />
+      <ChoiceBox fx:id="switchChoiceBox" layoutX="301.0" layoutY="229.0" prefHeight="25.0" prefWidth="102.0" />
+      <Label layoutX="303.0" layoutY="206.0" text="Switch:" />
+      <Label layoutX="472.0" layoutY="209.0" text="Position in route:" />
+      <ToggleButton fx:id="minusToggleButton" layoutX="527.0" layoutY="229.0" mnemonicParsing="false" prefWidth="85.0" text="MINUS" />
+      <ToggleButton fx:id="plusToggleButton" layoutX="430.0" layoutY="229.0" mnemonicParsing="false" prefWidth="85.0" text="PLUS" />
+      <ListView fx:id="switchPositionListView" layoutX="429.0" layoutY="272.0" prefHeight="70.0" prefWidth="184.0" />
+      <Button fx:id="addSwitchPositionButton" layoutX="344.0" layoutY="276.0" mnemonicParsing="false" prefWidth="60.0" text="Add" />
+      <Button fx:id="deleteSwitchPositionButton" layoutX="344.0" layoutY="319.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
       <HBox fx:id="previewHBox" layoutX="260.0" layoutY="14.0" prefHeight="80.0" prefWidth="360.0" style="-fx-background-color: gray;" />
+      <ChoiceBox fx:id="departureChoiceBox" layoutX="309.0" layoutY="123.0" prefHeight="25.0" prefWidth="102.0" />
+      <Label layoutX="311.0" layoutY="102.0" text="Departure track:" />
    </children>
 </Pane>

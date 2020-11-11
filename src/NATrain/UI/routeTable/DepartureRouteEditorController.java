@@ -27,6 +27,8 @@ public class DepartureRouteEditorController {
     @FXML
     private ChoiceBox<Signal> signalChoiceBox;
     @FXML
+    private ChoiceBox<TrackSection> departureChoiceBox;
+    @FXML
     private ChoiceBox<TrackSection> TVDS1ChoiceBox;
     @FXML
     private ChoiceBox<TrackSection> TVDS2ChoiceBox;
@@ -73,6 +75,7 @@ public class DepartureRouteEditorController {
         ObservableList<TrackSection> trackObservableList = FXCollections.observableArrayList(Model.getTrackSections().values());
         TVDS1ChoiceBox.setItems(trackObservableList);
         TVDS2ChoiceBox.setItems(trackObservableList);
+        departureChoiceBox.setItems(trackObservableList);
 
         if (departureRoute.getSignal() != null)
             signalChoiceBox.setValue(departureRoute.getSignal());
@@ -157,7 +160,8 @@ public class DepartureRouteEditorController {
             departureRoute.setTVDS2(TVDS2ChoiceBox.getValue());
             ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>(selectedTrackListView.getItems());
             departureRoute.setOccupationalOrder(occupationalOrder);
-            departureRoute.setDestinationTrackSection(occupationalOrder.getLast());
+            departureRoute.setDepartureTrackSection(departureChoiceBox.getValue());
+            departureRoute.setDestinationTrackSection(TVDS1ChoiceBox.getValue());
             Model.getRouteTable().add(departureRoute);
             Stage thisStage = (Stage) descriptionTextField.getScene().getWindow();
             thisStage.close();
