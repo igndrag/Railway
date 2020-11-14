@@ -68,4 +68,22 @@ public class Signal extends TracksideObject {
     public void close() {
         setSignalState(closedSignalState);
     }
+
+    public GlobalSignalState getGlobalStatus() {
+        switch (signalState) {
+            case RED:
+            case BLUE:
+                return GlobalSignalState.CLOSED;
+            case GREEN:
+            case WHITE:
+                return GlobalSignalState.OPENED;
+            case YELLOW:
+            case BLINKED_YELLOW:
+            case YELLOW_AND_YELLOW:
+            case YELLOW_AND_BLINKED_YELLOW:
+                return GlobalSignalState.OPENED_ON_RESTRICTED_SPEED;
+            default:
+                return GlobalSignalState.NOT_ACTIVE; //if not configured or not light
+        }
+    }
 }
