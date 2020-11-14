@@ -59,6 +59,9 @@ public class DepartureRouteEditorController {
         initialName = departureRoute.getDescription();
         descriptionTextField.setText(initialName);
 
+
+        switchChoiceBox.setItems(FXCollections.observableArrayList(Model.getSwitches().values()));
+
         ObservableList<String> switchPositionsObservableList = FXCollections.observableArrayList();
         departureRoute.getSwitchStatePositions().forEach((sw, sp) -> {
             StringBuilder stringBuilder = new StringBuilder();
@@ -68,29 +71,22 @@ public class DepartureRouteEditorController {
                 stringBuilder.append("-");
             stringBuilder.append(sw.getId());
             switchPositionsObservableList.add(stringBuilder.toString());
+            switchChoiceBox.getItems().remove(sw);
         });
+
         switchPositionListView.setItems(switchPositionsObservableList);
 
         signalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
-        ObservableList<TrackSection> trackObservableList = FXCollections.observableArrayList(Model.getTrackSections().values());
-        TVDS1ChoiceBox.setItems(trackObservableList);
-        TVDS2ChoiceBox.setItems(trackObservableList);
-        departureChoiceBox.setItems(trackObservableList);
-
-        if (departureRoute.getSignal() != null)
-            signalChoiceBox.setValue(departureRoute.getSignal());
 
         ToggleGroup toggleGroup = new ToggleGroup();
         plusToggleButton.setToggleGroup(toggleGroup);
         minusToggleButton.setToggleGroup(toggleGroup);
         plusToggleButton.setSelected(true);
 
-        switchChoiceBox.setItems(FXCollections.observableArrayList(Model.getSwitches().values()));
-
         addSwitchPositionButton.setOnAction(event -> {
             if (!switchChoiceBox.getSelectionModel().isEmpty()) {
                 SwitchState switchState;
-                String switchName = switchChoiceBox.getSelectionModel().getSelectedItem().getId();
+                Switch aSwitch = switchChoiceBox.getSelectionModel().getSelectedItem();
                 StringBuilder stringBuilder = new StringBuilder();
                 if (plusToggleButton.isSelected()) {
                     stringBuilder.append("+");
@@ -99,10 +95,10 @@ public class DepartureRouteEditorController {
                     stringBuilder.append("-");
                     switchState = SwitchState.MINUS;
                 }
-                stringBuilder.append(switchName);
+                stringBuilder.append(aSwitch.getId());
                 switchPositionListView.getItems().add(stringBuilder.toString());
                 switchChoiceBox.getItems().remove(switchChoiceBox.getSelectionModel().getSelectedItem());
-                switchStatePositionsMap.put(Model.getSwitches().get(switchName), switchState);
+                switchStatePositionsMap.put(aSwitch, switchState);
             }
         });
 
@@ -118,9 +114,32 @@ public class DepartureRouteEditorController {
             }
         });
 
+        ObservableList<TrackSection> trackObservableList = FXCollections.observableArrayList(Model.getTrackSections().values());
+        trackObservableList.sort(Comparator.comparing(TracksideObject::getId));
+        TVDS1ChoiceBox.setItems(trackObservableList);
+        if (departureRoute.getTVDS1() != null) {
+            TVDS1ChoiceBox.getSelectionModel().select(departureRoute.getTVDS1());
+        }
+        TVDS2ChoiceBox.setItems(trackObservableList);
+        if (departureRoute.getTVDS2() != null) {
+            TVDS2ChoiceBox.getSelectionModel().select(departureRoute.getTVDS2());
+        }
+        departureChoiceBox.setItems(trackObservableList);
+        if (departureRoute.getDepartureTrackSection() != null) {
+            departureChoiceBox.getSelectionModel().select(departureRoute.getDepartureTrackSection());
+        }
+
+        if (departureRoute.getSignal() != null)
+            signalChoiceBox.setValue(departureRoute.getSignal());
+
+
         ObservableList<TrackSection> allTrackSections = FXCollections.observableArrayList(Model.getTrackSections().values());
         allTrackSections.sort(Comparator.comparing(TracksideObject::getId));
         allTrackListView.setItems(allTrackSections);
+        departureRoute.getOccupationalOrder().forEach(trackSection -> {
+            allTrackListView.getSelectionModel().select(trackSection);
+            swipeRight();
+        });
 
         ObservableList<String> selectedTrackSections = FXCollections.observableArrayList();
         departureRoute.getOccupationalOrder().stream().map(TracksideObject::getId).forEach(trackName -> {
