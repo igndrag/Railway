@@ -1,7 +1,9 @@
 package NATrain.UI.routeTable;
 
+import NATrain.UI.routeTable.RouteTableController;
 import NATrain.model.Model;
 import NATrain.routes.Route;
+import NATrain.routes.RouteType;
 import NATrain.trackSideObjects.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,16 +18,25 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 
-public class DepartureRouteEditorController {
+public class RouteEditorController {
 
-    private Route departureRoute;
+    private Route route;
+    private RouteType selectedRouteType;
     private ConcurrentHashMap<Switch, SwitchState> switchStatePositionsMap;
     private String initialName;
 
     @FXML
+    private ToggleButton arrivalToggleButton;
+    @FXML
+    private ToggleButton departureToggleButton;
+    @FXML
+    private ToggleButton shuntingToggleButton;
+    @FXML
     private TextField descriptionTextField;
     @FXML
     private ChoiceBox<Signal> signalChoiceBox;
+    @FXML
+    private ChoiceBox<Signal> nextSignalChoiceBox;
     @FXML
     private ChoiceBox<TrackSection> departureChoiceBox;
     @FXML
@@ -53,17 +64,51 @@ public class DepartureRouteEditorController {
     @FXML
     private HBox previewHBox;
 
-    public void initialize(Route departureRoute) {
-        this.departureRoute = departureRoute;
-        switchStatePositionsMap = new ConcurrentHashMap<>(departureRoute.getSwitchStatePositions());
-        initialName = departureRoute.getDescription();
-        descriptionTextField.setText(initialName);
+    public void initialize(Route route) {
+        this.route = route;
 
+        ToggleGroup routeTypeToggleGroup = new ToggleGroup();
+
+        arrivalToggleButton.setToggleGroup(routeTypeToggleGroup);
+        departureToggleButton.setToggleGroup(routeTypeToggleGroup);
+        shuntingToggleButton.setToggleGroup(routeTypeToggleGroup);
+
+        arrivalToggleButton.setOnAction(event -> {
+            selectArrivalRouteType();
+        });
+
+
+        departureToggleButton.setOnAction(event -> {
+            selectDepartureRouteType();
+        });
+
+        shuntingToggleButton.setOnAction(event -> {
+            selectShuntingRouteType();
+        });
+
+        switch (route.getRouteType()) {
+            case ARRIVAL:
+                arrivalToggleButton.setSelected(true);
+                selectArrivalRouteType();
+                break;
+            case DEPARTURE:
+                selectDepartureRouteType();
+                departureToggleButton.setSelected(true);
+                break;
+            default:
+                selectShuntingRouteType();
+                shuntingToggleButton.setSelected(true);
+                break;
+        }
+
+        switchStatePositionsMap = new ConcurrentHashMap<>(route.getSwitchStatePositions());
+        initialName = route.getDescription();
+        descriptionTextField.setText(initialName);
 
         switchChoiceBox.setItems(FXCollections.observableArrayList(Model.getSwitches().values()));
 
         ObservableList<String> switchPositionsObservableList = FXCollections.observableArrayList();
-        departureRoute.getSwitchStatePositions().forEach((sw, sp) -> {
+        route.getSwitchStatePositions().forEach((sw, sp) -> {
             StringBuilder stringBuilder = new StringBuilder();
             if (sp == SwitchState.PLUS)
                 stringBuilder.append("+");
@@ -76,11 +121,9 @@ public class DepartureRouteEditorController {
 
         switchPositionListView.setItems(switchPositionsObservableList);
 
-        signalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
-
-        ToggleGroup toggleGroup = new ToggleGroup();
-        plusToggleButton.setToggleGroup(toggleGroup);
-        minusToggleButton.setToggleGroup(toggleGroup);
+        ToggleGroup switchPositionToggleGroup = new ToggleGroup();
+        plusToggleButton.setToggleGroup(switchPositionToggleGroup);
+        minusToggleButton.setToggleGroup(switchPositionToggleGroup);
         plusToggleButton.setSelected(true);
 
         addSwitchPositionButton.setOnAction(event -> {
@@ -114,39 +157,33 @@ public class DepartureRouteEditorController {
             }
         });
 
+        signalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
+        nextSignalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
+
+        if (route.getSignal() != null)
+            signalChoiceBox.setValue(route.getSignal());
+
         ObservableList<TrackSection> trackObservableList = FXCollections.observableArrayList(Model.getTrackSections().values());
         trackObservableList.sort(Comparator.comparing(TracksideObject::getId));
         TVDS1ChoiceBox.setItems(trackObservableList);
-        if (departureRoute.getTVDS1() != null) {
-            TVDS1ChoiceBox.getSelectionModel().select(departureRoute.getTVDS1());
+        if (route.getTVDS1() != null) {
+            TVDS1ChoiceBox.getSelectionModel().select(route.getTVDS1());
         }
         TVDS2ChoiceBox.setItems(trackObservableList);
-        if (departureRoute.getTVDS2() != null) {
-            TVDS2ChoiceBox.getSelectionModel().select(departureRoute.getTVDS2());
+        if (route.getTVDS2() != null) {
+            TVDS2ChoiceBox.getSelectionModel().select(route.getTVDS2());
         }
         departureChoiceBox.setItems(trackObservableList);
-        if (departureRoute.getDepartureTrackSection() != null) {
-            departureChoiceBox.getSelectionModel().select(departureRoute.getDepartureTrackSection());
+        if (route.getDepartureTrackSection() != null) {
+            departureChoiceBox.getSelectionModel().select(route.getDepartureTrackSection());
         }
-
-        if (departureRoute.getSignal() != null)
-            signalChoiceBox.setValue(departureRoute.getSignal());
-
-
         ObservableList<TrackSection> allTrackSections = FXCollections.observableArrayList(Model.getTrackSections().values());
         allTrackSections.sort(Comparator.comparing(TracksideObject::getId));
         allTrackListView.setItems(allTrackSections);
-        departureRoute.getOccupationalOrder().forEach(trackSection -> {
+        route.getOccupationalOrder().forEach(trackSection -> {
             allTrackListView.getSelectionModel().select(trackSection);
             swipeRight();
         });
-
-        ObservableList<String> selectedTrackSections = FXCollections.observableArrayList();
-        departureRoute.getOccupationalOrder().stream().map(TracksideObject::getId).forEach(trackName -> {
-            allTrackSections.remove(trackName);
-            selectedTrackSections.add(trackName);
-        });
-
     }
 
     @FXML
@@ -171,20 +208,24 @@ public class DepartureRouteEditorController {
     @FXML
     private void saveAndClose() {
         if (isInputValid()) {
-            departureRoute.setDescription(descriptionTextField.getText());
-            departureRoute.setSignal(signalChoiceBox.getValue());
-            departureRoute.setSwitchStatePositions(switchStatePositionsMap);
-            departureRoute.setWithManeuver(maneuverCheckBox.isSelected());
-            departureRoute.setTVDS1(TVDS1ChoiceBox.getValue());
-            departureRoute.setTVDS2(TVDS2ChoiceBox.getValue());
+            route.setRouteType(selectedRouteType);
+            route.setDescription(descriptionTextField.getText());
+            route.setSignal(signalChoiceBox.getValue());
+            route.setNextSignal(nextSignalChoiceBox.getValue());
+            route.setSwitchStatePositions(switchStatePositionsMap);
+            route.setWithManeuver(maneuverCheckBox.isSelected());
+            route.setTVDS1(TVDS1ChoiceBox.getValue());
+            route.setTVDS2(TVDS2ChoiceBox.getValue());
             ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>(selectedTrackListView.getItems());
-            departureRoute.setOccupationalOrder(occupationalOrder);
-            departureRoute.setDepartureTrackSection(departureChoiceBox.getValue());
-            departureRoute.setDestinationTrackSection(TVDS1ChoiceBox.getValue());
-            Model.getRouteTable().add(departureRoute);
+            route.setOccupationalOrder(occupationalOrder);
+            route.setDepartureTrackSection(departureChoiceBox.getValue());
+            route.setDestinationTrackSection(TVDS1ChoiceBox.getValue());
+            Model.getRouteTable().add(route);
             Stage thisStage = (Stage) descriptionTextField.getScene().getWindow();
             thisStage.close();
-            RouteTableController.routeObservableList.add(departureRoute);
+            if (!RouteTableController.getRouteObservableList().contains(route)) {
+                RouteTableController.getRouteObservableList().add(route);
+            }
         }
     }
 
@@ -203,35 +244,70 @@ public class DepartureRouteEditorController {
             return false;
         }
 
-        if (TVDS1ChoiceBox.getSelectionModel().isEmpty()) {
+        if (!nextSignalChoiceBox.isDisable() && nextSignalChoiceBox.getSelectionModel().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Please, choice next signal in route!");
+            alert.show();
+            return false;
+        }
+
+        if (!TVDS1ChoiceBox.isDisable() && TVDS1ChoiceBox.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Please, choice first track vacancy detection section (TVDS1)!");
             alert.show();
             return false;
         }
 
-        if (TVDS2ChoiceBox.getSelectionModel().isEmpty()) {
+        if (!TVDS2ChoiceBox.isDisable() && TVDS2ChoiceBox.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Please, choice second track vacancy detection section (TVDS2)!");
             alert.show();
             return false;
         }
 
-        if (TVDS1ChoiceBox.getValue().equals(TVDS2ChoiceBox.getValue())) {
+        if (!TVDS1ChoiceBox.isDisable() && !TVDS2ChoiceBox.isDisable() && TVDS1ChoiceBox.getValue().equals(TVDS2ChoiceBox.getValue())) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Please, choice different two track vacancy detection sections!");
             alert.show();
             return false;
         }
 
-        if (selectedTrackListView.getItems().size() < 2) {
+        if (selectedTrackListView.getItems().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Please, create occupational order of at least two track sections!");
+            alert.setContentText("Please, create occupational order at least of one track sections!");
             alert.show();
             return false;
         }
 
         return true;
+    }
+
+
+    private void selectDepartureRouteType() {
+        selectedRouteType = RouteType.DEPARTURE;
+        TVDS1ChoiceBox.setDisable(false);
+        TVDS2ChoiceBox.setDisable(false);
+        nextSignalChoiceBox.getSelectionModel().clearSelection();
+        nextSignalChoiceBox.setDisable(true);
+    }
+
+    private void selectArrivalRouteType() {
+        selectedRouteType = RouteType.ARRIVAL;
+        TVDS1ChoiceBox.getSelectionModel().clearSelection();
+        TVDS1ChoiceBox.setDisable(true);
+        TVDS2ChoiceBox.getSelectionModel().clearSelection();
+        TVDS2ChoiceBox.setDisable(true);
+        nextSignalChoiceBox.setDisable(false);
+    }
+
+    private void selectShuntingRouteType() {
+        selectedRouteType = RouteType.SHUNTING;
+        TVDS1ChoiceBox.getSelectionModel().clearSelection();
+        TVDS1ChoiceBox.setDisable(true);
+        TVDS2ChoiceBox.getSelectionModel().clearSelection();
+        TVDS2ChoiceBox.setDisable(true);
+        nextSignalChoiceBox.getSelectionModel().clearSelection();
+        nextSignalChoiceBox.setDisable(true);
     }
 
 

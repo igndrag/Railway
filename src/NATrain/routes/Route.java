@@ -13,6 +13,7 @@ public class Route implements Serializable {
     protected RouteType routeType;
     private String description;
     private Signal signal;
+    private Signal nextSignal;
     private ConcurrentMap<Switch, SwitchState> switchStatePositions = new ConcurrentHashMap<>();
     private ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>();
     private TrackSection departureTrackSection;
@@ -108,6 +109,14 @@ public class Route implements Serializable {
 
     public void setSignal(Signal signal) {
         this.signal = signal;
+    }
+
+    public Signal getNextSignal() {
+        return nextSignal;
+    }
+
+    public void setNextSignal(Signal nextSignal) {
+        this.nextSignal = nextSignal;
     }
 
     public ConcurrentMap<Switch, SwitchState> getSwitchStatePositions() {

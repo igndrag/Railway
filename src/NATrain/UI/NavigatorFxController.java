@@ -20,12 +20,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class NavigatorFxController {
 
     private static Stage primaryStage;
     public static Boolean showGridLines = true;
-    public static String modelURL = "model.ntm";
 
     @FXML
     private Button controlButton;
@@ -45,8 +46,14 @@ public class NavigatorFxController {
         primaryStage = mainStage;
     }
 
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     public void initialize() {
-        ModelMock.MockModel();
+        AppConfigController.loadConfigs();
+        Model.loadFromDisk();
+
         blinker = new Timeline(
                 new KeyFrame(Duration.seconds(1),
                         event -> {
@@ -149,6 +156,21 @@ public class NavigatorFxController {
     }
 
     @FXML
+    public void toAppConfig() throws IOException {
+        FXMLLoader loader = new FXMLLoader(AppConfigController.class.getResource("AppConfig.fxml"));
+        Stage appConfig = new Stage();
+        appConfig.setTitle("Application Configs");
+        appConfig.setScene(new Scene(loader.load(), 450, 200));
+        AppConfigController controller = loader.getController();
+        controller.setPrimaryStage(appConfig);
+        appConfig.setOnCloseRequest(event -> {
+            primaryStage.show();
+        });
+        primaryStage.hide();
+        appConfig.show();
+    }
+
+    @FXML
     private void saveCollection(MouseEvent mouseEvent) {
         Model.saveOnDisk();
     }
@@ -157,5 +179,7 @@ public class NavigatorFxController {
     private void loadCollection(MouseEvent mouseEvent) {
         Model.loadFromDisk();
     }
+
+
 
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:controller="NATrain.UI.AppConfigController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="modelPathTextField" layoutX="26.0" layoutY="35.0" prefHeight="23.0" prefWidth="322.0" />
+      <Label fx:id="testResultLabel" layoutX="313.0" layoutY="88.0" text="test result" />
+      <Button onAction="#browse" fx:id="browseButton" layoutX="369.0" layoutY="35.0" mnemonicParsing="false" prefWidth="65.0" text="Browse..." />
+      <ColorPicker fx:id="backgroundColorPicker" layoutX="26.0" layoutY="141.0" />
+      <TextField fx:id="portNumberTextField" layoutX="26.0" layoutY="84.0" />
+      <Label layoutX="26.0" layoutY="67.0" text="COM port number:" />
+      <Label layoutX="27.0" layoutY="120.0" text="Background color:" />
+      <Button fx:id="testConnectionButton" layoutX="186.0" layoutY="84.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" text="Test connection" />
+      <Label layoutX="26.0" layoutY="17.0" text="Model directory" />
+      <Button fx:id="saveButton" onAction="#saveConfigs" layoutX="369.0" layoutY="160.0" mnemonicParsing="false" prefWidth="65.0" text="Save" />
+   </children>
+</Pane>

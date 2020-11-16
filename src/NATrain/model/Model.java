@@ -18,6 +18,8 @@ public enum Model implements Serializable {
 
     INSTANCE;
 
+    private static String modelURL;
+
     protected static Integer xSize = 20; //default size
     protected static Integer ySize = 20;
 
@@ -57,6 +59,14 @@ public enum Model implements Serializable {
         return controlModules;
     }
 
+    public static String getModelURL() {
+        return modelURL;
+    }
+
+    public static void setModelURL(String modelURL) {
+        Model.modelURL = modelURL;
+    }
+
     public static void refreshAll() {
         Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(Quad::refresh);
     }
@@ -68,7 +78,7 @@ public enum Model implements Serializable {
     public static void saveOnDisk() {
         try {
             ArrayList<QuadDTO> notEmptyQuadDTOS = new ArrayList<>();
-            File modelFile = new File(NavigatorFxController.modelURL);
+            File modelFile = new File(modelURL);
             modelFile.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(modelFile);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -95,9 +105,9 @@ public enum Model implements Serializable {
 
     public static void loadFromDisk() {
         try {
-            Path path = Paths.get(NavigatorFxController.modelURL);
+            Path path = Paths.get(modelURL);
             if (path.toFile().exists()) {
-                File modelFile = new File(NavigatorFxController.modelURL);
+                File modelFile = new File(modelURL);
                 FileInputStream fileInputStream = new FileInputStream(modelFile);
                 ObjectInputStream inputStream = new ObjectInputStream(fileInputStream);
                 xSize = (Integer) inputStream.readObject();

@@ -15,7 +15,7 @@ public class Main extends Application {
       //  service.start();
 
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("UI/navigator.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UI/Navigator.fxml"));
         Parent root = loader.load();
         primaryStage.setTitle("NATrain");
         primaryStage.setScene(new Scene(root, 900, 140));

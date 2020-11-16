@@ -2,6 +2,7 @@ package NATrain.UI.routeTable;
 
 import NATrain.model.Model;
 import NATrain.routes.Route;
+import NATrain.routes.RouteType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,10 +20,8 @@ import java.util.*;
 
 public class RouteTableController {
 
-    protected static ObservableList<Route> routeObservableList;
+    private static ObservableList<Route> routeObservableList;
     private Stage primaryStage;
-
-    private RouteTypeSelectorController selector = new RouteTypeSelectorController();
 
     @FXML
     private TableView<Route> routeTable;
@@ -45,6 +44,10 @@ public class RouteTableController {
         this.primaryStage = primaryStage;
     }
 
+    public static ObservableList<Route> getRouteObservableList() {
+        return routeObservableList;
+    }
+
     public void initialize() {
         routeTypeColumn.setCellValueFactory(new PropertyValueFactory<>("routeTypeName"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -60,7 +63,7 @@ public class RouteTableController {
 
         newButton.setOnMouseClicked(event -> {
             try {
-                toRouteTypeSelector();
+                toRouteEditor(new Route("New Route", RouteType.SHUNTING));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -81,7 +84,7 @@ public class RouteTableController {
             switch (selectedRoute.getRouteType()) {
                 case DEPARTURE:
                     try {
-                        selector.toDepartureRouteEditor(selectedRoute);
+                        toRouteEditor(selectedRoute);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -98,16 +101,17 @@ public class RouteTableController {
         });
     }
 
-    private void toRouteTypeSelector() throws IOException{
-        FXMLLoader loader = new FXMLLoader(RouteTypeSelectorController.class.getResource("RouteTypeSelector.fxml"));
-        Stage routeTypeSelector = new Stage();
-        routeTypeSelector.setTitle("Route Type Selector");
-        routeTypeSelector.setScene(new Scene(loader.load(), 155, 185));
-        routeTypeSelector.setResizable(false);
-        RouteTypeSelectorController controller = loader.getController();
-        controller.setRouteTableStage(primaryStage);
-        routeTypeSelector.initModality(Modality.WINDOW_MODAL);
-        routeTypeSelector.initOwner(primaryStage);
-        routeTypeSelector.show();
+    protected void toRouteEditor(Route route) throws IOException {
+        FXMLLoader loader = new FXMLLoader(RouteEditorController.class.getResource("RouteEditor.fxml"));
+        Stage routeEditor = new Stage();
+        routeEditor.setTitle("Route Editor");
+        routeEditor.setScene(new Scene(loader.load(), 640, 400));
+        routeEditor.setResizable(false);
+        RouteEditorController controller = loader.getController();
+        controller.initialize(route);
+        routeEditor.initModality(Modality.WINDOW_MODAL);
+        routeEditor.initOwner(primaryStage);
+        routeEditor.show();
     }
+
 }
