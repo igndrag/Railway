@@ -177,5 +177,12 @@ public class WorkPlaceController {
         locomotiveController.show();
     }
 
+    @FXML
+    private void cancelSelectedRoute() {
+        if (!routeStatusTableView.getSelectionModel().isEmpty()) {
+            routeStatusTableView.getSelectionModel().getSelectedItem().cancelRoute();
+        }
+    }
+
 }
 

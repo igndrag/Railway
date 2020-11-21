@@ -18,9 +18,8 @@ public class Route implements Serializable {
     private ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>();
     private TrackSection departureTrackSection;
     private TrackSection destinationTrackSection;
-    private Signal destinationSignal;
     private TrackAutomationType trackAutomationType;
-    private Boolean withManeuver;
+    private Boolean withManeuver = false;
     private TrackSection TVDS1;
     private TrackSection TVDS2;
 
@@ -60,14 +59,6 @@ public class Route implements Serializable {
 
     public void setDepartureTrackSection(TrackSection departureTrackSection) {
         this.departureTrackSection = departureTrackSection;
-    }
-
-    public Signal getDestinationSignal() {
-        return destinationSignal;
-    }
-
-    public void setDestinationSignal(Signal destinationSignal) {
-        this.destinationSignal = destinationSignal;
     }
 
     public void setDestinationTrackSection(TrackSection destinationTrackSection) {

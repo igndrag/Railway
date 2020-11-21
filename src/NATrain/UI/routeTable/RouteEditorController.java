@@ -157,11 +157,18 @@ public class RouteEditorController {
             }
         });
 
+        maneuverCheckBox.setSelected(route.getWithManeuver());
+
         signalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
         nextSignalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
 
-        if (route.getSignal() != null)
+        if (route.getSignal() != null) {
             signalChoiceBox.setValue(route.getSignal());
+        }
+
+        if (route.getNextSignal() != null) {
+            nextSignalChoiceBox.setValue(route.getNextSignal());
+        }
 
         ObservableList<TrackSection> trackObservableList = FXCollections.observableArrayList(Model.getTrackSections().values());
         trackObservableList.sort(Comparator.comparing(TracksideObject::getId));
@@ -216,10 +223,19 @@ public class RouteEditorController {
             route.setWithManeuver(maneuverCheckBox.isSelected());
             route.setTVDS1(TVDS1ChoiceBox.getValue());
             route.setTVDS2(TVDS2ChoiceBox.getValue());
-            ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>(selectedTrackListView.getItems());
-            route.setOccupationalOrder(occupationalOrder);
             route.setDepartureTrackSection(departureChoiceBox.getValue());
-            route.setDestinationTrackSection(TVDS1ChoiceBox.getValue());
+            ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>(selectedTrackListView.getItems());
+            switch (selectedRouteType) {
+                case DEPARTURE:
+                    route.setDestinationTrackSection(TVDS1ChoiceBox.getValue());
+                    break;
+                case ARRIVAL:
+                case SHUNTING:
+                    route.setDestinationTrackSection(occupationalOrder.getLast());
+                    break;
+            }
+            route.setOccupationalOrder(occupationalOrder);
+
             Model.getRouteTable().add(route);
             Stage thisStage = (Stage) descriptionTextField.getScene().getWindow();
             thisStage.close();

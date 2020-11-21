@@ -87,21 +87,27 @@ public class ActionExecutor {
     }
 
     private void prepareRoute(Route route) {
+        RouteExecutor routeExecutor = null;
         switch (route.getRouteType()) {
+            case ARRIVAL:
+                routeExecutor = new ArrivalRouteExecutor(route);
+                break;
             case DEPARTURE:
-                DepartureRouteExecutor departureRouteExecutor = new DepartureRouteExecutor(route);
-                departureRouteExecutor.executeRoute();
-                activeRoutes.add(departureRouteExecutor);
+                routeExecutor = new DepartureRouteExecutor(route);
                 break;
             case SHUNTING:
                 //TODO
+        }
+        if (routeExecutor != null) {
+            routeExecutor.executeRoute();
+            activeRoutes.add(routeExecutor);
         }
     }
 
     private ObservableList<Route> findRoutes(Signal signal, TracksideObject tracksideObject) {
         List<Route> result = Model.getRouteTable().stream()
                 .filter(route -> route.getSignal() == signal)
-                .filter(route -> route.getDestinationSignal() == tracksideObject || route.getDestinationTrackSection() == tracksideObject)
+                .filter(route -> route.getNextSignal() == tracksideObject || route.getDestinationTrackSection() == tracksideObject)
                 .collect(Collectors.toList());
         return FXCollections.observableArrayList(result);
     }
