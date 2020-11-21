@@ -12,7 +12,11 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static java.util.concurrent.TimeUnit.*;
 
 public abstract class AbstractRouteExecutor implements RouteExecutor {
 
@@ -23,9 +27,10 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
     private final TrackSection departureSection;
     private final TrackSection destinationSection; //в отправлении - это участок удаления
     private final Map<TrackSection, PropertyChangeListener> trackSectionUnlockerMap = new HashMap<>();
-    private final Map<TrackSection, PropertyChangeListener> signalStateUpdaterMap = new HashMap<>();
+    private final Map<TracksideObject, PropertyChangeListener> signalStateUpdaterMap = new HashMap<>();
     private final ConcurrentLinkedDeque<TrackSection> occupationalOrder;
-    private TrackSection cursor;
+    private static final int delayForChangeSwitchPositions = 2;
+    private static final int tryToInterlockCount = 3;
 
     public static void setWorkPlaceController(WorkPlaceController workPlaceController) {
         AbstractRouteExecutor.workPlaceController = workPlaceController;
@@ -67,7 +72,7 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
             if (event.getPropertyName().equals("occupationalProperty")) {
                 strongLock = true; // if something changed in tracks states apply strong lock
                 if (routeStatus == RouteStatus.READY && thisSection != departureSection) {
-                    routeStatus = RouteStatus.IN_PROCESS; //проверить все, кроме первого !!
+                    routeStatus = RouteStatus.IN_PROCESS;
                     workPlaceController.refreshRouteStatusTable();
                     removeSignalUpdaters();
                 }
@@ -82,16 +87,17 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                     }
                 }
 
-                if (route.getRouteType() == RouteType.DEPARTURE) {
+                if (route.getRouteType() == RouteType.DEPARTURE || route.getRouteType() == RouteType.ARRIVAL) {
                     if (previousSection.notInterlocked()
                             && thisSection.isOccupationFixed()
-                            && thisSection.isDeallocationFixed()
+                            && (thisSection.isDeallocationFixed() || route.getRouteType() == RouteType.ARRIVAL && thisSection == destinationSection)
                             && nextSection.isOccupationFixed()) {
                         thisSection.setInterlocked(false);
                         thisSection.removePropertyChangeListener(this);
                         trackSectionUnlockerMap.remove(thisSection);
                         if (trackSectionUnlockerMap.isEmpty()) {
                             routeStatus = RouteStatus.COMPLETED;
+                            removeSignalUpdaters();
                             workPlaceController.refreshRouteStatusTable();
                         }
                     }
@@ -166,24 +172,26 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
         workPlaceController.refreshRouteStatusTable();
     }
 
-    private void cancel() {
+    public void cancelRoute() {
+        int safetyPause = strongLock ? 180 : 30;
         routeStatus = RouteStatus.CANCELLATION;
         workPlaceController.refreshRouteStatusTable();
-        try {
-            if (strongLock)
-                TimeUnit.SECONDS.sleep(180);
-            else
-                TimeUnit.SECONDS.sleep(30);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        departureSection.setInterlocked(false);
-        destinationSection.setInterlocked(false);
-        route.getOccupationalOrder().forEach(trackSection -> trackSection.setInterlocked(false));
-        removeUnusedUnlockers();
-        removeSignalUpdaters();
-        routeStatus = RouteStatus.CANCELLED;
-        workPlaceController.refreshRouteStatusTable();
+        workPlaceController.log(String.format("Route: %s is cancelling with %ds safety pause.", route.getDescription(), safetyPause));
+
+        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        service.scheduleWithFixedDelay(
+                () -> {
+                    departureSection.setInterlocked(false);
+                    destinationSection.setInterlocked(false);
+                    route.getOccupationalOrder().forEach(trackSection -> trackSection.setInterlocked(false));
+                    removeUnusedUnlockers();
+                    removeSignalUpdaters();
+                    routeStatus = RouteStatus.CANCELLED;
+                    workPlaceController.refreshRouteStatusTable();
+                    workPlaceController.log(String.format("Route: %s has been canceled.", route.getDescription()));
+                    service.shutdown();
+                },
+                safetyPause, safetyPause, SECONDS);
     }
 
     private boolean checkSwitchPositions() {
@@ -197,20 +205,27 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
         return true;
     }
 
-    private void createTrackSectionStateListeners() {
+    private void createListeners() {
         TrackSection firstSection = occupationalOrder.pollFirst();
         TrackSectionUnlocker firstTrackSectionUnlocker = new TrackSectionUnlocker(TrackSection.EMPTY_TRACK_SECTION, firstSection, occupationalOrder.getFirst());
         trackSectionUnlockerMap.put(firstSection, firstTrackSectionUnlocker);
+        assert firstSection != null;
         firstSection.addPropertyChangeListener(firstTrackSectionUnlocker);
-        cursor = firstSection;
-        occupationalOrder.forEach(trackSection -> {
-            if (trackSection.isInterlocked()) {
-                TrackSectionUnlocker trackSectionUnlocker = new TrackSectionUnlocker(cursor, trackSection, occupationalOrder.getFirst());
-                trackSectionUnlockerMap.put(trackSection, trackSectionUnlocker);
-                trackSection.addPropertyChangeListener(trackSectionUnlocker);
+        TrackSection cursor = firstSection;
+        while (!occupationalOrder.isEmpty()) {
+            TrackSection trackSection = occupationalOrder.pollFirst();
+            TrackSection nextSection;
+            if (occupationalOrder.isEmpty()) {
+                nextSection = TrackSection.EMPTY_TRACK_SECTION;
+            } else {
+                nextSection = occupationalOrder.getFirst();
             }
-        });
-        occupationalOrder.clear();
+            TrackSectionUnlocker trackSectionUnlocker = new TrackSectionUnlocker(cursor, trackSection, nextSection);
+            trackSectionUnlockerMap.put(trackSection, trackSectionUnlocker);
+            trackSection.addPropertyChangeListener(trackSectionUnlocker);
+            cursor = trackSection;
+        }
+
         if (route.getTVDS1() != null) {
             SignalStateUpdater TVDS1signalStateUpdater = new SignalStateUpdater();
             signalStateUpdaterMap.put(route.getTVDS1(), TVDS1signalStateUpdater);
@@ -220,6 +235,11 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
             SignalStateUpdater TVDS2signalStateUpdater = new SignalStateUpdater();
             signalStateUpdaterMap.put(route.getTVDS1(), TVDS2signalStateUpdater);
             route.getTVDS2().addPropertyChangeListener(TVDS2signalStateUpdater);
+        }
+        if (route.getNextSignal() != null) {
+            SignalStateUpdater fromNextSignalUpdater = new SignalStateUpdater();
+            route.getNextSignal().addPropertyChangeListener(fromNextSignalUpdater);
+            signalStateUpdaterMap.put(route.getNextSignal(), fromNextSignalUpdater);
         }
 
     }
@@ -236,21 +256,24 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
 
     @Override
     public void executeRoute() {
-        if (checkTrackSections() && checkSwitchesAbilityToSet()) {
-            setSwitchPositions();
-            try {
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            if (checkTrackSections() && checkSwitchPositions()) {
-                interlock();
-                routeStatus = RouteStatus.READY;
-                autoselectSignalState();
-                createTrackSectionStateListeners();
-            }
-        }
+        setSwitchPositions();
+        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        AtomicInteger cyclesCount = new AtomicInteger();
+        service.scheduleWithFixedDelay(
+                () -> {
+                    cyclesCount.getAndIncrement();
+                    if (checkTrackSections() && checkSwitchPositions()) {
+                        interlock();
+                        routeStatus = RouteStatus.READY;
+                        autoselectSignalState();
+                        createListeners();
+                        service.shutdown();
+                    }
+                    if (cyclesCount.get() > tryToInterlockCount) {
+                        service.shutdown();
+                    }
+                },
+                0, delayForChangeSwitchPositions, SECONDS);
     }
 
     protected boolean isAllSectionsFree() {

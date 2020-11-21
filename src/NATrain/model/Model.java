@@ -68,7 +68,7 @@ public enum Model implements Serializable {
     }
 
     public static void refreshAll() {
-        Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(Quad::refresh);
+        Arrays.stream(mainGrid).flatMap(Arrays::stream).parallel().forEach(Quad::refresh);
     }
 
     public static void setGridLinesVisible(Boolean show) {

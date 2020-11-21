@@ -22,9 +22,9 @@ public class TrackSection extends TracksideObject {
 
     private transient TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
 
-    private boolean interlocked = false;
-    private boolean occupationFixed = false;
-    private boolean deallocationFixed = false;
+    private transient boolean interlocked = false;
+    private transient boolean occupationFixed = false;
+    private transient boolean deallocationFixed = false;
 
     public boolean isOccupationFixed() {
         return occupationFixed;

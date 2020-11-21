@@ -5,4 +5,5 @@ public interface RouteExecutor {
     String getRouteDescription();
     RouteStatus getRouteStatus();
     void autoselectSignalState();
+    void cancelRoute();
 }

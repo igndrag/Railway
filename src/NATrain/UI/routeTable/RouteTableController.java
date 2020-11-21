@@ -81,15 +81,11 @@ public class RouteTableController {
 
         editButton.setOnAction(event -> {
             Route selectedRoute = routeTable.getSelectionModel().getSelectedItem();
-            switch (selectedRoute.getRouteType()) {
-                case DEPARTURE:
                     try {
                         toRouteEditor(selectedRoute);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    break;
-            }
         });
 
         routeTable.setOnMouseClicked(event -> {
