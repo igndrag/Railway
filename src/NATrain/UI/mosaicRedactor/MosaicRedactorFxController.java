@@ -3,7 +3,6 @@ package NATrain.UI.mosaicRedactor;
 import NATrain.UI.NavigatorFxController;
 import NATrain.quads.BaseQuad;
 import NATrain.quads.QuadType;
-import NATrain.utils.ModelMock;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -248,7 +247,7 @@ public class MosaicRedactorFxController {
     private static void toQuadConfigurator(int x, int y) throws IOException {
         if (Model.getMainGrid()[y][x].isEmpty())
             return;
-        FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("quadConfigurator.fxml"));
+        FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("QuadConfigurator.fxml"));
         Stage quadConfigurator = new Stage();
         quadConfigurator.setTitle("Quad configurator");
         quadConfigurator.setScene(new Scene(loader.load(), 400, 300));

@@ -67,7 +67,7 @@ public class NavigatorFxController {
     @FXML
     private void toTrackRedactor(ActionEvent actionEvent) throws IOException {
        // Model.loadFromDisk();
-        FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("mosaicTrackRedactor.fxml"));
+        FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("MosaicTrackRedactor.fxml"));
         Stage trackRedactor = new Stage();
         MosaicRedactorFxController.setPrimaryStage(trackRedactor);
         trackRedactor.setTitle("Mosaic Redactor");

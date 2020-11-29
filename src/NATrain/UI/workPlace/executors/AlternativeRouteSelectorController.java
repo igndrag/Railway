@@ -22,7 +22,11 @@ public class AlternativeRouteSelectorController {
         routeDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("Description"));
         switchPositionsColumn.setCellValueFactory(new PropertyValueFactory<>("SwitchPositions"));
         alternativeRoutsTableView.setItems(routes);
+
+        okButton.setOnAction(event -> {
+            if (!alternativeRoutsTableView.getSelectionModel().isEmpty()) {
+                ActionExecutor.prepareRoute(alternativeRoutsTableView.getSelectionModel().getSelectedItem());
+            }
+        });
     }
-
-
 }

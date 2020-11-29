@@ -40,6 +40,9 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
     public AbstractRouteExecutor(Route route) {
         this.route = route;
         occupationalOrder = new ConcurrentLinkedDeque<>(route.getOccupationalOrder()); // create copy for processing
+        if (route.getRouteType() == RouteType.SHUNTING) {
+            occupationalOrder.pollLast();
+        }
         this.departureSection = route.getDepartureTrackSection();
         this.destinationSection = route.getDestinationTrackSection();
     }
@@ -77,7 +80,6 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                     workPlaceController.refreshRouteStatusTable();
                     removeSignalUpdaters();
                 }
-                autoselectSignalState(); // realize it in extended classes
 
                 if (thisSection.isInterlocked()) {
                     if (event.getOldValue() == TrackSectionState.FREE && event.getNewValue() == TrackSectionState.OCCUPIED) {
@@ -87,8 +89,6 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                         thisSection.fixDeallocation();
                     }
                 }
-
-                if (route.getRouteType() == RouteType.DEPARTURE || route.getRouteType() == RouteType.ARRIVAL) {
                     if (previousSection.notInterlocked()
                             && thisSection.isOccupationFixed()
                             && (thisSection.isDeallocationFixed() || route.getRouteType() == RouteType.ARRIVAL && thisSection == destinationSection)
@@ -102,9 +102,10 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                             workPlaceController.refreshRouteStatusTable();
                         }
                     }
-                }
             }
+            autoselectSignalState();
         }
+
     }
 
     private boolean checkTrackSections() {
@@ -188,6 +189,7 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                     removeUnusedUnlockers();
                     removeSignalUpdaters();
                     routeStatus = RouteStatus.CANCELLED;
+                    route.getSignal().close();
                     workPlaceController.refreshRouteStatusTable();
                     workPlaceController.log(String.format("Route: %s has been canceled.", route.getDescription()));
                     service.shutdown();
@@ -208,9 +210,15 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
 
     private void createListeners() {
         TrackSection firstSection = occupationalOrder.pollFirst();
-        TrackSectionUnlocker firstTrackSectionUnlocker = new TrackSectionUnlocker(TrackSection.EMPTY_TRACK_SECTION, firstSection, occupationalOrder.getFirst());
-        trackSectionUnlockerMap.put(firstSection, firstTrackSectionUnlocker);
         assert firstSection != null;
+        TrackSection secondSection;
+        if (occupationalOrder.isEmpty()) { // for too short route
+            secondSection = TrackSection.EMPTY_TRACK_SECTION;
+        } else {
+            secondSection = occupationalOrder.getFirst();
+        }
+        TrackSectionUnlocker firstTrackSectionUnlocker = new TrackSectionUnlocker(TrackSection.EMPTY_TRACK_SECTION, firstSection, secondSection);
+        trackSectionUnlockerMap.put(firstSection, firstTrackSectionUnlocker);
         firstSection.addPropertyChangeListener(firstTrackSectionUnlocker);
         TrackSection cursor = firstSection;
         while (!occupationalOrder.isEmpty()) {

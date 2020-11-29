@@ -67,6 +67,10 @@ public class WorkPlaceController {
         this.primaryStage = primaryStage;
     }
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     public void initialize() {
         routeStatusTableView.setItems(actionExecutor.getActiveRoutes());
         routeIdColumn.setCellValueFactory(new PropertyValueFactory<>("routeDescription"));
@@ -76,11 +80,11 @@ public class WorkPlaceController {
 
         NavigatorFxController.showGridLines = false;
         gridPane = new GridPane();
-        int raws = Model.getMainGrid().length;
+        int rows = Model.getMainGrid().length;
         int columns = Model.getMainGrid()[0].length;
 
 
-        for (int i = 0; i < raws; i++) {
+        for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 Pane quadPane = new Pane();
                 Group quadView;
@@ -103,8 +107,8 @@ public class WorkPlaceController {
         }
         workArea.setContent(gridPane);
 
-        ConnectionService connectionService = new ConnectionService("COM5");
-        connectionService.start();
+     //   ConnectionService connectionService = new ConnectionService("COM5");
+     //   connectionService.start();
         log("Work Place initialized");
         log("Good Lock!!!");
     }

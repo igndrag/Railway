@@ -80,7 +80,13 @@ public class Switch extends TracksideObject implements Serializable {
     }
 
     public boolean isChangePositionAvailable() {
-        return trackSection.getVacancyState() == TrackSectionState.FREE && !trackSection.isInterlocked();
+        boolean paredSwitchCheck = true;
+        if (paredSwitch != null) {
+            paredSwitchCheck = paredSwitch.getTrackSection().getVacancyState() != TrackSectionState.FREE
+                    || paredSwitch.getTrackSection().isInterlocked();
+        }
+        return trackSection.getVacancyState() == TrackSectionState.FREE
+                && !trackSection.isInterlocked() && paredSwitchCheck;
     }
 
     public void sendCommandToChangePosition() {

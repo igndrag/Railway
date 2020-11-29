@@ -1,5 +1,7 @@
 package NATrain.UI.workPlace.executors;
 
+import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
+import NATrain.UI.mosaicRedactor.QuadConfiguratorFxController;
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
 import NATrain.quads.*;
@@ -10,6 +12,10 @@ import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TracksideObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
@@ -77,13 +83,17 @@ public class ActionExecutor {
                     if (foundedRoutes.size() == 1) {
                         prepareRoute(foundedRoutes.get(0));
                     } else {
-                     //   toAlternativeRouteSelector(FXCollections.observableArrayList(foundedRoutes));
+                        try {
+                            toAlternativeRouteSelector(FXCollections.observableArrayList(foundedRoutes));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 break;
             case CHANGE_SWITCH_POSITION:
                 Switch aSwitch = ((SwitchQuad) firstSelectedQuad).getAssociatedSwitch();
-                aSwitch.sendCommandToChangePosition();
+                //aSwitch.sendCommandToChangePosition();
                 break;
         }
         clearSelection();
@@ -99,12 +109,10 @@ public class ActionExecutor {
                 routeExecutor = new DepartureRouteExecutor(route);
                 break;
             case SHUNTING:
-                //TODO
+                routeExecutor = new ShuntingRouteExecutor(route);
         }
-        if (routeExecutor != null) {
             routeExecutor.executeRoute();
             activeRoutes.add(routeExecutor);
-        }
     }
 
     private ObservableList<Route> findRoutes(Signal signal, TracksideObject tracksideObject) {
@@ -125,10 +133,15 @@ public class ActionExecutor {
     }
 
     private void toAlternativeRouteSelector (ObservableList<Route> routes) throws IOException {
-        //TODO
+        FXMLLoader loader = new FXMLLoader(AlternativeRouteSelectorController.class.getResource("AlternativeRouteSelector.fxml"));
+        Stage alternativeRouteSelector = new Stage();
+        alternativeRouteSelector.setTitle("Alternative Route Selector");
+        alternativeRouteSelector.setScene(new Scene(loader.load(), 500, 200));
+        alternativeRouteSelector.setResizable(false);
+        AlternativeRouteSelectorController controller = loader.getController();
+        controller.initialize(routes);
+        alternativeRouteSelector.initModality(Modality.WINDOW_MODAL);
+        alternativeRouteSelector.initOwner(workPlaceController.getPrimaryStage());
+        alternativeRouteSelector.show();
     }
-
-
-
-
 }
