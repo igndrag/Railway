@@ -12,7 +12,6 @@ import java.beans.PropertyChangeListener;
 
 public abstract class BaseQuad extends AbstractQuad implements Configurable {
 
-
     protected TrackSection firstAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
     protected TrackSection secondAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
     protected Switch associatedSwitch = Switch.EMPTY_SWITCH;

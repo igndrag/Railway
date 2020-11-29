@@ -1,5 +1,6 @@
 package NATrain.remoteControlModules;
 import NATrain.UI.NavigatorFxController;
+import NATrain.connectionService.RequestExecutor;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.SignalState;
 
@@ -17,8 +18,6 @@ public class SignalControlModule extends AbstractModule {
     public SignalControlModule(int address) {
         super(address);
         channels = new Signal[4];
-
-
     }
 
     @Override
@@ -49,11 +48,6 @@ public class SignalControlModule extends AbstractModule {
             case OPENED_ON_BLINKED_WHITE_RESPONSE_STATUS_CODE:
                 signal.setSignalState(SignalState.BLINKED_WHITE);
         }
-    }
-
-    @Override
-    public void sendCommand(int channel, Command command) {
-        //to request pool
     }
 
     @Override

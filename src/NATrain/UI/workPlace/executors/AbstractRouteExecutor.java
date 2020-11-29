@@ -1,6 +1,7 @@
 package NATrain.UI.workPlace.executors;
 
 import NATrain.UI.workPlace.WorkPlaceController;
+import NATrain.connectionService.RequestExecutor;
 import NATrain.remoteControlModules.Command;
 import NATrain.remoteControlModules.SwitchControlModule;
 import NATrain.routes.Route;

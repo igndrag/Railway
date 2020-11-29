@@ -2,17 +2,16 @@ package NATrain.UI.workPlace.executors;
 
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
-import NATrain.quads.EmptyQuad;
-import NATrain.quads.Quad;
-import NATrain.quads.SignalQuad;
-import NATrain.quads.SimpleTrackQuad;
+import NATrain.quads.*;
 import NATrain.routes.Route;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.Signal;
+import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TracksideObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +30,7 @@ public class ActionExecutor {
         this.workPlaceController = workPlaceController;
     }
 
-    private ObservableList<RouteExecutor> activeRoutes = FXCollections.observableArrayList();
+    private static ObservableList<RouteExecutor> activeRoutes = FXCollections.observableArrayList();
 
     public ObservableList<RouteExecutor> getActiveRoutes() {
         return activeRoutes;
@@ -40,9 +39,9 @@ public class ActionExecutor {
     public void executeControlAction(ControlAction controlAction, Quad quad) {
         System.out.println("Request on " + controlAction.getDescription() + " received from " + quad.getType());
         if (firstSelectedQuad == EMPTY_QUAD) {
+            firstControlAction = controlAction;
+            firstSelectedQuad = quad;
             if (controlAction == ControlAction.SET_ROUT_FROM) {
-                firstSelectedQuad = quad;
-                firstControlAction = controlAction;
                 quad.select();
             } else {
                 execute();
@@ -78,15 +77,19 @@ public class ActionExecutor {
                     if (foundedRoutes.size() == 1) {
                         prepareRoute(foundedRoutes.get(0));
                     } else {
-                        //TODO create pane for choosing alternative routes
+                     //   toAlternativeRouteSelector(FXCollections.observableArrayList(foundedRoutes));
                     }
                 }
+                break;
             case CHANGE_SWITCH_POSITION:
+                Switch aSwitch = ((SwitchQuad) firstSelectedQuad).getAssociatedSwitch();
+                aSwitch.sendCommandToChangePosition();
+                break;
         }
         clearSelection();
     }
 
-    private void prepareRoute(Route route) {
+    protected static void prepareRoute(Route route) {
         RouteExecutor routeExecutor = null;
         switch (route.getRouteType()) {
             case ARRIVAL:
@@ -112,11 +115,6 @@ public class ActionExecutor {
         return FXCollections.observableArrayList(result);
     }
 
-
-    public void cancelRoute (RouteExecutor routeExecutor) {
-
-    }
-
     public void clearSelection() {
         firstSelectedQuad.unselect();
         firstSelectedQuad = EMPTY_QUAD;
@@ -126,6 +124,9 @@ public class ActionExecutor {
         secondControlAction = null;
     }
 
+    private void toAlternativeRouteSelector (ObservableList<Route> routes) throws IOException {
+        //TODO
+    }
 
 
 

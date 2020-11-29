@@ -31,11 +31,6 @@ public class SwitchControlModule extends AbstractModule {
     }
 
     @Override
-    public void sendCommand(int channel, Command command) {
-
-    }
-
-    @Override
     public String getType() {
         return "Switch Control Module";
     }

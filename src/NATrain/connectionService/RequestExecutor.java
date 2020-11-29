@@ -10,8 +10,8 @@ public class RequestExecutor extends Thread{
         this.connectionService = connectionService;
     }
 
-    private static ConcurrentLinkedQueue<String> requestPool = new ConcurrentLinkedQueue<>();
-    protected static ConcurrentLinkedQueue<String> responsePool = new ConcurrentLinkedQueue<>();
+    private static final ConcurrentLinkedQueue<String> requestPool = new ConcurrentLinkedQueue<>();
+    protected static final ConcurrentLinkedQueue<String> responsePool = new ConcurrentLinkedQueue<>();
 
     public static ConcurrentLinkedQueue<String> getRequestPool() {
         return requestPool;
@@ -21,17 +21,13 @@ public class RequestExecutor extends Thread{
         return responsePool;
     }
 
-    /* Request format REQCODE(1 digit)_CMADDR(3 digit)_CHNUM(2 digit)
-                            1 - global request
-                            2 - check input
-                            3 - command
-            example 2_002_03
+    /* Request format COMMANDCODE_CMADDR(2 digit)_CHNUM(2 digit)
 
-            Response format RESCODE(1 digit)_CMADDR(3 digit)_CHNUM(2 digit)
-                            1 - OK
-                            2 - wrong request
-                            3 - fail or timeout
-            example  1_110_10
+            example 20_20_03
+
+            Response format RESCODE_CMADDR(2 digit)_CHNUM(2 digit)
+
+            example  1_11_10
         */
     @Override
     public void run() {

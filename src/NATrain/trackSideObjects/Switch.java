@@ -1,5 +1,7 @@
 package NATrain.trackSideObjects;
 
+import NATrain.remoteControlModules.Command;
+
 import java.io.Serializable;
 
 
@@ -79,5 +81,12 @@ public class Switch extends TracksideObject implements Serializable {
 
     public boolean isChangePositionAvailable() {
         return trackSection.getVacancyState() == TrackSectionState.FREE && !trackSection.isInterlocked();
+    }
+
+    public void sendCommandToChangePosition() {
+        if (trackSection.getVacancyState() == TrackSectionState.FREE && !trackSection.isInterlocked()) {
+            assert controlModule != null;
+            controlModule.sendCommand(channel, Command.CHANGE_SWITCH_POSITION);
+        }
     }
 }

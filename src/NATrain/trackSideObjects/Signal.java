@@ -1,5 +1,7 @@
 package NATrain.trackSideObjects;
 
+import NATrain.remoteControlModules.Command;
+
 import java.util.Collections;
 import java.util.Set;
 
@@ -67,6 +69,11 @@ public class Signal extends TracksideObject {
 
     public void close() {
         setSignalState(closedSignalState);
+    }
+
+    public void sendCommand(Command command) {
+        assert controlModule != null;
+        controlModule.sendCommand(channel, command);
     }
 
     public GlobalSignalState getGlobalStatus() {

@@ -5,6 +5,7 @@ import NATrain.UI.workPlace.executors.ActionExecutor;
 import NATrain.UI.workPlace.executors.AbstractRouteExecutor;
 import NATrain.UI.workPlace.executors.RouteExecutor;
 import NATrain.UI.workPlace.executors.RouteStatus;
+import NATrain.connectionService.ConnectionService;
 import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.routes.Route;
@@ -102,6 +103,8 @@ public class WorkPlaceController {
         }
         workArea.setContent(gridPane);
 
+        ConnectionService connectionService = new ConnectionService("COM5");
+        connectionService.start();
         log("Work Place initialized");
         log("Good Lock!!!");
     }
