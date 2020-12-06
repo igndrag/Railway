@@ -61,6 +61,12 @@ public class Signal extends TracksideObject {
         }
     }
 
+    public void setClosedSignalState(SignalState closedSignalState) {
+        if (closedSignalState == RED || closedSignalState == BLUE) {
+            this.closedSignalState = closedSignalState;
+        };
+    }
+
     public Signal(String id, Set<SignalState> approvedSignals, SignalType signalType) {
         super(id);
         this.approvedSignals = approvedSignals;

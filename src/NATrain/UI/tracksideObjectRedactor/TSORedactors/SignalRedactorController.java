@@ -3,6 +3,7 @@ package NATrain.UI.tracksideObjectRedactor.TSORedactors;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
 import NATrain.model.Model;
 import NATrain.trackSideObjects.Signal;
+import NATrain.trackSideObjects.SignalState;
 import NATrain.trackSideObjects.SignalType;
 import NATrain.trackSideObjects.TracksideObject;
 import javafx.collections.ObservableList;
@@ -13,6 +14,8 @@ import javafx.scene.layout.Pane;
 
 public class SignalRedactorController extends TracksideObjectRedactorController {
 
+    @FXML
+    private CheckBox redLampCheckBox;
     @FXML
     private ToggleButton trimmerToggleButton;
     @FXML
@@ -39,8 +42,11 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
                 break;
             case TRACK:
                 trackToggleButton.setSelected(true);
+                redLampCheckBox.setDisable(true);
                 break;
         }
+        trimmerToggleButton.setOnAction(event -> redLampCheckBox.setDisable(false));
+        trackToggleButton.setOnAction(event -> redLampCheckBox.setDisable(true));
     }
 
     @FXML
@@ -53,6 +59,10 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
             signal.setSignalType(SignalType.TRIMMER);
         else
             signal.setSignalType(SignalType.TRACK);
+
+        if (redLampCheckBox.isSelected()) {
+            signal.setClosedSignalState(SignalState.RED);
+        }
 
         updateModelAndClose(Model.getSignals(), signal);
     }

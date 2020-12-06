@@ -10,6 +10,9 @@ import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.routes.Route;
 import NATrain.trackSideObjects.ControlAction;
+import NATrain.trackSideObjects.Signal;
+import NATrain.trackSideObjects.SwitchState;
+import NATrain.trackSideObjects.TrackSectionState;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -72,6 +75,11 @@ public class WorkPlaceController {
     }
 
     public void initialize() {
+
+        Model.getSignals().values().forEach(Signal::close);
+        Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
+        Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));
+
         routeStatusTableView.setItems(actionExecutor.getActiveRoutes());
         routeIdColumn.setCellValueFactory(new PropertyValueFactory<>("routeDescription"));
         routeStatusColumn.setCellValueFactory(new PropertyValueFactory<>("routeStatus"));
