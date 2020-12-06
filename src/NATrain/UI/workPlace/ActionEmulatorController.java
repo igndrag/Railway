@@ -10,6 +10,9 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 
 public class ActionEmulatorController {
+
+    @FXML
+    private Button allClosedButton;
     @FXML
     private Button allFreeButton;
     @FXML
@@ -110,8 +113,13 @@ public class ActionEmulatorController {
     }
 
     @FXML
-    private void setAllSectionsFree() {
+    protected void setAllSectionsFree() {
         Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
+    }
+
+    @FXML
+    protected void setAllSignalClosed() {
+        Model.getSignals().values().forEach(Signal::close);
     }
 
 
