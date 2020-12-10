@@ -3,15 +3,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:controller="NATrain.UI.tracks.TrackSelectorController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="292.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView layoutX="23.0" layoutY="32.0" prefHeight="200.0" prefWidth="552.0">
+      <TableView fx:id="tracksTableView" layoutX="23.0" layoutY="32.0" prefHeight="200.0" prefWidth="552.0">
         <columns>
-          <TableColumn prefWidth="83.0" text="Id" />
-            <TableColumn prefWidth="285.0" text="Blocking Type" />
-          <TableColumn prefWidth="91.0" text="Block Sections" />
-            <TableColumn prefWidth="92.0" text="Bidirectional" />
+          <TableColumn fx:id="idColumn" prefWidth="83.0" text="Id" />
+            <TableColumn fx:id="blockingTypeColumn" prefWidth="285.0" text="Blocking Type" />
+          <TableColumn fx:id="blockSectionCountColumn" prefWidth="91.0" text="Block Sections" />
+            <TableColumn fx:id="bidirectionalColumn" prefWidth="92.0" text="Bidirectional" />
         </columns>
       </TableView>
+      <Button fx:id="newButton" layoutX="515.0" layoutY="251.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+      <Button fx:id="editButton" layoutX="439.0" layoutY="251.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+      <Button fx:id="deleteButton" layoutX="358.0" layoutY="251.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
    </children>
 </Pane>

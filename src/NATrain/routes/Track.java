@@ -26,4 +26,8 @@ public class Track implements Serializable {
     public boolean isBidirectional() {
         return bidirectional;
     }
+
+    public int getBlockSectionCount() {
+        return blockSections.size();
+    }
 }
