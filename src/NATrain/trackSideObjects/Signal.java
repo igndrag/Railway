@@ -22,8 +22,8 @@ public class Signal extends TracksideObject {
     public void setSignalType(SignalType signalType) {
         this.signalType = signalType;
         switch (signalType) {
-            case TRACK:
-                approvedSignals = STANDARD_TRACK_SIGNAL_STATES;
+            case STATION:
+                approvedSignals = STANDARD_STATION_SIGNAL_STATES;
                 closedSignalState = RED;
                 break;
             case TRIMMER:
@@ -44,8 +44,8 @@ public class Signal extends TracksideObject {
     public Signal(String id, SignalType signalType) {
         super(id);
         this.signalType = signalType;
-        if (signalType == SignalType.TRACK)
-            this.approvedSignals = STANDARD_TRACK_SIGNAL_STATES;
+        if (signalType == SignalType.STATION)
+            this.approvedSignals = STANDARD_STATION_SIGNAL_STATES;
         else
             this.approvedSignals = STANDARD_TRIMMER_SIGNAL_STATES;
     }

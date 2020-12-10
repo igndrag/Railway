@@ -2,6 +2,7 @@ package NATrain.model;
 
 import NATrain.UI.NavigatorFxController;
 import NATrain.routes.Route;
+import NATrain.routes.Track;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
 import NATrain.remoteControlModules.ControlModule;
@@ -34,6 +35,8 @@ public enum Model implements Serializable {
     private static Map<String, TrackSection> trackSections =  new ConcurrentHashMap<>();
 
     private static Map<Integer, ControlModule> controlModules = new ConcurrentHashMap<>();
+
+    public static Set<Track> tracks = new CopyOnWriteArraySet<>();
 
     public static Quad[][] getMainGrid() {
         return mainGrid;

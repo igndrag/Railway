@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="140.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.NavigatorFxController">
+<AnchorPane prefHeight="140.0" prefWidth="1029.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.NavigatorFxController">
    <children>
       <Button fx:id="mosaicRedactorButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="28.0" layoutY="20.0" mnemonicParsing="false" onAction="#toTrackRedactor" prefHeight="100.0" prefWidth="120.0" text="Mosaic Redactor" textAlignment="CENTER">
          <graphic>
@@ -29,11 +29,11 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="321.0" layoutY="20.0" mnemonicParsing="false" onAction="#toRouteTable" prefHeight="100.0" prefWidth="120.0" text="Routes" textAlignment="CENTER">
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="455.0" layoutY="20.0" mnemonicParsing="false" onAction="#toRouteTable" prefHeight="100.0" prefWidth="120.0" text="Routes" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../icons/roots_icon.png" />
+                  <Image url="@../../icons/routes_icon.png" />
                </image>
             </ImageView>
          </graphic>
@@ -41,7 +41,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="463.0" layoutY="20.0" mnemonicParsing="false" onAction="#toControlModuleRedactor" prefHeight="100.0" prefWidth="120.0" text="Hardware" textAlignment="CENTER">
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="597.0" layoutY="20.0" mnemonicParsing="false" onAction="#toControlModuleRedactor" prefHeight="100.0" prefWidth="120.0" text="Hardware" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -53,7 +53,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="controlButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="608.0" layoutY="20.0" mnemonicParsing="false" onAction="#toWorkPlace" onMouseClicked="#loadCollection" prefHeight="100.0" prefWidth="120.0" text="Control" textAlignment="CENTER">
+      <Button fx:id="controlButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="742.0" layoutY="20.0" mnemonicParsing="false" onAction="#toWorkPlace" onMouseClicked="#loadCollection" prefHeight="100.0" prefWidth="120.0" text="Control" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -65,11 +65,23 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="settingButton" onAction="#toAppConfig" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="754.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#saveCollection" prefHeight="100.0" prefWidth="120.0" text="Settings" textAlignment="CENTER">
+      <Button fx:id="settingButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="888.0" layoutY="20.0" mnemonicParsing="false" onAction="#toAppConfig" onMouseClicked="#saveCollection" prefHeight="100.0" prefWidth="120.0" text="Settings" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../icons/settings_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="315.0" layoutY="20.0" mnemonicParsing="false" onAction="#toRouteTable" prefHeight="100.0" prefWidth="120.0" text="Tracks" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/tracks_icon.png" />
                </image>
             </ImageView>
          </graphic>

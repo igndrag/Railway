@@ -19,7 +19,7 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
     @FXML
     private ToggleButton trimmerToggleButton;
     @FXML
-    private ToggleButton trackToggleButton;
+    private ToggleButton stationToggleButton;
     @FXML
     private Pane signalPreview; // just for future
 
@@ -34,19 +34,19 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
 
         ToggleGroup toggleGroup = new ToggleGroup();
         trimmerToggleButton.setToggleGroup(toggleGroup);
-        trackToggleButton.setToggleGroup(toggleGroup);
+        stationToggleButton.setToggleGroup(toggleGroup);
 
         switch (signal.getSignalType()) {
             case TRIMMER:
                 trimmerToggleButton.setSelected(true);
                 break;
-            case TRACK:
-                trackToggleButton.setSelected(true);
+            case STATION:
+                stationToggleButton.setSelected(true);
                 redLampCheckBox.setDisable(true);
                 break;
         }
         trimmerToggleButton.setOnAction(event -> redLampCheckBox.setDisable(false));
-        trackToggleButton.setOnAction(event -> redLampCheckBox.setDisable(true));
+        stationToggleButton.setOnAction(event -> redLampCheckBox.setDisable(true));
     }
 
     @FXML
@@ -58,7 +58,7 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         if (trimmerToggleButton.isSelected())
             signal.setSignalType(SignalType.TRIMMER);
         else
-            signal.setSignalType(SignalType.TRACK);
+            signal.setSignalType(SignalType.STATION);
 
         if (redLampCheckBox.isSelected()) {
             signal.setClosedSignalState(SignalState.RED);

@@ -109,7 +109,7 @@ public class TracksideObjectNavigatorController {
         FXMLLoader loader = new FXMLLoader(SignalRedactorController.class.getResource("signalRedactor.fxml"));
         Stage signalRedactor = new Stage();
         signalRedactor.setTitle("Signal Redactor");
-        signalRedactor.setScene(new Scene(loader.load(), 330, 220));
+        signalRedactor.setScene(new Scene(loader.load(), 350, 220));
         signalRedactor.setResizable(false);
         SignalRedactorController controller = loader.getController();
         controller.init(signal, signalTableView, signalList);

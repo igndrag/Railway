@@ -21,7 +21,7 @@ public class ModelMock {
             }
         }
 
-        Model.getSignals().put("S1", new Signal("S1", SignalType.TRACK));
+        Model.getSignals().put("S1", new Signal("S1", SignalType.STATION));
         Model.getSignals().put("M1", new Signal("M1", SignalType.TRIMMER));
 
         Switch oneSwitch = new Switch("1");
