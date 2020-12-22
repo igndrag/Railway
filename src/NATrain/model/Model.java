@@ -62,6 +62,10 @@ public enum Model implements Serializable {
         return controlModules;
     }
 
+    public static Set<Track> getTracks() {
+        return tracks;
+    }
+
     public static String getModelURL() {
         return modelURL;
     }
@@ -92,6 +96,7 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(switches);
             objectOutputStream.writeObject(controlModules);
             objectOutputStream.writeObject(routeTable);
+            objectOutputStream.writeObject(tracks);
 
             Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(quad -> {
                 if (quad.getType() != QuadType.EMPTY_QUAD) {
@@ -127,6 +132,7 @@ public enum Model implements Serializable {
                 switches.values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.UNDEFINED));
                 controlModules = (Map<Integer, ControlModule>) inputStream.readObject();
                 routeTable = (CopyOnWriteArraySet<Route>) inputStream.readObject();
+                tracks = (Set<Track>) inputStream.readObject();
 
                 ArrayList<QuadDTO> notEmptyQuadDTOS = (ArrayList<QuadDTO>) inputStream.readObject();
                 inputStream.close();

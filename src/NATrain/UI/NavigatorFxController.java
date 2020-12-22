@@ -3,6 +3,7 @@ package NATrain.UI;
 import NATrain.UI.controlModuleRedactor.CMNavigatorController;
 import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.routeTable.RouteTableController;
+import NATrain.UI.tracks.TrackSelectorController;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController;
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
@@ -52,7 +53,8 @@ public class NavigatorFxController {
 
     public void initialize() {
         AppConfigController.loadConfigs();
-        Model.loadFromDisk();
+        //ModelMock.MockModel();
+       Model.loadFromDisk();
 
         blinker = new Timeline(
                 new KeyFrame(Duration.seconds(1),
@@ -65,23 +67,23 @@ public class NavigatorFxController {
     }
 
     @FXML
-    private void toTrackRedactor(ActionEvent actionEvent) throws IOException {
+    private void toMosaicRedactor(ActionEvent actionEvent) throws IOException {
        // Model.loadFromDisk();
         FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("MosaicTrackRedactor.fxml"));
-        Stage trackRedactor = new Stage();
-        MosaicRedactorFxController.setPrimaryStage(trackRedactor);
-        trackRedactor.setTitle("Mosaic Redactor");
-        trackRedactor.setScene(new Scene(loader.load(), 800, 600));
-        trackRedactor.setResizable(true);
+        Stage mosaicRedactor = new Stage();
+        MosaicRedactorFxController.setPrimaryStage(mosaicRedactor);
+        mosaicRedactor.setTitle("Mosaic Redactor");
+        mosaicRedactor.setScene(new Scene(loader.load(), 800, 600));
+        mosaicRedactor.setResizable(true);
         //MosaicRedactorFxController controller = loader.getController();
         //controller.initialize();
 
-        trackRedactor.setOnCloseRequest(event -> {
+        mosaicRedactor.setOnCloseRequest(event -> {
         //    Model.saveOnDisk();
             primaryStage.show();
         });
         primaryStage.hide();
-        trackRedactor.show();
+        mosaicRedactor.show();
     }
 
     @FXML
@@ -168,6 +170,21 @@ public class NavigatorFxController {
         });
         primaryStage.hide();
         appConfig.show();
+    }
+
+    @FXML
+    private void toTrackSelector() throws IOException {
+        FXMLLoader loader = new FXMLLoader(TrackSelectorController.class.getResource("TrackSelector.fxml"));
+        Stage trackSelector = new Stage();
+        trackSelector.setTitle("Track Selector");
+        trackSelector.setScene(new Scene(loader.load(), 600, 300));
+        TrackSelectorController controller = loader.getController();
+        controller.setPrimaryStage(trackSelector);
+        trackSelector.setOnCloseRequest(event -> {
+            primaryStage.show();
+        });
+        primaryStage.hide();
+        trackSelector.show();
     }
 
     @FXML

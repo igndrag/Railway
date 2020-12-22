@@ -3,36 +3,37 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracks.TrackRedactorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracks.TrackRedactorController">
    <children>
       <Label layoutX="21.0" layoutY="23.0" text="Track Name" />
       <TextField fx:id="trackNameTextField" layoutX="21.0" layoutY="46.0" />
-      <TextField fx:id="blockSectionPrefixTextField" layoutX="20.0" layoutY="116.0" prefHeight="23.0" prefWidth="40.0" />
-      <Label layoutX="21.0" layoutY="99.0" text="Prefix" />
-      <Label layoutX="19.0" layoutY="77.0" text="Track Block Sections" />
-      <Label layoutX="80.0" layoutY="99.0" text="Suffix" />
-      <TextField fx:id="blockSectionSuffixTextField" layoutX="79.0" layoutY="116.0" prefHeight="23.0" prefWidth="40.0" />
-      <Button layoutX="215.0" layoutY="116.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="52.0" text="Add" />
-      <TextField fx:id="blockSectionCountTextField" layoutX="140.0" layoutY="115.0" prefHeight="23.0" prefWidth="40.0" />
-      <Label layoutX="141.0" layoutY="98.0" text="Count" />
-      <Button fx:id="deleteLastButton" layoutX="463.0" layoutY="189.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Delete Last" />
-      <Button fx:id="clearAllButton" layoutX="463.0" layoutY="230.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Clear All" />
-      <RadioButton layoutX="178.0" layoutY="50.0" mnemonicParsing="false" text="Bidirectional" />
-      <Label layoutX="286.0" layoutY="81.0" text="Track Signals    (creates automatically)" />
-      <Label layoutX="285.0" layoutY="100.0" text="Prefix" />
-      <TextField fx:id="signalPrefixTextField" layoutX="284.0" layoutY="117.0" prefHeight="23.0" prefWidth="40.0" />
-      <Label layoutX="288.0" layoutY="35.0" text="Arrival Signals:" />
-      <Label layoutX="372.0" layoutY="19.0" text="Normal Direction" />
-      <ChoiceBox fx:id="normalDirectionArrivalSignalChoiceBox" layoutX="475.0" layoutY="16.0" prefHeight="23.0" prefWidth="68.0" />
-      <ChoiceBox fx:id="reversedDirectionArrivalSignalChoiceBox" layoutX="476.0" layoutY="50.0" prefHeight="23.0" prefWidth="68.0" />
-      <Label layoutX="373.0" layoutY="53.0" text="Reversed Direction" />
-      <TableView fx:id="blockSectionsTableView" layoutX="19.0" layoutY="164.0" prefHeight="200.0" prefWidth="425.0">
+      <TextField fx:id="blockSectionPrefixTextField" layoutX="20.0" layoutY="168.0" prefHeight="23.0" prefWidth="40.0" />
+      <Label layoutX="21.0" layoutY="151.0" text="Prefix" />
+      <Label layoutX="19.0" layoutY="131.0" text="Track Block Sections" />
+      <Label layoutX="80.0" layoutY="151.0" text="Suffix" />
+      <TextField fx:id="blockSectionSuffixTextField" layoutX="79.0" layoutY="168.0" prefHeight="23.0" prefWidth="40.0" />
+      <Button fx:id="addButton" layoutX="206.0" layoutY="167.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="52.0" text="Add" />
+      <TextField fx:id="blockSectionCountTextField" layoutX="140.0" layoutY="167.0" prefHeight="23.0" prefWidth="40.0" />
+      <Label layoutX="141.0" layoutY="150.0" text="Count" />
+      <Button fx:id="deleteLastButton" onAction="#deleteLast" layoutX="17.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Delete Last" />
+      <Button fx:id="clearAllButton" onAction="#deleteAll" layoutX="117.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Clear All" />
+      <RadioButton fx:id="bidirectionalRadioButton" layoutX="178.0" layoutY="50.0" mnemonicParsing="false" text="Bidirectional" />
+      <Label layoutX="288.0" layoutY="150.0" text="Track Signal Prefix" />
+      <TextField fx:id="signalPrefixTextField" layoutX="288.0" layoutY="167.0" prefHeight="23.0" prefWidth="40.0" />
+      <Label layoutX="311.0" layoutY="25.0" text="Arrival Signals:" />
+      <Label layoutX="345.0" layoutY="50.0" text="Normal Direction" />
+      <ChoiceBox fx:id="normalDirectionArrivalSignalChoiceBox" layoutX="347.0" layoutY="70.0" prefHeight="25.0" prefWidth="96.0" />
+      <ChoiceBox fx:id="reversedDirectionArrivalSignalChoiceBox" layoutX="346.0" layoutY="119.0" prefHeight="25.0" prefWidth="99.0" />
+      <Label layoutX="345.0" layoutY="100.0" text="Reversed Direction" />
+      <TableView fx:id="blockSectionsTableView" layoutX="19.0" layoutY="206.0" prefHeight="200.0" prefWidth="425.0">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="83.0" text="Id" />
           <TableColumn fx:id="normalDirectionSignalColumn" prefWidth="159.0" text="Normal Direction Signal" />
             <TableColumn fx:id="reversedDirectionSignalColumn" prefWidth="186.0" text="Reversed Direction Signal" />
         </columns>
       </TableView>
-      <Button fx:id="saveButton" layoutX="463.0" layoutY="383.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Save" />
+      <Button fx:id="saveButton" onAction="#saveAndClose" layoutX="358.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Save" />
+      <ChoiceBox fx:id="blockingTypeChoiceBox" layoutX="20.0" layoutY="96.0" prefHeight="25.0" prefWidth="247.0" />
+      <Label layoutX="21.0" layoutY="77.0" text="Blocking Type" />
    </children>
 </Pane>

@@ -10,9 +10,13 @@ import static NATrain.trackSideObjects.SignalState.*;
 public class Signal extends TracksideObject {
     static final long serialVersionUID = 1L;
 
-    public static final Signal EMPTY_SIGNAL = new Signal("", Collections.emptySet(), SignalType.EMPTY_SIGNAL);
+    public static final Signal EMPTY_SIGNAL = new Signal("None", Collections.emptySet(), SignalType.EMPTY_SIGNAL);
     public static final String INITIAL_SIGNAL_NAME = "New Signal";
 
+    public Signal(String id, SignalType signalType) {
+        super(id);
+        setSignalType(signalType);
+    }
 
     Set<SignalState> approvedSignals;
     transient SignalState signalState = SignalState.UNDEFINED;
@@ -30,6 +34,10 @@ public class Signal extends TracksideObject {
                 approvedSignals = STANDARD_TRIMMER_SIGNAL_STATES;
                 closedSignalState = BLUE;
                 break;
+            case TRACK:
+                approvedSignals = STANDARD_TRACK_SIGNAL_STATES;
+                closedSignalState = RED;
+                break;
         }
     }
 
@@ -39,15 +47,6 @@ public class Signal extends TracksideObject {
 
     public Set<SignalState> getApprovedSignals() {
         return approvedSignals;
-    }
-
-    public Signal(String id, SignalType signalType) {
-        super(id);
-        this.signalType = signalType;
-        if (signalType == SignalType.STATION)
-            this.approvedSignals = STANDARD_STATION_SIGNAL_STATES;
-        else
-            this.approvedSignals = STANDARD_TRIMMER_SIGNAL_STATES;
     }
 
     public SignalState getSignalState() {
@@ -91,6 +90,7 @@ public class Signal extends TracksideObject {
             case WHITE:
                 return GlobalSignalState.OPENED;
             case YELLOW:
+            case BLINKED_WHITE:
             case BLINKED_YELLOW:
             case YELLOW_AND_YELLOW:
             case YELLOW_AND_BLINKED_YELLOW:

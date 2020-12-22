@@ -13,12 +13,8 @@ public class TrackBlockSection implements Serializable {
     private Signal reversedDirectionSignal;
     private Boolean bidirectional = false;
 
-    public TrackBlockSection(TrackSection section, Signal normalDirectionSignal, Signal reversedDirectionSignal, Boolean bidirectional) {
+    public TrackBlockSection(TrackSection section) {
         this.section = section;
-        this.normalDirectionSignal = normalDirectionSignal;
-        if (bidirectional)
-        this.reversedDirectionSignal = reversedDirectionSignal;
-        this.bidirectional = bidirectional;
     }
 
     public TrackSection getSection() {
@@ -39,5 +35,17 @@ public class TrackBlockSection implements Serializable {
 
     public String getId() {
         return section.getId();
+    }
+
+    public void setNormalDirectionSignal(Signal normalDirectionSignal) {
+        this.normalDirectionSignal = normalDirectionSignal;
+    }
+
+    public void setReversedDirectionSignal(Signal reversedDirectionSignal) {
+        this.reversedDirectionSignal = reversedDirectionSignal;
+    }
+
+    public void setBidirectional(Boolean bidirectional) {
+        this.bidirectional = bidirectional;
     }
 }
