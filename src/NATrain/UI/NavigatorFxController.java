@@ -5,6 +5,7 @@ import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.routeTable.RouteTableController;
 import NATrain.UI.tracks.TrackSelectorController;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController;
+import NATrain.UI.workPlace.Blinker;
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
 import NATrain.quads.AbstractQuad;
@@ -54,17 +55,7 @@ public class NavigatorFxController {
     public void initialize() {
         AppConfigController.loadConfigs();
         //ModelMock.MockModel();
-       Model.loadFromDisk();
-
-        blinker = new Timeline(
-                new KeyFrame(Duration.seconds(1),
-                        event -> {
-                            AbstractQuad.blink();
-                            Model.refreshAll();
-                        }
-                ));
-        blinker.setCycleCount(Timeline.INDEFINITE);
-    }
+       }
 
     @FXML
     private void toMosaicRedactor(ActionEvent actionEvent) throws IOException {
@@ -129,14 +120,14 @@ public class NavigatorFxController {
         routeTable.setResizable(false);
         RouteTableController controller = loader.getController();
         controller.setPrimaryStage(routeTable);
-        blinker.play();
+        Blinker.start(); // for preview quads!
         //controller.initialize();
         routeTable.setOnCloseRequest(event -> {
             primaryStage.show();
         });
         primaryStage.hide();
         routeTable.show();
-        blinker.pause();
+        Blinker.stop();
     }
 
     @FXML
@@ -147,11 +138,11 @@ public class NavigatorFxController {
         workPlace.setScene(new Scene(loader.load(), 800, 510));
         WorkPlaceController controller = loader.getController();
         controller.setPrimaryStage(workPlace);
-        blinker.play();
+        Blinker.start();
         //controller.initialize();
         workPlace.setOnCloseRequest(event -> {
             primaryStage.show();
-            blinker.pause();
+            Blinker.stop();
         });
         primaryStage.hide();
         workPlace.show();

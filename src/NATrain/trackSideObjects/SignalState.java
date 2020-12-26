@@ -44,5 +44,16 @@ public enum SignalState {
             UNDEFINED
     ));
 
+    public boolean isBlinking() {
+        switch (this) {
+            case BLINKED_WHITE:
+            case YELLOW_AND_BLINKED_YELLOW:
+            case BLINKED_YELLOW:
+                return true;
+            default: return false;
+        }
+
+    }
+
 
 }
