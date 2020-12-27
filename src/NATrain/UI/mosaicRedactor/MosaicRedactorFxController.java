@@ -31,9 +31,9 @@ public class MosaicRedactorFxController {
 
     private static Stage primaryStage;
     private static GridPane gridPane;
-    private static Model model;
     private static Quad selectedQuad;
     private static QuadType selectedQuadType;
+    private ToggleGroup toggleGroup = new ToggleGroup();
 
     @FXML
     private MenuItem saveMenuItem;
@@ -92,10 +92,6 @@ public class MosaicRedactorFxController {
         gridPane = gridPane;
     }
 
-    public static Model getModel() {
-        return model;
-    }
-
     public static void setModel(Model model) {
         model = model;
     }
@@ -122,14 +118,12 @@ public class MosaicRedactorFxController {
 
         });
 
-
         //*** left panel initializing ***//
         VBox STQVBox = new VBox();
         VBox DTQVBox = new VBox();
         VBox SWQVBox = new VBox();
         VBox SIQVBox = new VBox();
 
-        ToggleGroup toggleGroup = new ToggleGroup();
         eraserToggleButton.setToggleGroup(toggleGroup);
         eraserToggleButton.setOnAction(event -> {
             if (eraserToggleButton.isSelected()) {
@@ -211,6 +205,20 @@ public class MosaicRedactorFxController {
             }
         }
         workArea.setContent(gridPane);
+    }
+
+    public void activateKeyListeners () {
+        primaryStage.getScene().setOnKeyTyped(event -> {
+            if (event.getCharacter().equals("")){
+                toggleGroup.selectToggle(null); //unselect quad or eraser
+            }
+        });
+    }
+
+
+
+    public void deactivateKeyListeners () {
+
     }
 
     @FXML

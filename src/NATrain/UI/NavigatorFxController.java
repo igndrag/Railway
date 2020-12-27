@@ -54,6 +54,7 @@ public class NavigatorFxController {
 
     public void initialize() {
         AppConfigController.loadConfigs();
+        Model.loadFromDisk();
         //ModelMock.MockModel();
        }
 
@@ -62,13 +63,13 @@ public class NavigatorFxController {
        // Model.loadFromDisk();
         FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("MosaicTrackRedactor.fxml"));
         Stage mosaicRedactor = new Stage();
-        MosaicRedactorFxController.setPrimaryStage(mosaicRedactor);
         mosaicRedactor.setTitle("Mosaic Redactor");
         mosaicRedactor.setScene(new Scene(loader.load(), 800, 600));
         mosaicRedactor.setResizable(true);
-        //MosaicRedactorFxController controller = loader.getController();
+        MosaicRedactorFxController.setPrimaryStage(mosaicRedactor);
+        MosaicRedactorFxController controller = loader.getController();
+        controller.activateKeyListeners();
         //controller.initialize();
-
         mosaicRedactor.setOnCloseRequest(event -> {
         //    Model.saveOnDisk();
             primaryStage.show();
