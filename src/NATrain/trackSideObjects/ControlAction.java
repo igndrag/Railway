@@ -7,6 +7,8 @@ public enum ControlAction {
     SET_AUTO_MODE ("Set auto mode"),
     CHANGE_SWITCH_POSITION ("Change switch position"),
     OPEN_ON_WHITE  ("Open on white"),
+
+    CHANGE_TRACK_DIRECTION ("Change track direction")
     ;
 
     private final String description;
