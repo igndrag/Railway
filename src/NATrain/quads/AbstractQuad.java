@@ -1,7 +1,10 @@
 package NATrain.quads;
 
 import NATrain.UI.NavigatorFxController;
+import NATrain.UI.workPlace.Blinker;
 import NATrain.trackSideObjects.ControlAction;
+import NATrain.trackSideObjects.SignalState;
+import NATrain.trackSideObjects.TrackSection;
 import NATrain.utils.QuadPainter;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -103,6 +106,66 @@ public abstract class AbstractQuad implements Quad, Paintable {
             WHITE_BLINKER = SIGNAL_LAMP_BACKGROUND_COLOR;
         } else {
             WHITE_BLINKER = Color.WHITE;
+        }
+    }
+
+    protected static void refreshTrackSectionState(TrackSection associatedTrack, Shape trackSectionElement) {
+        if (associatedTrack == TrackSection.EMPTY_TRACK_SECTION) {
+            trackSectionElement.setFill(UNDEFINED_ELEMENT_COLOR);
+        } else {
+            switch (associatedTrack.getVacancyState()) {
+                case UNDEFINED:
+                    trackSectionElement.setFill(CONFIGURED_ELEMENT_COLOR);
+                    break;
+                case FREE:
+                    if (associatedTrack.isInterlocked())
+                        trackSectionElement.setFill(INTERLOCKED_ELEMENT_COLOR);
+                    else
+                        trackSectionElement.setFill(FREE_ELEMENT_COLOR);
+                    break;
+                case OCCUPIED:
+                    trackSectionElement.setFill(OCCUPIED_ELEMENT_COLOR);
+                    break;
+            }
+        }
+    }
+
+    protected class FirstTrackViewUpdater implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            updateFirstTrackView();
+        }
+    }
+
+    protected class SecondTrackViewUpdater implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            updateSecondTrackView();
+        }
+    }
+
+    protected class SwitchTrackViewUpdater implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            updateSwitchView();
+        }
+    }
+
+    protected class SignalQuadViewUpdater implements PropertyChangeListener {
+        Quad quad;
+        public SignalQuadViewUpdater(Quad quad) {
+            this.quad = quad;
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            SignalState newSignalState =  (SignalState) evt.getNewValue();
+            if (newSignalState.isBlinking()) {
+                Blinker.registerQuad(quad);
+            } else {
+                Blinker.unregisterQuad(quad);
+            }
+            updateSignalView();
         }
     }
 }

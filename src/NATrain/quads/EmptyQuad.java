@@ -64,7 +64,25 @@ public class EmptyQuad extends AbstractQuad {
         //do nothing
     }
 
+    @Override
+    public void updateFirstTrackView() {
+        //do nothing
+    }
 
+    @Override
+    public void updateSecondTrackView() {
+        //do nothing
+    }
+
+    @Override
+    public void updateSignalView() {
+        //do nothing
+    }
+
+    @Override
+    public void updateSwitchView() {
+        //do nothing
+    }
 }
 
 

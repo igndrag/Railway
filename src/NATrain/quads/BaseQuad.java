@@ -42,42 +42,16 @@ public abstract class BaseQuad extends AbstractQuad implements Configurable {
     @Override
     public void activateListeners() {
         if (firstAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) {
-            firstAssociatedTrack.addPropertyChangeListener(new QuadViewUpdater());
+            firstAssociatedTrack.addPropertyChangeListener(new FirstTrackViewUpdater());
         }
         if (secondAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) {
-            secondAssociatedTrack.addPropertyChangeListener(new QuadViewUpdater());
+            secondAssociatedTrack.addPropertyChangeListener(new SecondTrackViewUpdater());
         }
         if (associatedSwitch != Switch.EMPTY_SWITCH) {
-            associatedSwitch.addPropertyChangeListener(new QuadViewUpdater());
+            associatedSwitch.addPropertyChangeListener(new SwitchTrackViewUpdater());
         }
         if (associatedSignal != Signal.EMPTY_SIGNAL) {
             associatedSignal.addPropertyChangeListener(new SignalQuadViewUpdater(this));
-        }
-    }
-
-    private class QuadViewUpdater implements PropertyChangeListener {
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            refresh();
-        }
-    }
-
-    private class SignalQuadViewUpdater implements PropertyChangeListener {
-
-        Quad quad;
-        public SignalQuadViewUpdater(Quad quad) {
-            this.quad = quad;
-        }
-
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            SignalState newSignalState =  (SignalState) evt.getNewValue();
-            if (newSignalState.isBlinking()) {
-                Blinker.registerQuad(quad);
-            } else {
-                Blinker.unregisterQuad(quad);
-            }
-            refresh();
         }
     }
 }

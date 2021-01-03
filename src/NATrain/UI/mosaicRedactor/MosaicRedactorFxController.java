@@ -211,14 +211,12 @@ public class MosaicRedactorFxController {
         primaryStage.getScene().setOnKeyTyped(event -> {
             if (event.getCharacter().equals("")){
                 toggleGroup.selectToggle(null); //unselect quad or eraser
+                if (selectedQuad != null) {
+                    selectedQuad.unselect();
+                }
+                selectedQuadType = null;
             }
         });
-    }
-
-
-
-    public void deactivateKeyListeners () {
-
     }
 
     @FXML

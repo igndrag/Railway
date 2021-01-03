@@ -19,7 +19,7 @@ public class Blinker {
                 new KeyFrame(Duration.seconds(1),
                         event -> {
                             AbstractQuad.blink();
-                            quadsWithBlinkers.forEach(Quad::refresh);
+                            quadsWithBlinkers.forEach(Quad::updateSignalView);
                            // Model.refreshAll();
                         }
                 ));

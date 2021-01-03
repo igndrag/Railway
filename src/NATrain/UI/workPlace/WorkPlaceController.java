@@ -6,6 +6,7 @@ import NATrain.UI.workPlace.executors.AbstractRouteExecutor;
 import NATrain.UI.workPlace.executors.RouteExecutor;
 import NATrain.UI.workPlace.executors.RouteStatus;
 import NATrain.connectionService.ConnectionService;
+import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.routes.Route;
@@ -35,10 +36,8 @@ import java.util.List;
 
 public class WorkPlaceController {
 
-
     @FXML
     private BorderPane mainPane;
-
     @FXML
     private RadioMenuItem actionEmulatorRadioMenuItem;
     @FXML
@@ -79,6 +78,7 @@ public class WorkPlaceController {
         Model.getSignals().values().forEach(Signal::close);
         Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
         Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));
+        //MQTTConnectionService.main(null);
 
         routeStatusTableView.setItems(actionExecutor.getActiveRoutes());
         routeIdColumn.setCellValueFactory(new PropertyValueFactory<>("routeDescription"));
@@ -141,6 +141,8 @@ public class WorkPlaceController {
                 contextMenu.hide();
             });
         }
+
+        Model.refreshAll();
     }
 
     public synchronized void log(String message) {

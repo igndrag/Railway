@@ -13,7 +13,11 @@ public interface Quad {
     void unselect();
     Group getView();
     void setGridLineVisible(Boolean show);
-    void activateListeners();
+    void activateListeners(); // that's the price of bad design((
+    void updateFirstTrackView();
+    void updateSecondTrackView();
+    void updateSignalView();
+    void updateSwitchView();
 
     List<ControlAction> getAvailableActions();
 

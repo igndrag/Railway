@@ -30,34 +30,15 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
 
     @Override
     public void refresh() {
-        refreshTrackSectionState(firstAssociatedTrack, firstTrackElement);
-        descriptionLabel.setText(firstAssociatedTrack.getId());
+        updateFirstTrackView();
+        if (firstAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) {
+            descriptionLabel.setText(firstAssociatedTrack.getId());
+        }
     }
 
     @Override
     public List<ControlAction> getAvailableActions() {
         return availableActions;
-    }
-
-    void refreshTrackSectionState(TrackSection associatedTrack, Shape trackSectionElement) {
-        if (associatedTrack == TrackSection.EMPTY_TRACK_SECTION) {
-            trackSectionElement.setFill(UNDEFINED_ELEMENT_COLOR);
-        } else {
-            switch (associatedTrack.getVacancyState()) {
-                case UNDEFINED:
-                    trackSectionElement.setFill(CONFIGURED_ELEMENT_COLOR);
-                    break;
-                case FREE:
-                    if (associatedTrack.isInterlocked())
-                        trackSectionElement.setFill(INTERLOCKED_ELEMENT_COLOR);
-                    else
-                        trackSectionElement.setFill(FREE_ELEMENT_COLOR);
-                    break;
-                case OCCUPIED:
-                    trackSectionElement.setFill(OCCUPIED_ELEMENT_COLOR);
-                    break;
-            }
-        }
     }
 
     @Override
@@ -96,6 +77,26 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
     @Override
     public boolean hasBorder() {
         return borderElement != null;
+    }
+
+    @Override
+    public void updateFirstTrackView() {
+        refreshTrackSectionState(firstAssociatedTrack, firstTrackElement);
+    }
+
+    @Override
+    public void updateSecondTrackView() {
+        //do nothing
+    }
+
+    @Override
+    public void updateSignalView() {
+        //do nothing
+    }
+
+    @Override
+    public void updateSwitchView() {
+        //do nothing
     }
 }
 

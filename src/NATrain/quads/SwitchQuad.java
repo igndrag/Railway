@@ -35,9 +35,11 @@ public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfig
 
     @Override
     public void refresh() {
-        refreshTrackSectionState(firstAssociatedTrack, firstTrackElement);
-        refreshSwitchState();
-        descriptionLabel.setText(associatedSwitch.getId());
+        updateFirstTrackView();
+        updateSwitchView();
+        if (associatedSwitch != Switch.EMPTY_SWITCH) {
+            descriptionLabel.setText(associatedSwitch.getId());
+        }
     }
 
     @Override
@@ -80,5 +82,10 @@ public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfig
             switchPlusElement.setFill(UNDEFINED_ELEMENT_COLOR);
             switchMinusElement.setFill(UNDEFINED_ELEMENT_COLOR);
         }
+    }
+
+    @Override
+    public void updateSwitchView() {
+        refreshSwitchState();
     }
 }

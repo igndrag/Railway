@@ -38,10 +38,12 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
 
     @Override
     public void refresh() {
-        refreshTrackSectionState(firstAssociatedTrack, firstTrackElement);
-        refreshTrackSectionState(secondAssociatedTrack, secondTrackElement);
-        refreshSignalState();
-        descriptionLabel.setText(associatedSignal.getId());
+        updateFirstTrackView();
+        updateSecondTrackView();
+        updateSignalView();
+        if (associatedSignal != Signal.EMPTY_SIGNAL) {
+            descriptionLabel.setText(associatedSignal.getId());
+        }
     }
 
     @Override
@@ -117,5 +119,10 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
             if (secondLampElement != null)
                 secondLampElement.setFill(UNDEFINED_ELEMENT_COLOR);
         }
+    }
+
+    @Override
+    public void updateSignalView() {
+        refreshSignalState();
     }
 }
