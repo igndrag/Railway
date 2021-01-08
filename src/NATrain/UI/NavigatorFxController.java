@@ -54,14 +54,14 @@ public class NavigatorFxController {
 
     public void initialize() {
         AppConfigController.loadConfigs();
-        Model.loadFromDisk();
-        //ModelMock.MockModel();
+        //Model.loadFromDisk();
+        ModelMock.MockModel();
        }
 
     @FXML
     private void toMosaicRedactor(ActionEvent actionEvent) throws IOException {
        // Model.loadFromDisk();
-        FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("MosaicTrackRedactor.fxml"));
+        FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("MosaicRedactor.fxml"));
         Stage mosaicRedactor = new Stage();
         mosaicRedactor.setTitle("Mosaic Redactor");
         mosaicRedactor.setScene(new Scene(loader.load(), 800, 600));
@@ -73,6 +73,9 @@ public class NavigatorFxController {
         mosaicRedactor.setOnCloseRequest(event -> {
         //    Model.saveOnDisk();
             primaryStage.show();
+            if (controller.getSelectedQuad() != null) {
+                controller.getSelectedQuad().unselect();
+            }
         });
         primaryStage.hide();
         mosaicRedactor.show();

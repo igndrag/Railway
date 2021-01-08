@@ -6,10 +6,9 @@ import java.beans.PropertyChangeListener;
 
 public class TrackSection extends TracksideObject {
 
-
     static final long serialVersionUID = 1L;
 
-    public static final TrackSection EMPTY_TRACK_SECTION = new TrackSection("Empty track section");
+    public static final TrackSection EMPTY_TRACK_SECTION = new TrackSection("none");
 
     static {
         EMPTY_TRACK_SECTION.setInterlocked(false);
@@ -19,12 +18,21 @@ public class TrackSection extends TracksideObject {
     }
 
     public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
+    private boolean arrivalDepartureTrack = false;
 
     private transient TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
 
     private transient boolean interlocked = false;
     private transient boolean occupationFixed = false;
     private transient boolean deallocationFixed = false;
+
+    public boolean isArrivalDepartureTrack() {
+        return arrivalDepartureTrack;
+    }
+
+    public void setArrivalDepartureTrack(boolean arrivalDepartureTrack) {
+        this.arrivalDepartureTrack = arrivalDepartureTrack;
+    }
 
     public boolean isOccupationFixed() {
         return occupationFixed;
@@ -73,4 +81,8 @@ public class TrackSection extends TracksideObject {
         propertyChangeSupport.firePropertyChange("occupationalProperty", oldState, vacancyState);
     }
 
- }
+    @Override
+    public String toString() {
+        return id;
+    }
+}

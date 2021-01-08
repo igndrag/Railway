@@ -7,9 +7,13 @@ import NATrain.trackSideObjects.TracksideObject;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableView;
 
-public class TrackSectionRedactorController extends TracksideObjectRedactorController { //make generic class
+public class TrackSectionRedactorController extends TracksideObjectRedactorController {
+
+    @FXML
+    private CheckBox arrivalDepartureTrackChoiceBox; //make generic class
 
     private TrackSection trackSection;
 
@@ -19,6 +23,7 @@ public class TrackSectionRedactorController extends TracksideObjectRedactorContr
         this.tableView = tableView;
         this.observableList = observableList;
         initTextField(Model.getTrackSections(), trackSection);
+        arrivalDepartureTrackChoiceBox.setSelected(trackSection.isArrivalDepartureTrack());
     }
 
     @FXML
@@ -27,6 +32,7 @@ public class TrackSectionRedactorController extends TracksideObjectRedactorContr
         trackSection.setId(textField.getText());
         if (!isNameValid(Model.getTrackSections(), TrackSection.INITIAL_TRACK_SECTION_NAME))
             return;
+        trackSection.setArrivalDepartureTrack(arrivalDepartureTrackChoiceBox.isSelected());
         updateModelAndClose(Model.getTrackSections(), trackSection);
     }
 }

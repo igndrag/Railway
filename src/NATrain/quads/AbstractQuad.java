@@ -2,7 +2,7 @@ package NATrain.quads;
 
 import NATrain.UI.NavigatorFxController;
 import NATrain.UI.workPlace.Blinker;
-import NATrain.trackSideObjects.ControlAction;
+import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.SignalState;
 import NATrain.trackSideObjects.TrackSection;
 import NATrain.utils.QuadPainter;
@@ -10,12 +10,8 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public abstract class AbstractQuad implements Quad, Paintable {
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
@@ -28,6 +24,8 @@ public abstract class AbstractQuad implements Quad, Paintable {
     public static final Color ISOLATOR_ELEMENT_COLOR = Color.BROWN;
     public static final Color SIGNAL_LAMP_BACKGROUND_COLOR = Color.GRAY;
     public static final Color GRID_LINE_COLOR = Color.LIGHTGRAY;
+    public static final Color TRACK_UNDEFINED_ELEMENT_COLOR = Color.LIGHTCORAL;
+    public static final Color TRACK_CONFIGURED_COLOR = Color.CORAL;
     public static Color YELLOW_BLINKER = Color.YELLOW;
     public static Color WHITE_BLINKER = Color.WHITE;
 
@@ -130,6 +128,25 @@ public abstract class AbstractQuad implements Quad, Paintable {
         }
     }
 
+    protected static void refreshBlockSectionState(TrackBlockSection blockSection, Shape blockSectionElement) {
+        TrackSection associatedTrackSection = blockSection.getSection();
+        if (associatedTrackSection == TrackSection.EMPTY_TRACK_SECTION) {
+            blockSectionElement.setFill(TRACK_UNDEFINED_ELEMENT_COLOR);
+        } else {
+            switch (associatedTrackSection.getVacancyState()) {
+                case UNDEFINED:
+                    blockSectionElement.setFill(TRACK_CONFIGURED_COLOR);
+                    break;
+                case FREE:
+                    blockSectionElement.setFill(FREE_ELEMENT_COLOR);
+                    break;
+                case OCCUPIED:
+                    blockSectionElement.setFill(OCCUPIED_ELEMENT_COLOR);
+                    break;
+            }
+        }
+    }
+
     protected class FirstTrackViewUpdater implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
@@ -153,13 +170,14 @@ public abstract class AbstractQuad implements Quad, Paintable {
 
     protected class SignalQuadViewUpdater implements PropertyChangeListener {
         Quad quad;
+
         public SignalQuadViewUpdater(Quad quad) {
             this.quad = quad;
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            SignalState newSignalState =  (SignalState) evt.getNewValue();
+            SignalState newSignalState = (SignalState) evt.getNewValue();
             if (newSignalState.isBlinking()) {
                 Blinker.registerQuad(quad);
             } else {

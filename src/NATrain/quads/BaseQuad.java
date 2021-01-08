@@ -24,6 +24,38 @@ public abstract class BaseQuad extends AbstractQuad implements Configurable {
         super(x, y);
     }
 
+    public TrackSection getFirstAssociatedTrack() {
+        return firstAssociatedTrack;
+    }
+
+    public void setFirstAssociatedTrack(TrackSection firstAssociatedTrack) {
+        this.firstAssociatedTrack = firstAssociatedTrack;
+    }
+
+    public TrackSection getSecondAssociatedTrack() {
+        return secondAssociatedTrack;
+    }
+
+    public void setSecondAssociatedTrack(TrackSection secondAssociatedTrack) {
+        this.secondAssociatedTrack = secondAssociatedTrack;
+    }
+
+    public Switch getAssociatedSwitch() {
+        return associatedSwitch;
+    }
+
+    public void setAssociatedSwitch(Switch associatedSwitch) {
+        this.associatedSwitch = associatedSwitch;
+    }
+
+    public Signal getAssociatedSignal() {
+        return associatedSignal;
+    }
+
+    public void setAssociatedSignal(Signal associatedSignal) {
+        this.associatedSignal = associatedSignal;
+    }
+
     @Override
     public boolean isEmpty() {
         return false;

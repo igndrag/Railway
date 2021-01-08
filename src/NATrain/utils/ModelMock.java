@@ -58,16 +58,5 @@ public class ModelMock {
         twoTrackSection.setControlModule(trackControlModule);
 
         Model.getControlModules().put(1, trackControlModule1);
-
-        Route routeOne = new Route("Test Departure Route one", RouteType.DEPARTURE);
-        routeOne.setRouteType(RouteType.DEPARTURE);
-        routeOne.setTVDS1(oneTrackSection);
-        routeOne.setTVDS2(twoTrackSection);
-        routeOne.setSignal(Model.getSignals().get("S1"));
-        routeOne.getSwitchStatePositions().put(oneSwitch, SwitchState.PLUS);
-        routeOne.getSwitchStatePositions().put(twoSwitch, SwitchState.MINUS);
-        routeOne.getSwitchStatePositions().put(threeSwitch, SwitchState.PLUS);
-
-        Model.getRouteTable().add(routeOne);
     }
 }

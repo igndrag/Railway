@@ -118,7 +118,7 @@ public class ActionExecutor {
     private ObservableList<Route> findRoutes(Signal signal, TracksideObject tracksideObject) {
         List<Route> result = Model.getRouteTable().stream()
                 .filter(route -> route.getSignal() == signal)
-                .filter(route -> route.getNextSignal() == tracksideObject || route.getDestinationTrackSection() == tracksideObject)
+                .filter(route -> route.getDestinationTrackSection() == tracksideObject)
                 .collect(Collectors.toList());
         return FXCollections.observableArrayList(result);
     }

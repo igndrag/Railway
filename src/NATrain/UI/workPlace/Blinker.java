@@ -1,12 +1,9 @@
 package NATrain.UI.workPlace;
-
-import NATrain.model.Model;
 import NATrain.quads.AbstractQuad;
 import NATrain.quads.Quad;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -20,7 +17,6 @@ public class Blinker {
                         event -> {
                             AbstractQuad.blink();
                             quadsWithBlinkers.forEach(Quad::updateSignalView);
-                           // Model.refreshAll();
                         }
                 ));
         blinker.setCycleCount(Timeline.INDEFINITE);
@@ -42,5 +38,4 @@ public class Blinker {
     public static void unregisterQuad (Quad quad) {
         quadsWithBlinkers.remove(quad);
     }
-
 }

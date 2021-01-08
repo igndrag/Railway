@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Track implements Serializable {
+
+
     static final long serialVersionUID = 1L;
+    public static final Track EMPTY_TRACK = new Track("none");
 
     private String id;
     private TrackDirection trackDirection = TrackDirection.NORMAL;
@@ -79,5 +82,10 @@ public class Track implements Serializable {
 
     public void setReversedDirectionArrivalSignal(Signal reversedDirectionArrivalSignal) {
         this.reversedDirectionArrivalSignal = reversedDirectionArrivalSignal;
+    }
+
+    @Override
+    public String toString() {
+        return id;
     }
 }

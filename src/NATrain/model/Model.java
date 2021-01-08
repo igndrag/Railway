@@ -32,7 +32,7 @@ public enum Model implements Serializable {
 
     private static Map<String, Signal> signals = new ConcurrentHashMap<>();
 
-    private static Map<String, TrackSection> trackSections =  new ConcurrentHashMap<>();
+    private static Map<String, TrackSection> trackSections = new ConcurrentHashMap<>();
 
     private static Map<Integer, ControlModule> controlModules = new ConcurrentHashMap<>();
 
@@ -84,7 +84,9 @@ public enum Model implements Serializable {
 
     public static void saveOnDisk() {
         try {
-            ArrayList<QuadDTO> notEmptyQuadDTOS = new ArrayList<>();
+            ArrayList<QuadDTO> notEmptyQuadDTOs = new ArrayList<>();
+            ArrayList<TrackQuadDTO> notEmptyTrackQuadDTOs = new ArrayList<>();
+
             File modelFile = new File(modelURL);
             modelFile.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(modelFile);
@@ -100,10 +102,15 @@ public enum Model implements Serializable {
 
             Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(quad -> {
                 if (quad.getType() != QuadType.EMPTY_QUAD) {
-                    notEmptyQuadDTOS.add(QuadDTO.castToDTO(quad));
+                    if (quad instanceof BaseQuad) {
+                        notEmptyQuadDTOs.add(QuadDTO.castToDTO(quad));
+                    } else if (quad instanceof TrackBaseQuad) {
+                        notEmptyTrackQuadDTOs.add(TrackQuadDTO.castToDTO(quad));
+                    }
                 }
             });
-            objectOutputStream.writeObject(notEmptyQuadDTOS);
+            objectOutputStream.writeObject(notEmptyQuadDTOs);
+            objectOutputStream.writeObject(notEmptyTrackQuadDTOs);
             fileOutputStream.flush();
             objectOutputStream.close();
         } catch (IOException e) {
@@ -119,7 +126,7 @@ public enum Model implements Serializable {
                 FileInputStream fileInputStream = new FileInputStream(modelFile);
                 ObjectInputStream inputStream = new ObjectInputStream(fileInputStream);
                 xSize = (Integer) inputStream.readObject();
-                ySize  = (Integer) inputStream.readObject();
+                ySize = (Integer) inputStream.readObject();
                 mainGrid = new Quad[ySize][xSize];
                 trackSections = (Map<String, TrackSection>) inputStream.readObject();
                 trackSections.values().forEach(TracksideObject::addPropertyChangeSupport);
@@ -135,10 +142,14 @@ public enum Model implements Serializable {
                 tracks = (Set<Track>) inputStream.readObject();
 
                 ArrayList<QuadDTO> notEmptyQuadDTOS = (ArrayList<QuadDTO>) inputStream.readObject();
+                ArrayList<TrackQuadDTO> notEmptyTrackQuadDTOS = (ArrayList<TrackQuadDTO>) inputStream.readObject();
                 inputStream.close();
 
                 notEmptyQuadDTOS.forEach(quadDTO -> {
                     getMainGrid()[quadDTO.getY()][quadDTO.getX()] = QuadDTO.castToQuad(quadDTO);
+                });
+                notEmptyTrackQuadDTOS.forEach(trackQuadDTO -> {
+                    getMainGrid()[trackQuadDTO.getY()][trackQuadDTO.getX()] = TrackQuadDTO.castToQuad(trackQuadDTO);
                 });
             }
         } catch (IOException | ClassNotFoundException e) {

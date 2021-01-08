@@ -13,7 +13,7 @@ public abstract class TracksideObject implements Serializable {
     protected transient PropertyChangeSupport propertyChangeSupport;
     ControlModule controlModule;
     Integer channel;
-    private String id;
+    protected String id;
 
     public TracksideObject(String id) {
         this.id = id;

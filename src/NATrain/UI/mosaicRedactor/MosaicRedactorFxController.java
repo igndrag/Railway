@@ -3,6 +3,8 @@ package NATrain.UI.mosaicRedactor;
 import NATrain.UI.NavigatorFxController;
 import NATrain.quads.BaseQuad;
 import NATrain.quads.QuadType;
+import NATrain.quads.TrackBaseQuad;
+import NATrain.quads.configurableInterfaces.BlockSectionConfigurable;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -80,6 +82,15 @@ public class MosaicRedactorFxController {
     @FXML
     private ScrollPane simpleTrackSectionIcons;
 
+    @FXML
+    private ScrollPane blockSectionIcons;
+
+    @FXML
+    private ScrollPane trackSignalIcons;
+
+    @FXML
+    private ScrollPane trackControlIcons;
+
     public static void setPrimaryStage(Stage mainStage) {
         primaryStage = mainStage;
     }
@@ -123,6 +134,9 @@ public class MosaicRedactorFxController {
         VBox DTQVBox = new VBox();
         VBox SWQVBox = new VBox();
         VBox SIQVBox = new VBox();
+        VBox BTQVbox = new VBox();
+        VBox BSQVbox = new VBox();
+        VBox BCQVbox = new VBox();
 
         eraserToggleButton.setToggleGroup(toggleGroup);
         eraserToggleButton.setOnAction(event -> {
@@ -147,32 +161,48 @@ public class MosaicRedactorFxController {
                             log(quadType + " unselected");
                         }
                     });
-                    button.setGraphic(QuadFactory.createQuad(0,0, quadType).getView());
+                    button.setGraphic(QuadFactory.createQuad(0, 0, quadType).getView());
                     switch (quadType.toString().substring(0, 3)) {
-                        case ("STQ") :
+                        case ("STQ"):
                             STQVBox.getChildren().add(button);
                             break;
-                        case ("DTQ") :
+                        case ("DTQ"):
                             DTQVBox.getChildren().add(button);
                             break;
-                        case ("SWQ") :
+                        case ("SWQ"):
                             SWQVBox.getChildren().add(button);
                             break;
-                        case ("SIQ") :
+                        case ("SIQ"):
                             SIQVBox.getChildren().add(button);
+                            break;
+                        case ("BTQ"):
+                            BTQVbox.getChildren().add(button);
+                            break;
+                        case ("BSQ"):
+                            BSQVbox.getChildren().add(button);
+                            break;
+                        case ("BCQ") :
+                            BCQVbox.getChildren().add(button);
                             break;
                     }
 
                 }
         );
-        STQVBox.setPadding(new Insets(0,0,0,15));
-        DTQVBox.setPadding(new Insets(0,0,0,15));
-        SWQVBox.setPadding(new Insets(0,0,0,15));
-        SIQVBox.setPadding(new Insets(0,0,0,15));
+        STQVBox.setPadding(new Insets(0, 0, 0, 15));
+        DTQVBox.setPadding(new Insets(0, 0, 0, 15));
+        SWQVBox.setPadding(new Insets(0, 0, 0, 15));
+        SIQVBox.setPadding(new Insets(0, 0, 0, 15));
+        BTQVbox.setPadding(new Insets(0, 0, 0, 15));
+        BSQVbox.setPadding(new Insets(0, 0, 0, 15));
+        BCQVbox.setPadding(new Insets(0, 0, 0, 15));
+
         simpleTrackSectionIcons.setContent(STQVBox);
         doubleTrackSectionIcons.setContent(DTQVBox);
         switchIcons.setContent(SWQVBox);
         signalIcons.setContent(SIQVBox);
+        blockSectionIcons.setContent(BTQVbox);
+        trackSignalIcons.setContent(BSQVbox);
+        trackControlIcons.setContent(BCQVbox);
 
         //*** grid pane panel initializing ***//
 
@@ -207,9 +237,9 @@ public class MosaicRedactorFxController {
         workArea.setContent(gridPane);
     }
 
-    public void activateKeyListeners () {
+    public void activateKeyListeners() {
         primaryStage.getScene().setOnKeyTyped(event -> {
-            if (event.getCharacter().equals("")){
+            if (event.getCharacter().equals("")) {
                 toggleGroup.selectToggle(null); //unselect quad or eraser
                 if (selectedQuad != null) {
                     selectedQuad.unselect();
@@ -242,6 +272,10 @@ public class MosaicRedactorFxController {
     public void greenButtonClicked(ActionEvent actionEvent) {
     }
 
+    public Quad getSelectedQuad() {
+        return selectedQuad;
+    }
+
     private static void selectQuad(int x, int y) {
         Quad quadForSelect = Model.getMainGrid()[y][x];
         if (selectedQuad != null)
@@ -253,16 +287,29 @@ public class MosaicRedactorFxController {
     private static void toQuadConfigurator(int x, int y) throws IOException {
         if (Model.getMainGrid()[y][x].isEmpty())
             return;
-        FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("QuadConfigurator.fxml"));
-        Stage quadConfigurator = new Stage();
-        quadConfigurator.setTitle("Quad configurator");
-        quadConfigurator.setScene(new Scene(loader.load(), 400, 300));
-        quadConfigurator.setResizable(false);
-        QuadConfiguratorFxController controller = loader.getController();
-        controller.initialize(x, y);
-        quadConfigurator.initModality(Modality.WINDOW_MODAL);
-        quadConfigurator.initOwner(primaryStage);
-        quadConfigurator.show();
+        if (Model.getMainGrid()[y][x] instanceof TrackBaseQuad) {
+            FXMLLoader loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator.fxml"));
+            Stage trackQuadConfigurator = new Stage();
+            trackQuadConfigurator.setTitle("Track Quad Configurator");
+            trackQuadConfigurator.setScene(new Scene(loader.load(), 400, 240));
+            trackQuadConfigurator.setResizable(false);
+            TrackQuadConfiguratorFxController controller = loader.getController();
+            controller.initialize(x, y);
+            trackQuadConfigurator.initModality(Modality.WINDOW_MODAL);
+            trackQuadConfigurator.initOwner(primaryStage);
+            trackQuadConfigurator.show();
+        } else {
+            FXMLLoader loader = new FXMLLoader(QuadConfiguratorFxController.class.getResource("QuadConfigurator.fxml"));
+            Stage quadConfigurator = new Stage();
+            quadConfigurator.setTitle("Quad Configurator");
+            quadConfigurator.setScene(new Scene(loader.load(), 400, 300));
+            quadConfigurator.setResizable(false);
+            QuadConfiguratorFxController controller = loader.getController();
+            controller.initialize(x, y);
+            quadConfigurator.initModality(Modality.WINDOW_MODAL);
+            quadConfigurator.initOwner(primaryStage);
+            quadConfigurator.show();
+        }
     }
 
     protected void configQuadView(Node quadView, int x, int y) {
@@ -271,7 +318,7 @@ public class MosaicRedactorFxController {
                 selectQuad(x, y);
                 if (selectedQuadType != null) {
                     putQuadOnGrid(x, y, selectedQuadType);
-                    Pane parent = (Pane)quadView.getParent();
+                    Pane parent = (Pane) quadView.getParent();
                     parent.getChildren().clear();
                 }
 
@@ -291,7 +338,7 @@ public class MosaicRedactorFxController {
         Quad newQuad = QuadFactory.createQuad(x, y, selectedQuadType);
         Model.getMainGrid()[y][x] = newQuad;
         Pane quadPane = new Pane();
-      //  quadPane.setPadding(new Insets(5));
+        //  quadPane.setPadding(new Insets(5));
         quadPane.getChildren().add(newQuad.getView());
         configQuadView(newQuad.getView(), x, y);
         gridPane.add(quadPane, x, y);
@@ -307,6 +354,7 @@ public class MosaicRedactorFxController {
             textFlowPanel.getChildren().add(new Text(message + System.lineSeparator()));
         });
     }
+
     @FXML
     private void showGridLines() {
         Model.setGridLinesVisible(gridLinesCheckBox.isSelected());

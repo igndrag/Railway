@@ -8,13 +8,21 @@ import java.io.Serializable;
 public class TrackBlockSection implements Serializable {
     static final long serialVersionUID = 1L;
 
-    private final TrackSection section;
-    private Signal normalDirectionSignal;
-    private Signal reversedDirectionSignal;
+    public static final TrackBlockSection EMPTY_BLOCK_SECTION = new TrackBlockSection(Track.EMPTY_TRACK,TrackSection.EMPTY_TRACK_SECTION);
+
+    private final Track track;
+    private TrackSection section = TrackSection.EMPTY_TRACK_SECTION;
+    private Signal normalDirectionSignal = Signal.EMPTY_SIGNAL;
+    private Signal reversedDirectionSignal = Signal.EMPTY_SIGNAL;
     private Boolean bidirectional = false;
 
-    public TrackBlockSection(TrackSection section) {
+    public TrackBlockSection(Track track, TrackSection section) {
+        this.track = track;
         this.section = section;
+    }
+
+    public Track getTrack() {
+        return track;
     }
 
     public TrackSection getSection() {
@@ -47,5 +55,10 @@ public class TrackBlockSection implements Serializable {
 
     public void setBidirectional(Boolean bidirectional) {
         this.bidirectional = bidirectional;
+    }
+
+    @Override
+    public String toString() {
+        return section.getId();
     }
 }
