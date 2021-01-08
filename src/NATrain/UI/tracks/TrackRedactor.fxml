@@ -15,11 +15,11 @@
       <Button fx:id="addButton" layoutX="206.0" layoutY="167.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="52.0" text="Add" />
       <TextField fx:id="blockSectionCountTextField" layoutX="140.0" layoutY="167.0" prefHeight="23.0" prefWidth="40.0" />
       <Label layoutX="141.0" layoutY="150.0" text="Count" />
-      <Button fx:id="deleteLastButton" onAction="#deleteLast" layoutX="17.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Delete Last" />
-      <Button fx:id="clearAllButton" onAction="#deleteAll" layoutX="117.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Clear All" />
+      <Button fx:id="deleteLastButton" layoutX="17.0" layoutY="419.0" mnemonicParsing="false" onAction="#deleteLast" prefHeight="25.0" prefWidth="87.0" text="Delete Last" />
+      <Button fx:id="clearAllButton" layoutX="117.0" layoutY="419.0" mnemonicParsing="false" onAction="#deleteAll" prefHeight="25.0" prefWidth="87.0" text="Clear All" />
       <RadioButton fx:id="bidirectionalRadioButton" layoutX="178.0" layoutY="50.0" mnemonicParsing="false" text="Bidirectional" />
-      <Label layoutX="288.0" layoutY="150.0" text="Track Signal Prefix" />
-      <TextField fx:id="signalPrefixTextField" layoutX="288.0" layoutY="167.0" prefHeight="23.0" prefWidth="40.0" />
+      <Label layoutX="288.0" layoutY="150.0" text="Prefix" />
+      <TextField fx:id="signalPrefixTextField" layoutX="288.0" layoutY="168.0" prefHeight="23.0" prefWidth="40.0" />
       <Label layoutX="311.0" layoutY="25.0" text="Arrival Signals:" />
       <Label layoutX="345.0" layoutY="50.0" text="Normal Direction" />
       <ChoiceBox fx:id="normalDirectionArrivalSignalChoiceBox" layoutX="347.0" layoutY="70.0" prefHeight="25.0" prefWidth="96.0" />
@@ -32,8 +32,11 @@
             <TableColumn fx:id="reversedDirectionSignalColumn" prefWidth="186.0" text="Reversed Direction Signal" />
         </columns>
       </TableView>
-      <Button fx:id="saveButton" onAction="#saveAndClose" layoutX="358.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Save" />
+      <Button fx:id="saveButton" layoutX="358.0" layoutY="419.0" mnemonicParsing="false" onAction="#saveAndClose" prefHeight="25.0" prefWidth="87.0" text="Save" />
       <ChoiceBox fx:id="blockingTypeChoiceBox" layoutX="20.0" layoutY="96.0" prefHeight="25.0" prefWidth="247.0" />
       <Label layoutX="21.0" layoutY="77.0" text="Blocking Type" />
+      <Label layoutX="347.0" layoutY="150.0" text="Numeration" />
+      <ToggleButton fx:id="evenToggleButton" layoutX="344.0" layoutY="168.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="46.0" text="Even" />
+      <ToggleButton fx:id="oddToggleButton" layoutX="399.0" layoutY="168.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="46.0" text="Odd" />
    </children>
 </Pane>

@@ -18,6 +18,10 @@ import javafx.stage.Stage;
 public class TrackRedactorController {
 
     @FXML
+    private ToggleButton oddToggleButton;
+    @FXML
+    private ToggleButton evenToggleButton;
+    @FXML
     private Button addButton;
     @FXML
     private ChoiceBox<TrackBlockingType> blockingTypeChoiceBox;
@@ -42,13 +46,13 @@ public class TrackRedactorController {
     @FXML
     private ChoiceBox<Signal> reversedDirectionArrivalSignalChoiceBox;
     @FXML
-    private TableView <TrackBlockSection> blockSectionsTableView;
+    private TableView<TrackBlockSection> blockSectionsTableView;
     @FXML
-    private TableColumn <TrackBlockSection, String> idColumn;
+    private TableColumn<TrackBlockSection, String> idColumn;
     @FXML
-    private TableColumn <TrackBlockSection, String> normalDirectionSignalColumn;
+    private TableColumn<TrackBlockSection, String> normalDirectionSignalColumn;
     @FXML
-    private TableColumn <TrackBlockSection, String> reversedDirectionSignalColumn;
+    private TableColumn<TrackBlockSection, String> reversedDirectionSignalColumn;
     @FXML
     private Button saveButton;
 
@@ -60,6 +64,12 @@ public class TrackRedactorController {
         this.track = track;
         this.initialName = track.getId();
         this.trackTableView = trackTableView;
+
+        ToggleGroup toggleGroup = new ToggleGroup();
+        evenToggleButton.setToggleGroup(toggleGroup);
+        oddToggleButton.setToggleGroup(toggleGroup);
+        evenToggleButton.setSelected(true);
+
         trackNameTextField.setText(track.getId());
         bidirectionalRadioButton.setSelected(track.isBidirectional());
         if (!track.isBidirectional()) {
@@ -99,24 +109,46 @@ public class TrackRedactorController {
     private void createBlockSections() {
         try {
             int sectionsCount = Integer.parseInt(blockSectionCountTextField.getText());
-            for (int i = 1;  i <= sectionsCount; i++) {
+            boolean even;
+            if (evenToggleButton.isSelected()) {
+                even = true;
+            } else {
+                even = false;
+            }
+            for (int i = sectionsCount; i > 0; i --) {
                 StringBuilder blockSectionName = new StringBuilder();
                 blockSectionName.append(blockSectionPrefixTextField.getText());
-                blockSectionName.append(i);
+                if (even) {
+                    blockSectionName.append(2*i);}
+                else {
+                    blockSectionName.append(2*i -1);
+                }
                 blockSectionName.append(blockSectionSuffixTextField.getText());
-                TrackBlockSection blockSection = new TrackBlockSection(new TrackSection(blockSectionName.toString()));
-                StringBuilder normalDirectionSignalName = new StringBuilder();
-                normalDirectionSignalName.append(signalPrefixTextField.getText());
-                normalDirectionSignalName.append(i);
-                normalDirectionSignalName.append("ND");
-                blockSection.setNormalDirectionSignal(new Signal(normalDirectionSignalName.toString(), SignalType.TRACK));
+                TrackBlockSection blockSection = new TrackBlockSection(track, new TrackSection(blockSectionName.toString()));
+                if (i != sectionsCount) {
+                    StringBuilder normalDirectionSignalName = new StringBuilder();
+                    normalDirectionSignalName.append(signalPrefixTextField.getText());
+                    if (even) {
+                        normalDirectionSignalName.append(2*i);
+                    } else {
+                        normalDirectionSignalName.append(2*i - 1);
+                    }
+                    normalDirectionSignalName.append("ND");
+                    blockSection.setNormalDirectionSignal(new Signal(normalDirectionSignalName.toString(), SignalType.TRACK));
+                }
                 if (bidirectionalRadioButton.isSelected()) {
-                    StringBuilder reversedDirectionSignalName = new StringBuilder();
-                    reversedDirectionSignalName.append(signalPrefixTextField.getText());
-                    reversedDirectionSignalName.append(sectionsCount - i + 1);
-                    reversedDirectionSignalName.append("RD");
-                    blockSection.setBidirectional(true);
-                    blockSection.setReversedDirectionSignal(new Signal(reversedDirectionSignalName.toString(), SignalType.TRACK));
+                    if (i > 1) {
+                        StringBuilder reversedDirectionSignalName = new StringBuilder();
+                        reversedDirectionSignalName.append(signalPrefixTextField.getText());
+                        if (even) {
+                            reversedDirectionSignalName.append(2*(i - 1) - 1);
+                        } else {
+                            reversedDirectionSignalName.append(2*(i - 1));
+                        }
+                        reversedDirectionSignalName.append("RD");
+                        blockSection.setBidirectional(true);
+                        blockSection.setReversedDirectionSignal(new Signal(reversedDirectionSignalName.toString(), SignalType.TRACK));
+                    }
                 }
                 blockSectionsTableView.getItems().add(blockSection);
                 track.getBlockSections().add(blockSection);
@@ -159,7 +191,9 @@ public class TrackRedactorController {
 
     private boolean isTrackNameValid() {
         String newTrackName = trackNameTextField.getText();
-        if (Model.getTracks().stream().filter(tr -> {return tr !=track;}).map(Track::getId).anyMatch(name -> name.equals(newTrackName))) {
+        if (Model.getTracks().stream().filter(tr -> {
+            return tr != track;
+        }).map(Track::getId).anyMatch(name -> name.equals(newTrackName))) {
             UIUtils.showAlert(String.format("Track %s already exists.", newTrackName));
             return false;
         }
