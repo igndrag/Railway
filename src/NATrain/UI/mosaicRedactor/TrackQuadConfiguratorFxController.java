@@ -55,10 +55,15 @@ public class TrackQuadConfiguratorFxController {
         trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracks()));
         trackChoiceBox.getItems().add(Track.EMPTY_TRACK);
         trackChoiceBox.getSelectionModel().select(quadForConfig.getFirstBlockSection().getTrack());
+        firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
+        secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
+
         trackChoiceBox.setOnAction(event -> {
             firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
             secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
         });
+
+        firstBlockSectionChoiceBox.getSelectionModel().select(quadForConfig.getFirstBlockSection());
 
         firstBlockSectionChoiceBox.setOnAction(event -> {
             quadForConfig.setFirstBlockSection(firstBlockSectionChoiceBox.getValue());
@@ -70,6 +75,7 @@ public class TrackQuadConfiguratorFxController {
 
         if (quadForConfig instanceof BlockSignalConfigurable) {
             showBlockSectionNameCheckBox.setDisable(true);
+            secondBlockSectionChoiceBox.getSelectionModel().select(quadForConfig.getSecondBlockSection());
             secondBlockSectionChoiceBox.setOnAction((event -> {
                 quadForConfig.setSecondBlockSection(secondBlockSectionChoiceBox.getValue());
                 selectSecondSignal();

@@ -3,6 +3,7 @@ package NATrain.model;
 import NATrain.UI.NavigatorFxController;
 import NATrain.routes.Route;
 import NATrain.routes.Track;
+import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
 import NATrain.remoteControlModules.ControlModule;
@@ -14,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.stream.Collectors;
 
 public enum Model implements Serializable {
 
@@ -140,6 +142,26 @@ public enum Model implements Serializable {
                 controlModules = (Map<Integer, ControlModule>) inputStream.readObject();
                 routeTable = (CopyOnWriteArraySet<Route>) inputStream.readObject();
                 tracks = (Set<Track>) inputStream.readObject();
+                tracks.forEach(track -> {
+                    track.getBlockSections().forEach(blockSection -> {
+                        blockSection.getSection().addPropertyChangeSupport();
+                        blockSection.getSection().setVacancyState(TrackSectionState.UNDEFINED);
+                        Signal signal = blockSection.getNormalDirectionSignal();
+                        if (signal.getId().equals("None")) {
+                            blockSection.setNormalDirectionSignal(Signal.EMPTY_SIGNAL);
+                        } else {
+                            signal.addPropertyChangeSupport();
+                            signal.setSignalState(SignalState.UNDEFINED);
+                        }
+                        signal = blockSection.getReversedDirectionSignal();
+                        if (signal.getId().equals("None")) {
+                            blockSection.setReversedDirectionSignal(Signal.EMPTY_SIGNAL);
+                        } else {
+                            signal.addPropertyChangeSupport();
+                            signal.setSignalState(SignalState.UNDEFINED);
+                        }
+                    });
+                });
 
                 ArrayList<QuadDTO> notEmptyQuadDTOS = (ArrayList<QuadDTO>) inputStream.readObject();
                 ArrayList<TrackQuadDTO> notEmptyTrackQuadDTOS = (ArrayList<TrackQuadDTO>) inputStream.readObject();

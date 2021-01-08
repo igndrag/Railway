@@ -4,6 +4,7 @@ import NATrain.quads.configurableInterfaces.BlockSectionConfigurable;
 import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.ControlAction;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +16,12 @@ public abstract class BlockingTrackQuad extends TrackBaseQuad implements BlockSe
 
     public void showBlockSectionName(boolean show) {
         blockSectionName.setVisible(show);
+    }
+
+    private static final List<ControlAction> availableActions = new ArrayList<>();
+
+    static {
+        availableActions.add(ControlAction.SET_ROUTE_TO_TRACK_LINE);
     }
 
     @Override
@@ -57,6 +64,6 @@ public abstract class BlockingTrackQuad extends TrackBaseQuad implements BlockSe
 
     @Override
     public List<ControlAction> getAvailableActions() {
-        return Collections.emptyList();
+        return availableActions;
     }
 }

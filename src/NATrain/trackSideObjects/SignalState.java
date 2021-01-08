@@ -33,7 +33,8 @@ public enum SignalState {
     public static final Set<SignalState> STANDARD_TRACK_SIGNAL_STATES = new HashSet<>(Arrays.asList(
             RED,
             YELLOW,
-            GREEN
+            GREEN,
+            UNDEFINED
     ));
 
     public static final Set<SignalState> STANDARD_TRIMMER_SIGNAL_STATES = new HashSet<>(Arrays.asList(
