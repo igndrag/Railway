@@ -17,9 +17,10 @@ public class DepartureRouteExecutor extends AbstractRouteExecutor {
     @Override
     public void autoselectSignalState() {
         Signal signal = route.getSignal();
-        if (routeStatus == RouteStatus.READY && isAllSectionsFree() && route.getTVDS1().getVacancyState() == TrackSectionState.FREE) {
+        if (routeStatus == RouteStatus.READY && isAllSectionsFree()
+                && route.getTVDS1().getSection().getVacancyState() == TrackSectionState.FREE) {
             if (route.getWithManeuver()) {
-                if (route.getTVDS2().getVacancyState() == TrackSectionState.FREE) {
+                if (route.getTVDS2().getSection().getVacancyState() == TrackSectionState.FREE) {
                  //   signal.sendCommand(Command.OPEN_ON_YELLOW_AND_BLINKED_YELLOW);
                     signal.setSignalState(SignalState.YELLOW_AND_BLINKED_YELLOW);
                 } else {
@@ -27,7 +28,7 @@ public class DepartureRouteExecutor extends AbstractRouteExecutor {
                     route.getSignal().setSignalState(SignalState.YELLOW_AND_YELLOW);
                 }
             } else {
-                if (route.getTVDS2().getVacancyState() == TrackSectionState.FREE) {
+                if (route.getTVDS2().getSection().getVacancyState() == TrackSectionState.FREE) {
                    // signal.sendCommand(Command.OPEN_ON_GREEN);
                     route.getSignal().setSignalState(SignalState.GREEN);
                 } else {

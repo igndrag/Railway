@@ -1,9 +1,10 @@
 package NATrain.UI.routeTable;
 
-import NATrain.UI.routeTable.RouteTableController;
 import NATrain.model.Model;
 import NATrain.routes.Route;
 import NATrain.routes.RouteType;
+import NATrain.routes.Track;
+import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,10 +17,10 @@ import java.util.Comparator;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.stream.Collectors;
 
 
 public class RouteEditorController {
-
     private Route route;
     private RouteType selectedRouteType;
     private ConcurrentHashMap<Switch, SwitchState> switchStatePositionsMap;
@@ -40,9 +41,11 @@ public class RouteEditorController {
     @FXML
     private ChoiceBox<TrackSection> departureChoiceBox;
     @FXML
-    private ChoiceBox<TrackSection> TVDS1ChoiceBox;
+    private ChoiceBox<Track> destinationTrackLineChoiceBox;
     @FXML
-    private ChoiceBox<TrackSection> TVDS2ChoiceBox;
+    private ChoiceBox<TrackBlockSection> TVDS1ChoiceBox;
+    @FXML
+    private ChoiceBox<TrackBlockSection> TVDS2ChoiceBox;
     @FXML
     private CheckBox maneuverCheckBox;
     @FXML
@@ -170,17 +173,33 @@ public class RouteEditorController {
             nextSignalChoiceBox.setValue(route.getNextSignal());
         }
 
-        ObservableList<TrackSection> trackObservableList = FXCollections.observableArrayList(Model.getTrackSections().values());
-        trackObservableList.sort(Comparator.comparing(TracksideObject::getId));
-        TVDS1ChoiceBox.setItems(trackObservableList);
+        ObservableList<Track> TrackObservableList = FXCollections.observableArrayList(Model.getTracks());
+        TrackObservableList.sort(Comparator.comparing(Track::getId));
+        destinationTrackLineChoiceBox.setItems(TrackObservableList);
+        if (route.getDestinationTrack() != null) {
+            destinationTrackLineChoiceBox.getSelectionModel().select(route.getDestinationTrack());
+            TVDS1ChoiceBox.setItems(FXCollections.observableArrayList(destinationTrackLineChoiceBox.getValue().getBlockSections()));
+            TVDS2ChoiceBox.setItems(FXCollections.observableArrayList(destinationTrackLineChoiceBox.getValue().getBlockSections()));
+        }
+        destinationTrackLineChoiceBox.setOnAction(event -> {
+            TVDS1ChoiceBox.setItems(FXCollections.observableArrayList(destinationTrackLineChoiceBox.getValue().getBlockSections()));
+            TVDS2ChoiceBox.setItems(FXCollections.observableArrayList(destinationTrackLineChoiceBox.getValue().getBlockSections()));
+        });
+
         if (route.getTVDS1() != null) {
             TVDS1ChoiceBox.getSelectionModel().select(route.getTVDS1());
         }
-        TVDS2ChoiceBox.setItems(trackObservableList);
         if (route.getTVDS2() != null) {
             TVDS2ChoiceBox.getSelectionModel().select(route.getTVDS2());
         }
-        departureChoiceBox.setItems(trackObservableList);
+
+        ObservableList<TrackSection> arrivalDepartureTrackObservableList = FXCollections.observableArrayList(
+                Model.getTrackSections()
+                        .values()
+                        .stream()
+                        .filter(TrackSection::isArrivalDepartureTrack)
+                        .collect(Collectors.toList()));
+        departureChoiceBox.setItems(arrivalDepartureTrackObservableList);
         if (route.getDepartureTrackSection() != null) {
             departureChoiceBox.getSelectionModel().select(route.getDepartureTrackSection());
         }
@@ -224,10 +243,11 @@ public class RouteEditorController {
             route.setTVDS1(TVDS1ChoiceBox.getValue());
             route.setTVDS2(TVDS2ChoiceBox.getValue());
             route.setDepartureTrackSection(departureChoiceBox.getValue());
+            //TODO set departure track line
             ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>(selectedTrackListView.getItems());
             switch (selectedRouteType) {
                 case DEPARTURE:
-                    route.setDestinationTrackSection(TVDS1ChoiceBox.getValue());
+                    route.setDestinationTrack(TVDS1ChoiceBox.getValue().getTrack());
                     break;
                 case ARRIVAL:
                 case SHUNTING:
@@ -305,6 +325,7 @@ public class RouteEditorController {
         TVDS2ChoiceBox.setDisable(false);
         nextSignalChoiceBox.getSelectionModel().clearSelection();
         nextSignalChoiceBox.setDisable(true);
+        destinationTrackLineChoiceBox.setDisable(false);
     }
 
     private void selectArrivalRouteType() {
@@ -314,6 +335,7 @@ public class RouteEditorController {
         TVDS2ChoiceBox.getSelectionModel().clearSelection();
         TVDS2ChoiceBox.setDisable(true);
         nextSignalChoiceBox.setDisable(false);
+        destinationTrackLineChoiceBox.setDisable(true);
     }
 
     private void selectShuntingRouteType() {
@@ -324,6 +346,7 @@ public class RouteEditorController {
         TVDS2ChoiceBox.setDisable(true);
         nextSignalChoiceBox.getSelectionModel().clearSelection();
         nextSignalChoiceBox.setDisable(true);
+        destinationTrackLineChoiceBox.setDisable(true);
     }
 
 

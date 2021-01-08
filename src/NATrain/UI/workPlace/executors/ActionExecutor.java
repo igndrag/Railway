@@ -6,6 +6,7 @@ import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.routes.Route;
+import NATrain.routes.Track;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class ActionExecutor {
 
-    public static final Quad EMPTY_QUAD = new EmptyQuad(-1, -1) ;
+    public static final Quad EMPTY_QUAD = new EmptyQuad(-1, -1);
     public static final ObservableList<Route> EMPTY_ROUTE_LIST = FXCollections.observableArrayList();
 
     private Quad firstSelectedQuad = EMPTY_QUAD;
@@ -74,6 +75,10 @@ public class ActionExecutor {
                         foundedRoutes = findRoutes(((SignalQuad) firstSelectedQuad).getAssociatedSignal(),
                                 ((SimpleTrackQuad) secondSelectedQuad).getFirstAssociatedTrack());
                         break;
+                    case SET_ROUTE_TO_TRACK_LINE:
+                        foundedRoutes = findRoutsToTrackLine(((SignalQuad) firstSelectedQuad).getAssociatedSignal(),
+                                ((BlockingTrackQuad) secondSelectedQuad).getFirstBlockSection().getTrack());
+                        break;
                     default:
                         workPlaceController.log("Wrong command.");
                 }
@@ -111,14 +116,22 @@ public class ActionExecutor {
             case SHUNTING:
                 routeExecutor = new ShuntingRouteExecutor(route);
         }
-            routeExecutor.executeRoute();
-            activeRoutes.add(routeExecutor);
+        routeExecutor.executeRoute();
+        activeRoutes.add(routeExecutor);
     }
 
     private ObservableList<Route> findRoutes(Signal signal, TracksideObject tracksideObject) {
         List<Route> result = Model.getRouteTable().stream()
                 .filter(route -> route.getSignal() == signal)
                 .filter(route -> route.getDestinationTrackSection() == tracksideObject)
+                .collect(Collectors.toList());
+        return FXCollections.observableArrayList(result);
+    }
+
+    private ObservableList<Route> findRoutsToTrackLine(Signal signal, Track track) {
+        List<Route> result = Model.getRouteTable().stream()
+                .filter(route -> route.getSignal() == signal)
+                .filter(route -> route.getDestinationTrack() == track)
                 .collect(Collectors.toList());
         return FXCollections.observableArrayList(result);
     }
@@ -132,7 +145,7 @@ public class ActionExecutor {
         secondControlAction = null;
     }
 
-    private void toAlternativeRouteSelector (ObservableList<Route> routes) throws IOException {
+    private void toAlternativeRouteSelector(ObservableList<Route> routes) throws IOException {
         FXMLLoader loader = new FXMLLoader(AlternativeRouteSelectorController.class.getResource("AlternativeRouteSelector.fxml"));
         Stage alternativeRouteSelector = new Stage();
         alternativeRouteSelector.setTitle("Alternative Route Selector");
