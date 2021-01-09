@@ -51,7 +51,7 @@ public abstract class BlockingSignalQuad extends TrackBaseQuad implements BlockS
 
     @Override
     public void updateSignalView() {
-        if (firstBlockSection.getTrack().getTrackDirection() == TrackDirection.NORMAL) {
+        if (track.getTrackDirection() == TrackDirection.NORMAL) {
             if (reversedSignalView) {
                 updateBlockSignalView(secondSignal, secondSignalLampElement);
             } else {

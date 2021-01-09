@@ -101,7 +101,7 @@ public class RouteTableController {
         FXMLLoader loader = new FXMLLoader(RouteEditorController.class.getResource("RouteEditor.fxml"));
         Stage routeEditor = new Stage();
         routeEditor.setTitle("Route Editor");
-        routeEditor.setScene(new Scene(loader.load(), 640, 400));
+        routeEditor.setScene(new Scene(loader.load(), 640, 450));
         routeEditor.setResizable(false);
         RouteEditorController controller = loader.getController();
         controller.initialize(route);

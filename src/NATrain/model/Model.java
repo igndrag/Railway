@@ -38,7 +38,7 @@ public enum Model implements Serializable {
 
     private static Map<Integer, ControlModule> controlModules = new ConcurrentHashMap<>();
 
-    public static Set<Track> tracks = new CopyOnWriteArraySet<>();
+    private static Set<Track> tracks = new CopyOnWriteArraySet<>();
 
     public static Quad[][] getMainGrid() {
         return mainGrid;

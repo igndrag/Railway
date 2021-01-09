@@ -55,32 +55,47 @@ public class TrackQuadConfiguratorFxController {
         trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracks()));
         trackChoiceBox.getItems().add(Track.EMPTY_TRACK);
         trackChoiceBox.getSelectionModel().select(quadForConfig.getTrack());
-        firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
-        secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
-
-        trackChoiceBox.setOnAction(event -> {
-            quadForConfig.setTrack(trackChoiceBox.getValue());
+        if (trackChoiceBox.getValue() != Track.EMPTY_TRACK) {
             firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
             secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
-        });
+        } else {
+            firstBlockSectionChoiceBox.setDisable(true);
+            secondBlockSectionChoiceBox.setDisable(true);
+        }
+        trackChoiceBox.setOnAction(event -> {
+            quadForConfig.setTrack(trackChoiceBox.getValue());
+            if (trackChoiceBox.getValue() != Track.EMPTY_TRACK) {
+                firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
+                secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
+                firstBlockSectionChoiceBox.setDisable(false);
+                secondBlockSectionChoiceBox.setDisable(false);
+            } else {
+                firstBlockSectionChoiceBox.setDisable(true);
+                secondBlockSectionChoiceBox.setDisable(true);
+            }
+            });
 
         firstBlockSectionChoiceBox.getSelectionModel().select(quadForConfig.getFirstBlockSection());
 
-        firstBlockSectionChoiceBox.setOnAction(event -> {
-            quadForConfig.setFirstBlockSection(firstBlockSectionChoiceBox.getValue());
-            if (quadForConfig instanceof BlockSignalConfigurable) {
-                selectFirstSignal();
+        firstBlockSectionChoiceBox.setOnMouseClicked(event -> {
+            if (firstBlockSectionChoiceBox.getValue() != null) {
+                quadForConfig.setFirstBlockSection(firstBlockSectionChoiceBox.getValue());
+                if (quadForConfig instanceof BlockSignalConfigurable) {
+                    selectFirstSignal();
+                }
+                quadForConfig.refresh();
             }
-            quadForConfig.refresh();
         });
 
         if (quadForConfig instanceof BlockSignalConfigurable) {
             showBlockSectionNameCheckBox.setDisable(true);
             secondBlockSectionChoiceBox.getSelectionModel().select(quadForConfig.getSecondBlockSection());
-            secondBlockSectionChoiceBox.setOnAction((event -> {
+            secondBlockSectionChoiceBox.setOnMouseClicked((event -> {
+                if (secondBlockSectionChoiceBox.getValue() != null) {
                 quadForConfig.setSecondBlockSection(secondBlockSectionChoiceBox.getValue());
                 selectSecondSignal();
                 quadForConfig.refresh();
+                }
             }));
             reverseCheckBox.setSelected(quadForConfig.getReversedSignalView());
             reverseCheckBox.setOnAction(event -> {

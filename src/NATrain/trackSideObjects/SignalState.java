@@ -34,6 +34,7 @@ public enum SignalState {
             RED,
             YELLOW,
             GREEN,
+            NOT_LIGHT,
             UNDEFINED
     ));
 

@@ -10,10 +10,7 @@ import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.routes.Route;
-import NATrain.trackSideObjects.ControlAction;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.SwitchState;
-import NATrain.trackSideObjects.TrackSectionState;
+import NATrain.trackSideObjects.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,7 +46,7 @@ public class WorkPlaceController {
     @FXML
     private Label timeLabel;
     @FXML
-    private TableView <RouteExecutor> routeStatusTableView;
+    private TableView<RouteExecutor> routeStatusTableView;
     @FXML
     private TableColumn<RouteExecutor, String> routeIdColumn;
     @FXML
@@ -78,7 +75,18 @@ public class WorkPlaceController {
         Model.getSignals().values().forEach(Signal::close);
         Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
         Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));
-        //MQTTConnectionService.main(null);
+        Model.getTracks().forEach(track -> {
+            track.getBlockSections().forEach(blockSection -> {
+                blockSection.getSection().setVacancyState(TrackSectionState.FREE);
+                if (blockSection.getNormalDirectionSignal() != Signal.EMPTY_SIGNAL) {
+                    blockSection.getNormalDirectionSignal().setSignalState(SignalState.GREEN);
+                }
+                if (blockSection.getReversedDirectionSignal() != Signal.EMPTY_SIGNAL) {
+                    blockSection.getReversedDirectionSignal().setSignalState(SignalState.NOT_LIGHT);
+                }
+            });
+        });
+        Model.refreshAll();
 
         routeStatusTableView.setItems(actionExecutor.getActiveRoutes());
         routeIdColumn.setCellValueFactory(new PropertyValueFactory<>("routeDescription"));
@@ -115,8 +123,8 @@ public class WorkPlaceController {
         }
         workArea.setContent(gridPane);
 
-     //   ConnectionService connectionService = new ConnectionService("COM5");
-     //   connectionService.start();
+        //   ConnectionService connectionService = new ConnectionService("COM5");
+        //   connectionService.start();
         log("Work Place initialized");
         log("Good Lock!!!");
     }
@@ -163,7 +171,7 @@ public class WorkPlaceController {
         FXMLLoader loader = new FXMLLoader(ActionEmulatorController.class.getResource("ActionEmulator.fxml"));
         Stage actionEmulator = new Stage();
         actionEmulator.setTitle("Action Emulator");
-        actionEmulator.setScene(new Scene(loader.load(), 600, 160));
+        actionEmulator.setScene(new Scene(loader.load(), 800, 160));
         ActionEmulatorController controller = loader.getController();
         //controller.initialize();
         actionEmulator.setOnCloseRequest(event -> {
@@ -172,7 +180,7 @@ public class WorkPlaceController {
         actionEmulator.show();
     }
 
-    public void showConnectionServiceEmulator() throws IOException{
+    public void showConnectionServiceEmulator() throws IOException {
         FXMLLoader loader = new FXMLLoader(ConnectionServiceEmulatorController.class.getResource("ConnectionServiceEmulator.fxml"));
         Stage connectionServiceEmulator = new Stage();
         connectionServiceEmulator.setTitle("Connection Service Emulator");
@@ -183,7 +191,7 @@ public class WorkPlaceController {
         connectionServiceEmulator.show();
     }
 
-    public void showLocomotiveController() throws IOException{
+    public void showLocomotiveController() throws IOException {
         FXMLLoader loader = new FXMLLoader(ConnectionServiceEmulatorController.class.getResource("LocomotiveController.fxml"));
         Stage locomotiveController = new Stage();
         locomotiveController.setTitle("Locomotive Controller");
