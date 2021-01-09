@@ -1,11 +1,13 @@
 package NATrain.quads;
 
+import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.Signal;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
 public abstract class TrackBaseQuad extends AbstractQuad {
+    protected Track track = Track.EMPTY_TRACK;
     protected TrackBlockSection firstBlockSection = TrackBlockSection.EMPTY_BLOCK_SECTION;
     protected TrackBlockSection secondBlockSection = TrackBlockSection.EMPTY_BLOCK_SECTION;
     protected Signal firstSignal = Signal.EMPTY_SIGNAL;
@@ -21,6 +23,14 @@ public abstract class TrackBaseQuad extends AbstractQuad {
 
     public TrackBaseQuad(int x, int y) {
         super(x, y);
+    }
+
+    public Track getTrack() {
+        return track;
+    }
+
+    public void setTrack(Track track) {
+        this.track = track;
     }
 
     public TrackBlockSection getFirstBlockSection() {

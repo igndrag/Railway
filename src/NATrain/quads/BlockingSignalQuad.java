@@ -26,10 +26,10 @@ public abstract class BlockingSignalQuad extends TrackBaseQuad implements BlockS
         updateSecondTrackView();
         updateBlockSignalView(firstSignal, firstSignalLampElement);
         updateBlockSignalView(secondSignal, secondSignalLampElement);
-        if (firstSignalLabel != null) {
+        if (firstSignalLabel != null && firstSignal != Signal.EMPTY_SIGNAL) {
             firstSignalLabel.setText(firstSignal.getId());
         }
-        if (secondSignalLabel != null) {
+        if (secondSignalLabel != null && secondSignal != Signal.EMPTY_SIGNAL) {
             secondSignalLabel.setText(secondSignal.getId());
         }
     }
@@ -41,12 +41,12 @@ public abstract class BlockingSignalQuad extends TrackBaseQuad implements BlockS
 
     @Override
     public void updateFirstTrackView() {
-        refreshBlockSectionState(firstBlockSection, firstTrackElement);
+        refreshBlockSectionState(firstBlockSection.getSection(), firstTrackElement);
     }
 
     @Override
     public void updateSecondTrackView() {
-        refreshBlockSectionState(secondBlockSection, secondTrackElement);
+        refreshBlockSectionState(secondBlockSection.getSection(), secondTrackElement);
     }
 
     @Override

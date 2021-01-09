@@ -54,11 +54,12 @@ public class TrackQuadConfiguratorFxController {
 
         trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracks()));
         trackChoiceBox.getItems().add(Track.EMPTY_TRACK);
-        trackChoiceBox.getSelectionModel().select(quadForConfig.getFirstBlockSection().getTrack());
+        trackChoiceBox.getSelectionModel().select(quadForConfig.getTrack());
         firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
         secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
 
         trackChoiceBox.setOnAction(event -> {
+            quadForConfig.setTrack(trackChoiceBox.getValue());
             firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
             secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
         });
@@ -94,6 +95,7 @@ public class TrackQuadConfiguratorFxController {
                 if (!secondBlockSectionChoiceBox.getSelectionModel().isEmpty()) {
                     selectSecondSignal();
                 }
+                quadForConfig.refresh();
             });
 
         } else {

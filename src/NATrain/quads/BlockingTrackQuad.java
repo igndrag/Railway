@@ -44,7 +44,7 @@ public abstract class BlockingTrackQuad extends TrackBaseQuad implements BlockSe
 
     @Override
     public void updateFirstTrackView() {
-        refreshBlockSectionState(firstBlockSection, firstTrackElement);
+        refreshBlockSectionState(firstBlockSection.getSection(), firstTrackElement);
     }
 
     @Override
