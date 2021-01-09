@@ -1,5 +1,6 @@
 package NATrain.quads;
 
+import NATrain.routes.Track;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
@@ -11,6 +12,7 @@ public class QuadDTO implements Serializable {
     int x;
     int y;
     private QuadType quadType;
+    private final Track track;
     private final TrackSection firstAssociatedTrack;
     private final TrackSection secondAssociatedTrack;
     private final Switch associatedSwitch;
@@ -26,6 +28,12 @@ public class QuadDTO implements Serializable {
 
         if (originalQuad.descriptionLabel != null && originalQuad.descriptionLabel.isVisible()) {
             descriptionShown = true;
+        }
+
+        if (originalQuad.track == Track.EMPTY_TRACK) {
+            this.track = null;
+        } else {
+            this.track = originalQuad.track;
         }
 
         if (originalQuad.firstAssociatedTrack == TrackSection.EMPTY_TRACK_SECTION)
@@ -63,6 +71,11 @@ public class QuadDTO implements Serializable {
 
     public static Quad castToQuad(QuadDTO quadDTO) {
         BaseQuad baseQuad = (BaseQuad) QuadFactory.createQuad(quadDTO.x, quadDTO.y, quadDTO.quadType);
+        if (quadDTO.track == null) {
+            baseQuad.track = Track.EMPTY_TRACK;
+        } else {
+            baseQuad.track = quadDTO.track;
+        }
         if (quadDTO.firstAssociatedTrack == null)
             baseQuad.firstAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
         else

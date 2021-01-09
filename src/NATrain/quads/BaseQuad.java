@@ -2,6 +2,7 @@ package NATrain.quads;
 
 import NATrain.UI.workPlace.Blinker;
 import NATrain.quads.configurableInterfaces.Configurable;
+import NATrain.routes.Track;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.SignalState;
 import NATrain.trackSideObjects.Switch;
@@ -14,6 +15,7 @@ import java.beans.PropertyChangeListener;
 
 public abstract class BaseQuad extends AbstractQuad implements Configurable {
 
+    protected Track track = Track.EMPTY_TRACK;
     protected TrackSection firstAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
     protected TrackSection secondAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
     protected Switch associatedSwitch = Switch.EMPTY_SWITCH;
@@ -22,6 +24,22 @@ public abstract class BaseQuad extends AbstractQuad implements Configurable {
 
     public BaseQuad(int x, int y) {
         super(x, y);
+    }
+
+    public Track getTrack() {
+        return track;
+    }
+
+    public void setTrack(Track track) {
+        this.track = track;
+    }
+
+    public Text getDescriptionLabel() {
+        return descriptionLabel;
+    }
+
+    public void setDescriptionLabel(Text descriptionLabel) {
+        this.descriptionLabel = descriptionLabel;
     }
 
     public TrackSection getFirstAssociatedTrack() {

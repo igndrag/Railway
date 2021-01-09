@@ -1,9 +1,7 @@
 package NATrain.UI.mosaicRedactor;
 
 import NATrain.UI.NavigatorFxController;
-import NATrain.quads.BaseQuad;
-import NATrain.quads.QuadType;
-import NATrain.quads.TrackBaseQuad;
+import NATrain.quads.*;
 import NATrain.quads.configurableInterfaces.BlockSectionConfigurable;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
@@ -19,7 +17,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import NATrain.model.Model;
-import NATrain.quads.Quad;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -298,6 +295,17 @@ public class MosaicRedactorFxController {
             trackQuadConfigurator.initModality(Modality.WINDOW_MODAL);
             trackQuadConfigurator.initOwner(primaryStage);
             trackQuadConfigurator.show();
+        } else if (Model.getMainGrid()[y][x] instanceof ArrivalSignalQuad) {
+            FXMLLoader loader = new FXMLLoader(ArrivalSignalQuadConfiguratorFxController.class.getResource("ArrivalSignalQuadConfigurator.fxml"));
+            Stage quadConfigurator = new Stage();
+            quadConfigurator.setTitle("Quad Configurator");
+            quadConfigurator.setScene(new Scene(loader.load(), 400, 240));
+            quadConfigurator.setResizable(false);
+            ArrivalSignalQuadConfiguratorFxController controller = loader.getController();
+            controller.initialize(x, y);
+            quadConfigurator.initModality(Modality.WINDOW_MODAL);
+            quadConfigurator.initOwner(primaryStage);
+            quadConfigurator.show();
         } else {
             FXMLLoader loader = new FXMLLoader(QuadConfiguratorFxController.class.getResource("QuadConfigurator.fxml"));
             Stage quadConfigurator = new Stage();

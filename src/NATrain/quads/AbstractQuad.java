@@ -128,8 +128,7 @@ public abstract class AbstractQuad implements Quad, Paintable {
         }
     }
 
-    protected static void refreshBlockSectionState(TrackBlockSection blockSection, Shape blockSectionElement) {
-        TrackSection associatedTrackSection = blockSection.getSection();
+    protected static void refreshBlockSectionState(TrackSection associatedTrackSection, Shape blockSectionElement) {
         if (associatedTrackSection == TrackSection.EMPTY_TRACK_SECTION) {
             blockSectionElement.setFill(TRACK_UNDEFINED_ELEMENT_COLOR);
         } else {

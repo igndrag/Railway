@@ -100,7 +100,18 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(switches);
             objectOutputStream.writeObject(controlModules);
             objectOutputStream.writeObject(routeTable);
-            objectOutputStream.writeObject(tracks);
+            Set<Track> tracksCopy = new CopyOnWriteArraySet<>(tracks);
+            tracksCopy.forEach(track -> {
+                track.getBlockSections().forEach(blockSection -> {
+                    if (blockSection.getNormalDirectionSignal() == Signal.EMPTY_SIGNAL) {
+                        blockSection.setNormalDirectionSignal(null);
+                    }
+                    if (blockSection.getReversedDirectionSignal() == Signal.EMPTY_SIGNAL) {
+                        blockSection.setReversedDirectionSignal(null);
+                    }
+                });
+            });
+            objectOutputStream.writeObject(tracksCopy);
 
             Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(quad -> {
                 if (quad.getType() != QuadType.EMPTY_QUAD) {
@@ -147,14 +158,14 @@ public enum Model implements Serializable {
                         blockSection.getSection().addPropertyChangeSupport();
                         blockSection.getSection().setVacancyState(TrackSectionState.UNDEFINED);
                         Signal signal = blockSection.getNormalDirectionSignal();
-                        if (signal.getId().equals("None")) {
+                        if (signal == null) {
                             blockSection.setNormalDirectionSignal(Signal.EMPTY_SIGNAL);
                         } else {
                             signal.addPropertyChangeSupport();
                             signal.setSignalState(SignalState.UNDEFINED);
                         }
                         signal = blockSection.getReversedDirectionSignal();
-                        if (signal.getId().equals("None")) {
+                        if (signal == null) {
                             blockSection.setReversedDirectionSignal(Signal.EMPTY_SIGNAL);
                         } else {
                             signal.addPropertyChangeSupport();

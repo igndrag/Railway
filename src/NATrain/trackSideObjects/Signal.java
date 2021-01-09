@@ -11,6 +11,11 @@ public class Signal extends TracksideObject {
     static final long serialVersionUID = 1L;
 
     public static final Signal EMPTY_SIGNAL = new Signal("None", Collections.emptySet(), SignalType.EMPTY_SIGNAL);
+
+    static {
+        EMPTY_SIGNAL.setSignalState(UNDEFINED);
+    }
+
     public static final String INITIAL_SIGNAL_NAME = "New Signal";
 
     public Signal(String id, SignalType signalType) {
