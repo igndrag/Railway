@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.ActionEmulatorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.ActionEmulatorController">
    <children>
       <ToggleButton fx:id="interlockTrackToggleButton" layoutX="20.0" layoutY="78.0" mnemonicParsing="false" prefWidth="70.0" text="Interlock" />
       <ToggleButton fx:id="occupiedTrackToggleButton" layoutX="117.0" layoutY="78.0" mnemonicParsing="false" prefWidth="70.0" text="Occupied" />
@@ -17,8 +17,13 @@
       <ChoiceBox fx:id="switchChoiceBox" layoutX="411.0" layoutY="40.0" prefHeight="23.0" prefWidth="167.0" />
       <ToggleButton fx:id="plusToggleButton" layoutX="411.0" layoutY="124.0" mnemonicParsing="false" prefWidth="70.0" text="Plus" />
       <ToggleButton fx:id="minusToggleButton" layoutX="506.0" layoutY="124.0" mnemonicParsing="false" prefWidth="70.0" text="Minus" />
-      <ToggleButton fx:id="interlockSwitchToggleButton" layoutX="411.0" layoutY="79.0" mnemonicParsing="false" prefWidth="70.0" text="Interlock" />
       <Button fx:id="allFreeButton" layoutX="117.0" layoutY="121.0" mnemonicParsing="false" onAction="#setAllSectionsFree" prefHeight="25.0" prefWidth="70.0" text="All free" />
-      <Button fx:id="allClosedButton" onAction="#setAllSignalClosed" layoutX="316.0" layoutY="80.0" mnemonicParsing="false" text="All closed" />
+      <Button fx:id="allClosedButton" layoutX="316.0" layoutY="80.0" mnemonicParsing="false" onAction="#setAllSignalClosed" text="All closed" />
+      <ChoiceBox fx:id="trackLineChoiceBox" layoutX="604.0" layoutY="40.0" prefHeight="23.0" prefWidth="167.0" />
+      <Label layoutX="605.0" layoutY="18.0" text="Track Line" />
+      <ChoiceBox fx:id="blockSectionChoiceBox" layoutX="605.0" layoutY="88.0" prefHeight="23.0" prefWidth="167.0" />
+      <Label layoutX="606.0" layoutY="66.0" text="Block Section" />
+      <ToggleButton fx:id="occupiedBlockSectionToggleButton" layoutX="606.0" layoutY="122.0" mnemonicParsing="false" prefWidth="70.0" text="Occupied" />
+      <ToggleButton fx:id="freeBlockSectionToggleButton" layoutX="701.0" layoutY="124.0" mnemonicParsing="false" prefWidth="70.0" text="Free" />
    </children>
 </Pane>

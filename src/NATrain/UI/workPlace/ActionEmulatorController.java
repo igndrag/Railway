@@ -1,6 +1,8 @@
 package NATrain.UI.workPlace;
 
 import NATrain.model.Model;
+import NATrain.routes.Track;
+import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -11,6 +13,14 @@ import javafx.scene.control.ToggleGroup;
 
 public class ActionEmulatorController {
 
+    @FXML
+    private ChoiceBox<Track> trackLineChoiceBox;
+    @FXML
+    private ChoiceBox<TrackBlockSection> blockSectionChoiceBox;
+    @FXML
+    private ToggleButton occupiedBlockSectionToggleButton;
+    @FXML
+    private ToggleButton freeBlockSectionToggleButton;
     @FXML
     private Button allClosedButton;
     @FXML
@@ -39,10 +49,15 @@ public class ActionEmulatorController {
         trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTrackSections().values()));
         switchChoiceBox.setItems(FXCollections.observableArrayList(Model.getSwitches().values()));
         signalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
+        trackLineChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracks()));
 
         ToggleGroup toggleGroup = new ToggleGroup();
         plusToggleButton.setToggleGroup(toggleGroup);
         minusToggleButton.setToggleGroup(toggleGroup);
+
+        toggleGroup = new ToggleGroup();
+        freeBlockSectionToggleButton.setToggleGroup(toggleGroup);
+        occupiedBlockSectionToggleButton.setToggleGroup(toggleGroup);
 
         signalChoiceBox.setOnAction(event -> {
             if (!signalChoiceBox.getSelectionModel().isEmpty()) {
@@ -69,6 +84,34 @@ public class ActionEmulatorController {
                     occupiedTrackToggleButton.setSelected(false); //button isn't selected for undefined state
             }
 
+        });
+
+        trackLineChoiceBox.setOnAction(event -> {
+            if (!trackLineChoiceBox.getSelectionModel().isEmpty()) {
+                blockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackLineChoiceBox.getValue().getBlockSections()));
+            }
+        });
+
+        blockSectionChoiceBox.setOnAction(event -> {
+            if (!blockSectionChoiceBox.getSelectionModel().isEmpty()) {
+                if (blockSectionChoiceBox.getValue().getSection().getVacancyState() == TrackSectionState.FREE) {
+                    freeBlockSectionToggleButton.setSelected(true);
+                } else {
+                    occupiedBlockSectionToggleButton.setSelected(true);
+                }
+            }
+        });
+
+        freeBlockSectionToggleButton.setOnAction(event -> {
+            if (!blockSectionChoiceBox.getSelectionModel().isEmpty()) {
+                blockSectionChoiceBox.getValue().getSection().setVacancyState(TrackSectionState.FREE);
+            }
+        });
+
+        occupiedBlockSectionToggleButton.setOnAction(event -> {
+            if (!blockSectionChoiceBox.getSelectionModel().isEmpty()) {
+                blockSectionChoiceBox.getValue().getSection().setVacancyState(TrackSectionState.OCCUPIED);
+            }
         });
 
         interlockTrackToggleButton.setOnMouseClicked(event -> {
