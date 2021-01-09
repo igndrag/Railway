@@ -243,11 +243,11 @@ public class RouteEditorController {
             route.setTVDS1(TVDS1ChoiceBox.getValue());
             route.setTVDS2(TVDS2ChoiceBox.getValue());
             route.setDepartureTrackSection(departureChoiceBox.getValue());
-            //TODO set departure track line
             ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>(selectedTrackListView.getItems());
             switch (selectedRouteType) {
                 case DEPARTURE:
                     route.setDestinationTrack(TVDS1ChoiceBox.getValue().getTrack());
+                    route.setDestinationTrackSection(TVDS1ChoiceBox.getValue().getSection());
                     break;
                 case ARRIVAL:
                 case SHUNTING:
