@@ -2,7 +2,6 @@ package NATrain.UI.mosaicRedactor;
 
 import NATrain.UI.NavigatorFxController;
 import NATrain.quads.*;
-import NATrain.quads.configurableInterfaces.BlockSectionConfigurable;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -284,7 +283,7 @@ public class MosaicRedactorFxController {
     private static void toQuadConfigurator(int x, int y) throws IOException {
         if (Model.getMainGrid()[y][x].isEmpty())
             return;
-        if (Model.getMainGrid()[y][x] instanceof TrackBaseQuad) {
+        if (Model.getMainGrid()[y][x] instanceof BlockingBaseQuad) {
             FXMLLoader loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator.fxml"));
             Stage trackQuadConfigurator = new Stage();
             trackQuadConfigurator.setTitle("Track Quad Configurator");

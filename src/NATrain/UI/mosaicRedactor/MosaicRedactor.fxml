@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -9,24 +8,24 @@
    <left>
       <Accordion maxHeight="600.0" minHeight="400.0" prefHeight="402.0" prefWidth="150.0" BorderPane.alignment="TOP_CENTER">
         <panes>
-          <TitledPane alignment="TOP_LEFT" animated="false" maxHeight="400.0" text="Simple track section">
+          <TitledPane alignment="TOP_LEFT" animated="false" maxHeight="400.0" text="Simple track sections">
                <content>
                   <ScrollPane fx:id="simpleTrackSectionIcons" prefHeight="200.0" prefWidth="200.0">
                     </ScrollPane>
                </content>
           </TitledPane>
-          <TitledPane animated="false" text="Double track section">
+          <TitledPane animated="false" text="Double track sections">
             <content>
               <ScrollPane fx:id="doubleTrackSectionIcons" prefHeight="200.0" prefWidth="200.0">
                       </ScrollPane>
             </content>
           </TitledPane>
-          <TitledPane animated="false" text="Switch">
+          <TitledPane animated="false" text="Switches">
             <content>
               <ScrollPane fx:id="switchIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </TitledPane>
-            <TitledPane animated="false" text="Signal">
+            <TitledPane animated="false" text="Signals">
                 <content>
                     <ScrollPane fx:id="signalIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                 </content>
@@ -38,10 +37,10 @@
             </TitledPane>
             <TitledPane animated="false" layoutX="10.0" layoutY="387.0" text="Track Signals">
                <content>
-                  <ScrollPane fx:id="trackSignalIcons"  minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <ScrollPane fx:id="trackSignalIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </TitledPane>
-            <TitledPane  animated="false" layoutX="10.0" layoutY="60.0" text="Track Controls">
+            <TitledPane animated="false" layoutX="10.0" layoutY="60.0" text="Track Controls">
                <content>
                   <ScrollPane fx:id="trackControlIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
