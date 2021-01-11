@@ -1,5 +1,7 @@
 package NATrain.quads;
 
+import NATrain.quads.SWQ.SWQ1_1;
+
 public enum QuadType {
     EMPTY_QUAD,
     DEMO_QUAD,
@@ -37,6 +39,9 @@ public enum QuadType {
     SIQ4_1,
     SIQ4_2,
     SIQA3_1,
+    SIQA3_2,
+    SIQA4_1,
+    SIQA4_2,
 
     SWQ1_1,
     SWQ1_2,
