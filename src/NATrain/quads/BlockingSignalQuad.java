@@ -9,7 +9,7 @@ import javafx.scene.shape.Shape;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class BlockingSignalQuad extends TrackBaseQuad implements BlockSignalConfigurable {
+public abstract class BlockingSignalQuad extends BlockingBaseQuad implements BlockSignalConfigurable {
 
     public BlockingSignalQuad(int x, int y) {
         super(x, y);
@@ -35,40 +35,20 @@ public abstract class BlockingSignalQuad extends TrackBaseQuad implements BlockS
     }
 
     @Override
-    public void activateListeners() {
-        // TODO when create view updaters
-    }
-
-    @Override
-    public void updateFirstTrackView() {
-        refreshBlockSectionState(firstBlockSection.getSection(), firstTrackElement);
-    }
-
-    @Override
-    public void updateSecondTrackView() {
-        refreshBlockSectionState(secondBlockSection.getSection(), secondTrackElement);
-    }
-
-    @Override
     public void updateSignalView() {
         if (track.getTrackDirection() == TrackDirection.NORMAL) {
             if (reversedSignalView) {
-                updateBlockSignalView(secondSignal, secondSignalLampElement);
-            } else {
                 updateBlockSignalView(firstSignal, firstSignalLampElement);
+            } else {
+                updateBlockSignalView(secondSignal, secondSignalLampElement);
             }
         } else {
             if (reversedSignalView) {
-                updateBlockSignalView(firstSignal, firstSignalLampElement);
-            } else {
                 updateBlockSignalView(secondSignal, secondSignalLampElement);
+            } else {
+                updateBlockSignalView(firstSignal, firstSignalLampElement);
             }
         }
-    }
-
-    @Override
-    public void updateSwitchView() {
-        //do nothing
     }
 
     @Override

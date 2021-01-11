@@ -14,7 +14,9 @@ public class TrackBlockSection implements Serializable {
     private TrackSection section = TrackSection.EMPTY_TRACK_SECTION;
     private Signal normalDirectionSignal = Signal.EMPTY_SIGNAL;
     private Signal reversedDirectionSignal = Signal.EMPTY_SIGNAL;
-    private Boolean bidirectional = false;
+    private boolean bidirectional = false;
+    private boolean lastInNormalDirection = false;
+    private boolean lastInReverseDirection = false;
 
     public TrackBlockSection(Track track, TrackSection section) {
         this.track = track;
@@ -55,6 +57,22 @@ public class TrackBlockSection implements Serializable {
 
     public void setBidirectional(Boolean bidirectional) {
         this.bidirectional = bidirectional;
+    }
+
+    public boolean isLastInNormalDirection() {
+        return lastInNormalDirection;
+    }
+
+    public void setLastInNormalDirection(boolean lastInNormalDirection) {
+        this.lastInNormalDirection = lastInNormalDirection;
+    }
+
+    public boolean isLastInReverseDirection() {
+        return lastInReverseDirection;
+    }
+
+    public void setLastInReverseDirection(boolean lastInReverseDirection) {
+        this.lastInReverseDirection = lastInReverseDirection;
     }
 
     @Override

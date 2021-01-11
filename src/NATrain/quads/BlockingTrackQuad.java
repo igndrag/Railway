@@ -3,12 +3,10 @@ package NATrain.quads;
 import NATrain.quads.configurableInterfaces.BlockSectionConfigurable;
 import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.ControlAction;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public abstract class BlockingTrackQuad extends TrackBaseQuad implements BlockSectionConfigurable {
+public abstract class BlockingTrackQuad extends BlockingBaseQuad implements BlockSectionConfigurable {
 
     public BlockingTrackQuad(int x, int y) {
         super(x, y);
@@ -38,21 +36,6 @@ public abstract class BlockingTrackQuad extends TrackBaseQuad implements BlockSe
     }
 
     @Override
-    public void activateListeners() {
-        // TODO when create view updaters
-    }
-
-    @Override
-    public void updateFirstTrackView() {
-        refreshBlockSectionState(firstBlockSection.getSection(), firstTrackElement);
-    }
-
-    @Override
-    public void updateSecondTrackView() {
-        //do nothing
-    }
-
-    @Override
     public void updateSignalView() {
         //do nothing
     }
@@ -66,4 +49,6 @@ public abstract class BlockingTrackQuad extends TrackBaseQuad implements BlockSe
     public List<ControlAction> getAvailableActions() {
         return availableActions;
     }
+
+
 }

@@ -79,13 +79,18 @@ public class WorkPlaceController {
             track.getBlockSections().forEach(blockSection -> {
                 blockSection.getSection().setVacancyState(TrackSectionState.FREE);
                 if (blockSection.getNormalDirectionSignal() != Signal.EMPTY_SIGNAL) {
-                    blockSection.getNormalDirectionSignal().setSignalState(SignalState.GREEN);
+                    if (!blockSection.isLastInNormalDirection()) {
+                        blockSection.getNormalDirectionSignal().setSignalState(SignalState.GREEN);
+                    } else {
+                        blockSection.getNormalDirectionSignal().setSignalState(SignalState.YELLOW);
+                    }
                 }
                 if (blockSection.getReversedDirectionSignal() != Signal.EMPTY_SIGNAL) {
                     blockSection.getReversedDirectionSignal().setSignalState(SignalState.NOT_LIGHT);
                 }
             });
         });
+
         Model.refreshAll();
 
         routeStatusTableView.setItems(actionExecutor.getActiveRoutes());

@@ -1,21 +1,17 @@
 package NATrain.model;
 
-import NATrain.UI.NavigatorFxController;
 import NATrain.routes.Route;
 import NATrain.routes.Track;
-import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
 import NATrain.remoteControlModules.ControlModule;
 
-import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.stream.Collectors;
 
 public enum Model implements Serializable {
 
@@ -100,8 +96,7 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(switches);
             objectOutputStream.writeObject(controlModules);
             objectOutputStream.writeObject(routeTable);
-            Set<Track> tracksCopy = new CopyOnWriteArraySet<>(tracks);
-            tracksCopy.forEach(track -> {
+            tracks.forEach(track -> { // change EMPTY_SIGNALs to null fow writing
                 track.getBlockSections().forEach(blockSection -> {
                     if (blockSection.getNormalDirectionSignal() == Signal.EMPTY_SIGNAL) {
                         blockSection.setNormalDirectionSignal(null);
@@ -111,13 +106,24 @@ public enum Model implements Serializable {
                     }
                 });
             });
-            objectOutputStream.writeObject(tracksCopy);
+            objectOutputStream.writeObject(tracks);
+            tracks.forEach(track -> { // return EMPTY_SIGNALs back
+                track.getBlockSections().forEach(blockSection -> {
+                    if (blockSection.getNormalDirectionSignal() == null) {
+                        blockSection.setNormalDirectionSignal(Signal.EMPTY_SIGNAL);
+                    }
+                    if (blockSection.getReversedDirectionSignal() == null) {
+                        blockSection.setReversedDirectionSignal(Signal.EMPTY_SIGNAL);
+                    }
+                });
+            });
+
 
             Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(quad -> {
                 if (quad.getType() != QuadType.EMPTY_QUAD) {
                     if (quad instanceof BaseQuad) {
                         notEmptyQuadDTOs.add(QuadDTO.castToDTO(quad));
-                    } else if (quad instanceof TrackBaseQuad) {
+                    } else if (quad instanceof BlockingBaseQuad) {
                         notEmptyTrackQuadDTOs.add(TrackQuadDTO.castToDTO(quad));
                     }
                 }

@@ -22,7 +22,7 @@ public class TrackQuadDTO implements Serializable {
     private boolean descriptionShown = false;
     private boolean reversedSignalView = false;
 
-    private TrackQuadDTO(TrackBaseQuad originalQuad) {
+    private TrackQuadDTO(BlockingBaseQuad originalQuad) {
         this.x = originalQuad.x;
         this.y = originalQuad.y;
         this.quadType = originalQuad.quadType;
@@ -72,11 +72,11 @@ public class TrackQuadDTO implements Serializable {
     }
 
     public static TrackQuadDTO castToDTO(Quad quad) {
-        return new TrackQuadDTO((TrackBaseQuad) quad);
+        return new TrackQuadDTO((BlockingBaseQuad) quad);
     }
 
     public static Quad castToQuad(TrackQuadDTO quadDTO) {
-        TrackBaseQuad baseQuad = (TrackBaseQuad) QuadFactory.createQuad(quadDTO.x, quadDTO.y, quadDTO.quadType);
+        BlockingBaseQuad baseQuad = (BlockingBaseQuad) QuadFactory.createQuad(quadDTO.x, quadDTO.y, quadDTO.quadType);
         if (quadDTO.descriptionShown) {
             baseQuad.showBlockSectionName(true);
         }

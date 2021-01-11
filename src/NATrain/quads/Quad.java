@@ -5,7 +5,7 @@ import javafx.scene.Group;
 
 import java.util.List;
 
-public interface Quad {
+public interface Quad { // that's the price of bad design((
     QuadType getType();
     boolean isEmpty();
     void refresh();
@@ -13,7 +13,7 @@ public interface Quad {
     void unselect();
     Group getView();
     void setGridLineVisible(Boolean show);
-    void activateListeners(); // that's the price of bad design((
+    void activateListeners();
     void updateFirstTrackView();
     void updateSecondTrackView();
     void updateSignalView();

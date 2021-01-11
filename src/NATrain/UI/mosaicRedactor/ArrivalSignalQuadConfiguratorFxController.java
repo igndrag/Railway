@@ -2,9 +2,6 @@ package NATrain.UI.mosaicRedactor;
 
 import NATrain.model.Model;
 import NATrain.quads.ArrivalSignalQuad;
-import NATrain.quads.BaseQuad;
-import NATrain.quads.TrackBaseQuad;
-import NATrain.quads.configurableInterfaces.BlockSignalConfigurable;
 import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.Signal;
@@ -14,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;

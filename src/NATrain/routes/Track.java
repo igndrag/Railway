@@ -1,16 +1,20 @@
 package NATrain.routes;
 
-import NATrain.trackSideObjects.Signal;
+import NATrain.quads.Quad;
+import NATrain.trackSideObjects.*;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Track implements Serializable {
 
-
     static final long serialVersionUID = 1L;
     public static final Track EMPTY_TRACK = new Track("none");
+    private transient Map<TrackSection, PropertyChangeListener> listeners;
 
     private String id;
     private TrackDirection trackDirection = TrackDirection.NORMAL;
@@ -83,6 +87,7 @@ public class Track implements Serializable {
     public void setReversedDirectionArrivalSignal(Signal reversedDirectionArrivalSignal) {
         this.reversedDirectionArrivalSignal = reversedDirectionArrivalSignal;
     }
+
 
     @Override
     public String toString() {

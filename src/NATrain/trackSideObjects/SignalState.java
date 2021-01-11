@@ -33,6 +33,7 @@ public enum SignalState {
     public static final Set<SignalState> STANDARD_TRACK_SIGNAL_STATES = new HashSet<>(Arrays.asList(
             RED,
             YELLOW,
+            BLINKED_YELLOW,
             GREEN,
             NOT_LIGHT,
             UNDEFINED

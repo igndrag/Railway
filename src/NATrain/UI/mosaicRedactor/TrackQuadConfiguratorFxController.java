@@ -1,7 +1,7 @@
 package NATrain.UI.mosaicRedactor;
 
 import NATrain.model.Model;
-import NATrain.quads.TrackBaseQuad;
+import NATrain.quads.BlockingBaseQuad;
 import NATrain.quads.configurableInterfaces.*;
 import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
@@ -33,14 +33,14 @@ public class TrackQuadConfiguratorFxController {
     private Pane quadViewPane;
     private Group quadView;
 
-    private TrackBaseQuad quadForConfig;
+    private BlockingBaseQuad quadForConfig;
     private Stage stage;
     private Pane parent;
     private EventHandler<? super MouseEvent> eventHandler;
 
     public void initialize(int x, int y) {
         // *** stage init
-        quadForConfig = (TrackBaseQuad)Model.getMainGrid()[y][x];
+        quadForConfig = (BlockingBaseQuad)Model.getMainGrid()[y][x];
         quadView = quadForConfig.getView();
         parent = (Pane) quadView.getParent();
         quadForConfig.unselect();
@@ -55,6 +55,7 @@ public class TrackQuadConfiguratorFxController {
         trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracks()));
         trackChoiceBox.getItems().add(Track.EMPTY_TRACK);
         trackChoiceBox.getSelectionModel().select(quadForConfig.getTrack());
+
         if (trackChoiceBox.getValue() != Track.EMPTY_TRACK) {
             firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
             secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
@@ -77,33 +78,33 @@ public class TrackQuadConfiguratorFxController {
 
         firstBlockSectionChoiceBox.getSelectionModel().select(quadForConfig.getFirstBlockSection());
 
-        firstBlockSectionChoiceBox.setOnMouseClicked(event -> {
-            if (firstBlockSectionChoiceBox.getValue() != null) {
+        firstBlockSectionChoiceBox.setOnAction(event -> {
+            if (!firstBlockSectionChoiceBox.getSelectionModel().isEmpty()) {
                 quadForConfig.setFirstBlockSection(firstBlockSectionChoiceBox.getValue());
                 if (quadForConfig instanceof BlockSignalConfigurable) {
                     selectFirstSignal();
                 }
                 quadForConfig.refresh();
+            } else {
+                quadForConfig.setFirstBlockSection(TrackBlockSection.EMPTY_BLOCK_SECTION);
             }
         });
 
         if (quadForConfig instanceof BlockSignalConfigurable) {
             showBlockSectionNameCheckBox.setDisable(true);
             secondBlockSectionChoiceBox.getSelectionModel().select(quadForConfig.getSecondBlockSection());
-            secondBlockSectionChoiceBox.setOnMouseClicked((event -> {
-                if (secondBlockSectionChoiceBox.getValue() != null) {
+            secondBlockSectionChoiceBox.setOnAction((event -> {
+                if (!secondBlockSectionChoiceBox.getSelectionModel().isEmpty()) {
                 quadForConfig.setSecondBlockSection(secondBlockSectionChoiceBox.getValue());
                 selectSecondSignal();
                 quadForConfig.refresh();
+                } else {
+                    quadForConfig.setSecondBlockSection(TrackBlockSection.EMPTY_BLOCK_SECTION);
                 }
             }));
             reverseCheckBox.setSelected(quadForConfig.getReversedSignalView());
             reverseCheckBox.setOnAction(event -> {
-                if (reverseCheckBox.isSelected()) {
-                    quadForConfig.setReversedSignalView(true);
-                } else {
-                    quadForConfig.setReversedSignalView(false);
-                }
+                quadForConfig.setReversedSignalView(reverseCheckBox.isSelected());
                 if (!firstBlockSectionChoiceBox.getSelectionModel().isEmpty()) {
                     selectFirstSignal();
                 }

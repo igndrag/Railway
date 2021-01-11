@@ -152,6 +152,8 @@ public class TrackRedactorController {
                 }
                 blockSectionsTableView.getItems().add(blockSection);
                 track.getBlockSections().add(blockSection);
+                track.getBlockSections().get(track.getBlockSectionCount() - 1).setLastInNormalDirection(true);
+                track.getBlockSections().get(0).setLastInReverseDirection(true);
             }
             blockSectionsTableView.refresh();
         } catch (NumberFormatException e) {
