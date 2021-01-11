@@ -2,7 +2,9 @@ package NATrain.utils;
 
 import NATrain.quads.AbstractQuad;
 import NATrain.quads.BSQ.BSQ1_1;
-import NATrain.quads.BTQ.BTQ1_1;
+import NATrain.quads.BSQ.BSQ2_1;
+import NATrain.quads.BSQ.BSQ2_2;
+import NATrain.quads.BTQ.*;
 import NATrain.quads.DTQ.DTQ1_1;
 import NATrain.quads.DTQ.DTQ1_2;
 import NATrain.quads.DTQ.DTQ2_1;
@@ -131,8 +133,22 @@ public class QuadFactory {
                return new SWQ4_4(x, y);
            case BTQ1_1:
                return new BTQ1_1(x, y);
+           case BTQ1_2:
+               return new BTQ1_2(x, y);
+           case BTQ4_1:
+               return new BTQ4_1(x, y);
+           case BTQ4_2:
+               return new BTQ4_2(x, y);
+           case BTQ4_3:
+               return new BTQ4_3(x, y);
+           case BTQ4_4:
+               return new BTQ4_4(x, y);
            case BSQ1_1:
                return new BSQ1_1(x, y);
+           case BSQ2_1:
+               return new BSQ2_1(x, y);
+           case BSQ2_2:
+               return new BSQ2_2(x, y);
            case SIQA3_1:
                return new SIQA3_1(x, y);
            case SIQA3_2:
