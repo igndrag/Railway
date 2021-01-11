@@ -22,10 +22,6 @@ public class ActionEmulatorController {
     @FXML
     private ToggleButton freeBlockSectionToggleButton;
     @FXML
-    private Button allClosedButton;
-    @FXML
-    private Button allFreeButton;
-    @FXML
     private ToggleButton interlockTrackToggleButton;
     @FXML
     private ToggleButton occupiedTrackToggleButton;
@@ -42,8 +38,6 @@ public class ActionEmulatorController {
     @FXML
     private ToggleButton minusToggleButton;
     @FXML
-
-    private ToggleButton interlockSwitchToggleButton;
 
     public void initialize() {
         trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTrackSections().values()));
@@ -164,6 +158,4 @@ public class ActionEmulatorController {
     protected void setAllSignalClosed() {
         Model.getSignals().values().forEach(Signal::close);
     }
-
-
 }

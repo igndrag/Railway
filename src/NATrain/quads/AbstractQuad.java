@@ -1,8 +1,8 @@
 package NATrain.quads;
-
 import NATrain.UI.NavigatorFxController;
 import NATrain.UI.workPlace.Blinker;
 import NATrain.routes.TrackBlockSection;
+import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.SignalState;
 import NATrain.trackSideObjects.TrackSection;
 import NATrain.utils.QuadPainter;
