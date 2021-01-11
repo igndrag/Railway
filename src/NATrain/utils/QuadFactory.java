@@ -135,6 +135,12 @@ public class QuadFactory {
                return new BSQ1_1(x, y);
            case SIQA3_1:
                return new SIQA3_1(x, y);
+           case SIQA3_2:
+               return new SIQA3_2(x, y);
+           case SIQA4_1:
+               return new SIQA4_1(x, y);
+           case SIQA4_2:
+               return new SIQA4_2(x, y);
        }
         return new EmptyQuad(x, y);
     }
