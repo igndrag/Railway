@@ -1,13 +1,19 @@
 package NATrain.quads;
 
+import NATrain.routes.Track;
+import NATrain.routes.TrackDirection;
 import NATrain.trackSideObjects.ControlAction;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BlockingControlQuad extends BlockingTrackQuad {
+public abstract class BlockingControlQuad extends BlockingBaseQuad {
 
     private static final List<ControlAction> availableActions = new ArrayList<>();
+
+    protected Shape firstRawElement;
+    protected Shape secondRawElement;
 
     static {
         availableActions.add(ControlAction.CHANGE_TRACK_DIRECTION);
@@ -22,5 +28,49 @@ public abstract class BlockingControlQuad extends BlockingTrackQuad {
         return availableActions;
     }
 
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public void refresh() {
+        if (blockSectionName != null) {
+            if (track != Track.EMPTY_TRACK) {
+                if (track.getTrackDirection() == TrackDirection.NORMAL) {
+                    firstRawElement.setFill(TRACK_NORMAL_DIRECTION_RAW_COLOR);
+                    secondRawElement.setFill(TRACK_DIRECTION_RAW_BACKGROUND_COLOR);
+                } else {
+                    firstRawElement.setFill(TRACK_DIRECTION_RAW_BACKGROUND_COLOR);
+                    secondRawElement.setFill(TRACK_REVERSED_DIRECTION_RAW_COLOR);
+                }
+                blockSectionName.setText(track.getId());
+            } else {
+                firstRawElement.setFill(TRACK_DIRECTION_RAW_BACKGROUND_COLOR);
+                secondRawElement.setFill(TRACK_DIRECTION_RAW_BACKGROUND_COLOR);
+                blockSectionName.setText("");
+            }
+        }
+    }
+
+    @Override
+    public void updateFirstTrackView() {
+        //do nothing
+    }
+
+    @Override
+    public void updateSecondTrackView() {
+        //do nothing
+    }
+
+    @Override
+    public void updateSignalView() {
+        //do nothing
+    }
+
+    @Override
+    public void updateSwitchView() {
+        //do nothing
+    }
     //create direction rows in view
 }

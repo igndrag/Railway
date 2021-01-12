@@ -20,10 +20,6 @@ public abstract class BlockingBaseQuad extends AbstractQuad {
     protected TrackBlockSection secondBlockSection = TrackBlockSection.EMPTY_BLOCK_SECTION;
     protected Signal firstSignal = Signal.EMPTY_SIGNAL;
     protected Signal secondSignal = Signal.EMPTY_SIGNAL;
-    protected Shape firstTrackElement;
-    protected Shape secondTrackElement;
-    protected Shape firstSignalLampElement;
-    protected Shape secondSignalLampElement;
     protected Text blockSectionName; //creating in factory
     protected Boolean reversedSignalView = false;
     protected Text firstSignalLabel;
@@ -77,16 +73,6 @@ public abstract class BlockingBaseQuad extends AbstractQuad {
         if (secondSignalLabel != null) {
             this.secondSignalLabel.setText(secondSignal.getId());
         }
-    }
-
-    @Override
-    public void updateFirstTrackView() {
-        refreshBlockSectionState(firstBlockSection.getSection(), firstTrackElement);
-    }
-
-    @Override
-    public void updateSecondTrackView() {
-        refreshBlockSectionState(secondBlockSection.getSection(), secondTrackElement);
     }
 
     @Override

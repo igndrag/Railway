@@ -1,5 +1,6 @@
 package NATrain.quads;
 
+import NATrain.quads.configurableInterfaces.BlockSectionConfigurable;
 import NATrain.quads.configurableInterfaces.BlockSignalConfigurable;
 import NATrain.routes.TrackDirection;
 import NATrain.trackSideObjects.ControlAction;
@@ -9,7 +10,11 @@ import javafx.scene.shape.Shape;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class BlockingSignalQuad extends BlockingBaseQuad implements BlockSignalConfigurable {
+public abstract class BlockingSignalQuad extends BlockingTrackQuad implements BlockSectionConfigurable, BlockSignalConfigurable {
+
+    protected Shape secondTrackElement;
+    protected Shape firstSignalLampElement;
+    protected Shape secondSignalLampElement;
 
     public BlockingSignalQuad(int x, int y) {
         super(x, y);
@@ -32,6 +37,11 @@ public abstract class BlockingSignalQuad extends BlockingBaseQuad implements Blo
         if (secondSignalLabel != null && secondSignal != Signal.EMPTY_SIGNAL) {
             secondSignalLabel.setText(secondSignal.getId());
         }
+    }
+
+    @Override
+    public void updateSecondTrackView() {
+        refreshBlockSectionState(secondBlockSection.getSection(), secondTrackElement);
     }
 
     @Override

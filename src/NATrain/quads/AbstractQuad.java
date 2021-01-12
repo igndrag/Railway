@@ -26,6 +26,9 @@ public abstract class AbstractQuad implements Quad, Paintable {
     public static final Color GRID_LINE_COLOR = Color.LIGHTGRAY;
     public static final Color TRACK_UNDEFINED_ELEMENT_COLOR = Color.LIGHTCORAL;
     public static final Color TRACK_CONFIGURED_COLOR = Color.CORAL;
+    public static final Color TRACK_DIRECTION_RAW_BACKGROUND_COLOR = Color.GRAY;
+    public static final Color TRACK_NORMAL_DIRECTION_RAW_COLOR = Color.LIGHTGREEN;
+    public static final Color TRACK_REVERSED_DIRECTION_RAW_COLOR = Color.DARKRED;
     public static Color YELLOW_BLINKER = Color.YELLOW;
     public static Color WHITE_BLINKER = Color.WHITE;
 

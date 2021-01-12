@@ -12,6 +12,7 @@ import NATrain.quads.DTQ.DTQ2_2;
 import NATrain.quads.EmptyQuad;
 import NATrain.quads.Quad;
 import NATrain.quads.QuadType;
+import NATrain.quads.BCQ.*;
 import NATrain.quads.SIQ.*;
 import NATrain.quads.STQ.*;
 import NATrain.quads.SWQ.*;
@@ -19,9 +20,6 @@ import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-
-
-
 public class QuadFactory {
 
     public static Group redactorModeQuadView = new Group();
@@ -157,6 +155,8 @@ public class QuadFactory {
                return new SIQA4_1(x, y);
            case SIQA4_2:
                return new SIQA4_2(x, y);
+           case BCQ1_1:
+               return new BCQ1_1(x, y);
        }
         return new EmptyQuad(x, y);
     }

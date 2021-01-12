@@ -2,6 +2,7 @@ package NATrain.UI.mosaicRedactor;
 
 import NATrain.model.Model;
 import NATrain.quads.BlockingBaseQuad;
+import NATrain.quads.BlockingControlQuad;
 import NATrain.quads.configurableInterfaces.*;
 import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
@@ -56,25 +57,43 @@ public class TrackQuadConfiguratorFxController {
         trackChoiceBox.getItems().add(Track.EMPTY_TRACK);
         trackChoiceBox.getSelectionModel().select(quadForConfig.getTrack());
 
-        if (trackChoiceBox.getValue() != Track.EMPTY_TRACK) {
-            firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
-            secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
-        } else {
+        if (quadForConfig instanceof BlockingControlQuad) {
             firstBlockSectionChoiceBox.setDisable(true);
-            secondBlockSectionChoiceBox.setDisable(true);
+            trackChoiceBox.setOnAction(event -> {
+                if (trackChoiceBox.getValue() != Track.EMPTY_TRACK) {
+                    quadForConfig.setTrack(trackChoiceBox.getValue());
+                 } else {
+                    quadForConfig.setTrack(Track.EMPTY_TRACK);
+                 }
+                quadForConfig.refresh();
+            });
         }
-        trackChoiceBox.setOnAction(event -> {
-            quadForConfig.setTrack(trackChoiceBox.getValue());
+
+        if (quadForConfig instanceof BlockSectionConfigurable) {
             if (trackChoiceBox.getValue() != Track.EMPTY_TRACK) {
+                quadForConfig.setTrack(trackChoiceBox.getValue());
                 firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
                 secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
-                firstBlockSectionChoiceBox.setDisable(false);
-                secondBlockSectionChoiceBox.setDisable(false);
             } else {
+                quadForConfig.setTrack(Track.EMPTY_TRACK);
                 firstBlockSectionChoiceBox.setDisable(true);
                 secondBlockSectionChoiceBox.setDisable(true);
             }
-            });
+            trackChoiceBox.setOnAction(event -> {
+                quadForConfig.setTrack(trackChoiceBox.getValue());
+                if (trackChoiceBox.getValue() != Track.EMPTY_TRACK) {
+                    firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
+                    secondBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
+                    firstBlockSectionChoiceBox.setDisable(false);
+                    secondBlockSectionChoiceBox.setDisable(false);
+                } else {
+                    firstBlockSectionChoiceBox.getSelectionModel().clearSelection();
+                    firstBlockSectionChoiceBox.setDisable(true);
+                    secondBlockSectionChoiceBox.getSelectionModel().clearSelection();
+                    secondBlockSectionChoiceBox.setDisable(true);
+                }
+                });
+        }
 
         firstBlockSectionChoiceBox.getSelectionModel().select(quadForConfig.getFirstBlockSection());
 
