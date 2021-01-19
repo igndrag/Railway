@@ -70,6 +70,9 @@ public enum QuadType {
     BSQ1_1,
     BSQ2_1,
     BSQ2_2,
+    BSQ3_1,
+    BSQ4_1,
+    BSQ4_2,
 
     BCQ1_1,
 

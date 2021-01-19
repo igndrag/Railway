@@ -100,6 +100,9 @@ public class ActionExecutor {
                 Switch aSwitch = ((SwitchQuad) firstSelectedQuad).getAssociatedSwitch();
                 //aSwitch.sendCommandToChangePosition();
                 break;
+            case CHANGE_TRACK_LINE_DIRECTION:
+                Track track = ((BlockingControlQuad)firstSelectedQuad).getTrack();
+                firstSelectedQuad.refresh();
         }
         clearSelection();
     }

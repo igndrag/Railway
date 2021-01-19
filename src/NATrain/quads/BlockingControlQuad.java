@@ -16,7 +16,7 @@ public abstract class BlockingControlQuad extends BlockingBaseQuad {
     protected Shape secondRawElement;
 
     static {
-        availableActions.add(ControlAction.CHANGE_TRACK_DIRECTION);
+        availableActions.add(ControlAction.CHANGE_TRACK_LINE_DIRECTION);
     }
 
     public BlockingControlQuad(int x, int y) {

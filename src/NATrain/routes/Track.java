@@ -1,5 +1,6 @@
 package NATrain.routes;
 
+import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.quads.Quad;
 import NATrain.trackSideObjects.*;
 
@@ -37,6 +38,7 @@ public class Track implements Serializable {
     }
 
     public void setTrackDirection(TrackDirection trackDirection) {
+        //TODO make property change support for recreate listeners for BSQs
         if (bidirectional) {
             this.trackDirection = trackDirection;
         } else {
@@ -86,6 +88,14 @@ public class Track implements Serializable {
 
     public void setReversedDirectionArrivalSignal(Signal reversedDirectionArrivalSignal) {
         this.reversedDirectionArrivalSignal = reversedDirectionArrivalSignal;
+    }
+
+    public boolean isAllBlockSectionsFree () {
+        for (TrackBlockSection blockSection : blockSections) {
+            if (blockSection.getSection().getVacancyState() == TrackSectionState.OCCUPIED)
+                return false;
+        }
+        return true;
     }
 
 
