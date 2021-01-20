@@ -71,8 +71,8 @@ public class TrackBlockSection implements Serializable {
         return lastInReverseDirection;
     }
 
-    public void setLastInReverseDirection(boolean lastInReverseDirection) {
-        this.lastInReverseDirection = lastInReverseDirection;
+    public void setLastInReversedDirection(boolean lastInReversedDirection) {
+        this.lastInReverseDirection = lastInReversedDirection;
     }
 
     @Override

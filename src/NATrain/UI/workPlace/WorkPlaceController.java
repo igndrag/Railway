@@ -33,6 +33,12 @@ import java.util.List;
 
 public class WorkPlaceController {
 
+    public static WorkPlaceController getActiveController() {
+        return activeController;
+    }
+
+    private static WorkPlaceController activeController;
+
     @FXML
     private BorderPane mainPane;
     @FXML
@@ -71,7 +77,7 @@ public class WorkPlaceController {
     }
 
     public void initialize() {
-
+        activeController = this;
         Model.getSignals().values().forEach(Signal::close);
         Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
         Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));

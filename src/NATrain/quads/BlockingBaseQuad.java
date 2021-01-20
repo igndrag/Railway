@@ -4,15 +4,12 @@ import NATrain.UI.workPlace.Blinker;
 import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
 import NATrain.routes.TrackDirection;
-import NATrain.trackSideObjects.GlobalSignalState;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.SignalState;
-import NATrain.trackSideObjects.TrackSectionState;
-import javafx.scene.shape.Shape;
+import NATrain.trackSideObjects.*;
 import javafx.scene.text.Text;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashSet;
 
 public abstract class BlockingBaseQuad extends AbstractQuad {
     protected Track track = Track.EMPTY_TRACK;
@@ -92,6 +89,7 @@ public abstract class BlockingBaseQuad extends AbstractQuad {
             int index = track.getBlockSections().indexOf(firstBlockSection); //find index TVDS1
             TrackBlockSection TVDS1 = firstBlockSection;
             TrackBlockSection TVDS2;
+            HashSet<TracksideObject> objectsForListening = new HashSet<>();
             PropertyChangeListener listener;
             if (reversedSignalView) {// FS - ND
                 if (!firstBlockSection.isLastInNormalDirection()) { //not last in normal direction
@@ -99,22 +97,74 @@ public abstract class BlockingBaseQuad extends AbstractQuad {
                     listener = new TrackSignalStateAutoselector(TVDS1, TVDS2, firstSignal);
                     TVDS1.getSection().addPropertyChangeListener(listener);
                     TVDS2.getSection().addPropertyChangeListener(listener);
+                    objectsForListening.add(TVDS1.getSection());
+                    objectsForListening.add(TVDS2.getSection());
                 } else {
                     listener = new LastTrackSignalStateAutoselector(TVDS1, firstSignal, this);
                     TVDS1.getSection().addPropertyChangeListener(listener);
                     track.getNormalDirectionArrivalSignal().addPropertyChangeListener(listener);
+                    objectsForListening.add(TVDS1.getSection());
+                    objectsForListening.add(track.getNormalDirectionArrivalSignal());
                 }
 
             } else { // FS - RD
-
+                if(!firstBlockSection.isLastInReverseDirection()) { //not last in reversed direction
+                    TVDS2 = track.getBlockSections().get(index - 1);
+                    listener = new TrackSignalStateAutoselector(TVDS1, TVDS2, firstSignal);
+                    TVDS1.getSection().addPropertyChangeListener(listener);
+                    TVDS2.getSection().addPropertyChangeListener(listener);
+                    objectsForListening.add(TVDS1.getSection());
+                    objectsForListening.add(TVDS2.getSection());
+                } else {
+                    listener = new LastTrackSignalStateAutoselector(TVDS1, firstSignal, this);
+                    TVDS1.getSection().addPropertyChangeListener(listener);
+                    track.getReversedDirectionArrivalSignal().addPropertyChangeListener(listener);
+                    objectsForListening.add(TVDS1.getSection());
+                    objectsForListening.add(track.getReversedDirectionArrivalSignal());
+                }
             }
+            track.getActiveListeners().put(listener, objectsForListening);
         }
 
         if (secondSignal != Signal.EMPTY_SIGNAL) {
-
+            int index = track.getBlockSections().indexOf(secondBlockSection); //find index TVDS1
+            TrackBlockSection TVDS1 = secondBlockSection;
+            TrackBlockSection TVDS2;
+            HashSet<TracksideObject> objectsForListening = new HashSet<>();
+            PropertyChangeListener listener;
+            if (reversedSignalView) {// SS - RD
+                if (!secondBlockSection.isLastInReverseDirection()) { //not last in reversed direction
+                    TVDS2 = track.getBlockSections().get(index - 1);
+                    listener = new TrackSignalStateAutoselector(TVDS1, TVDS2, secondSignal);
+                    TVDS1.getSection().addPropertyChangeListener(listener);
+                    TVDS2.getSection().addPropertyChangeListener(listener);
+                    objectsForListening.add(TVDS1.getSection());
+                    objectsForListening.add(TVDS2.getSection());
+                } else {
+                    listener = new LastTrackSignalStateAutoselector(TVDS1, secondSignal, this);
+                    TVDS1.getSection().addPropertyChangeListener(listener);
+                    track.getReversedDirectionArrivalSignal().addPropertyChangeListener(listener);
+                    objectsForListening.add(TVDS1.getSection());
+                    objectsForListening.add(track.getReversedDirectionArrivalSignal());
+                }
+            } else { //SS - ND
+                if (!secondBlockSection.isLastInNormalDirection()) { //not last in reversed direction
+                    TVDS2 = track.getBlockSections().get(index + 1);
+                    listener = new TrackSignalStateAutoselector(TVDS1, TVDS2, secondSignal);
+                    TVDS1.getSection().addPropertyChangeListener(listener);
+                    TVDS2.getSection().addPropertyChangeListener(listener);
+                    objectsForListening.add(TVDS1.getSection());
+                    objectsForListening.add(TVDS2.getSection());
+                } else {
+                    listener = new LastTrackSignalStateAutoselector(TVDS1, secondSignal, this);
+                    TVDS1.getSection().addPropertyChangeListener(listener);
+                    track.getNormalDirectionArrivalSignal().addPropertyChangeListener(listener);
+                    objectsForListening.add(TVDS1.getSection());
+                    objectsForListening.add(track.getNormalDirectionArrivalSignal());
+                }
+            }
+            track.getActiveListeners().put(listener, objectsForListening);
         }
-
-
     }
 
     private class TrackSignalStateAutoselector implements PropertyChangeListener {
