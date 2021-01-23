@@ -7,7 +7,7 @@ import NATrain.utils.QuadFactory;
 
 import java.io.Serializable;
 
-public class TrackQuadDTO implements Serializable {
+public class BlockingQuadDTO implements Serializable {
     //TODO 
 
     static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class TrackQuadDTO implements Serializable {
     private boolean descriptionShown = false;
     private boolean reversedSignalView = false;
 
-    private TrackQuadDTO(BlockingBaseQuad originalQuad) {
+    private BlockingQuadDTO(BlockingBaseQuad originalQuad) {
         this.x = originalQuad.x;
         this.y = originalQuad.y;
         this.quadType = originalQuad.quadType;
@@ -71,15 +71,13 @@ public class TrackQuadDTO implements Serializable {
         return y;
     }
 
-    public static TrackQuadDTO castToDTO(Quad quad) {
-        return new TrackQuadDTO((BlockingBaseQuad) quad);
+    public static BlockingQuadDTO castToDTO(Quad quad) {
+        return new BlockingQuadDTO((BlockingBaseQuad) quad);
     }
 
-    public static Quad castToQuad(TrackQuadDTO quadDTO) {
+    public static Quad castToQuad(BlockingQuadDTO quadDTO) {
         BlockingBaseQuad baseQuad = (BlockingBaseQuad) QuadFactory.createQuad(quadDTO.x, quadDTO.y, quadDTO.quadType);
-        if (quadDTO.descriptionShown) {
-            baseQuad.showBlockSectionName(true);
-        }
+        baseQuad.showBlockSectionName(quadDTO.descriptionShown);
 
         if (quadDTO.track == null) {
             baseQuad.track = Track.EMPTY_TRACK;
