@@ -7,7 +7,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public abstract class TracksideObject implements Serializable {
+public abstract class TracksideObject implements Serializable, Changeable {
     static final long serialVersionUID = 1L;
 
     protected transient PropertyChangeSupport propertyChangeSupport;
@@ -62,6 +62,13 @@ public abstract class TracksideObject implements Serializable {
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
+    }
+
+    @Override
+    public void deactivateListeners() {
+        PropertyChangeListener[] listeners = propertyChangeSupport.getPropertyChangeListeners();
+        Arrays.stream(listeners).forEach(listener -> propertyChangeSupport.removePropertyChangeListener(listener));
+    //TODO create special logic for all TSO and add it to MOSAIC mode initialize
     }
 
 

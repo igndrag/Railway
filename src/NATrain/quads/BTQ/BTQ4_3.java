@@ -30,5 +30,18 @@ public class BTQ4_3 extends BlockingTrackQuad {
         );
         firstTrackElement.setFill(BaseQuad.TRACK_UNDEFINED_ELEMENT_COLOR);
         addToQuadView(firstTrackElement);
+
+
+        blockSectionName = new Text("");
+        blockSectionName.setTextAlignment(TextAlignment.RIGHT);
+        blockSectionName.setWrappingWidth(80);
+        blockSectionName.setX(10);
+        blockSectionName.setY(20);
+        addToQuadView(blockSectionName);
+
+
     }
+
+
+
 }

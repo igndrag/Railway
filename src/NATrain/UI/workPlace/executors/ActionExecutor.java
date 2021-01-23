@@ -7,6 +7,7 @@ import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.routes.Route;
 import NATrain.routes.Track;
+import NATrain.routes.TrackDirection;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.Switch;
@@ -102,6 +103,8 @@ public class ActionExecutor {
                 break;
             case CHANGE_TRACK_LINE_DIRECTION:
                 Track track = ((BlockingControlQuad)firstSelectedQuad).getTrack();
+                TrackDirection newDirection = track.getTrackDirection() == TrackDirection.NORMAL ? TrackDirection.REVERSED : TrackDirection.NORMAL;
+                track.setTrackDirection(newDirection);
                 firstSelectedQuad.refresh();
         }
         clearSelection();

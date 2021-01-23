@@ -83,7 +83,7 @@ public enum Model implements Serializable {
     public static void saveOnDisk() {
         try {
             ArrayList<QuadDTO> notEmptyQuadDTOs = new ArrayList<>();
-            ArrayList<TrackQuadDTO> notEmptyTrackQuadDTOs = new ArrayList<>();
+            ArrayList<BlockingQuadDTO> notEmptyTrackQuadDTOs = new ArrayList<>();
 
             File modelFile = new File(modelURL);
             modelFile.createNewFile();
@@ -124,7 +124,7 @@ public enum Model implements Serializable {
                     if (quad instanceof BaseQuad) {
                         notEmptyQuadDTOs.add(QuadDTO.castToDTO(quad));
                     } else if (quad instanceof BlockingBaseQuad) {
-                        notEmptyTrackQuadDTOs.add(TrackQuadDTO.castToDTO(quad));
+                        notEmptyTrackQuadDTOs.add(BlockingQuadDTO.castToDTO(quad));
                     }
                 }
             });
@@ -160,6 +160,9 @@ public enum Model implements Serializable {
                 routeTable = (CopyOnWriteArraySet<Route>) inputStream.readObject();
                 tracks = (Set<Track>) inputStream.readObject();
                 tracks.forEach(track -> {
+                    track.setSignalQuads(new ArrayList<>());
+                    track.setActiveSignalListeners(new HashMap<>());
+
                     track.getBlockSections().forEach(blockSection -> {
                         blockSection.getSection().addPropertyChangeSupport();
                         blockSection.getSection().setVacancyState(TrackSectionState.UNDEFINED);
@@ -181,14 +184,14 @@ public enum Model implements Serializable {
                 });
 
                 ArrayList<QuadDTO> notEmptyQuadDTOS = (ArrayList<QuadDTO>) inputStream.readObject();
-                ArrayList<TrackQuadDTO> notEmptyTrackQuadDTOS = (ArrayList<TrackQuadDTO>) inputStream.readObject();
+                ArrayList<BlockingQuadDTO> notEmptyTrackQuadDTOS = (ArrayList<BlockingQuadDTO>) inputStream.readObject();
                 inputStream.close();
 
                 notEmptyQuadDTOS.forEach(quadDTO -> {
                     getMainGrid()[quadDTO.getY()][quadDTO.getX()] = QuadDTO.castToQuad(quadDTO);
                 });
                 notEmptyTrackQuadDTOS.forEach(trackQuadDTO -> {
-                    getMainGrid()[trackQuadDTO.getY()][trackQuadDTO.getX()] = TrackQuadDTO.castToQuad(trackQuadDTO);
+                    getMainGrid()[trackQuadDTO.getY()][trackQuadDTO.getX()] = BlockingQuadDTO.castToQuad(trackQuadDTO);
                 });
             }
         } catch (IOException | ClassNotFoundException e) {

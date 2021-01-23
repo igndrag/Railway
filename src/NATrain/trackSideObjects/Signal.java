@@ -2,6 +2,8 @@ package NATrain.trackSideObjects;
 
 import NATrain.remoteControlModules.Command;
 
+import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
 
@@ -105,4 +107,5 @@ public class Signal extends TracksideObject {
                 return GlobalSignalState.NOT_ACTIVE; //if not configured or not light
         }
     }
+
 }

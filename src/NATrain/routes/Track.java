@@ -1,25 +1,19 @@
 package NATrain.routes;
 
-import NATrain.UI.NavigatorFxController;
-import NATrain.UI.workPlace.WorkPlaceController;
-import NATrain.quads.Quad;
+import NATrain.quads.BlockingBaseQuad;
 import NATrain.trackSideObjects.*;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Track implements Serializable {
 
     static final long serialVersionUID = 1L;
     public static final Track EMPTY_TRACK = new Track("none");
-    private transient Map<PropertyChangeListener, Set<TracksideObject>> activeListeners = new HashMap<>();
+    private transient Map<PropertyChangeListener, Set<TracksideObject>> activeSignalListeners = new HashMap<>();
+    private transient List<BlockingBaseQuad> signalQuads = new ArrayList<>();
 
     private String id;
     private TrackDirection trackDirection = TrackDirection.NORMAL;
@@ -41,15 +35,33 @@ public class Track implements Serializable {
         return blockSections;
     }
 
-    public Map<PropertyChangeListener, Set<TracksideObject>> getActiveListeners() {
-        return activeListeners;
+    public Map<PropertyChangeListener, Set<TracksideObject>> getActiveSignalListeners() {
+        return activeSignalListeners;
+    }
+
+    public void setActiveSignalListeners(Map<PropertyChangeListener, Set<TracksideObject>> activeSignalListeners) {
+        this.activeSignalListeners = activeSignalListeners;
+    }
+
+    public List<BlockingBaseQuad> getSignalQuads() {
+        return signalQuads;
+    }
+
+    public void setSignalQuads(List<BlockingBaseQuad> signalQuads) {
+        this.signalQuads = signalQuads;
     }
 
     public void setTrackDirection(TrackDirection trackDirection) {
         //TODO make property change support for recreate listeners for BSQs
         if (bidirectional) {
             if (isAllBlockSectionsFree()) {
+                deactivateSignalListeners();
                 this.trackDirection = trackDirection;
+                signalQuads.forEach(quad -> {
+                    quad.activateSignalStateAutoselectors();
+                    quad.refresh();
+                });
+
             } else {
                 //WorkPlaceController.getActiveController().log(String.format("Track direction change of %s is impossible. Track isn't free.", this.id));
             }
@@ -111,18 +123,19 @@ public class Track implements Serializable {
     }
 
     public void deactivateSignalListeners() {
-        activeListeners.forEach((listener, objects) -> {
+        activeSignalListeners.forEach((listener, objects) -> {
             objects.forEach(object -> {
                 object.removePropertyChangeListener(listener);
             });
         });
         getBlockSections().stream().map(TrackBlockSection::getNormalDirectionSignal).forEach(signal -> {signal.setSignalState(SignalState.NOT_LIGHT);});
         getBlockSections().stream().map(TrackBlockSection::getReversedDirectionSignal).forEach(signal -> {signal.setSignalState(SignalState.NOT_LIGHT);});
-        activeListeners.clear();
+        activeSignalListeners.clear();
     }
 
     @Override
     public String toString() {
         return id;
     }
+
 }
