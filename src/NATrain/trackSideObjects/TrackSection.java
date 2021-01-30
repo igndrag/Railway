@@ -1,6 +1,9 @@
 package NATrain.trackSideObjects;
 
 
+import NATrain.сontrolModules.InputChannel;
+import NATrain.сontrolModules.InputChannelType;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -19,6 +22,7 @@ public class TrackSection extends TracksideObject {
 
     public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
     private boolean arrivalDepartureTrack = false;
+    private final InputChannel inputChannel = new InputChannel(InputChannelType.TRACK_SECTION, this);
 
     private transient TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
 
@@ -79,6 +83,10 @@ public class TrackSection extends TracksideObject {
         TrackSectionState oldState = this.vacancyState;
         this. vacancyState = vacancyState;
         propertyChangeSupport.firePropertyChange("occupationalProperty", oldState, vacancyState);
+    }
+
+    public InputChannel getInputChannel() {
+        return inputChannel;
     }
 
     @Override

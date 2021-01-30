@@ -1,7 +1,7 @@
 package NATrain.UI.controlModuleRedactor;
 
 import NATrain.model.Model;
-import NATrain.remoteControlModules.ControlModule;
+import NATrain.remoteControlModules.RemoteControlModule;
 import NATrain.remoteControlModules.SignalControlModule;
 import NATrain.remoteControlModules.SwitchControlModule;
 import NATrain.remoteControlModules.TrackControlModule;
@@ -14,8 +14,8 @@ public class CMCreatorController {
 
     private Stage primaryStage;
 
-    TableView<ControlModule> tableView;
-    ObservableList<ControlModule> observableList;
+    TableView<RemoteControlModule> tableView;
+    ObservableList<RemoteControlModule> observableList;
 
     @FXML
     private ToggleButton signalToggleButton;
@@ -32,7 +32,7 @@ public class CMCreatorController {
         this.primaryStage = primaryStage;
     }
 
-    public void initialize(TableView<ControlModule> tableView, ObservableList<ControlModule> observableList) {
+    public void initialize(TableView<RemoteControlModule> tableView, ObservableList<RemoteControlModule> observableList) {
         this.tableView = tableView;
         this.observableList = observableList;
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -45,7 +45,7 @@ public class CMCreatorController {
         String address = addressTextField.getText();
         if (isNumeric(address) && !address.equals("")) {
             Integer adrNum = Integer.parseInt(address);
-            if (Model.getControlModules().containsKey(adrNum)) {
+            if (Model.getRemoteControlModules().containsKey(adrNum)) {
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setContentText(String.format("Control Module with address %s is already exists!", Integer.parseInt(address)));
                 a.show();
@@ -73,7 +73,7 @@ public class CMCreatorController {
     private void saveAndClose() {
         if (isAddressValid()) {
             int address = Integer.parseInt(addressTextField.getText());
-            ControlModule controlModule = null;
+            RemoteControlModule controlModule = null;
             if (trackToggleButton.isSelected())
                 controlModule = new TrackControlModule(address);
             else if (switchToggleButton.isSelected())
@@ -86,7 +86,7 @@ public class CMCreatorController {
                 a.show();
                 return;
             }
-            Model.getControlModules().put(address, controlModule);
+            Model.getRemoteControlModules().put(address, controlModule);
             observableList.add(controlModule);
             tableView.refresh();
             primaryStage.close();

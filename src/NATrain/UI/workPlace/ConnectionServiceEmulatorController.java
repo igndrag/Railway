@@ -1,8 +1,7 @@
 package NATrain.UI.workPlace;
 
-import NATrain.UI.NavigatorFxController;
 import NATrain.model.Model;
-import NATrain.remoteControlModules.ControlModule;
+import NATrain.remoteControlModules.RemoteControlModule;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -61,7 +60,7 @@ public class ConnectionServiceEmulatorController {
             int statusCode = Integer.parseInt(statusTextField.getText());
             int controlModuleAddress = Integer.parseInt(resControlModuleAddressTextField.getText());
             int channelNumber = Integer.parseInt(resChannelNumberTextField.getText());
-            ControlModule controlModule = Model.getControlModules().get(controlModuleAddress);
+            RemoteControlModule controlModule = Model.getRemoteControlModules().get(controlModuleAddress);
             if (controlModule != null) {
                 controlModule.refreshObjectState(channelNumber, statusCode);
             }

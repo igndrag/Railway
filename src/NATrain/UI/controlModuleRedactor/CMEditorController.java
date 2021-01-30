@@ -1,7 +1,7 @@
 package NATrain.UI.controlModuleRedactor;
 
 import NATrain.model.Model;
-import NATrain.remoteControlModules.ControlModule;
+import NATrain.remoteControlModules.RemoteControlModule;
 import NATrain.remoteControlModules.SignalControlModule;
 import NATrain.remoteControlModules.SwitchControlModule;
 import NATrain.remoteControlModules.TrackControlModule;
@@ -16,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,8 +23,8 @@ import java.util.stream.Collectors;
 public class CMEditorController {
 
     private int chCount;
-    private ControlModule controlModule;
-    private TableView<ControlModule> tableView;
+    private RemoteControlModule controlModule;
+    private TableView<RemoteControlModule> tableView;
     private ObservableList<String> observableList;
 
     private CheckBox[] checkBoxes;
@@ -69,7 +68,7 @@ public class CMEditorController {
     @FXML
     private Button saveButton;
 
-    public void initialize(ControlModule controlModule, TableView<ControlModule> tableView) {
+    public void initialize(RemoteControlModule controlModule, TableView<RemoteControlModule> tableView) {
         checkBoxes = new CheckBox[]{checkBoxCh0, checkBoxCh1, checkBoxCh2, checkBoxCh3, checkBoxCh4, checkBoxCh5, checkBoxCh6, checkBoxCh7};
         choiceBoxes = new ChoiceBox[]{choiceBoxCh0, choiceBoxCh1, choiceBoxCh2, choiceBoxCh3, choiceBoxCh4, choiceBoxCh5, choiceBoxCh6, choiceBoxCh7};
         chCount = controlModule.getChannels().length;
@@ -145,7 +144,7 @@ public class CMEditorController {
 
         objectsForConfig.forEach((channel, tracksideObjectName) -> {
             TracksideObject tracksideObject = modelMap.get(tracksideObjectName);
-            tracksideObject.setControlModule(controlModule);
+         //   tracksideObject.setControlModule(controlModule);
             tracksideObject.setChannel(channel);
             controlModule.setTrackSideObjectOnChannel(tracksideObject, channel);
         });

@@ -1,10 +1,11 @@
 package NATrain.trackSideObjects;
 
+import NATrain.сontrolModules.OutputChannel;
 import NATrain.remoteControlModules.Command;
 
-import java.beans.PropertyChangeListener;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import static NATrain.trackSideObjects.SignalState.*;
@@ -29,6 +30,7 @@ public class Signal extends TracksideObject {
     transient SignalState signalState = SignalState.UNDEFINED;
     private SignalType signalType;
     private SignalState closedSignalState;
+    private final Map<SignalLamp, OutputChannel> lamps = new HashMap<>();
 
     public void setSignalType(SignalType signalType) {
         this.signalType = signalType;
@@ -60,6 +62,10 @@ public class Signal extends TracksideObject {
         return signalState;
     }
 
+    public Map<SignalLamp, OutputChannel> getLamps() {
+        return lamps;
+    }
+
     public void setSignalState(SignalState signalState) {
         if (approvedSignals.contains(signalState)) {
             SignalState oldState = this.signalState;
@@ -85,8 +91,6 @@ public class Signal extends TracksideObject {
     }
 
     public void sendCommand(Command command) {
-        assert controlModule != null;
-        controlModule.sendCommand(channel, command);
     }
 
     public GlobalSignalState getGlobalStatus() {

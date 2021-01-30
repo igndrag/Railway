@@ -4,7 +4,8 @@ import NATrain.routes.Route;
 import NATrain.routes.Track;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
-import NATrain.remoteControlModules.ControlModule;
+import NATrain.remoteControlModules.RemoteControlModule;
+import NATrain.сontrolModules.ControlModule;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -32,7 +33,9 @@ public enum Model implements Serializable {
 
     private static Map<String, TrackSection> trackSections = new ConcurrentHashMap<>();
 
-    private static Map<Integer, ControlModule> controlModules = new ConcurrentHashMap<>();
+    private static Map<Integer, RemoteControlModule> remoteControlModules = new ConcurrentHashMap<>();
+
+    private static Set<ControlModule> controlModules = new CopyOnWriteArraySet<>();
 
     private static Set<Track> tracks = new CopyOnWriteArraySet<>();
 
@@ -56,7 +59,11 @@ public enum Model implements Serializable {
         return trackSections;
     }
 
-    public static Map<Integer, ControlModule> getControlModules() {
+    public static Map<Integer, RemoteControlModule> getRemoteControlModules() {
+        return remoteControlModules;
+    }
+
+    public static Set<ControlModule> getControlModules() {
         return controlModules;
     }
 
@@ -94,7 +101,7 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(trackSections);
             objectOutputStream.writeObject(signals);
             objectOutputStream.writeObject(switches);
-            objectOutputStream.writeObject(controlModules);
+            objectOutputStream.writeObject(remoteControlModules);
             objectOutputStream.writeObject(routeTable);
             tracks.forEach(track -> { // change EMPTY_SIGNALs to null fow writing
                 track.getBlockSections().forEach(blockSection -> {
@@ -156,7 +163,7 @@ public enum Model implements Serializable {
                 switches = (Map<String, Switch>) inputStream.readObject();
                 switches.values().forEach(TracksideObject::addPropertyChangeSupport);
                 switches.values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.UNDEFINED));
-                controlModules = (Map<Integer, ControlModule>) inputStream.readObject();
+                remoteControlModules = (Map<Integer, RemoteControlModule>) inputStream.readObject();
                 routeTable = (CopyOnWriteArraySet<Route>) inputStream.readObject();
                 tracks = (Set<Track>) inputStream.readObject();
                 tracks.forEach(track -> {

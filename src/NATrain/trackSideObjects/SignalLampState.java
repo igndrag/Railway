@@ -1,17 +1,18 @@
 package NATrain.trackSideObjects;
 
-public enum TrackSectionState {
-    FREE (1),
-    OCCUPIED (2),
-    UNDEFINED (0);
+public enum SignalLampState {
+    NOT_LIGHT (0),
+    LIGHT (1),
+    BLINKING (2);
 
     private int stateCode;
 
-    private TrackSectionState (int stateCode) {
+    private SignalLampState (int stateCode) {
         this.stateCode = stateCode;
     }
 
     public int getCode() {
         return stateCode;
     }
+
 }

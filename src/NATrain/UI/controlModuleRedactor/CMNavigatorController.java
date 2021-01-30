@@ -1,7 +1,7 @@
 package NATrain.UI.controlModuleRedactor;
 
 import NATrain.model.Model;
-import NATrain.remoteControlModules.ControlModule;
+import NATrain.remoteControlModules.RemoteControlModule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,16 +25,16 @@ import java.util.Objects;
 public class CMNavigatorController {
 
     private Stage primaryStage;
-    private ObservableList<ControlModule> controlModules;
+    private ObservableList<RemoteControlModule> controlModules;
 
     @FXML
     private Pane previewPane;
     @FXML
-    private TableView<ControlModule> tableView;
+    private TableView<RemoteControlModule> tableView;
     @FXML
-    private TableColumn<ControlModule, String> typeColumn;
+    private TableColumn<RemoteControlModule, String> typeColumn;
     @FXML
-    private TableColumn<ControlModule, Integer> addressColumn;
+    private TableColumn<RemoteControlModule, Integer> addressColumn;
     @FXML
     private Button newButton;
     @FXML
@@ -52,8 +52,8 @@ public class CMNavigatorController {
         editButton.setDisable(true);
         deleteButton.setDisable(true);
 
-        controlModules = FXCollections.observableArrayList(Model.getControlModules().values());
-        controlModules.sort(Comparator.comparing(ControlModule::getAddress));
+        controlModules = FXCollections.observableArrayList(Model.getRemoteControlModules().values());
+        controlModules.sort(Comparator.comparing(RemoteControlModule::getAddress));
         tableView.setItems(controlModules);
 
         newButton.setOnMouseClicked(event -> {
@@ -65,13 +65,13 @@ public class CMNavigatorController {
         });
 
         deleteButton.setOnAction(event -> {
-            ControlModule objectForDelete = tableView.getSelectionModel().getSelectedItem();
+            RemoteControlModule objectForDelete = tableView.getSelectionModel().getSelectedItem();
             Arrays.stream(objectForDelete.getChannels()) //clear all channels references before delete control module
                     .filter(Objects::nonNull)
                     .forEach(tracksideObject -> tracksideObject.setControlModule(null));
 
             controlModules.remove(objectForDelete);
-            Model.getControlModules().remove(objectForDelete.getAddress());
+            Model.getRemoteControlModules().remove(objectForDelete.getAddress());
             if (controlModules.size() == 0) {
                 editButton.setDisable(true);
                 deleteButton.setDisable(true);
@@ -98,7 +98,7 @@ public class CMNavigatorController {
         });
     }
 
-    private void toControlModuleRedactor(ControlModule controlModule) throws IOException {
+    private void toControlModuleRedactor(RemoteControlModule controlModule) throws IOException {
         FXMLLoader loader = new FXMLLoader(CMEditorController.class.getResource("CMEditor.fxml"));
         Stage controlModuleEditor = new Stage();
         controlModuleEditor.setTitle("Control Module Editor");
@@ -125,7 +125,7 @@ public class CMNavigatorController {
         controlModuleCreator.show();
     }
 
-    private void refreshPreview(ControlModule controlModule) {
+    private void refreshPreview(RemoteControlModule controlModule) {
         previewPane.getChildren().clear();
         Group preview = new Group();
         for (int i = 0; i < controlModule.getChannels().length; i++) {

@@ -92,7 +92,7 @@ public class Switch extends TracksideObject implements Serializable {
     public void sendCommandToChangePosition() {
         if (trackSection.getVacancyState() == TrackSectionState.FREE && !trackSection.isInterlocked()) {
             assert controlModule != null;
-            controlModule.sendCommand(channel, Command.CHANGE_SWITCH_POSITION);
+            //controlModule.sendCommand(channel, Command.CHANGE_SWITCH_POSITION);
         }
     }
 }

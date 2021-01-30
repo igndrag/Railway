@@ -1,6 +1,7 @@
 package NATrain.trackSideObjects;
 
-import NATrain.remoteControlModules.ControlModule;
+import NATrain.remoteControlModules.RemoteControlModule;
+import NATrain.сontrolModules.ControlModule;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -50,11 +51,6 @@ public abstract class TracksideObject implements Serializable, Changeable {
         this.channel = channel;
     }
 
-    public Integer getControlModuleAddress() {
-        if (controlModule != null)
-            return controlModule.getAddress();
-        return null;
-    }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);

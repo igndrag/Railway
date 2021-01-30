@@ -2,18 +2,31 @@ package NATrain.connectionService;
 
 import NATrain.model.Model;
 import NATrain.trackSideObjects.TrackSectionState;
+import NATrain.сontrolModules.ControlModule;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import java.util.Arrays;
+
 public class MQTTConnectionService {
+    private static MQTTConnectionService service;
     static String broker = "tcp://localhost:1883";
-    static String topicName = "test";
+    static String topicName = "NATrain";
     static int qos = 1;
     static String clientID = "NATrainsApp";
     static MqttClient mqttClient;
     static MemoryPersistence persistence = new MemoryPersistence();
 
+    public static MQTTConnectionService getService() {
+        return service;
+    }
+
     private static class MyMqttCallback implements MqttCallback {
+        private ControlModule controlModule;
+
+        public MyMqttCallback(ControlModule controlModule) {
+            this.controlModule = controlModule;
+        }
 
         @Override
         public void connectionLost(Throwable throwable) {
@@ -22,28 +35,31 @@ public class MQTTConnectionService {
 
         @Override
         public void messageArrived(String topic, MqttMessage message) throws Exception {
-            System.out.println("message is : " + message);
-            if (message.toString().equals("Occupied")) {
-                Model.getTrackSections().get("SP").setVacancyState(TrackSectionState.OCCUPIED);
-            }
-            if (message.toString().equals("Free")) {
-                Model.getTrackSections().get("SP").setVacancyState(TrackSectionState.FREE);
-            }
+           // RESPONSE INPUTNUMBER1:INPUTSTATUS1 INPUTNUMBER2:INPUTSTATUS2 ...
+           String[] inputStatuses = message.toString().split(" ");
+           Arrays.stream(inputStatuses).forEach(inputStatus -> {
+               String[] statusParts = inputStatus.split(":");
+               int portNumber = Integer.parseInt(statusParts[0]);
+               int inputStateCode = Integer.parseInt(statusParts[1]);
+               controlModule.getInputChannels()[portNumber].setActualState(inputStateCode);
+           });
         }
 
         @Override
         public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
 
         }
-
-
     }
 
-    public static void main(String[] args) {
+    public static void initMQTTService() {
         connect();
-        publish("test", "Java MQTTClient started");
-        subscribe("TrackSectionModule", new MyMqttCallback());
+        publish(topicName, "NATrain MQTTClient started");
+
+        Model.getControlModules().forEach(controlModule -> {
+            subscribe(topicName + "/controlModules/" + controlModule.getId(), new MyMqttCallback(controlModule));
+        });
     }
+
     public static void subscribe(String topic, MqttCallback mqttCallback) {
         try {
             mqttClient.subscribe(topic); //subscribing to the topic name  test/topic
@@ -52,7 +68,6 @@ public class MQTTConnectionService {
             e.printStackTrace();
         }
     }
-
 
     public static void publish(String topic, String message) {
         MqttMessage mqttMessage = new MqttMessage(message.getBytes());

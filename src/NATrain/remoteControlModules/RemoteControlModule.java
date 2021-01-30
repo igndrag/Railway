@@ -4,7 +4,7 @@ import NATrain.trackSideObjects.TracksideObject;
 
 import java.util.List;
 
-public interface ControlModule {
+public interface RemoteControlModule {
 
     String getType();
 

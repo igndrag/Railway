@@ -1,10 +1,9 @@
 package NATrain.remoteControlModules;
 
-import NATrain.connectionService.RequestExecutor;
 import NATrain.trackSideObjects.TrackSection;
 import NATrain.trackSideObjects.TrackSectionState;
 
-public class TrackControlModule extends AbstractModule implements ControlModule {
+public class TrackControlModule extends AbstractModule implements RemoteControlModule {
     static final long serialVersionUID = 1L;
     private static final int FREE_RESPONSE_STATUS_CODE = 1;
     private static final int OCCUPIED_RESPONSE_STATUS_CODE = 2;

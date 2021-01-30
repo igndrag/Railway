@@ -7,6 +7,7 @@ import NATrain.UI.tracks.TrackSelectorController;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController;
 import NATrain.UI.workPlace.Blinker;
 import NATrain.UI.workPlace.WorkPlaceController;
+import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.quads.AbstractQuad;
 import NATrain.utils.ModelMock;
@@ -54,8 +55,9 @@ public class NavigatorFxController {
 
     public void initialize() {
         AppConfigController.loadConfigs();
-        Model.loadFromDisk();//
-        //ModelMock.MockModel();
+        //Model.loadFromDisk();//
+        ModelMock.MockModel();
+        MQTTConnectionService.initMQTTService();
        }
 
     @FXML

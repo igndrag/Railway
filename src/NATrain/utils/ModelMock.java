@@ -1,7 +1,5 @@
 package NATrain.utils;
 
-import NATrain.routes.Route;
-import NATrain.routes.RouteType;
 import NATrain.trackSideObjects.SwitchState;
 import NATrain.model.Model;
 import NATrain.quads.EmptyQuad;
@@ -10,6 +8,8 @@ import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.SignalType;
 import NATrain.trackSideObjects.Switch;
 import NATrain.trackSideObjects.TrackSection;
+import NATrain.сontrolModules.ControlModule;
+import NATrain.сontrolModules.UniversalModule;
 
 public class ModelMock {
 
@@ -23,6 +23,11 @@ public class ModelMock {
 
         Model.getSignals().put("S1", new Signal("S1", SignalType.STATION));
         Model.getSignals().put("M1", new Signal("M1", SignalType.TRIMMER));
+
+        ControlModule controlModule = new UniversalModule("testModule");
+        Model.getControlModules().add(controlModule);
+
+        // topic name: NATrain/controlModules/testModule
 
         Switch oneSwitch = new Switch("1");
         Switch twoSwitch = new Switch("2");
@@ -39,6 +44,7 @@ public class ModelMock {
 
         TrackSection oneTrackSection = new TrackSection ("1-3SP");
         TrackSection twoTrackSection = new TrackSection ("SP");
+        controlModule.getInputChannels()[0] = oneTrackSection.getInputChannel();
 
         oneTrackSection.setChannel(0);
         Model.getTrackSections().put("1-3SP", oneTrackSection);
@@ -48,15 +54,15 @@ public class ModelMock {
 
         TrackControlModule trackControlModule = new TrackControlModule(0);
         trackControlModule.setTrackSideObjectOnChannel(oneTrackSection, 0);
-        oneTrackSection.setControlModule(trackControlModule);
+        //oneTrackSection.setControlModule(trackControlModule);
 
-        Model.getControlModules().put(0, trackControlModule);
+        Model.getRemoteControlModules().put(0, trackControlModule);
 
         twoTrackSection.setChannel(1);
         TrackControlModule trackControlModule1 = new TrackControlModule(1);
         trackControlModule.setTrackSideObjectOnChannel(twoTrackSection, 1);
-        twoTrackSection.setControlModule(trackControlModule);
+       // twoTrackSection.setControlModule(trackControlModule);
 
-        Model.getControlModules().put(1, trackControlModule1);
+        Model.getRemoteControlModules().put(1, trackControlModule1);
     }
 }

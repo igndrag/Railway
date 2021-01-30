@@ -141,7 +141,7 @@ public class TracksideObjectNavigatorController {
         deleteTrackSectionButton.setOnAction(event -> {
             TracksideObject objectForDelete = trackSectionsTableView.getSelectionModel().getSelectedItem();
             if (objectForDelete.getControlModule() != null)
-                objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
+          //      objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
             objectForDelete.setControlModule(null);
             trackSectionList.remove(objectForDelete);
             Model.getTrackSections().remove(objectForDelete.getId());
@@ -192,7 +192,7 @@ public class TracksideObjectNavigatorController {
         deleteSwitchButton.setOnAction(event -> {
             Switch objectForDelete = (Switch) switchTableView.getSelectionModel().getSelectedItem();
             if (objectForDelete.getControlModule() != null)
-                objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
+            //    objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
             objectForDelete.setControlModule(null);
             if (objectForDelete.isPared()) {
                 objectForDelete.getParedSwitch().setParedSwitch(null);
@@ -246,7 +246,7 @@ public class TracksideObjectNavigatorController {
         deleteSignalButton.setOnAction(event -> {
             Signal objectForDelete = (Signal) signalTableView.getSelectionModel().getSelectedItem();
             if (objectForDelete.getControlModule() != null)
-                objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
+          //      objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
             objectForDelete.setControlModule(null);
 
             signalList.remove(objectForDelete);

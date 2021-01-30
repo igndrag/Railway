@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractModule implements ControlModule, Serializable {
+public abstract class AbstractModule implements RemoteControlModule, Serializable {
     static final long serialVersionUID = 1L;
 
     protected String IPAddress;
