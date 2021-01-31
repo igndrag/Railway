@@ -1,5 +1,6 @@
 package NATrain.trackSideObjects;
 
+import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.сontrolModules.InputChannel;
 import NATrain.сontrolModules.InputChannelType;
 import NATrain.сontrolModules.OutputChannel;
@@ -9,6 +10,7 @@ import java.io.Serializable;
 public class Switch extends TracksideObject implements Serializable {
     static final long serialVersionUID = 1L;
 
+    public static final int CONTROL_IMPULSE_COMMAND_CODE = 8;
     public static final Switch EMPTY_SWITCH = new Switch("");
     public static final String INITIAL_SWITCH_NAME = "New Switch";
 
@@ -59,8 +61,8 @@ public class Switch extends TracksideObject implements Serializable {
     }
 
     public void setSwitchState(SwitchState switchState) {
-        this.switchState = switchState;
-        propertyChangeSupport.firePropertyChange("switchStateProperty",null, switchState);
+            this.switchState = switchState;
+            propertyChangeSupport.firePropertyChange("switchStateProperty", null, switchState);
     }
 
     public void setTrackSection(TrackSection trackSection) {
@@ -94,9 +96,11 @@ public class Switch extends TracksideObject implements Serializable {
     public void changePosition() {
         if (isChangePositionAvailable()) {
             if (switchState == SwitchState.PLUS)
-                switchState = SwitchState.MINUS;
+                sendOutputCommand(SwitchState.MINUS);
             else if (switchState == SwitchState.MINUS)
-                switchState = SwitchState.PLUS;
+                sendOutputCommand(SwitchState.PLUS);
+        } else {
+            WorkPlaceController.getActiveController().log("Position change isn't available!");
         }
     }
 
@@ -110,10 +114,13 @@ public class Switch extends TracksideObject implements Serializable {
                 && !trackSection.isInterlocked() && paredSwitchCheck;
     }
 
-    public void sendCommandToChangePosition() {
-        if (trackSection.getVacancyState() == TrackSectionState.FREE && !trackSection.isInterlocked()) {
-            //assert controlModule != null;
-            //controlModule.sendCommand(channel, Command.CHANGE_SWITCH_POSITION);
+    public void sendOutputCommand(SwitchState switchState) {
+        switch (switchState) {
+            case PLUS:
+                plusOutputChannel.sendCommand(CONTROL_IMPULSE_COMMAND_CODE);
+                break;
+            case MINUS:
+                minusOutputChannel.sendCommand(CONTROL_IMPULSE_COMMAND_CODE);
         }
     }
 }

@@ -152,12 +152,11 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
             Switch aSwitch = entry.getKey();
             SwitchState switchState = entry.getValue();
             if (aSwitch.getSwitchState() != switchState && aSwitch.isChangePositionAvailable()) {
-
                 if (switchState == SwitchState.PLUS) {
-                   // switchControlModule.sendCommand(aSwitch.getChannel(), Command.SET_SWITCH_TO_PLUS);
+                    aSwitch.sendOutputCommand(SwitchState.PLUS);
                     aSwitch.setSwitchState(SwitchState.PLUS); //TODO delete it when realize hardware
                 } else {
-                   // switchControlModule.sendCommand(aSwitch.getChannel(), Command.SET_SWITCH_TO_MINUS);
+                    aSwitch.sendOutputCommand(SwitchState.MINUS);
                     aSwitch.setSwitchState(SwitchState.MINUS); //TODO delete it when realize hardware
                 }
             }

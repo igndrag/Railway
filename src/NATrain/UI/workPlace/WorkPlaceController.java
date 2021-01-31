@@ -40,6 +40,8 @@ public class WorkPlaceController {
 
     private static WorkPlaceController activeController;
 
+    private static boolean activeMode = false;
+
     @FXML
     private BorderPane mainPane;
     @FXML
@@ -63,7 +65,7 @@ public class WorkPlaceController {
     @FXML
     private ScrollPane workArea;
 
-    private ActionExecutor actionExecutor = new ActionExecutor(this);
+    private ActionExecutor actionExecutor = new ActionExecutor();
 
     private Stage primaryStage;
 
@@ -77,8 +79,17 @@ public class WorkPlaceController {
         return primaryStage;
     }
 
+    public static boolean isActiveMode() {
+        return activeMode;
+    }
+
+    public static void setActiveMode(boolean activeMode) {
+        activeMode = activeMode;
+    }
+
     public void initialize() {
         MQTTConnectionService.connect();
+        activeMode = true;
         activeController = this;
         Model.getSignals().values().forEach(Signal::close);
         Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));

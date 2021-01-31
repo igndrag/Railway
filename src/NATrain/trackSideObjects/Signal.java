@@ -1,5 +1,6 @@
 package NATrain.trackSideObjects;
 
+import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.сontrolModules.OutputChannel;
 
 import java.util.Collections;
@@ -69,7 +70,9 @@ public class Signal extends TracksideObject {
         if (approvedSignals.contains(signalState)) {
             SignalState oldState = this.signalState;
             this.signalState = signalState;
-            sendOutputCommands(signalState);
+            if (WorkPlaceController.isActiveMode()) {
+                sendOutputCommands(signalState);
+            }
             propertyChangeSupport.firePropertyChange("signalStateProperty", oldState, signalState);
         }
     }

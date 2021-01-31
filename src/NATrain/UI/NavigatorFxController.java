@@ -148,6 +148,7 @@ public class NavigatorFxController {
         //controller.initialize();
         workPlace.setOnCloseRequest(event -> {
             try {
+                WorkPlaceController.setActiveMode(false);
                 MQTTConnectionService.getClient().disconnect();
             } catch (MqttException e) {
                 e.printStackTrace();

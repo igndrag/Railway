@@ -32,11 +32,6 @@ public class ActionExecutor {
     private ControlAction firstControlAction;
     private Quad secondSelectedQuad = EMPTY_QUAD;
     private ControlAction secondControlAction;
-    private WorkPlaceController workPlaceController;
-
-    public ActionExecutor(WorkPlaceController workPlaceController) {
-        this.workPlaceController = workPlaceController;
-    }
 
     private static ObservableList<RouteExecutor> activeRoutes = FXCollections.observableArrayList();
 
@@ -81,10 +76,10 @@ public class ActionExecutor {
                                 ((BlockingTrackQuad) secondSelectedQuad).getFirstBlockSection().getTrack());
                         break;
                     default:
-                        workPlaceController.log("Wrong command.");
+                        WorkPlaceController.getActiveController().log("Wrong command.");
                 }
                 if (foundedRoutes.isEmpty()) {
-                    workPlaceController.log("Route isn't founded in route table.");
+                    WorkPlaceController.getActiveController().log("Route isn't founded in route table.");
                 } else {
                     if (foundedRoutes.size() == 1) {
                         prepareRoute(foundedRoutes.get(0));
@@ -99,7 +94,7 @@ public class ActionExecutor {
                 break;
             case CHANGE_SWITCH_POSITION:
                 Switch aSwitch = ((SwitchQuad) firstSelectedQuad).getAssociatedSwitch();
-                //aSwitch.sendCommandToChangePosition();
+                aSwitch.changePosition();
                 break;
             case CHANGE_TRACK_LINE_DIRECTION:
                 Track track = ((BlockingControlQuad)firstSelectedQuad).getTrack();
@@ -160,7 +155,7 @@ public class ActionExecutor {
         AlternativeRouteSelectorController controller = loader.getController();
         controller.initialize(routes);
         alternativeRouteSelector.initModality(Modality.WINDOW_MODAL);
-        alternativeRouteSelector.initOwner(workPlaceController.getPrimaryStage());
+        alternativeRouteSelector.initOwner(WorkPlaceController.getActiveController().getPrimaryStage());
         alternativeRouteSelector.show();
     }
 }
