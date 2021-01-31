@@ -27,6 +27,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.IOException;
 import java.util.List;
@@ -77,6 +78,7 @@ public class WorkPlaceController {
     }
 
     public void initialize() {
+        MQTTConnectionService.connect();
         activeController = this;
         Model.getSignals().values().forEach(Signal::close);
         Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
@@ -191,19 +193,8 @@ public class WorkPlaceController {
         actionEmulator.show();
     }
 
-    public void showConnectionServiceEmulator() throws IOException {
-        FXMLLoader loader = new FXMLLoader(ConnectionServiceEmulatorController.class.getResource("ConnectionServiceEmulator.fxml"));
-        Stage connectionServiceEmulator = new Stage();
-        connectionServiceEmulator.setTitle("Connection Service Emulator");
-        connectionServiceEmulator.setScene(new Scene(loader.load(), 550, 300));
-        connectionServiceEmulator.setOnCloseRequest(event -> {
-            connectionServiceEmulatorRadioMenuItem.setSelected(false);
-        });
-        connectionServiceEmulator.show();
-    }
-
     public void showLocomotiveController() throws IOException {
-        FXMLLoader loader = new FXMLLoader(ConnectionServiceEmulatorController.class.getResource("LocomotiveController.fxml"));
+        FXMLLoader loader = new FXMLLoader(LocomotiveController.class.getResource("LocomotiveController.fxml"));
         Stage locomotiveController = new Stage();
         locomotiveController.setTitle("Locomotive Controller");
         locomotiveController.setScene(new Scene(loader.load(), 220, 380));
@@ -219,6 +210,5 @@ public class WorkPlaceController {
             routeStatusTableView.getSelectionModel().getSelectedItem().cancelRoute();
         }
     }
-
 }
 

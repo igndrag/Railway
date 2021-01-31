@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -11,7 +12,17 @@
       <Label layoutX="132.0" layoutY="68.0" text="Signal type" />
       <ToggleButton fx:id="stationToggleButton" layoutX="127.0" layoutY="93.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Arrival/Departure" />
       <ToggleButton fx:id="trimmerToggleButton" layoutX="259.0" layoutY="94.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="68.0" text="Trimmer" />
-      <Pane fx:id="signalPreview" layoutX="21.0" layoutY="20.0" prefHeight="80.0" prefWidth="90.0" />
-      <CheckBox fx:id="redLampCheckBox" layoutX="257.0" layoutY="137.0" mnemonicParsing="false" text="Red Lamp" />
+      <Pane fx:id="signalPreview" layoutX="14.0" layoutY="14.0" prefHeight="190.0" prefWidth="40.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Pane>
+      <CheckBox fx:id="yellowLampCheckBox" layoutX="60.0" layoutY="13.0" mnemonicParsing="false" />
+      <CheckBox fx:id="greenLampCheckBox" layoutX="60.0" layoutY="43.0" mnemonicParsing="false" />
+      <CheckBox fx:id="redLampCheckBox" layoutX="60.0" layoutY="73.0" mnemonicParsing="false" />
+      <CheckBox fx:id="secondYellowLampCheckBox" layoutX="60.0" layoutY="103.0" mnemonicParsing="false" />
+      <CheckBox fx:id="secondGreenLampCheckBox" layoutX="60.0" layoutY="133.0" mnemonicParsing="false" />
+      <CheckBox fx:id="whiteLampCheckBox" layoutX="60.0" layoutY="163.0" mnemonicParsing="false" />
+      <CheckBox fx:id="greenLineCheckBox" layoutX="60.0" layoutY="190.0" mnemonicParsing="false" />
+      <CheckBox fx:id="trimmerRedLampCheckBox" layoutX="262.0" layoutY="133.0" mnemonicParsing="false" text="Red Lamp" />
    </children>
 </Pane>

@@ -1,7 +1,7 @@
 package NATrain.UI.controlModuleRedactor;
 
 import NATrain.model.Model;
-import NATrain.remoteControlModules.RemoteControlModule;
+import NATrain.сontrolModules.ControlModule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,16 +25,16 @@ import java.util.Objects;
 public class CMNavigatorController {
 
     private Stage primaryStage;
-    private ObservableList<RemoteControlModule> controlModules;
+    private ObservableList<ControlModule> controlModules;
 
     @FXML
     private Pane previewPane;
     @FXML
-    private TableView<RemoteControlModule> tableView;
+    private TableView<ControlModule> tableView;
     @FXML
-    private TableColumn<RemoteControlModule, String> typeColumn;
+    private TableColumn<ControlModule, String> typeColumn;
     @FXML
-    private TableColumn<RemoteControlModule, Integer> addressColumn;
+    private TableColumn<ControlModule, Integer> addressColumn;
     @FXML
     private Button newButton;
     @FXML
@@ -52,8 +52,8 @@ public class CMNavigatorController {
         editButton.setDisable(true);
         deleteButton.setDisable(true);
 
-        controlModules = FXCollections.observableArrayList(Model.getRemoteControlModules().values());
-        controlModules.sort(Comparator.comparing(RemoteControlModule::getAddress));
+        controlModules = FXCollections.observableArrayList(Model.getControlModules());
+        controlModules.sort(Comparator.comparing(ControlModule::getId));
         tableView.setItems(controlModules);
 
         newButton.setOnMouseClicked(event -> {
@@ -65,13 +65,13 @@ public class CMNavigatorController {
         });
 
         deleteButton.setOnAction(event -> {
-            RemoteControlModule objectForDelete = tableView.getSelectionModel().getSelectedItem();
-            Arrays.stream(objectForDelete.getChannels()) //clear all channels references before delete control module
-                    .filter(Objects::nonNull)
-                    .forEach(tracksideObject -> tracksideObject.setControlModule(null));
+            ControlModule objectForDelete = tableView.getSelectionModel().getSelectedItem();
+//            Arrays.stream(objectForDelete.getChannels()) //clear all channels references before delete control module
+//                    .filter(Objects::nonNull)
+//                    .forEach(tracksideObject -> tracksideObject.setControlModule(null));
 
             controlModules.remove(objectForDelete);
-            Model.getRemoteControlModules().remove(objectForDelete.getAddress());
+            Model.getControlModules().remove(objectForDelete);
             if (controlModules.size() == 0) {
                 editButton.setDisable(true);
                 deleteButton.setDisable(true);
@@ -90,15 +90,11 @@ public class CMNavigatorController {
             if (tableView.getSelectionModel().getSelectedItem() != null) {
                 editButton.setDisable(false);
                 deleteButton.setDisable(false);
-                refreshPreview(tableView.getSelectionModel().getSelectedItem());
-                tableView.setOnMouseClicked(event1 -> {
-                    refreshPreview(tableView.getSelectionModel().getSelectedItem());
-                });
             }
         });
     }
 
-    private void toControlModuleRedactor(RemoteControlModule controlModule) throws IOException {
+    private void toControlModuleRedactor(ControlModule controlModule) throws IOException {
         FXMLLoader loader = new FXMLLoader(CMEditorController.class.getResource("CMEditor.fxml"));
         Stage controlModuleEditor = new Stage();
         controlModuleEditor.setTitle("Control Module Editor");
@@ -115,7 +111,7 @@ public class CMNavigatorController {
         FXMLLoader loader = new FXMLLoader(CMCreatorController.class.getResource("CMCreator.fxml"));
         Stage controlModuleCreator = new Stage();
         controlModuleCreator.setTitle("Control Module Creator");
-        controlModuleCreator.setScene(new Scene(loader.load(), 250, 270));
+        controlModuleCreator.setScene(new Scene(loader.load(), 300, 270));
         controlModuleCreator.setResizable(false);
         CMCreatorController controller = loader.getController();
         controller.initialize(tableView, controlModules);
@@ -123,23 +119,5 @@ public class CMNavigatorController {
         controlModuleCreator.initModality(Modality.WINDOW_MODAL);
         controlModuleCreator.initOwner(primaryStage);
         controlModuleCreator.show();
-    }
-
-    private void refreshPreview(RemoteControlModule controlModule) {
-        previewPane.getChildren().clear();
-        Group preview = new Group();
-        for (int i = 0; i < controlModule.getChannels().length; i++) {
-            StringBuilder chName = new StringBuilder("CH" + i + ": ");
-            if (controlModule.getChannels()[i] != null) {
-                chName.append(controlModule.getChannels()[i].getId());
-            } else {
-                chName.append("none");
-            }
-            Text text = new Text(chName.toString());
-            text.setX(20);
-            text.setY(50 + 20 * i);
-            preview.getChildren().add(text);
-        }
-        previewPane.getChildren().add(preview);
     }
 }

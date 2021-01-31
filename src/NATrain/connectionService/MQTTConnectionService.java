@@ -17,8 +17,14 @@ public class MQTTConnectionService {
     static MqttClient mqttClient;
     static MemoryPersistence persistence = new MemoryPersistence();
 
+    public static MqttClient getClient() {
+        return mqttClient;
+    }
+
     public static MQTTConnectionService getService() {
         return service;
+
+
     }
 
     private static class MyMqttCallback implements MqttCallback {
@@ -37,27 +43,18 @@ public class MQTTConnectionService {
         public void messageArrived(String topic, MqttMessage message) throws Exception {
            // RESPONSE INPUTNUMBER1:INPUTSTATUS1 INPUTNUMBER2:INPUTSTATUS2 ...
            String[] inputStatuses = message.toString().split(" ");
-           Arrays.stream(inputStatuses).forEach(inputStatus -> {
-               String[] statusParts = inputStatus.split(":");
-               int portNumber = Integer.parseInt(statusParts[0]);
-               int inputStateCode = Integer.parseInt(statusParts[1]);
-               controlModule.getInputChannels()[portNumber].setActualState(inputStateCode);
-           });
+            for (String inputStatus : inputStatuses) {
+                String[] statusParts = inputStatus.split(":");
+                int portNumber = Integer.parseInt(statusParts[0]);
+                int inputStateCode = Integer.parseInt(statusParts[1]);
+                controlModule.getInputChannels().get(portNumber).setActualState(inputStateCode);
+            }
         }
 
         @Override
         public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
 
         }
-    }
-
-    public static void initMQTTService() {
-        connect();
-        publish(topicName, "NATrain MQTTClient started");
-
-        Model.getControlModules().forEach(controlModule -> {
-            subscribe(topicName + "/controlModules/" + controlModule.getId(), new MyMqttCallback(controlModule));
-        });
     }
 
     public static void subscribe(String topic, MqttCallback mqttCallback) {
@@ -88,6 +85,10 @@ public class MQTTConnectionService {
             connOpts.setCleanSession(true); //no persistent session
             connOpts.setKeepAliveInterval(1000);
             mqttClient.connect(connOpts); //connects the broker with connect options
+            publish(topicName, "NATrainApp connected");
+            Model.getControlModules().forEach(controlModule -> {
+                subscribe(topicName + "/controlModules/" + controlModule.getId(), new MyMqttCallback(controlModule));
+            });
         } catch (MqttException e) {
             e.printStackTrace();
         }

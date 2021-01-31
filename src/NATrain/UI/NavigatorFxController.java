@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -57,7 +58,6 @@ public class NavigatorFxController {
         AppConfigController.loadConfigs();
         //Model.loadFromDisk();//
         ModelMock.MockModel();
-        MQTTConnectionService.initMQTTService();
        }
 
     @FXML
@@ -147,6 +147,11 @@ public class NavigatorFxController {
         Blinker.start();
         //controller.initialize();
         workPlace.setOnCloseRequest(event -> {
+            try {
+                MQTTConnectionService.getClient().disconnect();
+            } catch (MqttException e) {
+                e.printStackTrace();
+            }
             primaryStage.show();
             Blinker.stop();
         });

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -27,7 +28,7 @@
             </TableView>
             <Pane prefHeight="46.0" prefWidth="274.0">
                <children>
-                  <Button fx:id="routeCancellationButton" onAction="#cancelSelectedRoute" layoutX="172.0" layoutY="12.0" mnemonicParsing="false" text="Cancel Route" />
+                  <Button fx:id="routeCancellationButton" layoutX="172.0" layoutY="12.0" mnemonicParsing="false" onAction="#cancelSelectedRoute" text="Cancel Route" />
                </children>
             </Pane>
          </children>
@@ -52,7 +53,6 @@
             <items>
                   <RadioMenuItem fx:id="locomotiveControllerRadioMenuItem" mnemonicParsing="false" onAction="#showLocomotiveController" text="Locomotive Control Pane" />
                   <RadioMenuItem fx:id="actionEmulatorRadioMenuItem" mnemonicParsing="false" onAction="#showActionEmulator" text="Action Emulator Pane" />
-                  <RadioMenuItem fx:id="connectionServiceEmulatorRadioMenuItem" mnemonicParsing="false" onAction="#showConnectionServiceEmulator" text="Connection Service Emulator Pane" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

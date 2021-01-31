@@ -1,9 +1,6 @@
 package NATrain.UI.workPlace.executors;
 
 import NATrain.UI.workPlace.WorkPlaceController;
-import NATrain.connectionService.RequestExecutor;
-import NATrain.remoteControlModules.Command;
-import NATrain.remoteControlModules.SwitchControlModule;
 import NATrain.routes.Route;
 import NATrain.routes.RouteType;
 import NATrain.trackSideObjects.*;
@@ -26,7 +23,7 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
     private static WorkPlaceController workPlaceController;
     private Boolean strongLock = false;
     private final TrackSection departureSection;
-    private final TrackSection destinationSection; //в отправлении - это участок удаления
+    private final TrackSection destinationSection; //In departure route this is TVDS1
     private final Map<TrackSection, PropertyChangeListener> trackSectionUnlockerMap = new HashMap<>();
     private final Map<TracksideObject, PropertyChangeListener> signalStateUpdaterMap = new HashMap<>();
     private final ConcurrentLinkedDeque<TrackSection> occupationalOrder;
@@ -155,7 +152,7 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
             Switch aSwitch = entry.getKey();
             SwitchState switchState = entry.getValue();
             if (aSwitch.getSwitchState() != switchState && aSwitch.isChangePositionAvailable()) {
-                SwitchControlModule switchControlModule = (SwitchControlModule) aSwitch.getControlModule();
+
                 if (switchState == SwitchState.PLUS) {
                    // switchControlModule.sendCommand(aSwitch.getChannel(), Command.SET_SWITCH_TO_PLUS);
                     aSwitch.setSwitchState(SwitchState.PLUS); //TODO delete it when realize hardware

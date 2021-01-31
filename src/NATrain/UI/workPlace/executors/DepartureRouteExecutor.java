@@ -1,13 +1,9 @@
 package NATrain.UI.workPlace.executors;
 
-import NATrain.remoteControlModules.Command;
 import NATrain.routes.Route;
 import NATrain.trackSideObjects.Signal;
 import NATrain.trackSideObjects.SignalState;
 import NATrain.trackSideObjects.TrackSectionState;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public class DepartureRouteExecutor extends AbstractRouteExecutor {
     public DepartureRouteExecutor(Route route) {

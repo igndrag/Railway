@@ -1,10 +1,11 @@
 package NATrain.trackSideObjects;
 
-import NATrain.remoteControlModules.Command;
+import NATrain.сontrolModules.InputChannel;
+import NATrain.сontrolModules.InputChannelType;
+import NATrain.сontrolModules.OutputChannel;
+import NATrain.сontrolModules.OutputChannelType;
 
 import java.io.Serializable;
-
-
 public class Switch extends TracksideObject implements Serializable {
     static final long serialVersionUID = 1L;
 
@@ -16,6 +17,11 @@ public class Switch extends TracksideObject implements Serializable {
     private Switch paredSwitch;
     private boolean pared = false;
     private TrackSection trackSection = TrackSection.EMPTY_TRACK_SECTION;
+
+    private final InputChannel plusInputChannel = new InputChannel(InputChannelType.SWITCH_PLUS, this);
+    private final InputChannel minusInputChannel = new InputChannel(InputChannelType.SWITCH_MINUS, this);
+    private final OutputChannel plusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_PLUS);
+    private final OutputChannel minusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_MINUS);
 
     public Switch(String id) {
         super(id);
@@ -30,7 +36,6 @@ public class Switch extends TracksideObject implements Serializable {
             this.paredSwitch = anotherSwitch;
         }
     }
-
 
     public void deleteParedSwitch(Switch paredSwitch) {
         pared = false;
@@ -70,6 +75,22 @@ public class Switch extends TracksideObject implements Serializable {
         return pared;
     }
 
+    public InputChannel getPlusInputChannel() {
+        return plusInputChannel;
+    }
+
+    public InputChannel getMinusInputChannel() {
+        return minusInputChannel;
+    }
+
+    public OutputChannel getPlusOutputChannel() {
+        return plusOutputChannel;
+    }
+
+    public OutputChannel getMinusOutputChannel() {
+        return minusOutputChannel;
+    }
+
     public void changePosition() {
         if (isChangePositionAvailable()) {
             if (switchState == SwitchState.PLUS)
@@ -91,7 +112,7 @@ public class Switch extends TracksideObject implements Serializable {
 
     public void sendCommandToChangePosition() {
         if (trackSection.getVacancyState() == TrackSectionState.FREE && !trackSection.isInterlocked()) {
-            assert controlModule != null;
+            //assert controlModule != null;
             //controlModule.sendCommand(channel, Command.CHANGE_SWITCH_POSITION);
         }
     }

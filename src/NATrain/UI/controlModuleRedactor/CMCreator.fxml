@@ -3,15 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMCreatorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMCreatorController">
    <children>
-      <Button onAction="#saveAndClose" layoutX="165.0" layoutY="230.0" mnemonicParsing="false" prefWidth="60.0" text="Save" />
+      <Button layoutX="205.0" layoutY="231.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
       <Label layoutX="38.0" layoutY="11.0" text="Type" />
-      <ToggleButton fx:id="signalToggleButton" layoutX="35.0" layoutY="36.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Signal Control Module" />
-      <ToggleButton fx:id="switchToggleButton" layoutX="35.0" layoutY="71.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Switch Control Module" />
-      <ToggleButton fx:id="trackToggleButton" layoutX="35.0" layoutY="106.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Track Control Module" />
-      <ToggleButton fx:id="checkConnectionButton" layoutX="35.0" layoutY="193.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="133.0" text="Check connection" />
+      <ToggleButton fx:id="universalMQTTToggleButton" layoutX="35.0" layoutY="36.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230.0" text="Universal MQTT Control Module" />
+      <ToggleButton fx:id="switchMQTTToggleButton" layoutX="35.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230.0" text="Switch MQTT Control Module" />
+      <ToggleButton fx:id="RS485ToggleButton" layoutX="35.0" layoutY="106.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230.0" text="RS-485 Control Module" />
+      <ToggleButton fx:id="checkConnectionButton" layoutX="35.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Check connection" />
       <TextField fx:id="addressTextField" layoutX="35.0" layoutY="161.0" />
-      <Label layoutX="38.0" layoutY="139.0" text="Address" />
+      <Label layoutX="38.0" layoutY="139.0" text="Module ID" />
    </children>
 </Pane>

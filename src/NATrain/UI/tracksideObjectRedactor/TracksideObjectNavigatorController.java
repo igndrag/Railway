@@ -80,7 +80,7 @@ public class TracksideObjectNavigatorController {
     }
 
     private void toTrackSectionRedactor (TrackSection trackSection) throws IOException {
-        FXMLLoader loader = new FXMLLoader(TrackSectionRedactorController.class.getResource("trackSectionRedactor.fxml"));
+        FXMLLoader loader = new FXMLLoader(TrackSectionRedactorController.class.getResource("TrackSectionRedactor.fxml"));
         Stage trackSectionRedactor = new Stage();
         trackSectionRedactor.setTitle("Track Section Redactor");
         trackSectionRedactor.setScene(new Scene(loader.load(), 325, 200));
@@ -93,7 +93,7 @@ public class TracksideObjectNavigatorController {
     }
 
     private void toSwitchRedactor (Switch mySwitch) throws IOException {
-        FXMLLoader loader = new FXMLLoader(SwitchRedactorController.class.getResource("switchRedactor.fxml"));
+        FXMLLoader loader = new FXMLLoader(SwitchRedactorController.class.getResource("SwitchRedactor.fxml"));
         Stage switchRedactor = new Stage();
         switchRedactor.setTitle("Switch Redactor");
         switchRedactor.setScene(new Scene(loader.load(), 330, 260));
@@ -106,7 +106,7 @@ public class TracksideObjectNavigatorController {
     }
 
     private void toSignalRedactor (Signal signal) throws IOException {
-        FXMLLoader loader = new FXMLLoader(SignalRedactorController.class.getResource("signalRedactor.fxml"));
+        FXMLLoader loader = new FXMLLoader(SignalRedactorController.class.getResource("SignalRedactor.fxml"));
         Stage signalRedactor = new Stage();
         signalRedactor.setTitle("Signal Redactor");
         signalRedactor.setScene(new Scene(loader.load(), 350, 220));
@@ -140,9 +140,9 @@ public class TracksideObjectNavigatorController {
 
         deleteTrackSectionButton.setOnAction(event -> {
             TracksideObject objectForDelete = trackSectionsTableView.getSelectionModel().getSelectedItem();
-            if (objectForDelete.getControlModule() != null)
+          //  if (objectForDelete.getControlModule() != null)
           //      objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
-            objectForDelete.setControlModule(null);
+          //  objectForDelete.setControlModule(null);
             trackSectionList.remove(objectForDelete);
             Model.getTrackSections().remove(objectForDelete.getId());
             if (trackSectionList.size() == 0) {
@@ -191,9 +191,9 @@ public class TracksideObjectNavigatorController {
 
         deleteSwitchButton.setOnAction(event -> {
             Switch objectForDelete = (Switch) switchTableView.getSelectionModel().getSelectedItem();
-            if (objectForDelete.getControlModule() != null)
+            //if (objectForDelete.getControlModule() != null)
             //    objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
-            objectForDelete.setControlModule(null);
+            //objectForDelete.setControlModule(null);
             if (objectForDelete.isPared()) {
                 objectForDelete.getParedSwitch().setParedSwitch(null);
             }
@@ -245,9 +245,9 @@ public class TracksideObjectNavigatorController {
 
         deleteSignalButton.setOnAction(event -> {
             Signal objectForDelete = (Signal) signalTableView.getSelectionModel().getSelectedItem();
-            if (objectForDelete.getControlModule() != null)
+          // if (objectForDelete.getControlModule() != null)
           //      objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
-            objectForDelete.setControlModule(null);
+          //  objectForDelete.setControlModule(null);
 
             signalList.remove(objectForDelete);
             Model.getSignals().remove(objectForDelete.getId());

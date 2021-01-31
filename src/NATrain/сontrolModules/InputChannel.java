@@ -1,15 +1,15 @@
 package NATrain.сontrolModules;
-
 import NATrain.trackSideObjects.*;
-
 import java.io.Serializable;
 
 public class InputChannel implements Serializable {
     static final long serialVersionUID = 1L;
 
-    private InputChannelType channelType;
-    private TracksideObject tracksideObject;
+    public int chNumber;
+    private final InputChannelType channelType;
+    private final TracksideObject tracksideObject;
     private ControlModule module;
+
 
     public void setActualState(int statusCode) {
         switch (channelType) {

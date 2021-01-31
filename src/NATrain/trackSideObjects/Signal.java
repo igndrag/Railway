@@ -1,7 +1,6 @@
 package NATrain.trackSideObjects;
 
 import NATrain.сontrolModules.OutputChannel;
-import NATrain.remoteControlModules.Command;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,7 +29,7 @@ public class Signal extends TracksideObject {
     transient SignalState signalState = SignalState.UNDEFINED;
     private SignalType signalType;
     private SignalState closedSignalState;
-    private final Map<SignalLamp, OutputChannel> lamps = new HashMap<>();
+    private final Map<SignalLampType, OutputChannel> lamps = new HashMap<>();
 
     public void setSignalType(SignalType signalType) {
         this.signalType = signalType;
@@ -62,7 +61,7 @@ public class Signal extends TracksideObject {
         return signalState;
     }
 
-    public Map<SignalLamp, OutputChannel> getLamps() {
+    public Map<SignalLampType, OutputChannel> getLamps() {
         return lamps;
     }
 
@@ -70,6 +69,7 @@ public class Signal extends TracksideObject {
         if (approvedSignals.contains(signalState)) {
             SignalState oldState = this.signalState;
             this.signalState = signalState;
+            sendOutputCommands(signalState);
             propertyChangeSupport.firePropertyChange("signalStateProperty", oldState, signalState);
         }
     }
@@ -78,6 +78,10 @@ public class Signal extends TracksideObject {
         if (closedSignalState == RED || closedSignalState == BLUE) {
             this.closedSignalState = closedSignalState;
         };
+    }
+
+    public SignalState getClosedSignalState() {
+        return closedSignalState;
     }
 
     public Signal(String id, Set<SignalState> approvedSignals, SignalType signalType) {
@@ -90,7 +94,10 @@ public class Signal extends TracksideObject {
         setSignalState(closedSignalState);
     }
 
-    public void sendCommand(Command command) {
+    private void sendOutputCommands(SignalState signalState) {
+        lamps.forEach((signalLampType, outputChannel) -> {
+            outputChannel.sendCommand(signalState.getLampStates().getOrDefault(signalLampType, SignalLampState.NOT_LIGHT).getCode());
+        });
     }
 
     public GlobalSignalState getGlobalStatus() {

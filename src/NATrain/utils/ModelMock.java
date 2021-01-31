@@ -1,15 +1,12 @@
 package NATrain.utils;
 
-import NATrain.trackSideObjects.SwitchState;
+import NATrain.trackSideObjects.*;
 import NATrain.model.Model;
 import NATrain.quads.EmptyQuad;
-import NATrain.remoteControlModules.TrackControlModule;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.SignalType;
-import NATrain.trackSideObjects.Switch;
-import NATrain.trackSideObjects.TrackSection;
 import NATrain.сontrolModules.ControlModule;
-import NATrain.сontrolModules.UniversalModule;
+import NATrain.сontrolModules.OutputChannel;
+import NATrain.сontrolModules.OutputChannelType;
+import NATrain.сontrolModules.UniversalMQTTModule;
 
 public class ModelMock {
 
@@ -21,13 +18,28 @@ public class ModelMock {
             }
         }
 
-        Model.getSignals().put("S1", new Signal("S1", SignalType.STATION));
-        Model.getSignals().put("M1", new Signal("M1", SignalType.TRIMMER));
 
-        ControlModule controlModule = new UniversalModule("testModule");
+        ControlModule controlModule = new UniversalMQTTModule("testModule");
         Model.getControlModules().add(controlModule);
 
         // topic name: NATrain/controlModules/testModule
+
+        Signal testSignal = new Signal("S1", SignalType.STATION);
+        OutputChannel outputChannel0 = new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT);
+        outputChannel0.setChNumber(0);
+        outputChannel0.setModule(controlModule);
+        controlModule.getOutputChannels().add(0, outputChannel0);
+        testSignal.getLamps().put(SignalLampType.RED_LAMP, outputChannel0);
+        OutputChannel outputChannel1 = new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT);
+        outputChannel1.setChNumber(1);
+        outputChannel1.setModule(controlModule);
+        controlModule.getOutputChannels().add(1, outputChannel1);
+        testSignal.getLamps().put(SignalLampType.GREEN_LAMP, outputChannel1);
+
+        Model.getSignals().put("S1", testSignal);
+        Model.getSignals().put("M1", new Signal("M1", SignalType.TRIMMER));
+
+
 
         Switch oneSwitch = new Switch("1");
         Switch twoSwitch = new Switch("2");
@@ -44,25 +56,11 @@ public class ModelMock {
 
         TrackSection oneTrackSection = new TrackSection ("1-3SP");
         TrackSection twoTrackSection = new TrackSection ("SP");
-        controlModule.getInputChannels()[0] = oneTrackSection.getInputChannel();
+        controlModule.getInputChannels().add(0, oneTrackSection.getInputChannel());
 
-        oneTrackSection.setChannel(0);
         Model.getTrackSections().put("1-3SP", oneTrackSection);
         Model.getTrackSections().put("SP", twoTrackSection);
         Model.getTrackSections().put("2-4SP", new TrackSection("2-4SP"));
         Model.getTrackSections().put("6-8SP", new TrackSection("6-8SP"));
-
-        TrackControlModule trackControlModule = new TrackControlModule(0);
-        trackControlModule.setTrackSideObjectOnChannel(oneTrackSection, 0);
-        //oneTrackSection.setControlModule(trackControlModule);
-
-        Model.getRemoteControlModules().put(0, trackControlModule);
-
-        twoTrackSection.setChannel(1);
-        TrackControlModule trackControlModule1 = new TrackControlModule(1);
-        trackControlModule.setTrackSideObjectOnChannel(twoTrackSection, 1);
-       // twoTrackSection.setControlModule(trackControlModule);
-
-        Model.getRemoteControlModules().put(1, trackControlModule1);
     }
 }
