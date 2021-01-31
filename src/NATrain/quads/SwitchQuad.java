@@ -1,5 +1,6 @@
 package NATrain.quads;
 
+import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.SwitchState;
 import NATrain.quads.configurableInterfaces.SwitchConfigurable;
@@ -61,12 +62,17 @@ public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfig
         if (associatedSwitch != Switch.EMPTY_SWITCH) {
             switch (associatedSwitch.getSwitchState()) {
                 case UNDEFINED:
-                    if (associatedSwitch.getNormalState() == SwitchState.PLUS) {  //normal state always defined plus or minus
-                        switchPlusElement.setFill(CONFIGURED_ELEMENT_COLOR);
-                        switchMinusElement.setFill(DEFAULT_BACKGROUND_COLOR);
+                    if (!WorkPlaceController.isActiveMode()) {
+                        if (associatedSwitch.getNormalState() == SwitchState.PLUS) {  //normal state always defined plus or minus
+                            switchPlusElement.setFill(CONFIGURED_ELEMENT_COLOR);
+                            switchMinusElement.setFill(DEFAULT_BACKGROUND_COLOR);
+                        } else {
+                            switchPlusElement.setFill(DEFAULT_BACKGROUND_COLOR);
+                            switchMinusElement.setFill(CONFIGURED_ELEMENT_COLOR);
+                        }
                     } else {
                         switchPlusElement.setFill(DEFAULT_BACKGROUND_COLOR);
-                        switchMinusElement.setFill(CONFIGURED_ELEMENT_COLOR);
+                        switchMinusElement.setFill(DEFAULT_BACKGROUND_COLOR);
                     }
                     break;
                 case PLUS:

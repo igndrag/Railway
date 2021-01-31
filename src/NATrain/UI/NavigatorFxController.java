@@ -105,7 +105,7 @@ public class NavigatorFxController {
         FXMLLoader loader = new FXMLLoader(CMNavigatorController.class.getResource("CMNavigator.fxml"));
         Stage controlModuleNavigator = new Stage();
         controlModuleNavigator.setTitle("Control Module Navigator");
-        controlModuleNavigator.setScene(new Scene(loader.load(), 430, 415));
+        controlModuleNavigator.setScene(new Scene(loader.load(), 1000, 415));
         controlModuleNavigator.setResizable(false);
         CMNavigatorController controller = loader.getController();
         //controller.initialize();

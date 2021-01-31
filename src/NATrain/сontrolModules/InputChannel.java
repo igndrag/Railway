@@ -9,9 +9,11 @@ public class InputChannel implements Serializable {
     private final InputChannelType channelType;
     private final TracksideObject tracksideObject;
     private ControlModule module;
+    private int actualState = 0;
 
 
     public void setActualState(int statusCode) {
+        actualState = statusCode;
         switch (channelType) {
             case TRACK_SECTION:
                 TrackSection trackSection = (TrackSection) tracksideObject;
@@ -23,11 +25,25 @@ public class InputChannel implements Serializable {
                 break;
             case SWITCH_PLUS:
                 Switch aSwitch = (Switch) tracksideObject;
-                aSwitch.setSwitchState(SwitchState.PLUS);
+                if (statusCode == 0) {
+                    if (aSwitch.getMinusInputChannel().actualState == 0) {
+                        aSwitch.setSwitchState(SwitchState.UNDEFINED);
+                    }
+                } else if (statusCode == 1 && aSwitch.getMinusInputChannel().actualState == 0) {
+                        aSwitch.setSwitchState(SwitchState.PLUS);
+                } else aSwitch.setSwitchState(SwitchState.UNDEFINED);
                 break;
             case SWITCH_MINUS:
                 aSwitch = (Switch) tracksideObject;
-                aSwitch.setSwitchState(SwitchState.MINUS);
+                if (statusCode == 0) {
+                    if (aSwitch.getPlusInputChannel().actualState == 0) {
+                        aSwitch.setSwitchState(SwitchState.UNDEFINED);
+                    }
+                } else if (statusCode == 1 && aSwitch.getPlusInputChannel().actualState == 0) {
+                    aSwitch.setSwitchState(SwitchState.MINUS);
+                } else {
+                    aSwitch.setSwitchState(SwitchState.UNDEFINED);
+                }
                 break;
         }
     }
@@ -35,6 +51,14 @@ public class InputChannel implements Serializable {
     public InputChannel(InputChannelType inputChannelType, TracksideObject tracksideObject) {
         this.channelType = inputChannelType;
         this.tracksideObject = tracksideObject;
+    }
+
+    public int getChNumber() {
+        return chNumber;
+    }
+
+    public void setChNumber(int chNumber) {
+        this.chNumber = chNumber;
     }
 
     public TracksideObject getTracksideObject() {

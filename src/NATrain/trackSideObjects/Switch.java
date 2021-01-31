@@ -22,8 +22,8 @@ public class Switch extends TracksideObject implements Serializable {
 
     private final InputChannel plusInputChannel = new InputChannel(InputChannelType.SWITCH_PLUS, this);
     private final InputChannel minusInputChannel = new InputChannel(InputChannelType.SWITCH_MINUS, this);
-    private final OutputChannel plusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_PLUS);
-    private final OutputChannel minusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_MINUS);
+    private final OutputChannel plusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_PLUS, this);
+    private final OutputChannel minusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_MINUS, this);
 
     public Switch(String id) {
         super(id);
@@ -121,6 +121,7 @@ public class Switch extends TracksideObject implements Serializable {
                 break;
             case MINUS:
                 minusOutputChannel.sendCommand(CONTROL_IMPULSE_COMMAND_CODE);
+                break;
         }
     }
 }

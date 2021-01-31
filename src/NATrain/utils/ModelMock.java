@@ -25,25 +25,36 @@ public class ModelMock {
         // topic name: NATrain/controlModules/testModule
 
         Signal testSignal = new Signal("S1", SignalType.STATION);
-        OutputChannel outputChannel0 = new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT);
+        OutputChannel outputChannel0 = new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, testSignal);
         outputChannel0.setChNumber(0);
         outputChannel0.setModule(controlModule);
-        controlModule.getOutputChannels().add(0, outputChannel0);
+        controlModule.getOutputChannels().put(0, outputChannel0);
         testSignal.getLamps().put(SignalLampType.RED_LAMP, outputChannel0);
-        OutputChannel outputChannel1 = new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT);
+        OutputChannel outputChannel1 = new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, testSignal);
         outputChannel1.setChNumber(1);
         outputChannel1.setModule(controlModule);
-        controlModule.getOutputChannels().add(1, outputChannel1);
+        controlModule.getOutputChannels().put(1, outputChannel1);
         testSignal.getLamps().put(SignalLampType.GREEN_LAMP, outputChannel1);
 
         Model.getSignals().put("S1", testSignal);
         Model.getSignals().put("M1", new Signal("M1", SignalType.TRIMMER));
 
-
-
         Switch oneSwitch = new Switch("1");
         Switch twoSwitch = new Switch("2");
         Switch threeSwitch = new Switch("3");
+
+        oneSwitch.getPlusInputChannel().setChNumber(2);
+        oneSwitch.getPlusInputChannel().setModule(controlModule);
+        oneSwitch.getMinusInputChannel().setChNumber(3);
+        oneSwitch.getMinusInputChannel().setModule(controlModule);
+        oneSwitch.getPlusOutputChannel().setChNumber(2);
+        oneSwitch.getPlusOutputChannel().setModule(controlModule);
+        oneSwitch.getMinusInputChannel().setChNumber(3);
+        oneSwitch.getMinusOutputChannel().setModule(controlModule);
+        controlModule.getInputChannels().put(2, oneSwitch.getPlusInputChannel());
+        controlModule.getInputChannels().put(3, oneSwitch.getMinusInputChannel());
+        controlModule.getOutputChannels().put(2, oneSwitch.getPlusOutputChannel());
+        controlModule.getOutputChannels().put(3, oneSwitch.getMinusOutputChannel());
         threeSwitch.setParedSwitch(twoSwitch);
         twoSwitch.setParedSwitch(threeSwitch);
         threeSwitch.setNormalState(SwitchState.MINUS);
@@ -56,7 +67,8 @@ public class ModelMock {
 
         TrackSection oneTrackSection = new TrackSection ("1-3SP");
         TrackSection twoTrackSection = new TrackSection ("SP");
-        controlModule.getInputChannels().add(0, oneTrackSection.getInputChannel());
+        oneSwitch.setTrackSection(oneTrackSection);
+        controlModule.getInputChannels().put(0, oneTrackSection.getInputChannel());
 
         Model.getTrackSections().put("1-3SP", oneTrackSection);
         Model.getTrackSections().put("SP", twoTrackSection);

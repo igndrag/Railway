@@ -6,21 +6,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Objects;
 
 public class CMNavigatorController {
 
@@ -28,13 +23,18 @@ public class CMNavigatorController {
     private ObservableList<ControlModule> controlModules;
 
     @FXML
-    private Pane previewPane;
-    @FXML
     private TableView<ControlModule> tableView;
     @FXML
     private TableColumn<ControlModule, String> typeColumn;
     @FXML
-    private TableColumn<ControlModule, Integer> addressColumn;
+    private TableColumn<ControlModule, String> idColumn;
+    @FXML
+    private TableColumn<ControlModule, Integer> inputsCountColumn;
+    @FXML
+    private TableColumn<ControlModule, Integer> outputsCountColumn;
+    @FXML
+    private TableColumn<ControlModule, String> objectsColumn;
+
     @FXML
     private Button newButton;
     @FXML
@@ -47,8 +47,12 @@ public class CMNavigatorController {
     }
 
     public void initialize() {
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("moduleType"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        inputsCountColumn.setCellValueFactory(new PropertyValueFactory<>("inputsCount"));
+        outputsCountColumn.setCellValueFactory(new PropertyValueFactory<>("outputsCount"));
+        objectsColumn.setCellValueFactory(new PropertyValueFactory<>("objectNames"));
+
         editButton.setDisable(true);
         deleteButton.setDisable(true);
 

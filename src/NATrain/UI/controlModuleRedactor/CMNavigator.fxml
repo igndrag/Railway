@@ -3,12 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMNavigatorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMNavigatorController">
     <children>
-        <TableView fx:id="tableView" layoutX="25.0" layoutY="16.0" prefHeight="340.0" prefWidth="380.0">
+        <TableView fx:id="tableView" layoutX="25.0" layoutY="16.0" prefHeight="340.0" prefWidth="947.0">
             <columns>
-                <TableColumn fx:id="typeColumn" prefWidth="127.0" text="Type" />
-                <TableColumn fx:id="addressColumn" prefWidth="108.0" text="ID" />
+                <TableColumn fx:id="typeColumn" prefWidth="212.0" text="Type" />
+                <TableColumn fx:id="idColumn" prefWidth="82.0" text="ID" />
+            <TableColumn fx:id="inputsCountColumn" prefWidth="50.0" text="Inputs" />
+            <TableColumn fx:id="outputsCountColumn" prefWidth="60.0" text="Outputs" />
+            <TableColumn fx:id="objectsColumn" prefWidth="542.0" text="Objects" />
             </columns>
         </TableView>
         <Button fx:id="newButton" layoutX="190.0" layoutY="371.0" mnemonicParsing="false" prefWidth="60.0" text="New" />

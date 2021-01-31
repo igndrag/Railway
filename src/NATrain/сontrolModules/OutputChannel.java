@@ -1,5 +1,7 @@
 package NATrain.сontrolModules;
 
+import NATrain.trackSideObjects.TracksideObject;
+
 import java.io.Serializable;
 
 public class OutputChannel implements Serializable {
@@ -8,10 +10,12 @@ public class OutputChannel implements Serializable {
     private int chNumber;
     private OutputChannelType channelType;
     private ControlModule module;
+    private TracksideObject tracksideObject;
     private int actualStatusCode;
 
-    public OutputChannel(OutputChannelType channelType) {
+    public OutputChannel(OutputChannelType channelType, TracksideObject tracksideObject) {
         this.channelType = channelType;
+        this.tracksideObject = tracksideObject;
     }
 
     public int getChNumber() {
@@ -32,6 +36,10 @@ public class OutputChannel implements Serializable {
 
     public OutputChannelType getChannelType() {
         return channelType;
+    }
+
+    public TracksideObject getTracksideObject() {
+        return tracksideObject;
     }
 
     public void sendCommand (int commandCode) {
