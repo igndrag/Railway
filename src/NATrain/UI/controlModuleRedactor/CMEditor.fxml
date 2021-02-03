@@ -3,27 +3,47 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMEditorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="390.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMEditorController">
    <children>
-      <Label fx:id="CMTypeLabel" layoutX="21.0" layoutY="14.0" text="Inputs" />
-      <CheckBox fx:id="checkBoxCh0" layoutX="150.0" layoutY="45.0" mnemonicParsing="false" text="CH0" />
-      <CheckBox fx:id="checkBoxCh1" layoutX="150.0" layoutY="75.0" mnemonicParsing="false" text="CH1" />
-      <CheckBox fx:id="checkBoxCh2" layoutX="150.0" layoutY="105.0" mnemonicParsing="false" text="CH2" />
-      <CheckBox fx:id="checkBoxCh3" layoutX="150.0" layoutY="135.0" mnemonicParsing="false" text="CH3" />
-      <CheckBox fx:id="checkBoxCh4" layoutX="150.0" layoutY="165.0" mnemonicParsing="false" text="CH4" />
-      <CheckBox fx:id="checkBoxCh5" layoutX="150.0" layoutY="195.0" mnemonicParsing="false" text="CH5" />
-      <CheckBox fx:id="checkBoxCh6" layoutX="150.0" layoutY="225.0" mnemonicParsing="false" text="CH6" />
-      <CheckBox fx:id="checkBoxCh7" layoutX="150.0" layoutY="255.0" mnemonicParsing="false" text="CH7" />
-      <ChoiceBox fx:id="choiceBoxCh0" layoutX="20.0" layoutY="40.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh1" layoutX="20.0" layoutY="70.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh2" layoutX="20.0" layoutY="100.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh3" layoutX="20.0" layoutY="130.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh4" layoutX="20.0" layoutY="160.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh5" layoutX="20.0" layoutY="190.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh6" layoutX="20.0" layoutY="220.0" prefHeight="23.0" prefWidth="115.0" />
-      <ChoiceBox fx:id="choiceBoxCh7" layoutX="20.0" layoutY="250.0" prefHeight="23.0" prefWidth="115.0" />
-
-      <Button fx:id="saveButton" layoutX="150.0" layoutY="292.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
-      <Label fx:id="CMTypeLabel1" layoutX="213.0" layoutY="20.0" text="Outputs" />
+      <Label layoutX="21.0" layoutY="23.0" text="Inputs" />
+      <Label layoutX="356.0" layoutY="22.0" text="Outputs" />
+      <TableView fx:id="inputsTableView" layoutX="22.0" layoutY="48.0" prefHeight="171.0" prefWidth="313.0">
+        <columns>
+          <TableColumn fx:id="inputNumberColumn" prefWidth="29.0" text="№" />
+          <TableColumn fx:id="inputTypeColumn" prefWidth="179.0" text="Type" />
+            <TableColumn fx:id="inputObjectColumn" prefWidth="103.0" text="Trackside Object" />
+        </columns>
+      </TableView>
+      <TableView fx:id="outputsTableView" layoutX="356.0" layoutY="48.0" prefHeight="171.0" prefWidth="423.0">
+         <columns>
+            <TableColumn fx:id="outputNumberColumn" prefWidth="29.0" text="№" />
+            <TableColumn fx:id="outputTypeColumn" prefWidth="135.0" text="Type" />
+            <TableColumn fx:id="lampColumn" prefWidth="154.0" text="Lamp" />
+            <TableColumn fx:id="outputObjectColumn" prefWidth="103.0" text="Trackside Object" />
+         </columns>
+      </TableView>
+      <Button fx:id="addInputButton" layoutX="275.0" layoutY="243.0" mnemonicParsing="false" onAction="#addInputChannel" prefWidth="60.0" text="Add" />
+      <Button fx:id="deleteInputButton" layoutX="275.0" layoutY="297.0" mnemonicParsing="false" onAction="#deleteInputChannel" prefWidth="60.0" text="Delete" />
+      <ChoiceBox fx:id="inputTypeChoiceBox" layoutX="107.0" layoutY="242.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="108.0" layoutY="221.0" text="Input Type" />
+      <ChoiceBox fx:id="inputObjectChoiceBox" layoutX="107.0" layoutY="350.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="108.0" layoutY="329.0" text="Trackside Object" />
+      <TextField fx:id="inputNumberTextField" layoutX="22.0" layoutY="241.0" prefHeight="25.0" prefWidth="43.0" />
+      <Label layoutX="23.0" layoutY="222.0" text="Ch №" />
+      <Button fx:id="addOutputButton" layoutX="718.0" layoutY="244.0" mnemonicParsing="false" onAction="#addOutputChannel" prefWidth="60.0" text="Add" />
+      <Button layoutX="716.0" layoutY="297.0" mnemonicParsing="false" onAction="#deleteOutputChannel" prefWidth="60.0" text="Delete" />
+      <ChoiceBox fx:id="outputTypeChoiceBox" layoutX="545.0" layoutY="243.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="546.0" layoutY="222.0" text="Output Type" />
+      <ChoiceBox fx:id="outputObjectChoiceBox" layoutX="545.0" layoutY="297.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="546.0" layoutY="276.0" text="Trackside Object" />
+      <TextField fx:id="outputNumberTextField" layoutX="474.0" layoutY="242.0" prefHeight="25.0" prefWidth="43.0" />
+      <Label layoutX="475.0" layoutY="221.0" text="Ch №" />
+      <Label fx:id="CMTypeLabel" layoutX="22.0" layoutY="5.0" text="CMTypeLabel" />
+      <ChoiceBox fx:id="lampTypeChoiceBox" layoutX="545.0" layoutY="350.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="546.0" layoutY="331.0" text="Lamp" />
+      <ChoiceBox fx:id="inputTrackChoiceBox" layoutX="107.0" layoutY="297.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="108.0" layoutY="276.0" text="Track" />
+      <ChoiceBox fx:id="outputTrackChoiceBox" layoutX="361.0" layoutY="297.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="362.0" layoutY="276.0" text="Track" />
    </children>
 </Pane>

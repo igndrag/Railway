@@ -6,8 +6,11 @@ import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
 import NATrain.routes.TrackBlockingType;
 import NATrain.trackSideObjects.Signal;
+import NATrain.trackSideObjects.SignalLampType;
 import NATrain.trackSideObjects.SignalType;
 import NATrain.trackSideObjects.TrackSection;
+import NATrain.сontrolModules.OutputChannel;
+import NATrain.сontrolModules.OutputChannelType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -134,7 +137,19 @@ public class TrackRedactorController {
                         normalDirectionSignalName.append(2*i - 1);
                     }
                     normalDirectionSignalName.append("ND");
-                    blockSection.setNormalDirectionSignal(new Signal(normalDirectionSignalName.toString(), SignalType.TRACK));
+                    Signal normalDirectionSignal = new Signal(normalDirectionSignalName.toString(), SignalType.TRACK);
+                    switch (blockingTypeChoiceBox.getValue()) {
+                        case AUTOMATIC_THREE_SIGNAL_BLOCKING: {
+                            normalDirectionSignal.getLamps().put(SignalLampType.RED_LAMP,
+                                    new OutputChannel(OutputChannelType.TRACK_SIGNAL_LAMP_OUTPUT, normalDirectionSignal, SignalLampType.RED_LAMP));
+                            normalDirectionSignal.getLamps().put(SignalLampType.YELLOW_LAMP,
+                                    new OutputChannel(OutputChannelType.TRACK_SIGNAL_LAMP_OUTPUT, normalDirectionSignal, SignalLampType.YELLOW_LAMP));
+                            normalDirectionSignal.getLamps().put(SignalLampType.GREEN_LAMP,
+                                    new OutputChannel(OutputChannelType.TRACK_SIGNAL_LAMP_OUTPUT, normalDirectionSignal, SignalLampType.GREEN_LAMP));
+                            break;
+                        }
+                    }
+                    blockSection.setNormalDirectionSignal(normalDirectionSignal);
                 }
                 if (bidirectionalRadioButton.isSelected()) {
                     if (i > 1) {
@@ -147,7 +162,19 @@ public class TrackRedactorController {
                         }
                         reversedDirectionSignalName.append("RD");
                         blockSection.setBidirectional(true);
-                        blockSection.setReversedDirectionSignal(new Signal(reversedDirectionSignalName.toString(), SignalType.TRACK));
+                        Signal reversedDirectionSignal = new Signal(reversedDirectionSignalName.toString(), SignalType.TRACK);
+                        switch (blockingTypeChoiceBox.getValue()) {
+                            case AUTOMATIC_THREE_SIGNAL_BLOCKING: {
+                                reversedDirectionSignal.getLamps().put(SignalLampType.RED_LAMP,
+                                        new OutputChannel(OutputChannelType.TRACK_SIGNAL_LAMP_OUTPUT, reversedDirectionSignal, SignalLampType.RED_LAMP));
+                                reversedDirectionSignal.getLamps().put(SignalLampType.YELLOW_LAMP,
+                                        new OutputChannel(OutputChannelType.TRACK_SIGNAL_LAMP_OUTPUT, reversedDirectionSignal, SignalLampType.YELLOW_LAMP));
+                                reversedDirectionSignal.getLamps().put(SignalLampType.GREEN_LAMP,
+                                        new OutputChannel(OutputChannelType.TRACK_SIGNAL_LAMP_OUTPUT, reversedDirectionSignal, SignalLampType.GREEN_LAMP));
+                                break;
+                            }
+                        }
+                        blockSection.setReversedDirectionSignal(reversedDirectionSignal);
                     }
                 }
                 blockSectionsTableView.getItems().add(blockSection);
@@ -193,9 +220,7 @@ public class TrackRedactorController {
 
     private boolean isTrackNameValid() {
         String newTrackName = trackNameTextField.getText();
-        if (Model.getTracks().stream().filter(tr -> {
-            return tr != track;
-        }).map(Track::getId).anyMatch(name -> name.equals(newTrackName))) {
+        if (Model.getTracks().stream().filter(tr -> tr != track).map(Track::getId).anyMatch(name -> name.equals(newTrackName))) {
             UIUtils.showAlert(String.format("Track %s already exists.", newTrackName));
             return false;
         }

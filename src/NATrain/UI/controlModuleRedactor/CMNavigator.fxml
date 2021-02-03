@@ -7,15 +7,15 @@
     <children>
         <TableView fx:id="tableView" layoutX="25.0" layoutY="16.0" prefHeight="340.0" prefWidth="947.0">
             <columns>
-                <TableColumn fx:id="typeColumn" prefWidth="212.0" text="Type" />
-                <TableColumn fx:id="idColumn" prefWidth="82.0" text="ID" />
-            <TableColumn fx:id="inputsCountColumn" prefWidth="50.0" text="Inputs" />
-            <TableColumn fx:id="outputsCountColumn" prefWidth="60.0" text="Outputs" />
-            <TableColumn fx:id="objectsColumn" prefWidth="542.0" text="Objects" />
+                <TableColumn fx:id="typeColumn" prefWidth="167.0" text="Type" />
+                <TableColumn fx:id="idColumn" prefWidth="89.0" text="ID" />
+            <TableColumn fx:id="inputsCountColumn" prefWidth="53.0" text="Inputs" />
+            <TableColumn fx:id="outputsCountColumn" prefWidth="58.0" text="Outputs" />
+            <TableColumn fx:id="objectsColumn" prefWidth="579.0" text="Objects" />
             </columns>
         </TableView>
-        <Button fx:id="newButton" layoutX="190.0" layoutY="371.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
-        <Button fx:id="editButton" layoutX="108.0" layoutY="371.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
-        <Button fx:id="deleteButton" layoutX="25.0" layoutY="370.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+        <Button fx:id="newButton" layoutX="911.0" layoutY="371.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+        <Button fx:id="editButton" layoutX="829.0" layoutY="371.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+        <Button fx:id="deleteButton" layoutX="746.0" layoutY="371.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
     </children>
 </Pane>

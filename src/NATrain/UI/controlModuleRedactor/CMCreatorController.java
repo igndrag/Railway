@@ -26,7 +26,7 @@ public class CMCreatorController {
     @FXML
     private TextField addressTextField;
 
-    ControlModuleType selectedType;
+    ControlModuleType selectedType = ControlModuleType.UNIVERSAL_MQTT_MODULE;
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -39,6 +39,8 @@ public class CMCreatorController {
         universalMQTTToggleButton.setToggleGroup(toggleGroup);
         switchMQTTToggleButton.setToggleGroup(toggleGroup);
         RS485ToggleButton.setToggleGroup(toggleGroup);
+
+        universalMQTTToggleButton.setSelected(true);
 
         universalMQTTToggleButton.setOnAction(event -> {
             selectedType = ControlModuleType.UNIVERSAL_MQTT_MODULE;
@@ -55,6 +57,9 @@ public class CMCreatorController {
 
     private boolean isAddressValid() {
         String address = addressTextField.getText();
+        if (address.equals("")) {
+            return false;
+        }
         for (ControlModule controlModule: Model.getControlModules()) {
             if (controlModule.getId().equals(address)) {
                 Alert a = new Alert(Alert.AlertType.WARNING);

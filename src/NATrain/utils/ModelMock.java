@@ -18,19 +18,20 @@ public class ModelMock {
             }
         }
 
-
         ControlModule controlModule = new UniversalMQTTModule("testModule");
         Model.getControlModules().add(controlModule);
 
         // topic name: NATrain/controlModules/testModule
 
         Signal testSignal = new Signal("S1", SignalType.STATION);
-        OutputChannel outputChannel0 = new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, testSignal);
+        OutputChannel outputChannel0 = new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, testSignal, SignalLampType.GREEN_LINE);
+        testSignal.getLamps().put(SignalLampType.GREEN_LAMP, outputChannel0);
         outputChannel0.setChNumber(0);
         outputChannel0.setModule(controlModule);
         controlModule.getOutputChannels().put(0, outputChannel0);
         testSignal.getLamps().put(SignalLampType.RED_LAMP, outputChannel0);
-        OutputChannel outputChannel1 = new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, testSignal);
+        OutputChannel outputChannel1 = new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, testSignal, SignalLampType.RED_LAMP);
+        testSignal.getLamps().put(SignalLampType.RED_LAMP, outputChannel1);
         outputChannel1.setChNumber(1);
         outputChannel1.setModule(controlModule);
         controlModule.getOutputChannels().put(1, outputChannel1);

@@ -62,6 +62,8 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         trimmerToggleButton.setToggleGroup(toggleGroup);
         stationToggleButton.setToggleGroup(toggleGroup);
 
+        stationToggleButton.setSelected(true);
+
         switch (signal.getSignalType()) {
             case TRIMMER:
                 trimmerToggleButton.setSelected(true);
@@ -103,11 +105,11 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
             greenLineCheckBox.setDisable(true);
             setNotActive(greenLineElement);
 
-            signal.getLamps().put(SignalLampType.WHITE_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+            signal.getLamps().put(SignalLampType.WHITE_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.WHITE_LAMP));
             if (trimmerRedLampCheckBox.isSelected()) {
-                signal.getLamps().put(SignalLampType.RED_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.RED_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.RED_LAMP));
             } else {
-                signal.getLamps().put(SignalLampType.BLUE_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.BLUE_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.BLUE_LAMP));
             }
         });
         stationToggleButton.setOnAction(event -> {
@@ -128,9 +130,9 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
 
         trimmerRedLampCheckBox.setOnAction(event -> {
             if (trimmerRedLampCheckBox.isSelected()) {
-                signal.getLamps().put(SignalLampType.RED_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.RED_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.RED_LAMP));
             } else {
-                signal.getLamps().put(SignalLampType.BLUE_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.BLUE_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.BLUE_LAMP));
             }
         });
 
@@ -189,11 +191,11 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         yellowLampCheckBox.setOnAction(event -> {
             selectElement(yellowLampElement, yellowLampCheckBox.isSelected());
             if (yellowLampCheckBox.isSelected()) {
-                signal.getLamps().put(SignalLampType.YELLOW_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.YELLOW_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.YELLOW_LAMP));
             } else {
                 OutputChannel outputChannel = signal.getLamps().get(SignalLampType.YELLOW_LAMP);
                 if (outputChannel.getModule() != null) {
-                    outputChannel.getModule().getOutputChannels().remove(outputChannel);
+                    outputChannel.getModule().getOutputChannels().remove(outputChannel.getChNumber());
                 }
                 signal.getLamps().remove(SignalLampType.YELLOW_LAMP);
             }
@@ -202,11 +204,11 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         greenLampCheckBox.setOnAction(event -> {
             selectElement(greenLampElement, greenLampCheckBox.isSelected());
             if (greenLampCheckBox.isSelected()) {
-                signal.getLamps().put(SignalLampType.GREEN_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.GREEN_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.GREEN_LAMP));
             } else {
                 OutputChannel outputChannel = signal.getLamps().get(SignalLampType.GREEN_LAMP);
                 if (outputChannel.getModule() != null) {
-                    outputChannel.getModule().getOutputChannels().remove(outputChannel);
+                    outputChannel.getModule().getOutputChannels().remove(outputChannel.getChNumber());
                 }
                 signal.getLamps().remove(SignalLampType.GREEN_LAMP);
             }
@@ -215,11 +217,11 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         redLampCheckBox.setOnAction(event -> {
             selectElement(redLampElement, redLampCheckBox.isSelected());
             if (redLampCheckBox.isSelected()) {
-                signal.getLamps().put(SignalLampType.RED_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.RED_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.RED_LAMP));
             } else {
                 OutputChannel outputChannel = signal.getLamps().get(SignalLampType.RED_LAMP);
                 if (outputChannel.getModule() != null) {
-                    outputChannel.getModule().getOutputChannels().remove(outputChannel);
+                    outputChannel.getModule().getOutputChannels().remove(outputChannel.getChNumber());
                 }
                 signal.getLamps().remove(SignalLampType.RED_LAMP);
             }
@@ -228,11 +230,11 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         secondYellowLampCheckBox.setOnAction(event -> {
             selectElement(secondYellowLampElement, secondYellowLampCheckBox.isSelected());
             if (secondYellowLampCheckBox.isSelected()) {
-                signal.getLamps().put(SignalLampType.SECOND_YELLOW_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.SECOND_YELLOW_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.SECOND_YELLOW_LAMP));
             } else {
                 OutputChannel outputChannel = signal.getLamps().get(SignalLampType.SECOND_YELLOW_LAMP);
                 if (outputChannel.getModule() != null) {
-                    outputChannel.getModule().getOutputChannels().remove(outputChannel);
+                    outputChannel.getModule().getOutputChannels().remove(outputChannel.getChNumber());
                 }
                 signal.getLamps().remove(SignalLampType.SECOND_YELLOW_LAMP);
             }
@@ -241,11 +243,11 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         secondGreenLampCheckBox.setOnAction(event -> {
             selectElement(secondGreenLampElement, secondGreenLampCheckBox.isSelected());
             if (secondGreenLampCheckBox.isSelected()) {
-                signal.getLamps().put(SignalLampType.SECOND_GREEN_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.SECOND_GREEN_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.SECOND_GREEN_LAMP));
             } else {
                 OutputChannel outputChannel = signal.getLamps().get(SignalLampType.SECOND_GREEN_LAMP);
                 if (outputChannel.getModule() != null) {
-                    outputChannel.getModule().getOutputChannels().remove(outputChannel);
+                    outputChannel.getModule().getOutputChannels().remove(outputChannel.getChNumber());
                 }
                 signal.getLamps().remove(SignalLampType.SECOND_GREEN_LAMP);
             }
@@ -254,11 +256,11 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         whiteLampCheckBox.setOnAction(event -> {
             selectElement(whiteLampElement, whiteLampCheckBox.isSelected());
             if (whiteLampCheckBox.isSelected()) {
-                signal.getLamps().put(SignalLampType.WHITE_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.WHITE_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.WHITE_LAMP));
             } else {
                 OutputChannel outputChannel = signal.getLamps().get(SignalLampType.WHITE_LAMP);
                 if (outputChannel.getModule() != null) {
-                    outputChannel.getModule().getOutputChannels().remove(outputChannel);
+                    outputChannel.getModule().getOutputChannels().remove(outputChannel.getChNumber());
                 }
                 signal.getLamps().remove(SignalLampType.WHITE_LAMP);
             }
@@ -267,11 +269,11 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         greenLineCheckBox.setOnAction(event -> {
             selectElement(greenLineElement, greenLineCheckBox.isSelected());
             if (greenLineCheckBox.isSelected()) {
-                signal.getLamps().put(SignalLampType.GREEN_LINE, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal));
+                signal.getLamps().put(SignalLampType.GREEN_LINE, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.GREEN_LINE));
             } else {
                 OutputChannel outputChannel = signal.getLamps().get(SignalLampType.GREEN_LINE);
                 if (outputChannel.getModule() != null) {
-                    outputChannel.getModule().getOutputChannels().remove(outputChannel);
+                    outputChannel.getModule().getOutputChannels().remove(outputChannel.getChNumber());
                 }
                 signal.getLamps().remove(SignalLampType.GREEN_LINE);
             }

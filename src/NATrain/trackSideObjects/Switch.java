@@ -22,8 +22,8 @@ public class Switch extends TracksideObject implements Serializable {
 
     private final InputChannel plusInputChannel = new InputChannel(InputChannelType.SWITCH_PLUS, this);
     private final InputChannel minusInputChannel = new InputChannel(InputChannelType.SWITCH_MINUS, this);
-    private final OutputChannel plusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_PLUS, this);
-    private final OutputChannel minusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_MINUS, this);
+    private final OutputChannel plusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_PLUS, this, null);
+    private final OutputChannel minusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_MINUS, this, null);
 
     public Switch(String id) {
         super(id);

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class InputChannel implements Serializable {
     static final long serialVersionUID = 1L;
 
-    public int chNumber;
+    private int chNumber = -1;
     private final InputChannelType channelType;
     private final TracksideObject tracksideObject;
     private ControlModule module;
@@ -16,6 +16,7 @@ public class InputChannel implements Serializable {
         actualState = statusCode;
         switch (channelType) {
             case TRACK_SECTION:
+            case BLOCK_SECTION:
                 TrackSection trackSection = (TrackSection) tracksideObject;
                 if (statusCode == TrackSectionState.FREE.getCode()) {
                     trackSection.setVacancyState(TrackSectionState.FREE);

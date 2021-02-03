@@ -1,5 +1,7 @@
 package NATrain.сontrolModules;
 
+import NATrain.trackSideObjects.Switch;
+import NATrain.trackSideObjects.TracksideObject;
 import javafx.collections.ObservableMap;
 
 import java.util.Map;
@@ -27,11 +29,38 @@ public interface ControlModule {
     }
 
     default String getObjectNames () {
-        TreeSet<String> names = new TreeSet<>();
-        getInputChannels().values().forEach(inputChannel -> names.add(inputChannel.getTracksideObject().getId()));
-        getOutputChannels().values().forEach(outputChannel -> names.add(outputChannel.getTracksideObject().getId()));
+        TreeSet<String> trackSectionNames = new TreeSet<>();
+        TreeSet<String> signalNames = new TreeSet<>();
+        TreeSet<String> switchNames = new TreeSet<>();
+        getInputChannels().values().forEach(inputChannel -> {
+            switch (inputChannel.getChannelType()) {
+                case SWITCH_MINUS:
+                case SWITCH_PLUS:
+                    switchNames.add(inputChannel.getTracksideObject().getId());
+                    break;
+                case TRACK_SECTION:
+                    trackSectionNames.add(inputChannel.getTracksideObject().getId());
+                    break;
+            }
+        });
+        getOutputChannels().values().forEach(outputChannel -> {
+            switch (outputChannel.getChannelType()) {
+                case SWITCH_TO_PLUS:
+                case SWITCH_TO_MINUS:
+                    switchNames.add(outputChannel.getTracksideObject().getId());
+                    break;
+                case SIGNAL_LAMP_OUTPUT:
+                    signalNames.add(outputChannel.getTracksideObject().getId());
+                    break;
+            }
+        });
         StringBuilder stringBuilder = new StringBuilder();
-        names.forEach(name -> stringBuilder.append(name).append("; "));
-        return stringBuilder.substring(0, stringBuilder.length() - 3);
+        stringBuilder.append("Sections: ");
+        trackSectionNames.forEach(name -> stringBuilder.append(name).append("; "));
+        stringBuilder.append("Signals: ");
+        signalNames.forEach(name -> stringBuilder.append(name).append("; "));
+        stringBuilder.append("Switches: ");
+        switchNames.forEach(name -> stringBuilder.append(name).append("; "));
+        return stringBuilder.toString();
     }
 }

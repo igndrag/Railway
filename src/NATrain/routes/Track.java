@@ -7,6 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 public class Track implements Serializable {
 
@@ -131,6 +132,26 @@ public class Track implements Serializable {
         getBlockSections().stream().map(TrackBlockSection::getNormalDirectionSignal).forEach(signal -> {signal.setSignalState(SignalState.NOT_LIGHT);});
         getBlockSections().stream().map(TrackBlockSection::getReversedDirectionSignal).forEach(signal -> {signal.setSignalState(SignalState.NOT_LIGHT);});
         activeSignalListeners.clear();
+    }
+
+    public List<TrackSection> getTrackSections() {
+        return blockSections.stream().map(TrackBlockSection::getSection).collect(Collectors.toList());
+    }
+
+    public List<Signal> getSignals() {
+        List<Signal> result = new ArrayList<>();
+        for (TrackBlockSection blockSection : blockSections) {
+            Signal normalDirectionSignal = blockSection.getNormalDirectionSignal();
+            if (normalDirectionSignal != null && normalDirectionSignal != Signal.EMPTY_SIGNAL) {
+                result.add(normalDirectionSignal);
+            }
+            Signal reversedDirectionSignal = blockSection.getReversedDirectionSignal();
+            if (reversedDirectionSignal != null && reversedDirectionSignal != Signal.EMPTY_SIGNAL) {
+                result.add(reversedDirectionSignal);
+            }
+        }
+        result.sort(Comparator.comparing(TracksideObject::getId));
+        return result;
     }
 
     @Override

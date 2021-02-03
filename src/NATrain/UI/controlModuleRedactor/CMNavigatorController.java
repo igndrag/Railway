@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class CMNavigatorController {
 
@@ -70,9 +71,16 @@ public class CMNavigatorController {
 
         deleteButton.setOnAction(event -> {
             ControlModule objectForDelete = tableView.getSelectionModel().getSelectedItem();
-//            Arrays.stream(objectForDelete.getChannels()) //clear all channels references before delete control module
-//                    .filter(Objects::nonNull)
-//                    .forEach(tracksideObject -> tracksideObject.setControlModule(null));
+
+            //clear all channels references before delete control module
+
+            objectForDelete.getInputChannels().values().stream()
+                    .filter(Objects::nonNull)
+                    .forEach(tracksideObject -> tracksideObject.setModule(null));
+
+            objectForDelete.getOutputChannels().values().stream()
+                    .filter(Objects::nonNull)
+                    .forEach(tracksideObject -> tracksideObject.setModule(null));
 
             controlModules.remove(objectForDelete);
             Model.getControlModules().remove(objectForDelete);
@@ -102,12 +110,15 @@ public class CMNavigatorController {
         FXMLLoader loader = new FXMLLoader(CMEditorController.class.getResource("CMEditor.fxml"));
         Stage controlModuleEditor = new Stage();
         controlModuleEditor.setTitle("Control Module Editor");
-        controlModuleEditor.setScene(new Scene(loader.load(), 230, 330));
+        controlModuleEditor.setScene(new Scene(loader.load(), 800, 390));
         controlModuleEditor.setResizable(false);
         CMEditorController controller = loader.getController();
         controller.initialize(controlModule, tableView);
         controlModuleEditor.initModality(Modality.WINDOW_MODAL);
         controlModuleEditor.initOwner(primaryStage);
+        controlModuleEditor.setOnCloseRequest(event -> {
+            tableView.refresh();
+        });
         controlModuleEditor.show();
     }
 
