@@ -1,10 +1,10 @@
 package NATrain.UI.workPlace.executors;
 
 import NATrain.routes.Route;
-import NATrain.trackSideObjects.GlobalSignalState;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.SignalState;
-import NATrain.trackSideObjects.TrackSectionState;
+import NATrain.trackSideObjects.signals.GlobalSignalState;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalState;
+import NATrain.trackSideObjects.trackSections.TrackSectionState;
 
 public class ArrivalRouteExecutor extends AbstractRouteExecutor {
     public ArrivalRouteExecutor(Route route) {

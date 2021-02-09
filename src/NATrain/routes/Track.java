@@ -2,6 +2,10 @@ package NATrain.routes;
 
 import NATrain.quads.BlockingBaseQuad;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalState;
+import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.trackSideObjects.trackSections.TrackSectionState;
 
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
@@ -16,6 +20,7 @@ public class Track implements Serializable {
     private transient Map<PropertyChangeListener, Set<TracksideObject>> activeSignalListeners = new HashMap<>();
     private transient List<BlockingBaseQuad> signalQuads = new ArrayList<>();
 
+    private RouteDirection normalDirection = RouteDirection.EVEN;
     private String id;
     private TrackDirection trackDirection = TrackDirection.NORMAL;
     private boolean bidirectional = false;
@@ -23,6 +28,14 @@ public class Track implements Serializable {
     private TrackBlockingType trackBlockingType = TrackBlockingType.AUTOMATIC_THREE_SIGNAL_BLOCKING;
     private Signal normalDirectionArrivalSignal = Signal.EMPTY_SIGNAL;
     private Signal reversedDirectionArrivalSignal = Signal.EMPTY_SIGNAL;
+
+    public RouteDirection getNormalDirection() {
+        return normalDirection;
+    }
+
+    public void setNormalDirection(RouteDirection normalDirection) {
+        this.normalDirection = normalDirection;
+    }
 
     public Track(String id) {
         this.id = id;
@@ -117,7 +130,7 @@ public class Track implements Serializable {
 
     public boolean isAllBlockSectionsFree() {
         for (TrackBlockSection blockSection : blockSections) {
-            if (blockSection.getSection().getVacancyState() == TrackSectionState.OCCUPIED)
+            if (blockSection.getVacancyState() == TrackSectionState.OCCUPIED)
                 return false;
         }
         return true;
@@ -132,10 +145,6 @@ public class Track implements Serializable {
         getBlockSections().stream().map(TrackBlockSection::getNormalDirectionSignal).forEach(signal -> {signal.setSignalState(SignalState.NOT_LIGHT);});
         getBlockSections().stream().map(TrackBlockSection::getReversedDirectionSignal).forEach(signal -> {signal.setSignalState(SignalState.NOT_LIGHT);});
         activeSignalListeners.clear();
-    }
-
-    public List<TrackSection> getTrackSections() {
-        return blockSections.stream().map(TrackBlockSection::getSection).collect(Collectors.toList());
     }
 
     public List<Signal> getSignals() {

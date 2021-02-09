@@ -1,17 +1,9 @@
 package NATrain.сontrolModules;
 
-import NATrain.trackSideObjects.Switch;
-import NATrain.trackSideObjects.TracksideObject;
-import javafx.collections.ObservableMap;
-
 import java.util.Map;
 import java.util.TreeSet;
 
 public interface ControlModule {
-
-    public static final int LIGHT_OF_COMMAND_CODE = 10;
-    public static final int LIGHT_ON_COMMAND_CODE = 20;
-    public static final int BLINKING_ON_COMMAND_CODE = 20;
 
     String getId();
     ControlModuleType getModuleType();

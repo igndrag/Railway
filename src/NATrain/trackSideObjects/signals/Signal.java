@@ -1,14 +1,17 @@
-package NATrain.trackSideObjects;
+package NATrain.trackSideObjects.signals;
 
 import NATrain.UI.workPlace.WorkPlaceController;
+import NATrain.trackSideObjects.TracksideObject;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.сontrolModules.OutputChannel;
+import com.sun.istack.internal.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static NATrain.trackSideObjects.SignalState.*;
+import static NATrain.trackSideObjects.signals.SignalState.*;
 
 public class Signal extends TracksideObject {
     static final long serialVersionUID = 1L;
@@ -31,6 +34,11 @@ public class Signal extends TracksideObject {
     private SignalType signalType;
     private SignalState closedSignalState;
     private final Map<SignalLampType, OutputChannel> lamps = new HashMap<>();
+    @Nullable
+    private TrackSection borderedSection;
+    @Nullable
+    private TrackSection previousSection;
+
 
     public void setSignalType(SignalType signalType) {
         this.signalType = signalType;

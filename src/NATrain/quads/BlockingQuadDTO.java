@@ -2,7 +2,7 @@ package NATrain.quads;
 
 import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
-import NATrain.trackSideObjects.Signal;
+import NATrain.trackSideObjects.signals.Signal;
 import NATrain.utils.QuadFactory;
 
 import java.io.Serializable;

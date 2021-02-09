@@ -1,8 +1,13 @@
 package NATrain.utils;
 
-import NATrain.trackSideObjects.*;
 import NATrain.model.Model;
 import NATrain.quads.EmptyQuad;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalLampType;
+import NATrain.trackSideObjects.signals.SignalType;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.switches.SwitchState;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.сontrolModules.ControlModule;
 import NATrain.сontrolModules.OutputChannel;
 import NATrain.сontrolModules.OutputChannelType;

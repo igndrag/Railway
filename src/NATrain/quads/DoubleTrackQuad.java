@@ -3,7 +3,7 @@ package NATrain.quads;
 import NATrain.quads.configurableInterfaces.FirstTrackConfigurable;
 import NATrain.quads.configurableInterfaces.SecondTrackConfigurable;
 import NATrain.trackSideObjects.ControlAction;
-import NATrain.trackSideObjects.TrackSection;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import javafx.scene.shape.Shape;
 
 import java.util.Collections;

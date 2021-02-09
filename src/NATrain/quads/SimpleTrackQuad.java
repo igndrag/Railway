@@ -1,13 +1,11 @@
 package NATrain.quads;
 
-import NATrain.quads.configurableInterfaces.Configurable;
 import NATrain.quads.configurableInterfaces.FirstTrackConfigurable;
 import NATrain.trackSideObjects.ControlAction;
-import NATrain.trackSideObjects.TrackSection;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConfigurable {

@@ -1,4 +1,4 @@
-package NATrain.trackSideObjects;
+package NATrain.trackSideObjects.signals;
 
 public enum SignalLampState {
     NOT_LIGHT (0),

@@ -1,4 +1,4 @@
-package NATrain.trackSideObjects;
+package NATrain.trackSideObjects.switches;
 
 public enum SwitchState {
     PLUS (1),

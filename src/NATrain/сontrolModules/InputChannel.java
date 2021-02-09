@@ -1,5 +1,10 @@
 package NATrain.сontrolModules;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.switches.SwitchState;
+import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.trackSideObjects.trackSections.TrackSectionState;
+
 import java.io.Serializable;
 
 public class InputChannel implements Serializable {

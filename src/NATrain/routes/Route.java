@@ -1,6 +1,9 @@
 package NATrain.routes;
 
-import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.switches.SwitchState;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 
 import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;

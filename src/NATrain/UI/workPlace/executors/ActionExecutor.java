@@ -1,7 +1,5 @@
 package NATrain.UI.workPlace.executors;
 
-import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
-import NATrain.UI.mosaicRedactor.QuadConfiguratorFxController;
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
 import NATrain.quads.*;
@@ -9,8 +7,8 @@ import NATrain.routes.Route;
 import NATrain.routes.Track;
 import NATrain.routes.TrackDirection;
 import NATrain.trackSideObjects.ControlAction;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.Switch;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.TracksideObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

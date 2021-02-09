@@ -4,6 +4,12 @@ import NATrain.routes.Route;
 import NATrain.routes.Track;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalState;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.switches.SwitchState;
+import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.trackSideObjects.trackSections.TrackSectionState;
 import NATrain.сontrolModules.ControlModule;
 
 import java.io.*;
@@ -164,8 +170,8 @@ public enum Model implements Serializable {
                     track.setActiveSignalListeners(new HashMap<>());
 
                     track.getBlockSections().forEach(blockSection -> {
-                        blockSection.getSection().addPropertyChangeSupport();
-                        blockSection.getSection().setVacancyState(TrackSectionState.UNDEFINED);
+                        blockSection.addPropertyChangeSupport();
+                        blockSection.setVacancyState(TrackSectionState.UNDEFINED);
                         Signal signal = blockSection.getNormalDirectionSignal();
                         if (signal == null) {
                             blockSection.setNormalDirectionSignal(Signal.EMPTY_SIGNAL);

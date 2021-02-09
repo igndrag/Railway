@@ -1,10 +1,10 @@
 package NATrain.UI.tracksideObjectRedactor.TSORedactors;
 
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
-import NATrain.trackSideObjects.SwitchState;
+import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.model.Model;
-import NATrain.trackSideObjects.Switch;
-import NATrain.trackSideObjects.TrackSection;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.trackSideObjects.TracksideObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

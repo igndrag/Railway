@@ -1,9 +1,8 @@
 package NATrain.quads;
 import NATrain.UI.NavigatorFxController;
 import NATrain.UI.workPlace.Blinker;
-import NATrain.trackSideObjects.SignalState;
-import NATrain.trackSideObjects.TrackSection;
-import NATrain.trackSideObjects.TracksideObject;
+import NATrain.trackSideObjects.signals.SignalState;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.QuadPainter;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -11,8 +10,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractQuad implements Quad, Paintable {
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;

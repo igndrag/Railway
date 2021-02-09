@@ -5,12 +5,14 @@ import NATrain.UI.workPlace.executors.ActionExecutor;
 import NATrain.UI.workPlace.executors.AbstractRouteExecutor;
 import NATrain.UI.workPlace.executors.RouteExecutor;
 import NATrain.UI.workPlace.executors.RouteStatus;
-import NATrain.connectionService.ConnectionService;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.quads.*;
-import NATrain.routes.Route;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalState;
+import NATrain.trackSideObjects.switches.SwitchState;
+import NATrain.trackSideObjects.trackSections.TrackSectionState;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +29,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.IOException;
 import java.util.List;
@@ -96,7 +97,7 @@ public class WorkPlaceController {
         Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));
         Model.getTracks().forEach(track -> {
             track.getBlockSections().forEach(blockSection -> {
-                blockSection.getSection().setVacancyState(TrackSectionState.FREE);
+                blockSection.setVacancyState(TrackSectionState.FREE);
                 if (blockSection.getNormalDirectionSignal() != Signal.EMPTY_SIGNAL) {
                     if (!blockSection.isLastInNormalDirection()) {
                         blockSection.getNormalDirectionSignal().setSignalState(SignalState.GREEN);

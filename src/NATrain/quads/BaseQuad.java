@@ -1,16 +1,11 @@
 package NATrain.quads;
 
-import NATrain.UI.workPlace.Blinker;
 import NATrain.quads.configurableInterfaces.Configurable;
 import NATrain.routes.Track;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.SignalState;
-import NATrain.trackSideObjects.Switch;
-import NATrain.trackSideObjects.TrackSection;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import javafx.scene.text.Text;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 
 public abstract class BaseQuad extends AbstractQuad implements Configurable {

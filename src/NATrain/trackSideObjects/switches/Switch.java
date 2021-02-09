@@ -1,6 +1,9 @@
-package NATrain.trackSideObjects;
+package NATrain.trackSideObjects.switches;
 
 import NATrain.UI.workPlace.WorkPlaceController;
+import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.trackSideObjects.trackSections.TrackSectionState;
+import NATrain.trackSideObjects.TracksideObject;
 import NATrain.сontrolModules.InputChannel;
 import NATrain.сontrolModules.InputChannelType;
 import NATrain.сontrolModules.OutputChannel;

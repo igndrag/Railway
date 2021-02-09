@@ -4,6 +4,10 @@ import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.routes.Route;
 import NATrain.routes.RouteType;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.switches.SwitchState;
+import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.trackSideObjects.trackSections.TrackSectionState;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -233,13 +237,13 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
 
         if (route.getTVDS1() != null) {
             SignalStateUpdater TVDS1signalStateUpdater = new SignalStateUpdater();
-            signalStateUpdaterMap.put(route.getTVDS1().getSection(), TVDS1signalStateUpdater);
-            route.getTVDS1().getSection().addPropertyChangeListener(TVDS1signalStateUpdater);
+            signalStateUpdaterMap.put(route.getTVDS1(), TVDS1signalStateUpdater);
+            route.getTVDS1().addPropertyChangeListener(TVDS1signalStateUpdater);
         }
         if (route.getTVDS2() != null) {
             SignalStateUpdater TVDS2signalStateUpdater = new SignalStateUpdater();
-            signalStateUpdaterMap.put(route.getTVDS1().getSection(), TVDS2signalStateUpdater);
-            route.getTVDS2().getSection().addPropertyChangeListener(TVDS2signalStateUpdater);
+            signalStateUpdaterMap.put(route.getTVDS1(), TVDS2signalStateUpdater);
+            route.getTVDS2().addPropertyChangeListener(TVDS2signalStateUpdater);
         }
         if (route.getNextSignal() != null) {
             SignalStateUpdater fromNextSignalUpdater = new SignalStateUpdater();

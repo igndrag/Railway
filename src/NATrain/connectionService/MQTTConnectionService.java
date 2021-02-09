@@ -1,12 +1,9 @@
 package NATrain.connectionService;
 
 import NATrain.model.Model;
-import NATrain.trackSideObjects.TrackSectionState;
 import NATrain.сontrolModules.ControlModule;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-
-import java.util.Arrays;
 
 public class MQTTConnectionService {
     private static MQTTConnectionService service;

@@ -1,10 +1,8 @@
 package NATrain.UI.workPlace.executors;
 
 import NATrain.routes.Route;
-import NATrain.trackSideObjects.GlobalSignalState;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.SignalState;
-import NATrain.trackSideObjects.TrackSectionState;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalState;
 
 public class ShuntingRouteExecutor extends AbstractRouteExecutor {
     public ShuntingRouteExecutor(Route route) {

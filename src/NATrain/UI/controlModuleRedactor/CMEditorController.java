@@ -4,6 +4,10 @@ import NATrain.UI.UIUtils;
 import NATrain.model.Model;
 import NATrain.routes.Track;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalLampType;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.UtilFunctions;
 import NATrain.сontrolModules.*;
 import javafx.collections.FXCollections;
@@ -110,11 +114,12 @@ public class CMEditorController {
 
         inputTrackChoiceBox.setOnAction(event -> {
             if (!inputTrackChoiceBox.getSelectionModel().isEmpty()) {
-                inputObjectChoiceBox.setItems(FXCollections.observableArrayList(inputTrackChoiceBox.getValue().getTrackSections()));
+                inputObjectChoiceBox.setItems(FXCollections.observableArrayList(inputTrackChoiceBox.getValue().getBlockSections()));
             }
         });
 
         outputTypeChoiceBox.setItems(FXCollections.observableArrayList(OutputChannelType.values()));
+        outputTypeChoiceBox.getItems().remove(OutputChannelType.LOCOMOTIVE_OUTPUT);
         lampTypeChoiceBox.setDisable(true);
 
         outputTrackChoiceBox.setItems(tracks);

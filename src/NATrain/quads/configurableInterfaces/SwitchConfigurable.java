@@ -1,6 +1,6 @@
 package NATrain.quads.configurableInterfaces;
 
-import NATrain.trackSideObjects.Switch;
+import NATrain.trackSideObjects.switches.Switch;
 
 public interface SwitchConfigurable {
     void setAssociatedSwitch(Switch associatedSwitch);

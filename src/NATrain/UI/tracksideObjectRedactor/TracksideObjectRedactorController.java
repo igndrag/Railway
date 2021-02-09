@@ -1,12 +1,7 @@
 package NATrain.UI.tracksideObjectRedactor;
 
-import NATrain.UI.tracksideObjectRedactor.TSORedactor;
-import NATrain.model.Model;
-import NATrain.trackSideObjects.TrackSection;
 import NATrain.trackSideObjects.TracksideObject;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;

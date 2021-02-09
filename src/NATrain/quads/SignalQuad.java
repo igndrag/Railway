@@ -2,7 +2,7 @@ package NATrain.quads;
 
 import NATrain.quads.configurableInterfaces.SignalConfigurable;
 import NATrain.trackSideObjects.ControlAction;
-import NATrain.trackSideObjects.Signal;
+import NATrain.trackSideObjects.signals.Signal;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 

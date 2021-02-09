@@ -1,34 +1,29 @@
 package NATrain.routes;
 
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.TrackSection;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 
 import java.io.Serializable;
 
-public class TrackBlockSection implements Serializable {
+public class TrackBlockSection extends TrackSection implements Serializable {
     static final long serialVersionUID = 1L;
 
-    public static final TrackBlockSection EMPTY_BLOCK_SECTION = new TrackBlockSection(Track.EMPTY_TRACK,TrackSection.EMPTY_TRACK_SECTION);
+    public static final TrackBlockSection EMPTY_BLOCK_SECTION = new TrackBlockSection(Track.EMPTY_TRACK, "None");
 
     private final Track track;
-    private TrackSection section = TrackSection.EMPTY_TRACK_SECTION;
     private Signal normalDirectionSignal = Signal.EMPTY_SIGNAL;
     private Signal reversedDirectionSignal = Signal.EMPTY_SIGNAL;
     private boolean bidirectional = false;
     private boolean lastInNormalDirection = false;
     private boolean lastInReverseDirection = false;
 
-    public TrackBlockSection(Track track, TrackSection section) {
+    public TrackBlockSection(Track track, String id) {
+        super(id);
         this.track = track;
-        this.section = section;
     }
 
     public Track getTrack() {
         return track;
-    }
-
-    public TrackSection getSection() {
-        return section;
     }
 
     public Signal getNormalDirectionSignal() {
@@ -41,10 +36,6 @@ public class TrackBlockSection implements Serializable {
 
     public Boolean getBidirectional() {
         return bidirectional;
-    }
-
-    public String getId() {
-        return section.getId();
     }
 
     public void setNormalDirectionSignal(Signal normalDirectionSignal) {
@@ -77,6 +68,6 @@ public class TrackBlockSection implements Serializable {
 
     @Override
     public String toString() {
-        return section.getId();
+        return getId();
     }
 }

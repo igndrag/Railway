@@ -2,9 +2,9 @@ package NATrain.quads;
 
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.trackSideObjects.ControlAction;
-import NATrain.trackSideObjects.SwitchState;
+import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.quads.configurableInterfaces.SwitchConfigurable;
-import NATrain.trackSideObjects.Switch;
+import NATrain.trackSideObjects.switches.Switch;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;

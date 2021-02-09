@@ -3,10 +3,14 @@ package NATrain.UI.workPlace;
 import NATrain.model.Model;
 import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
-import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalState;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.switches.SwitchState;
+import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.trackSideObjects.trackSections.TrackSectionState;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -88,7 +92,7 @@ public class ActionEmulatorController {
 
         blockSectionChoiceBox.setOnAction(event -> {
             if (!blockSectionChoiceBox.getSelectionModel().isEmpty()) {
-                if (blockSectionChoiceBox.getValue().getSection().getVacancyState() == TrackSectionState.FREE) {
+                if (blockSectionChoiceBox.getValue().getVacancyState() == TrackSectionState.FREE) {
                     freeBlockSectionToggleButton.setSelected(true);
                 } else {
                     occupiedBlockSectionToggleButton.setSelected(true);
@@ -98,13 +102,13 @@ public class ActionEmulatorController {
 
         freeBlockSectionToggleButton.setOnAction(event -> {
             if (!blockSectionChoiceBox.getSelectionModel().isEmpty()) {
-                blockSectionChoiceBox.getValue().getSection().setVacancyState(TrackSectionState.FREE);
+                blockSectionChoiceBox.getValue().setVacancyState(TrackSectionState.FREE);
             }
         });
 
         occupiedBlockSectionToggleButton.setOnAction(event -> {
             if (!blockSectionChoiceBox.getSelectionModel().isEmpty()) {
-                blockSectionChoiceBox.getValue().getSection().setVacancyState(TrackSectionState.OCCUPIED);
+                blockSectionChoiceBox.getValue().setVacancyState(TrackSectionState.OCCUPIED);
             }
         });
 

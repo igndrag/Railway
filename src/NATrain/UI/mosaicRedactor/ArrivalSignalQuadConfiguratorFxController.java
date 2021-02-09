@@ -4,8 +4,8 @@ import NATrain.model.Model;
 import NATrain.quads.ArrivalSignalQuad;
 import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.TrackSection;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.QuadFactory;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
@@ -55,18 +55,10 @@ public class ArrivalSignalQuadConfiguratorFxController {
         trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracks()));
         trackChoiceBox.getItems().add(Track.EMPTY_TRACK);
         trackChoiceBox.getSelectionModel().select(quadForConfig.getTrack());
-        blockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue()
-                .getBlockSections()
-                .stream()
-                .map(TrackBlockSection::getSection)
-                .collect(Collectors.toList())));
+        blockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
         trackChoiceBox.setOnAction(event -> {
             quadForConfig.setTrack(trackChoiceBox.getValue());
-            blockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue()
-                    .getBlockSections()
-                    .stream()
-                    .map(TrackBlockSection::getSection)
-                    .collect(Collectors.toList())));
+            blockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
         });
 
         blockSectionChoiceBox.getSelectionModel().select(quadForConfig.getSecondAssociatedTrack());

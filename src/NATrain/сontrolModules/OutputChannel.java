@@ -1,6 +1,6 @@
 package NATrain.сontrolModules;
 
-import NATrain.trackSideObjects.SignalLampType;
+import NATrain.trackSideObjects.signals.SignalLampType;
 import NATrain.trackSideObjects.TracksideObject;
 
 import java.io.Serializable;

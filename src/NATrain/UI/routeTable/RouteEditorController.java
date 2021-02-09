@@ -1,11 +1,12 @@
 package NATrain.UI.routeTable;
 
 import NATrain.model.Model;
-import NATrain.routes.Route;
-import NATrain.routes.RouteType;
-import NATrain.routes.Track;
-import NATrain.routes.TrackBlockSection;
+import NATrain.routes.*;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.switches.SwitchState;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -197,7 +198,7 @@ public class RouteEditorController {
                 Model.getTrackSections()
                         .values()
                         .stream()
-                        .filter(TrackSection::isArrivalDepartureTrack)
+                        .filter(trackSection -> trackSection instanceof ArrivalDepartureTrack)
                         .collect(Collectors.toList()));
         departureChoiceBox.setItems(arrivalDepartureTrackObservableList);
         if (route.getDepartureTrackSection() != null) {
@@ -247,7 +248,7 @@ public class RouteEditorController {
             switch (selectedRouteType) {
                 case DEPARTURE:
                     route.setDestinationTrack(TVDS1ChoiceBox.getValue().getTrack());
-                    route.setDestinationTrackSection(TVDS1ChoiceBox.getValue().getSection());
+                    route.setDestinationTrackSection(TVDS1ChoiceBox.getValue());
                     break;
                 case ARRIVAL:
                 case SHUNTING:

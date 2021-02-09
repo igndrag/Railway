@@ -1,11 +1,9 @@
-package NATrain.trackSideObjects;
+package NATrain.trackSideObjects.trackSections;
 
 
+import NATrain.trackSideObjects.TracksideObject;
 import NATrain.сontrolModules.InputChannel;
 import NATrain.сontrolModules.InputChannelType;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public class TrackSection extends TracksideObject {
 
@@ -21,22 +19,14 @@ public class TrackSection extends TracksideObject {
     }
 
     public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
-    private boolean arrivalDepartureTrack = false;
     private final InputChannel inputChannel = new InputChannel(InputChannelType.TRACK_SECTION, this);
+    private int length = 0;
 
     private transient TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
 
     private transient boolean interlocked = false;
     private transient boolean occupationFixed = false;
     private transient boolean deallocationFixed = false;
-
-    public boolean isArrivalDepartureTrack() {
-        return arrivalDepartureTrack;
-    }
-
-    public void setArrivalDepartureTrack(boolean arrivalDepartureTrack) {
-        this.arrivalDepartureTrack = arrivalDepartureTrack;
-    }
 
     public boolean isOccupationFixed() {
         return occupationFixed;
@@ -87,6 +77,14 @@ public class TrackSection extends TracksideObject {
 
     public InputChannel getInputChannel() {
         return inputChannel;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 
     @Override

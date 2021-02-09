@@ -1,9 +1,9 @@
 package NATrain.quads;
 
 import NATrain.routes.Track;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.Switch;
-import NATrain.trackSideObjects.TrackSection;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.QuadFactory;
 import java.io.Serializable;
 

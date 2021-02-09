@@ -1,4 +1,4 @@
-package NATrain.trackSideObjects;
+package NATrain.trackSideObjects.signals;
 
 public enum SignalLampType {
     GREEN_LAMP,

@@ -2,13 +2,14 @@ package NATrain.UI.tracks;
 
 import NATrain.UI.UIUtils;
 import NATrain.model.Model;
+import NATrain.routes.RouteDirection;
 import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
 import NATrain.routes.TrackBlockingType;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.SignalLampType;
-import NATrain.trackSideObjects.SignalType;
-import NATrain.trackSideObjects.TrackSection;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalLampType;
+import NATrain.trackSideObjects.signals.SignalType;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.сontrolModules.OutputChannel;
 import NATrain.сontrolModules.OutputChannelType;
 import javafx.collections.FXCollections;
@@ -71,7 +72,28 @@ public class TrackRedactorController {
         ToggleGroup toggleGroup = new ToggleGroup();
         evenToggleButton.setToggleGroup(toggleGroup);
         oddToggleButton.setToggleGroup(toggleGroup);
-        evenToggleButton.setSelected(true);
+        if (track.getNormalDirection() == RouteDirection.EVEN) {
+            evenToggleButton.setSelected(true);
+        } else {
+            oddToggleButton.setSelected(true);
+        }
+
+        if (track.getBlockSections().size() > 0) {
+            evenToggleButton.setDisable(true);
+            oddToggleButton.setDisable(true);
+        }
+
+        evenToggleButton.setOnAction(event -> {
+            if (evenToggleButton.isSelected()) {
+                track.setNormalDirection(RouteDirection.EVEN);
+            }
+        });
+
+        oddToggleButton.setOnAction(event -> {
+            if (oddToggleButton.isSelected()) {
+                track.setNormalDirection(RouteDirection.ODD);
+            }
+        });
 
         trackNameTextField.setText(track.getId());
         bidirectionalRadioButton.setSelected(track.isBidirectional());
@@ -127,7 +149,7 @@ public class TrackRedactorController {
                     blockSectionName.append(2*i -1);
                 }
                 blockSectionName.append(blockSectionSuffixTextField.getText());
-                TrackBlockSection blockSection = new TrackBlockSection(track, new TrackSection(blockSectionName.toString()));
+                TrackBlockSection blockSection = new TrackBlockSection(track, blockSectionName.toString());
                 if (i != sectionsCount) {
                     StringBuilder normalDirectionSignalName = new StringBuilder();
                     normalDirectionSignalName.append(signalPrefixTextField.getText());
@@ -183,6 +205,8 @@ public class TrackRedactorController {
             track.getBlockSections().get(track.getBlockSectionCount() - 1).setLastInNormalDirection(true);
             track.getBlockSections().get(0).setLastInReversedDirection(true);
             blockSectionsTableView.refresh();
+            evenToggleButton.setDisable(true);
+            oddToggleButton.setDisable(true);
         } catch (NumberFormatException e) {
             UIUtils.showAlert("Incorrect Block Sections Count!");
         }
@@ -209,6 +233,9 @@ public class TrackRedactorController {
         if (lastSectionIndex > 0) {
             track.getBlockSections().remove(lastSectionIndex);
             blockSectionsTableView.getItems().remove(lastSectionIndex);
+        } else {
+            evenToggleButton.setDisable(false);
+            oddToggleButton.setDisable(false);
         }
     }
 
@@ -216,6 +243,8 @@ public class TrackRedactorController {
     private void deleteAll() {
         track.getBlockSections().clear();
         blockSectionsTableView.getItems().clear();
+        evenToggleButton.setDisable(false);
+        oddToggleButton.setDisable(false);
     }
 
     private boolean isTrackNameValid() {

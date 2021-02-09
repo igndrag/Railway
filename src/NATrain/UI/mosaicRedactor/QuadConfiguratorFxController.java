@@ -2,12 +2,10 @@ package NATrain.UI.mosaicRedactor;
 
 import NATrain.model.Model;
 import NATrain.quads.Quad;
-import NATrain.quads.SignalQuad;
-import NATrain.quads.SwitchQuad;
 import NATrain.quads.configurableInterfaces.*;
-import NATrain.trackSideObjects.Signal;
-import NATrain.trackSideObjects.Switch;
-import NATrain.trackSideObjects.TrackSection;
+import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.switches.Switch;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.QuadFactory;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
