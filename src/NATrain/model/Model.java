@@ -1,5 +1,6 @@
 package NATrain.model;
 
+import NATrain.routes.ArrivalDepartureTrack;
 import NATrain.routes.Route;
 import NATrain.routes.Track;
 import NATrain.trackSideObjects.*;
@@ -40,6 +41,8 @@ public enum Model implements Serializable {
 
     private static Set<ControlModule> controlModules = new CopyOnWriteArraySet<>();
 
+    private static Set<ArrivalDepartureTrack> stationTracks = new CopyOnWriteArraySet<>();
+
     private static Set<Track> tracks = new CopyOnWriteArraySet<>();
 
     public static Quad[][] getMainGrid() {
@@ -60,6 +63,10 @@ public enum Model implements Serializable {
 
     public static Map<String, TrackSection> getTrackSections() {
         return trackSections;
+    }
+
+    public static Set<ArrivalDepartureTrack> getStationTracks() {
+        return stationTracks;
     }
 
     public static Set<ControlModule> getControlModules() {
@@ -212,5 +219,13 @@ public enum Model implements Serializable {
                     mainGrid[y][x].refresh();
             }
         }
+    }
+
+    public void getEvenStationSignals() {
+
+    }
+
+    public void getOddStationSignals() {
+
     }
 }

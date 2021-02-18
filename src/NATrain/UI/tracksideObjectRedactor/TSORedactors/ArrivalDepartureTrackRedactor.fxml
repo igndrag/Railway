@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.ArrivalDepartureTrackRedactorController">
+   <children>
+      <Button layoutX="137.0" layoutY="196.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
+      <TextField fx:id="textField" layoutX="22.0" layoutY="31.0" prefHeight="25.0" prefWidth="178.0" />
+      <Label layoutX="24.0" layoutY="11.0" text="Name" />
+      <Label layoutX="26.0" layoutY="77.0" text="Length" />
+      <TextField fx:id="lengthTextField" layoutX="97.0" layoutY="73.0" prefHeight="25.0" prefWidth="103.0" />
+      <ChoiceBox fx:id="evenSignalChoiceBox" layoutX="96.0" layoutY="112.0" prefHeight="25.0" prefWidth="103.0" />
+      <ChoiceBox fx:id="oddSignalChoiceBox" layoutX="97.0" layoutY="153.0" prefHeight="25.0" prefWidth="103.0" />
+      <Label layoutX="24.0" layoutY="116.0" text="Even Signal" />
+      <Label layoutX="25.0" layoutY="157.0" text="Odd Signal" />
+   </children>
+</Pane>

@@ -1,5 +1,7 @@
 package NATrain.сontrolModules;
 
+import NATrain.trackSideObjects.TracksideObject;
+
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -54,5 +56,25 @@ public interface ControlModule {
         stringBuilder.append("Switches: ");
         switchNames.forEach(name -> stringBuilder.append(name).append("; "));
         return stringBuilder.toString();
+    }
+
+    default String getConfiguredChannels (TracksideObject tracksideObject) {
+        StringBuilder resultString = new StringBuilder();
+        resultString.append(" IN: ");
+        getInputChannels().values().forEach(inputChannel -> {
+            if (inputChannel.getTracksideObject() == tracksideObject) {
+                resultString.append(inputChannel.getChNumber());
+                resultString.append("; ");
+            }
+        });
+        resultString.append(" OUT: ");
+        getOutputChannels().values().forEach(outputChannel -> {
+            if (outputChannel.getTracksideObject() == tracksideObject) {
+                resultString.append(outputChannel.getChNumber());
+                resultString.append("; ");
+            }
+        });
+        resultString.append(" ");
+        return resultString.toString();
     }
 }

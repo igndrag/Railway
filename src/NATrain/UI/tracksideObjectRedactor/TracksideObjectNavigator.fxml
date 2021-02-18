@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="350.0" prefHeight="500.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController">
+  <tabs>
+    <Tab text="Track Sections">
+         <content>
+            <Pane prefHeight="471.0" prefWidth="451.0">
+               <children>
+                  <TableView fx:id="trackSectionsTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                    <columns>
+                        <TableColumn fx:id="trackSectionIdCol" prefWidth="70.0" text="ID" />
+                        <TableColumn fx:id="trackSectionControlModuleCol" prefWidth="379.0" text="Control Modules " />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="newTrackSectionButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                  <Button fx:id="editTrackSectionButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                  <Button fx:id="deleteTrackSectionButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+               </children>
+            </Pane>
+         </content>
+    </Tab>
+      <Tab text="Switches">
+          <content>
+              <Pane prefHeight="490.0" prefWidth="301.0">
+                  <children>
+                      <TableView fx:id="switchTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                          <columns>
+                              <TableColumn fx:id="switchIdCol" prefWidth="70.0" text="ID" />
+                              <TableColumn fx:id="switchControlModuleCol" prefWidth="378.0" text="Control Modules" />
+                          </columns>
+                      </TableView>
+                      <Button fx:id="newSwitchButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editSwitchButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteSwitchButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+                  </children>
+              </Pane>
+          </content>
+      </Tab>
+
+      <Tab text="Signals">
+          <content>
+              <Pane prefHeight="490.0" prefWidth="301.0">
+                  <children>
+                      <TableView fx:id="signalTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                          <columns>
+                              <TableColumn fx:id="signalIdCol" prefWidth="70.0" text="ID" />
+                              <TableColumn fx:id="signalControlModuleCol" prefWidth="379.0" text="Control Modules" />
+                          </columns>
+                      </TableView>
+                      <Button fx:id="newSignalButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editSignalButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteSignalButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+                  </children>
+              </Pane>
+          </content>
+      </Tab>
+      <Tab text="Station Tracks">
+          <content>
+              <Pane prefHeight="490.0" prefWidth="301.0">
+                  <children>
+                      <TableView fx:id="stationTrackTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                          <columns>
+                              <TableColumn fx:id="stationTrackIdCol" prefWidth="70.0" text="ID" />
+                              <TableColumn fx:id="stationTrackControlModuleCol" prefWidth="378.0" text="Control Module Address" />
+                          </columns>
+                      </TableView>
+                      <Button fx:id="newStationTrackButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editStationTrackButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteStationTrackButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+                  </children>
+              </Pane>
+          </content>
+      </Tab>
+
+      <Tab text="Locomotives">
+          <content>
+              <Pane prefHeight="490.0" prefWidth="301.0">
+                  <children>
+                      <TableView fx:id="locomotiveTrackTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                          <columns>
+                              <TableColumn fx:id="locomotiveTrackIdCol" prefWidth="70.0" text="ID" />
+                              <TableColumn fx:id="locomotiveControlModuleCol" prefWidth="379.0" text="Control Module Address" />
+                          </columns>
+                      </TableView>
+                      <Button fx:id="newLocomotiveButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editLocomotiveButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteLocomotiveButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+                  </children>
+              </Pane>
+          </content>
+      </Tab>
+
+
+  </tabs>
+</TabPane>

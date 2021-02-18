@@ -20,8 +20,6 @@ public class MQTTConnectionService {
 
     public static MQTTConnectionService getService() {
         return service;
-
-
     }
 
     private static class MyMqttCallback implements MqttCallback {

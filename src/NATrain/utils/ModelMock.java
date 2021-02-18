@@ -2,6 +2,7 @@ package NATrain.utils;
 
 import NATrain.model.Model;
 import NATrain.quads.EmptyQuad;
+import NATrain.routes.ArrivalDepartureTrack;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalLampType;
 import NATrain.trackSideObjects.signals.SignalType;
@@ -23,7 +24,7 @@ public class ModelMock {
             }
         }
 
-        ControlModule controlModule = new UniversalMQTTModule("testModule");
+        ControlModule controlModule = new UniversalMQTTModule("Test Module");
         Model.getControlModules().add(controlModule);
 
         // topic name: NATrain/controlModules/testModule
@@ -73,6 +74,10 @@ public class ModelMock {
 
         TrackSection oneTrackSection = new TrackSection ("1-3SP");
         TrackSection twoTrackSection = new TrackSection ("SP");
+
+        TrackSection stationTrack = new ArrivalDepartureTrack("1P");
+        Model.getTrackSections().put("1P", stationTrack);
+
         oneSwitch.setTrackSection(oneTrackSection);
         controlModule.getInputChannels().put(0, oneTrackSection.getInputChannel());
 

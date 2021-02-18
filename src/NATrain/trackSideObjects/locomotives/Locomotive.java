@@ -32,4 +32,9 @@ public class Locomotive extends TracksideObject {
     public void setLocation(TrackSection location) {
         this.location = location;
     }
+
+    @Override
+    public String getModules() {
+        return null;
+    }
 }

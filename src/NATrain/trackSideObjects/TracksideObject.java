@@ -5,7 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public abstract class TracksideObject implements Serializable, Changeable {
+public abstract class TracksideObject implements Serializable, Controllable {
     static final long serialVersionUID = 1L;
 
     protected transient PropertyChangeSupport propertyChangeSupport;

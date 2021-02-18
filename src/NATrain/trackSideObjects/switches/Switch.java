@@ -127,4 +127,9 @@ public class Switch extends TracksideObject implements Serializable {
                 break;
         }
     }
+
+    @Override
+    public String getModules() {
+        return null;
+    }
 }

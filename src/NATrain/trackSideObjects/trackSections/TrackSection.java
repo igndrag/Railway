@@ -91,4 +91,9 @@ public class TrackSection extends TracksideObject {
     public String toString() {
         return id;
     }
+
+    @Override
+    public String getModules() {
+        return null;
+    }
 }

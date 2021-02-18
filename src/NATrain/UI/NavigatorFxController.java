@@ -56,8 +56,8 @@ public class NavigatorFxController {
 
     public void initialize() {
         AppConfigController.loadConfigs();
-        Model.loadFromDisk();//
-        //ModelMock.MockModel();
+        //Model.loadFromDisk();//
+        ModelMock.MockModel();
        }
 
     @FXML
@@ -85,10 +85,10 @@ public class NavigatorFxController {
 
     @FXML
     private void toTracksideObjectRedactor(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(TracksideObjectNavigatorController.class.getResource("tracksideObjectNavigator.fxml"));
+        FXMLLoader loader = new FXMLLoader(TracksideObjectNavigatorController.class.getResource("TracksideObjectNavigator.fxml"));
         Stage tracksideObjectRedactor = new Stage();
         tracksideObjectRedactor.setTitle("Trackside Object Navigator");
-        tracksideObjectRedactor.setScene(new Scene(loader.load(), 350, 500));
+        tracksideObjectRedactor.setScene(new Scene(loader.load(), 500, 500));
         tracksideObjectRedactor.setResizable(false);
         //MosaicRedactorFxController controller = loader.getController();
         //controller.initialize();

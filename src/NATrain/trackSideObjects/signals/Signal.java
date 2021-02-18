@@ -1,15 +1,13 @@
 package NATrain.trackSideObjects.signals;
 
 import NATrain.UI.workPlace.WorkPlaceController;
+import NATrain.routes.RouteDirection;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.сontrolModules.OutputChannel;
-import com.sun.istack.internal.Nullable;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static NATrain.trackSideObjects.signals.SignalState.*;
 
@@ -34,11 +32,9 @@ public class Signal extends TracksideObject {
     private SignalType signalType;
     private SignalState closedSignalState;
     private final Map<SignalLampType, OutputChannel> lamps = new HashMap<>();
-    @Nullable
     private TrackSection borderedSection;
-    @Nullable
     private TrackSection previousSection;
-
+    private RouteDirection direction = RouteDirection.UNDEFINED;
 
     public void setSignalType(SignalType signalType) {
         this.signalType = signalType;
@@ -129,5 +125,26 @@ public class Signal extends TracksideObject {
                 return GlobalSignalState.NOT_ACTIVE; //if not configured or not light
         }
     }
+
+    public RouteDirection getDirection() {
+        return direction;
+    }
+
+    public void setDirection(RouteDirection direction) {
+        this.direction = direction;
+    }
+
+    @Override
+    public String getModules() {
+        StringBuilder stringBuilder = new StringBuilder();
+        lamps.values().stream().map(OutputChannel::getModule)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet()).forEach(controlModule -> {
+                    stringBuilder.append(controlModule.getId());
+                    stringBuilder.append(controlModule.getConfiguredChannels(this));
+        });
+        return stringBuilder.toString();
+    }
+
 
 }

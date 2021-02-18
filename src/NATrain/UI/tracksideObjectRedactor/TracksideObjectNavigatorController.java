@@ -4,7 +4,9 @@ import NATrain.UI.tracksideObjectRedactor.TSORedactors.SignalRedactorController;
 import NATrain.UI.tracksideObjectRedactor.TSORedactors.SwitchRedactorController;
 import NATrain.UI.tracksideObjectRedactor.TSORedactors.TrackSectionRedactorController;
 import NATrain.model.Model;
+import NATrain.routes.ArrivalDepartureTrack;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalType;
 import NATrain.trackSideObjects.switches.Switch;
@@ -25,10 +27,6 @@ import java.util.Comparator;
 
 public class TracksideObjectNavigatorController {
 
-    protected ObservableList<TracksideObject> trackSectionList;
-    protected ObservableList<TracksideObject> switchList;
-    protected ObservableList<TracksideObject> signalList;
-    private static Stage primaryStage;
 
     @FXML
     private TableView<TracksideObject> switchTableView;
@@ -36,8 +34,6 @@ public class TracksideObjectNavigatorController {
     private TableColumn<Switch, String> switchIdCol;
     @FXML
     private TableColumn<Switch, Integer> switchControlModuleCol;
-    @FXML
-    private TableColumn<Switch, Integer> switchChannelCol;
     @FXML
     private Button newSwitchButton;
     @FXML
@@ -53,25 +49,52 @@ public class TracksideObjectNavigatorController {
     @FXML
     private TableColumn<TrackSection, String> trackSectionIdCol;
     @FXML
-    private TableColumn<TrackSection, Integer> trackSectionControlModuleCol;
-    @FXML
-    private TableColumn<TrackSection, Integer> trackSectionChannelCol;
+    private TableColumn<TrackSection, String> trackSectionControlModuleCol;
     @FXML
     protected TableView<TracksideObject> trackSectionsTableView;
     @FXML
     private TableView<TracksideObject> signalTableView;
     @FXML
-    private TableColumn<Signal, Integer> signalIdCol;
+    private TableColumn<Signal, String> signalIdCol;
     @FXML
-    private TableColumn<Signal, Integer> signalControlModuleCol;
-    @FXML
-    private TableColumn<Signal, Integer> signalChannelCol;
+    private TableColumn<Signal, String> signalControlModuleCol;
     @FXML
     private Button newSignalButton;
     @FXML
     private Button editSignalButton;
     @FXML
     private Button deleteSignalButton;
+
+    @FXML
+    private TableView<TracksideObject> stationTrackTableView;
+    @FXML
+    private TableColumn<ArrivalDepartureTrack, String> stationTrackIdCol;
+    @FXML
+    private TableColumn<ArrivalDepartureTrack, String> stationTrackControlModuleCol;
+    @FXML
+    private Button newStationTrackButton;
+    @FXML
+    private Button editStationTrackButton;
+    @FXML
+    private Button deleteStationTrackButton;
+    @FXML
+    private TableView<Locomotive> locomotiveTrackTableView;
+    @FXML
+    private TableColumn <Locomotive, String> locomotiveTrackIdCol;
+    @FXML
+    private TableColumn <Locomotive, String> locomotiveControlModuleCol;
+    @FXML
+    private Button newLocomotiveButton;
+    @FXML
+    private Button editLocomotiveButton;
+    @FXML
+    private Button deleteLocomotiveButton;
+
+    protected ObservableList<TracksideObject> trackSectionList;
+    protected ObservableList<TracksideObject> switchList;
+    protected ObservableList<TracksideObject> signalList;
+
+    private static Stage primaryStage;
 
     public static void setPrimaryStage(Stage mainStage) {
         primaryStage = mainStage;
@@ -83,11 +106,11 @@ public class TracksideObjectNavigatorController {
         initSignalTab();
     }
 
-    private void toTrackSectionRedactor (TrackSection trackSection) throws IOException {
+    protected void toTrackSectionRedactor (TrackSection trackSection) throws IOException {
         FXMLLoader loader = new FXMLLoader(TrackSectionRedactorController.class.getResource("TrackSectionRedactor.fxml"));
         Stage trackSectionRedactor = new Stage();
         trackSectionRedactor.setTitle("Track Section Redactor");
-        trackSectionRedactor.setScene(new Scene(loader.load(), 325, 200));
+        trackSectionRedactor.setScene(new Scene(loader.load(), 240, 220));
         trackSectionRedactor.setResizable(false);
         TrackSectionRedactorController controller = loader.getController();
         controller.init(trackSection, trackSectionsTableView, trackSectionList);
@@ -124,8 +147,7 @@ public class TracksideObjectNavigatorController {
 
     public void initTrackSectionsTab() {
         trackSectionIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        trackSectionChannelCol.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        trackSectionControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("controlModuleAddress"));
+        trackSectionControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("modules"));
         editTrackSectionButton.setDisable(true);
         deleteTrackSectionButton.setDisable(true);
 
@@ -175,8 +197,7 @@ public class TracksideObjectNavigatorController {
 
     public void initSwitchTab() {
         switchIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        switchChannelCol.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        switchControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("controlModuleAddress"));
+        switchControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("modules"));
         editSwitchButton.setDisable(true);
         deleteSwitchButton.setDisable(true);
 
@@ -230,8 +251,7 @@ public class TracksideObjectNavigatorController {
 
     public void initSignalTab() {
         signalIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        signalChannelCol.setCellValueFactory(new PropertyValueFactory<>("channel"));
-        signalControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("controlModuleAddress"));
+        signalControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("modules"));
         editSignalButton.setDisable(true);
         deleteSignalButton.setDisable(true);
         signalList = FXCollections.observableArrayList(Model.getSignals().values());

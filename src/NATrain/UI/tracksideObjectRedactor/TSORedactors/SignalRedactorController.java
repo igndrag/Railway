@@ -20,6 +20,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+import java.util.regex.Pattern;
+
 public class SignalRedactorController extends TracksideObjectRedactorController {
 
     @FXML
@@ -365,6 +367,10 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         if (trimmerRedLampCheckBox.isSelected()) {
             signal.setClosedSignalState(SignalState.RED);
         }
+
+        Pattern pattern = Pattern.compile("\\d+$");
+        
+
         updateModelAndClose(Model.getSignals(), signal);
     }
 }

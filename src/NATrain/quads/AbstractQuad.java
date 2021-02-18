@@ -1,6 +1,7 @@
 package NATrain.quads;
 import NATrain.UI.NavigatorFxController;
 import NATrain.UI.workPlace.Blinker;
+import NATrain.routes.ArrivalDepartureTrack;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.QuadPainter;
@@ -15,6 +16,7 @@ public abstract class AbstractQuad implements Quad, Paintable {
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
     public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final Color CONFIGURED_ELEMENT_COLOR = Color.VIOLET;
+    public static final Color CONFIGURED_ARRIVAL_DEPARTURE_TRACK_COLOR = Color.ORANGE;
     public static final Color OCCUPIED_ELEMENT_COLOR = Color.RED;
     public static final Color FREE_ELEMENT_COLOR = Color.GREEN;
     public static final Color UNDEFINED_ELEMENT_COLOR = Color.BLUE;
@@ -113,7 +115,11 @@ public abstract class AbstractQuad implements Quad, Paintable {
         } else {
             switch (associatedTrack.getVacancyState()) {
                 case UNDEFINED:
-                    trackSectionElement.setFill(CONFIGURED_ELEMENT_COLOR);
+                    if (associatedTrack instanceof ArrivalDepartureTrack) {
+                        trackSectionElement.setFill(CONFIGURED_ARRIVAL_DEPARTURE_TRACK_COLOR);
+                    } else {
+                        trackSectionElement.setFill(CONFIGURED_ELEMENT_COLOR);
+                    }
                     break;
                 case FREE:
                     if (associatedTrack.isInterlocked())
