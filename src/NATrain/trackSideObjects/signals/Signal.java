@@ -7,6 +7,8 @@ import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.сontrolModules.OutputChannel;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static NATrain.trackSideObjects.signals.SignalState.*;
@@ -21,6 +23,7 @@ public class Signal extends TracksideObject {
     }
 
     public static final String INITIAL_SIGNAL_NAME = "New Signal";
+    private static Pattern pattern = Pattern.compile("\\d+$");
 
     public Signal(String id, SignalType signalType) {
         super(id);
@@ -35,6 +38,20 @@ public class Signal extends TracksideObject {
     private TrackSection borderedSection;
     private TrackSection previousSection;
     private RouteDirection direction = RouteDirection.UNDEFINED;
+    private Integer signalNumber = 0;
+
+    @Override
+    public void setId(String id) {
+        super.setId(id);
+        Matcher matcher = pattern.matcher(id);
+        if (matcher.find()) {
+            try {
+                signalNumber = Integer.parseInt(id.substring(matcher.start(), matcher.end()));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void setSignalType(SignalType signalType) {
         this.signalType = signalType;
@@ -84,7 +101,7 @@ public class Signal extends TracksideObject {
     public void setClosedSignalState(SignalState closedSignalState) {
         if (closedSignalState == RED || closedSignalState == BLUE) {
             this.closedSignalState = closedSignalState;
-        };
+        }
     }
 
     public SignalState getClosedSignalState() {
@@ -140,11 +157,18 @@ public class Signal extends TracksideObject {
         lamps.values().stream().map(OutputChannel::getModule)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet()).forEach(controlModule -> {
-                    stringBuilder.append(controlModule.getId());
-                    stringBuilder.append(controlModule.getConfiguredChannels(this));
+            stringBuilder.append(controlModule.getId());
+            stringBuilder.append(controlModule.getConfiguredChannels(this));
         });
         return stringBuilder.toString();
     }
 
+    public boolean isEven() {
+        return signalNumber > 0 && signalNumber % 2 == 0;
+    }
+
+    public boolean isOdd() {
+        return signalNumber > 0 && signalNumber % 2 > 0;
+    }
 
 }

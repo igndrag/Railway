@@ -3,10 +3,12 @@ package NATrain.UI.tracksideObjectRedactor.TSORedactors;
 import NATrain.UI.UIUtils;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
 import NATrain.model.Model;
+import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.UtilFunctions;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +16,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-public class ArrivalDepartureTrackRedactorController extends TracksideObjectRedactorController {
+import java.util.stream.Collectors;
+
+public class StationTrackRedactorController extends TracksideObjectRedactorController {
 
     @FXML
     private ChoiceBox<Signal> evenSignalChoiceBox;
@@ -24,26 +28,30 @@ public class ArrivalDepartureTrackRedactorController extends TracksideObjectReda
     private TextField lengthTextField;
 
 
-    private TrackSection trackSection;
+    private StationTrack stationTrack;
 
     @Override
     public void init(TracksideObject tracksideObject, TableView<TracksideObject> tableView, ObservableList<TracksideObject> observableList) {
         if (tracksideObject != TrackSection.EMPTY_TRACK_SECTION) {
-            this.trackSection = (TrackSection) tracksideObject;
-            initTextField(Model.getTrackSections(), trackSection);
+            this.stationTrack = (StationTrack) tracksideObject;
+            initTextField(Model.getStationTracks(), stationTrack);
         } else {
-            textField.setText(TrackSection.INITIAL_TRACK_SECTION_NAME);
+            textField.setText(StationTrack.INITIAL_STATION_TRACK_NAME);
         }
         this.tableView = tableView;
         this.observableList = observableList;
-        lengthTextField.setText("" + trackSection.getLength());
+        lengthTextField.setText("" + stationTrack.getLength());
+        evenSignalChoiceBox.setItems(FXCollections.observableArrayList(
+                Model.getSignals().values().stream().filter(Signal::isEven).collect(Collectors.toList())));
+        oddSignalChoiceBox.setItems(FXCollections.observableArrayList(
+                Model.getSignals().values().stream().filter(Signal::isOdd).collect(Collectors.toList())));
     }
 
     @FXML
     @Override
     public void saveAndClose(ActionEvent actionEvent) {
-        trackSection.setId(textField.getText());
-        if (!isNameValid(Model.getTrackSections(), TrackSection.INITIAL_TRACK_SECTION_NAME)) {
+        stationTrack.setId(textField.getText());
+        if (!isNameValid(Model.getStationTracks(), StationTrack.INITIAL_STATION_TRACK_NAME)) {
             return;
         }
         int length = UtilFunctions.parseIfPositiveNumeric(lengthTextField.getText());
@@ -51,8 +59,10 @@ public class ArrivalDepartureTrackRedactorController extends TracksideObjectReda
             UIUtils.showAlert("Incorrect length.");
             return;
         } else {
-            trackSection.setLength(length);
+            stationTrack.setLength(length);
         }
-        updateModelAndClose(Model.getTrackSections(), trackSection);
+        stationTrack.setEvenSignal(evenSignalChoiceBox.getValue());
+        stationTrack.setOddSignal(oddSignalChoiceBox.getValue());
+        updateModelAndClose(Model.getStationTracks(), stationTrack);
     }
 }

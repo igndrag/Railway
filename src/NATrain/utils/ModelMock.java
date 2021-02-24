@@ -2,7 +2,7 @@ package NATrain.utils;
 
 import NATrain.model.Model;
 import NATrain.quads.EmptyQuad;
-import NATrain.routes.ArrivalDepartureTrack;
+import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalLampType;
 import NATrain.trackSideObjects.signals.SignalType;
@@ -75,7 +75,7 @@ public class ModelMock {
         TrackSection oneTrackSection = new TrackSection ("1-3SP");
         TrackSection twoTrackSection = new TrackSection ("SP");
 
-        TrackSection stationTrack = new ArrivalDepartureTrack("1P");
+        TrackSection stationTrack = new StationTrack("1P");
         Model.getTrackSections().put("1P", stationTrack);
 
         oneSwitch.setTrackSection(oneTrackSection);

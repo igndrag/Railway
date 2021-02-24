@@ -12,7 +12,8 @@
                   <TableView fx:id="trackSectionsTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
                     <columns>
                         <TableColumn fx:id="trackSectionIdCol" prefWidth="70.0" text="ID" />
-                        <TableColumn fx:id="trackSectionControlModuleCol" prefWidth="379.0" text="Control Modules " />
+                        <TableColumn fx:id="trackSectionLengthCol" prefWidth="70.0" text="Length" />
+                        <TableColumn fx:id="trackSectionControlModuleCol" prefWidth="309.0" text="Control Module" />
                     </columns>
                   </TableView>
                   <Button fx:id="newTrackSectionButton" layoutX="400.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
@@ -64,7 +65,10 @@
                       <TableView fx:id="stationTrackTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
                           <columns>
                               <TableColumn fx:id="stationTrackIdCol" prefWidth="70.0" text="ID" />
-                              <TableColumn fx:id="stationTrackControlModuleCol" prefWidth="378.0" text="Control Module Address" />
+                              <TableColumn fx:id="stationTrackLengthCol" prefWidth="70.0" text="Length" />
+                              <TableColumn fx:id="stationTrackEvenSignalCol" prefWidth="82.0" text="Even Signal" />
+                        <TableColumn fx:id="stationTrackOddSignalCol" prefWidth="83.0" text="Odd Signal" />
+                        <TableColumn fx:id="stationTrackControlModuleCol" prefWidth="145.0" text="Control Module" />
                           </columns>
                       </TableView>
                       <Button fx:id="newStationTrackButton" layoutX="400.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
@@ -79,10 +83,10 @@
           <content>
               <Pane prefHeight="490.0" prefWidth="301.0">
                   <children>
-                      <TableView fx:id="locomotiveTrackTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                      <TableView fx:id="locomotiveTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
                           <columns>
-                              <TableColumn fx:id="locomotiveTrackIdCol" prefWidth="70.0" text="ID" />
-                              <TableColumn fx:id="locomotiveControlModuleCol" prefWidth="379.0" text="Control Module Address" />
+                              <TableColumn fx:id="locomotiveIdCol" prefWidth="70.0" text="ID" />
+                              <TableColumn fx:id="locomotiveControlModuleCol" prefWidth="379.0" text="Control Module" />
                           </columns>
                       </TableView>
                       <Button fx:id="newLocomotiveButton" layoutX="400.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />

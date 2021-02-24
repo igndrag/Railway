@@ -3,15 +3,12 @@ package NATrain.UI.tracksideObjectRedactor.TSORedactors;
 import NATrain.UI.UIUtils;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
 import NATrain.model.Model;
-import NATrain.routes.ArrivalDepartureTrack;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.utils.UtilFunctions;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 

@@ -198,7 +198,7 @@ public class RouteEditorController {
                 Model.getTrackSections()
                         .values()
                         .stream()
-                        .filter(trackSection -> trackSection instanceof ArrivalDepartureTrack)
+                        .filter(trackSection -> trackSection instanceof StationTrack)
                         .collect(Collectors.toList()));
         departureChoiceBox.setItems(arrivalDepartureTrackObservableList);
         if (route.getDepartureTrackSection() != null) {

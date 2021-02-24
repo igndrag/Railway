@@ -1,10 +1,8 @@
 package NATrain.UI.tracksideObjectRedactor;
 
-import NATrain.UI.tracksideObjectRedactor.TSORedactors.SignalRedactorController;
-import NATrain.UI.tracksideObjectRedactor.TSORedactors.SwitchRedactorController;
-import NATrain.UI.tracksideObjectRedactor.TSORedactors.TrackSectionRedactorController;
+import NATrain.UI.tracksideObjectRedactor.TSORedactors.*;
 import NATrain.model.Model;
-import NATrain.routes.ArrivalDepartureTrack;
+import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.*;
 import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
@@ -28,6 +26,7 @@ import java.util.Comparator;
 public class TracksideObjectNavigatorController {
 
 
+
     @FXML
     private TableView<TracksideObject> switchTableView;
     @FXML
@@ -49,6 +48,8 @@ public class TracksideObjectNavigatorController {
     @FXML
     private TableColumn<TrackSection, String> trackSectionIdCol;
     @FXML
+    private TableColumn<TrackSection, Integer> trackSectionLengthCol;
+    @FXML
     private TableColumn<TrackSection, String> trackSectionControlModuleCol;
     @FXML
     protected TableView<TracksideObject> trackSectionsTableView;
@@ -68,9 +69,16 @@ public class TracksideObjectNavigatorController {
     @FXML
     private TableView<TracksideObject> stationTrackTableView;
     @FXML
-    private TableColumn<ArrivalDepartureTrack, String> stationTrackIdCol;
+    private TableColumn<StationTrack, String> stationTrackIdCol;
     @FXML
-    private TableColumn<ArrivalDepartureTrack, String> stationTrackControlModuleCol;
+    private TableColumn<StationTrack, Integer> stationTrackLengthCol;
+    @FXML
+    private TableColumn<StationTrack, String> stationTrackControlModuleCol;
+    @FXML
+    private TableColumn<StationTrack, Signal> stationTrackEvenSignalCol;
+    @FXML
+    private TableColumn<StationTrack, Signal> stationTrackOddSignalCol;
+
     @FXML
     private Button newStationTrackButton;
     @FXML
@@ -78,9 +86,9 @@ public class TracksideObjectNavigatorController {
     @FXML
     private Button deleteStationTrackButton;
     @FXML
-    private TableView<Locomotive> locomotiveTrackTableView;
+    private TableView<TracksideObject> locomotiveTableView;
     @FXML
-    private TableColumn <Locomotive, String> locomotiveTrackIdCol;
+    private TableColumn <Locomotive, String> locomotiveIdCol;
     @FXML
     private TableColumn <Locomotive, String> locomotiveControlModuleCol;
     @FXML
@@ -91,10 +99,10 @@ public class TracksideObjectNavigatorController {
     private Button deleteLocomotiveButton;
 
     protected ObservableList<TracksideObject> trackSectionList;
-    protected ObservableList<ArrivalDepartureTrack> stationTrackList;
+    protected ObservableList<TracksideObject> stationTrackList;
     protected ObservableList<TracksideObject> switchList;
     protected ObservableList<TracksideObject> signalList;
-    protected ObservableList<Locomotive> locomotiveList;
+    protected ObservableList<TracksideObject> locomotiveList;
 
     private static Stage primaryStage;
 
@@ -106,6 +114,8 @@ public class TracksideObjectNavigatorController {
         initTrackSectionsTab();
         initSwitchTab();
         initSignalTab();
+        initStationTrackTab();
+        initLocomotiveTab();
     }
 
     protected void toTrackSectionRedactor (TrackSection trackSection) throws IOException {
@@ -147,9 +157,37 @@ public class TracksideObjectNavigatorController {
         signalRedactor.show();
     }
 
+    private void toStationTrackRedactor(StationTrack stationTrack) throws IOException {
+        FXMLLoader loader = new FXMLLoader(StationTrackRedactorController.class.getResource("StationTrackRedactor.fxml"));
+        Stage stationTrackRedactor = new Stage();
+        stationTrackRedactor.setTitle("Station Track Redactor");
+        stationTrackRedactor.setScene(new Scene(loader.load(), 240, 220));
+        stationTrackRedactor.setResizable(false);
+        StationTrackRedactorController controller = loader.getController();
+        controller.init(stationTrack, stationTrackTableView, stationTrackList);
+        stationTrackRedactor.initModality(Modality.WINDOW_MODAL);
+        stationTrackRedactor.initOwner(primaryStage);
+        stationTrackRedactor.show();
+    }
+
+
+    private void toLocomotiveRedactor(Locomotive locomotive) throws IOException {
+        FXMLLoader loader = new FXMLLoader(LocomotiveRedactorController.class.getResource("LocomotiveRedactor.fxml"));
+        Stage locomotiveRedactor = new Stage();
+        locomotiveRedactor.setTitle("Locomotive Redactor");
+        locomotiveRedactor.setScene(new Scene(loader.load(), 240, 220));
+        locomotiveRedactor.setResizable(false);
+        LocomotiveRedactorController controller = loader.getController();
+        controller.init(locomotive, locomotiveTableView, locomotiveList);
+        locomotiveRedactor.initModality(Modality.WINDOW_MODAL);
+        locomotiveRedactor.initOwner(primaryStage);
+        locomotiveRedactor.show();
+    }
+
     public void initTrackSectionsTab() {
         trackSectionIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         trackSectionControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("modules"));
+        trackSectionLengthCol.setCellValueFactory(new PropertyValueFactory<>("length"));
         editTrackSectionButton.setDisable(true);
         deleteTrackSectionButton.setDisable(true);
 
@@ -191,7 +229,6 @@ public class TracksideObjectNavigatorController {
             if (trackSectionsTableView.getSelectionModel().getSelectedItem() != null) {
                 editTrackSectionButton.setDisable(false);
                 deleteTrackSectionButton.setDisable(false);
-                trackSectionsTableView.setOnMouseClicked(null);
             }
         });
 
@@ -245,7 +282,6 @@ public class TracksideObjectNavigatorController {
             if (switchTableView.getSelectionModel().getSelectedItem() != null) {
                 editSwitchButton.setDisable(false);
                 deleteSwitchButton.setDisable(false);
-                switchTableView.setOnMouseClicked(null);
             }
         });
 
@@ -295,60 +331,108 @@ public class TracksideObjectNavigatorController {
             if (signalTableView.getSelectionModel().getSelectedItem() != null) {
                 editSignalButton.setDisable(false);
                 deleteSignalButton.setDisable(false);
-                signalTableView.setOnMouseClicked(null);
             }
         });
     }
 
     public void initStationTrackTab() {
         stationTrackIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        stationTrackLengthCol.setCellValueFactory(new PropertyValueFactory<>("length"));
         stationTrackControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("modules"));
+        stationTrackEvenSignalCol.setCellValueFactory(new PropertyValueFactory<>("evenSignal"));
+        stationTrackOddSignalCol.setCellValueFactory(new PropertyValueFactory<>("oddSignal"));
         editStationTrackButton.setDisable(true);
         deleteStationTrackButton.setDisable(true);
 
         stationTrackList = FXCollections.observableArrayList(Model.getStationTracks().values());
-        trackSectionList.sort(Comparator.comparing(TracksideObject::getId));
-        trackSectionsTableView.setItems(trackSectionList);
+        stationTrackList.sort(Comparator.comparing(TracksideObject::getId));
+        stationTrackTableView.setItems(stationTrackList);
 
-        newTrackSectionButton.setOnMouseClicked(event -> {
+        newStationTrackButton.setOnMouseClicked(event -> {
             try {
-                TrackSection trackSection = new TrackSection(TrackSection.INITIAL_TRACK_SECTION_NAME);
-                toTrackSectionRedactor(trackSection);
+                StationTrack stationTrack = new StationTrack(StationTrack.INITIAL_STATION_TRACK_NAME);
+                toStationTrackRedactor(stationTrack);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
-        deleteTrackSectionButton.setOnAction(event -> {
-            TracksideObject objectForDelete = trackSectionsTableView.getSelectionModel().getSelectedItem();
+        deleteStationTrackButton.setOnAction(event -> {
+            TracksideObject objectForDelete = stationTrackTableView.getSelectionModel().getSelectedItem();
             //  if (objectForDelete.getControlModule() != null)
             //      objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
             //  objectForDelete.setControlModule(null);
-            trackSectionList.remove(objectForDelete);
-            Model.getTrackSections().remove(objectForDelete.getId());
-            if (trackSectionList.size() == 0) {
-                editTrackSectionButton.setDisable(true);
-                deleteTrackSectionButton.setDisable(true);
+            stationTrackList.remove(objectForDelete);
+            Model.getStationTracks().remove(objectForDelete.getId());
+            if (stationTrackList.size() == 0) {
+                editStationTrackButton.setDisable(true);
+                deleteStationTrackButton.setDisable(true);
             }
         });
 
-        editTrackSectionButton.setOnAction(event -> {
+        editStationTrackButton.setOnAction(event -> {
             try {
-                toTrackSectionRedactor((TrackSection) trackSectionsTableView.getSelectionModel().getSelectedItem());
+                toStationTrackRedactor((StationTrack) stationTrackTableView.getSelectionModel().getSelectedItem());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
-        trackSectionsTableView.setOnMouseClicked(event -> {
-            if (trackSectionsTableView.getSelectionModel().getSelectedItem() != null) {
-                editTrackSectionButton.setDisable(false);
-                deleteTrackSectionButton.setDisable(false);
-                trackSectionsTableView.setOnMouseClicked(null);
+        stationTrackTableView.setOnMouseClicked(event -> {
+            if (stationTrackTableView.getSelectionModel().getSelectedItem() != null) {
+                editStationTrackButton.setDisable(false);
+                deleteStationTrackButton.setDisable(false);
             }
         });
 
     }
 
+    public void initLocomotiveTab() {
+        locomotiveIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        locomotiveControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("modules"));
+        editLocomotiveButton.setDisable(true);
+        deleteLocomotiveButton.setDisable(true);
+        locomotiveList = FXCollections.observableArrayList(Model.getLocomotives().values());
+        locomotiveList.sort(Comparator.comparing(TracksideObject::getId));
+        locomotiveTableView.setItems(locomotiveList);
+
+        newLocomotiveButton.setOnMouseClicked(event -> {
+            try {
+                Locomotive locomotive = new Locomotive(Locomotive.INITIAL_LOCOMOTIVE_NAME);
+                toLocomotiveRedactor(locomotive);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        deleteLocomotiveButton.setOnAction(event -> {
+            Locomotive objectForDelete = (Locomotive) locomotiveTableView.getSelectionModel().getSelectedItem();
+            // if (objectForDelete.getControlModule() != null)
+            //      objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
+            //  objectForDelete.setControlModule(null);
+
+            locomotiveList.remove(objectForDelete);
+            Model.getLocomotives().remove(objectForDelete.getId());
+            if (signalList.size() == 0) {
+                editLocomotiveButton.setDisable(true);
+                deleteLocomotiveButton.setDisable(true);
+            }
+        });
+
+        editLocomotiveButton.setOnAction(event -> {
+            try {
+                toLocomotiveRedactor((Locomotive) locomotiveTableView.getSelectionModel().getSelectedItem());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        locomotiveTableView.setOnMouseClicked(event -> {
+            if (locomotiveTableView.getSelectionModel().getSelectedItem() != null) {
+                editLocomotiveButton.setDisable(false);
+                deleteLocomotiveButton.setDisable(false);
+                }
+        });
+    }
 
 }

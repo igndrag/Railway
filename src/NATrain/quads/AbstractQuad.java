@@ -1,7 +1,7 @@
 package NATrain.quads;
 import NATrain.UI.NavigatorFxController;
 import NATrain.UI.workPlace.Blinker;
-import NATrain.routes.ArrivalDepartureTrack;
+import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.QuadPainter;
@@ -115,7 +115,7 @@ public abstract class AbstractQuad implements Quad, Paintable {
         } else {
             switch (associatedTrack.getVacancyState()) {
                 case UNDEFINED:
-                    if (associatedTrack instanceof ArrivalDepartureTrack) {
+                    if (associatedTrack instanceof StationTrack) {
                         trackSectionElement.setFill(CONFIGURED_ARRIVAL_DEPARTURE_TRACK_COLOR);
                     } else {
                         trackSectionElement.setFill(CONFIGURED_ELEMENT_COLOR);
