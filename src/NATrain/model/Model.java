@@ -39,9 +39,9 @@ public enum Model implements Serializable {
 
     private static Map<String, TrackSection> trackSections = new ConcurrentHashMap<>();
 
-    private static Set<ControlModule> controlModules = new CopyOnWriteArraySet<>();
+    private static Map<String, ControlModule> controlModules = new ConcurrentHashMap<>();
 
-    private static Set<ArrivalDepartureTrack> stationTracks = new CopyOnWriteArraySet<>();
+    private static Map<String, ArrivalDepartureTrack> stationTracks = new ConcurrentHashMap<>();
 
     private static Set<Track> tracks = new CopyOnWriteArraySet<>();
 
@@ -65,12 +65,12 @@ public enum Model implements Serializable {
         return trackSections;
     }
 
-    public static Set<ArrivalDepartureTrack> getStationTracks() {
-        return stationTracks;
+    public static Map<String, ControlModule> getControlModules() {
+        return controlModules;
     }
 
-    public static Set<ControlModule> getControlModules() {
-        return controlModules;
+    public static Map<String, ArrivalDepartureTrack> getStationTracks() {
+        return stationTracks;
     }
 
     public static Set<Track> getTracks() {
@@ -108,6 +108,7 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(signals);
             objectOutputStream.writeObject(switches);
             objectOutputStream.writeObject(controlModules);
+            objectOutputStream.writeObject(stationTracks);
             objectOutputStream.writeObject(routeTable);
             tracks.forEach(track -> { // change EMPTY_SIGNALs to null fow writing
                 track.getBlockSections().forEach(blockSection -> {
@@ -169,7 +170,8 @@ public enum Model implements Serializable {
                 switches = (Map<String, Switch>) inputStream.readObject();
                 switches.values().forEach(TracksideObject::addPropertyChangeSupport);
                 switches.values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.UNDEFINED));
-                controlModules = (Set<ControlModule>) inputStream.readObject();
+                controlModules = (Map<String ,ControlModule>) inputStream.readObject();
+                stationTracks = (Map<String, ArrivalDepartureTrack>) inputStream.readObject();
                 routeTable = (CopyOnWriteArraySet<Route>) inputStream.readObject();
                 tracks = (Set<Track>) inputStream.readObject();
                 tracks.forEach(track -> {

@@ -60,7 +60,7 @@ public class CMCreatorController {
         if (address.equals("")) {
             return false;
         }
-        for (ControlModule controlModule: Model.getControlModules()) {
+        for (ControlModule controlModule: Model.getControlModules().values()) {
             if (controlModule.getId().equals(address)) {
                 Alert a = new Alert(Alert.AlertType.WARNING);
                 a.setContentText(String.format("Control Module with address %s is already exists!", address));
@@ -86,7 +86,7 @@ public class CMCreatorController {
                     a.show();
                     return;
             }
-            Model.getControlModules().add(controlModule);
+            Model.getControlModules().put(addressTextField.getText() ,controlModule);
             observableList.add(controlModule);
             tableView.refresh();
             primaryStage.close();

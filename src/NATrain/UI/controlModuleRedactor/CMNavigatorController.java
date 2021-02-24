@@ -57,7 +57,7 @@ public class CMNavigatorController {
         editButton.setDisable(true);
         deleteButton.setDisable(true);
 
-        controlModules = FXCollections.observableArrayList(Model.getControlModules());
+        controlModules = FXCollections.observableArrayList(Model.getControlModules().values());
         controlModules.sort(Comparator.comparing(ControlModule::getId));
         tableView.setItems(controlModules);
 

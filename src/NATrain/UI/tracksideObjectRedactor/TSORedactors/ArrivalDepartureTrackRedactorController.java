@@ -4,6 +4,7 @@ import NATrain.UI.UIUtils;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
 import NATrain.model.Model;
 import NATrain.trackSideObjects.TracksideObject;
+import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.UtilFunctions;
 import javafx.collections.ObservableList;
@@ -16,9 +17,9 @@ import javafx.scene.control.TextField;
 public class ArrivalDepartureTrackRedactorController extends TracksideObjectRedactorController {
 
     @FXML
-    private ChoiceBox evenSignalChoiceBox;
+    private ChoiceBox<Signal> evenSignalChoiceBox;
     @FXML
-    private ChoiceBox oddSignalChoiceBox;
+    private ChoiceBox<Signal> oddSignalChoiceBox;
     @FXML
     private TextField lengthTextField;
 

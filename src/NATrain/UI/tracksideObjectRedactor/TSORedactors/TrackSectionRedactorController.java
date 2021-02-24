@@ -18,10 +18,6 @@ import javafx.scene.control.TextField;
 public class TrackSectionRedactorController extends TracksideObjectRedactorController {
 
     @FXML
-    private ChoiceBox evenSignalChoiceBox;
-    @FXML
-    private ChoiceBox oddSignalChoiceBox;
-    @FXML
     private TextField lengthTextField;
 
     private TrackSection trackSection;

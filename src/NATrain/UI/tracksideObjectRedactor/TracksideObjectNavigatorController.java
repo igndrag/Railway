@@ -91,8 +91,10 @@ public class TracksideObjectNavigatorController {
     private Button deleteLocomotiveButton;
 
     protected ObservableList<TracksideObject> trackSectionList;
+    protected ObservableList<ArrivalDepartureTrack> stationTrackList;
     protected ObservableList<TracksideObject> switchList;
     protected ObservableList<TracksideObject> signalList;
+    protected ObservableList<Locomotive> locomotiveList;
 
     private static Stage primaryStage;
 
@@ -297,4 +299,56 @@ public class TracksideObjectNavigatorController {
             }
         });
     }
+
+    public void initStationTrackTab() {
+        stationTrackIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        stationTrackControlModuleCol.setCellValueFactory(new PropertyValueFactory<>("modules"));
+        editStationTrackButton.setDisable(true);
+        deleteStationTrackButton.setDisable(true);
+
+        stationTrackList = FXCollections.observableArrayList(Model.getStationTracks().values());
+        trackSectionList.sort(Comparator.comparing(TracksideObject::getId));
+        trackSectionsTableView.setItems(trackSectionList);
+
+        newTrackSectionButton.setOnMouseClicked(event -> {
+            try {
+                TrackSection trackSection = new TrackSection(TrackSection.INITIAL_TRACK_SECTION_NAME);
+                toTrackSectionRedactor(trackSection);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        deleteTrackSectionButton.setOnAction(event -> {
+            TracksideObject objectForDelete = trackSectionsTableView.getSelectionModel().getSelectedItem();
+            //  if (objectForDelete.getControlModule() != null)
+            //      objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
+            //  objectForDelete.setControlModule(null);
+            trackSectionList.remove(objectForDelete);
+            Model.getTrackSections().remove(objectForDelete.getId());
+            if (trackSectionList.size() == 0) {
+                editTrackSectionButton.setDisable(true);
+                deleteTrackSectionButton.setDisable(true);
+            }
+        });
+
+        editTrackSectionButton.setOnAction(event -> {
+            try {
+                toTrackSectionRedactor((TrackSection) trackSectionsTableView.getSelectionModel().getSelectedItem());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        trackSectionsTableView.setOnMouseClicked(event -> {
+            if (trackSectionsTableView.getSelectionModel().getSelectedItem() != null) {
+                editTrackSectionButton.setDisable(false);
+                deleteTrackSectionButton.setDisable(false);
+                trackSectionsTableView.setOnMouseClicked(null);
+            }
+        });
+
+    }
+
+
 }

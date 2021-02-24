@@ -25,7 +25,7 @@ public class ModelMock {
         }
 
         ControlModule controlModule = new UniversalMQTTModule("Test Module");
-        Model.getControlModules().add(controlModule);
+        Model.getControlModules().put(controlModule.getId() ,controlModule);
 
         // topic name: NATrain/controlModules/testModule
 

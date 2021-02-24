@@ -15,9 +15,9 @@
                         <TableColumn fx:id="trackSectionControlModuleCol" prefWidth="379.0" text="Control Modules " />
                     </columns>
                   </TableView>
-                  <Button fx:id="newTrackSectionButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
-                  <Button fx:id="editTrackSectionButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
-                  <Button fx:id="deleteTrackSectionButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+                  <Button fx:id="newTrackSectionButton" layoutX="400.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                  <Button fx:id="editTrackSectionButton" layoutX="320.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                  <Button fx:id="deleteTrackSectionButton" layoutX="240.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
                </children>
             </Pane>
          </content>
@@ -32,9 +32,9 @@
                               <TableColumn fx:id="switchControlModuleCol" prefWidth="378.0" text="Control Modules" />
                           </columns>
                       </TableView>
-                      <Button fx:id="newSwitchButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
-                      <Button fx:id="editSwitchButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
-                      <Button fx:id="deleteSwitchButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+                      <Button fx:id="newSwitchButton" layoutX="400.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editSwitchButton" layoutX="320.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteSwitchButton" layoutX="240.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
                   </children>
               </Pane>
           </content>
@@ -50,9 +50,9 @@
                               <TableColumn fx:id="signalControlModuleCol" prefWidth="379.0" text="Control Modules" />
                           </columns>
                       </TableView>
-                      <Button fx:id="newSignalButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
-                      <Button fx:id="editSignalButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
-                      <Button fx:id="deleteSignalButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+                      <Button fx:id="newSignalButton" layoutX="400.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editSignalButton" layoutX="320.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteSignalButton" layoutX="240.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
                   </children>
               </Pane>
           </content>
@@ -67,9 +67,9 @@
                               <TableColumn fx:id="stationTrackControlModuleCol" prefWidth="378.0" text="Control Module Address" />
                           </columns>
                       </TableView>
-                      <Button fx:id="newStationTrackButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
-                      <Button fx:id="editStationTrackButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
-                      <Button fx:id="deleteStationTrackButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+                      <Button fx:id="newStationTrackButton" layoutX="400.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editStationTrackButton" layoutX="320.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteStationTrackButton" layoutX="240.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
                   </children>
               </Pane>
           </content>
@@ -85,14 +85,12 @@
                               <TableColumn fx:id="locomotiveControlModuleCol" prefWidth="379.0" text="Control Module Address" />
                           </columns>
                       </TableView>
-                      <Button fx:id="newLocomotiveButton" layoutX="264.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
-                      <Button fx:id="editLocomotiveButton" layoutX="186.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
-                      <Button fx:id="deleteLocomotiveButton" layoutX="107.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+                      <Button fx:id="newLocomotiveButton" layoutX="400.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editLocomotiveButton" layoutX="320.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteLocomotiveButton" layoutX="240.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
                   </children>
               </Pane>
           </content>
       </Tab>
-
-
   </tabs>
 </TabPane>

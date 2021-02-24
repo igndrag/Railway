@@ -27,16 +27,16 @@ public class QuadConfiguratorFxController {
     private CheckBox trackSectionBorderCheckBox;
 
     @FXML
-    private ChoiceBox<String> firstTrackSectionChoiceBox;
+    private ChoiceBox<TrackSection> firstTrackSectionChoiceBox;
 
     @FXML
-    private ChoiceBox<String> secondTrackSectionChoiceBox;
+    private ChoiceBox<TrackSection> secondTrackSectionChoiceBox;
 
     @FXML
-    private ChoiceBox<String> signalChoiceBox;
+    private ChoiceBox<Signal> signalChoiceBox;
 
     @FXML
-    private ChoiceBox<String> switchChoiceBox;
+    private ChoiceBox<Switch> switchChoiceBox;
 
     @FXML
     private Pane quadViewPane;
@@ -65,20 +65,14 @@ public class QuadConfiguratorFxController {
         // *** first track choice box init
         if (quadForConfig instanceof FirstTrackConfigurable) {
             FirstTrackConfigurable firstTrackConfigurable = (FirstTrackConfigurable) quadForConfig;
-            firstTrackSectionChoiceBox.setValue(firstTrackConfigurable.getFirstAssociatedTrack().getId());
-            firstTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().keySet());
-            firstTrackSectionChoiceBox.getItems().add("none");
+            firstTrackSectionChoiceBox.setValue(firstTrackConfigurable.getFirstAssociatedTrack());
+            firstTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().values());
+            firstTrackSectionChoiceBox.getItems().addAll(Model.getStationTracks().values());
+            firstTrackSectionChoiceBox.getItems().add(TrackSection.EMPTY_TRACK_SECTION);
 
             firstTrackSectionChoiceBox.setOnAction(event -> {
-                String choiceBoxValue = firstTrackSectionChoiceBox.getValue();
-                if (choiceBoxValue.equals("none")) {
-                    firstTrackConfigurable.setFirstAssociatedTrack(TrackSection.EMPTY_TRACK_SECTION);
-                } else {
-                    firstTrackConfigurable.setFirstAssociatedTrack(Model.getTrackSections().get(firstTrackSectionChoiceBox.getValue()));
-                }
-
-                quadForConfig.refresh();
-
+               firstTrackConfigurable.setFirstAssociatedTrack(firstTrackSectionChoiceBox.getValue());
+               quadForConfig.refresh();
             });
         } else {
             firstTrackSectionChoiceBox.setDisable(true);
@@ -87,17 +81,13 @@ public class QuadConfiguratorFxController {
         // *** second track choice box init
         if (quadForConfig instanceof SecondTrackConfigurable) {
             SecondTrackConfigurable secondTrackConfigurable = (SecondTrackConfigurable) quadForConfig;
-            secondTrackSectionChoiceBox.setValue(secondTrackConfigurable.getSecondAssociatedTrack().getId());
-            secondTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().keySet());
-            secondTrackSectionChoiceBox.getItems().add("none");
+            secondTrackSectionChoiceBox.setValue(secondTrackConfigurable.getSecondAssociatedTrack());
+            secondTrackSectionChoiceBox.getItems().addAll(Model.getTrackSections().values());
+            secondTrackSectionChoiceBox.getItems().addAll(Model.getStationTracks().values());
+            secondTrackSectionChoiceBox.getItems().add(TrackSection.EMPTY_TRACK_SECTION);
 
             secondTrackSectionChoiceBox.setOnAction(event -> {
-                String choiceBoxValue = secondTrackSectionChoiceBox.getValue();
-                if (choiceBoxValue.equals("none")) {
-                    secondTrackConfigurable.setSecondAssociatedTrack(TrackSection.EMPTY_TRACK_SECTION);
-                } else {
-                    secondTrackConfigurable.setSecondAssociatedTrack(Model.getTrackSections().get(secondTrackSectionChoiceBox.getValue()));
-                }
+                secondTrackConfigurable.setSecondAssociatedTrack(secondTrackSectionChoiceBox.getValue());
                 quadForConfig.refresh();
             });
         } else
@@ -106,17 +96,12 @@ public class QuadConfiguratorFxController {
         // *** signal choice box init
         if (quadForConfig instanceof SignalConfigurable) {
             SignalConfigurable signalConfigurable = (SignalConfigurable) quadForConfig;
-            signalChoiceBox.setValue(signalConfigurable.getAssociatedSignal().getId());
-            signalChoiceBox.getItems().addAll(Model.getSignals().keySet());
-            signalChoiceBox.getItems().add("none");
+            signalChoiceBox.setValue(signalConfigurable.getAssociatedSignal());
+            signalChoiceBox.getItems().addAll(Model.getSignals().values());
+            signalChoiceBox.getItems().add(Signal.EMPTY_SIGNAL);
 
             signalChoiceBox.setOnAction(event -> {
-                String choiceBoxValue = signalChoiceBox.getValue();
-                if (choiceBoxValue.equals("none")) {
-                    signalConfigurable.setAssociatedSignal(Signal.EMPTY_SIGNAL);
-                } else {
-                    signalConfigurable.setAssociatedSignal(Model.getSignals().get(signalChoiceBox.getValue()));
-                }
+                signalConfigurable.setAssociatedSignal(signalChoiceBox.getValue());
                 quadForConfig.refresh();
             });
         } else
@@ -125,17 +110,11 @@ public class QuadConfiguratorFxController {
         // *** switch choice box init
         if (quadForConfig instanceof SwitchConfigurable) {
             SwitchConfigurable switchConfigurable = (SwitchConfigurable) quadForConfig;
-            switchChoiceBox.setValue(switchConfigurable.getAssociatedSwitch().getId());
-            switchChoiceBox.getItems().addAll(Model.getSwitches().keySet());
-            switchChoiceBox.getItems().add("none");
+            switchChoiceBox.getItems().addAll(Model.getSwitches().values());
+            switchChoiceBox.getItems().add(Switch.EMPTY_SWITCH);
 
             switchChoiceBox.setOnAction(event -> {
-                String choiceBoxValue = switchChoiceBox.getValue();
-                if (choiceBoxValue.equals("none")) {
-                    switchConfigurable.setAssociatedSwitch(Switch.EMPTY_SWITCH);
-                } else {
-                    switchConfigurable.setAssociatedSwitch(Model.getSwitches().get(switchChoiceBox.getValue()));
-                }
+                switchConfigurable.setAssociatedSwitch(switchChoiceBox.getValue());
                 quadForConfig.refresh();
             });
         } else switchChoiceBox.setDisable(true);
