@@ -7,6 +7,8 @@ public class StationTrack extends TrackSection {
 
     public static final String INITIAL_STATION_TRACK_NAME = "New Station Track";
 
+
+
     private Signal evenSignal;
     private Signal oddSignal;
     public StationTrack(String id) {

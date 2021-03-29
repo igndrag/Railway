@@ -6,6 +6,10 @@ import NATrain.model.Model;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.utils.UtilFunctions;
+import NATrain.сontrolModules.InputChannel;
+import NATrain.сontrolModules.InputChannelType;
+import NATrain.сontrolModules.TrackSectionInputChannel;
+import NATrain.сontrolModules.TrackSectionInputType;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +18,8 @@ import javafx.scene.control.TextField;
 
 public class TrackSectionRedactorController extends TracksideObjectRedactorController {
 
+    @FXML
+    private TextField inputsCountTextField;
     @FXML
     private TextField lengthTextField;
 
@@ -30,6 +36,11 @@ public class TrackSectionRedactorController extends TracksideObjectRedactorContr
         this.tableView = tableView;
         this.observableList = observableList;
         lengthTextField.setText("" + trackSection.getLength());
+        if (trackSection.getSubsections().size() > 0) {
+           inputsCountTextField.setText(trackSection.getSubsections().size() + "");
+           inputsCountTextField.setDisable(true);
+        }
+
     }
 
     @FXML
@@ -45,6 +56,14 @@ public class TrackSectionRedactorController extends TracksideObjectRedactorContr
             return;
         } else {
             trackSection.setLength(length);
+        }
+        int subsectionsCount = UtilFunctions.parseIfPositiveNumeric(inputsCountTextField.getText());
+        if (subsectionsCount == -1) {
+            UIUtils.showAlert("Incorrect inputs count.");
+            return;
+        }
+        for (int i = 1; i <= subsectionsCount; i++) {
+            trackSection.getSubsections().add(new TrackSectionInputChannel(i, TrackSectionInputType.SUBSECTION, trackSection));
         }
         updateModelAndClose(Model.getTrackSections(), trackSection);
     }

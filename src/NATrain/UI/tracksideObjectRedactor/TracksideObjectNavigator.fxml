@@ -85,8 +85,8 @@
                   <children>
                       <TableView fx:id="locomotiveTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
                           <columns>
-                              <TableColumn fx:id="locomotiveIdCol" prefWidth="70.0" text="ID" />
-                              <TableColumn fx:id="locomotiveControlModuleCol" prefWidth="379.0" text="Control Module" />
+                              <TableColumn fx:id="locomotiveIdCol" prefWidth="108.0" text="ID" />
+                              <TableColumn fx:id="locomotiveControlModuleCol" prefWidth="341.0" text="Control Module" />
                           </columns>
                       </TableView>
                       <Button fx:id="newLocomotiveButton" layoutX="400.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />

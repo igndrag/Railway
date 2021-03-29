@@ -23,6 +23,8 @@ import java.util.Optional;
 public class CMEditorController {
 
     @FXML
+    private ChoiceBox<InputChannel> inputChoiceBox;
+    @FXML
     private ChoiceBox<Track> inputTrackChoiceBox;
     @FXML
     private ChoiceBox<Track> outputTrackChoiceBox;
@@ -107,6 +109,17 @@ public class CMEditorController {
             }
         });
 
+        inputObjectChoiceBox.setOnAction(event -> {
+            if (inputObjectChoiceBox.getValue() instanceof TrackSection) {
+                TrackSection trackSection = (TrackSection) inputObjectChoiceBox.getValue();
+                inputChoiceBox.setDisable(false);
+                inputChoiceBox.setItems(FXCollections.observableArrayList(trackSection.getSubsections()));
+            } else {
+                inputChoiceBox.setDisable(true);
+                inputChoiceBox.getSelectionModel().clearSelection();
+            }
+        });
+
         inputsTableView.setItems(inputs);
         inputNumberColumn.setCellValueFactory(new PropertyValueFactory<>("chNumber"));
         inputTypeColumn.setCellValueFactory(new PropertyValueFactory<>("channelType"));
@@ -119,7 +132,6 @@ public class CMEditorController {
         });
 
         outputTypeChoiceBox.setItems(FXCollections.observableArrayList(OutputChannelType.values()));
-        outputTypeChoiceBox.getItems().remove(OutputChannelType.LOCOMOTIVE_OUTPUT);
         lampTypeChoiceBox.setDisable(true);
 
         outputTrackChoiceBox.setItems(tracks);
@@ -191,7 +203,12 @@ public class CMEditorController {
         switch (inputTypeChoiceBox.getValue()) {
             case TRACK_SECTION:
             case BLOCK_SECTION:
-                inputChannel = ((TrackSection) object).getInputChannel();
+                if (inputChoiceBox.getSelectionModel().isEmpty()) {
+                    UIUtils.showAlert("Input Channel is not selected.");
+                    return;
+                } else {
+                    inputChannel = inputChoiceBox.getValue();
+                }
                 break;
             case SWITCH_PLUS:
                 inputChannel = ((Switch) object).getPlusInputChannel();

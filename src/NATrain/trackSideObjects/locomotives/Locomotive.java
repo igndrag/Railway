@@ -4,13 +4,12 @@ import NATrain.routes.RouteDirection;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.trackSections.TrackSection;
-import NATrain.сontrolModules.OutputChannel;
-import NATrain.сontrolModules.OutputChannelType;
+import NATrain.сontrolModules.ControlModule;
 
 public class Locomotive extends TracksideObject {
-    OutputChannel outputChannel = new OutputChannel(OutputChannelType.LOCOMOTIVE_OUTPUT, this, null);
 
-    public LocomotiveState actualState = LocomotiveState.NOT_MOVING;
+    private ControlModule controlModule;
+    private LocomotiveState actualState = LocomotiveState.NOT_MOVING;
     int speed = 0;
     public boolean mainLight = false;
     public boolean rearLight = false;
@@ -27,8 +26,12 @@ public class Locomotive extends TracksideObject {
         super(id);
     }
 
-    public OutputChannel getOutputChannel() {
-        return outputChannel;
+    public LocomotiveState getActualState() {
+        return actualState;
+    }
+
+    public void setActualState(LocomotiveState actualState) {
+        this.actualState = actualState;
     }
 
     public TrackSection getLocation() {
@@ -39,8 +42,16 @@ public class Locomotive extends TracksideObject {
         this.location = location;
     }
 
+    public void setModule(ControlModule module) {
+        this.controlModule = module;
+    }
+
+    public ControlModule getModule() {
+        return controlModule;
+    }
+
     @Override
     public String getModules() {
-        return null;
+        return getModule().getId();
     }
 }

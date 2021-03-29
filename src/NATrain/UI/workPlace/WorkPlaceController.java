@@ -9,6 +9,7 @@ import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.switches.SwitchState;
@@ -92,6 +93,7 @@ public class WorkPlaceController {
         MQTTConnectionService.connect();
         activeMode = true;
         activeController = this;
+
         Model.getSignals().values().forEach(Signal::close);
         Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
         Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));
@@ -147,6 +149,14 @@ public class WorkPlaceController {
             }
         }
         workArea.setContent(gridPane);
+
+        Model.getLocomotives().values().forEach(locomotive -> {
+            try {
+                showLocomotiveController(locomotive);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         //   ConnectionService connectionService = new ConnectionService("COM5");
         //   connectionService.start();
@@ -205,11 +215,13 @@ public class WorkPlaceController {
         actionEmulator.show();
     }
 
-    public void showLocomotiveController() throws IOException {
+    public void showLocomotiveController(Locomotive locomotive) throws IOException {
         FXMLLoader loader = new FXMLLoader(LocomotiveController.class.getResource("LocomotiveController.fxml"));
         Stage locomotiveController = new Stage();
         locomotiveController.setTitle("Locomotive Controller");
-        locomotiveController.setScene(new Scene(loader.load(), 220, 380));
+        locomotiveController.setScene(new Scene(loader.load(), 220, 480));
+        LocomotiveController controller = loader.getController();
+        controller.init(locomotive);
         locomotiveController.setOnCloseRequest(event -> {
             locomotiveControllerRadioMenuItem.setSelected(false);
         });

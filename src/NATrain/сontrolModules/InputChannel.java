@@ -16,18 +16,13 @@ public class InputChannel implements Serializable {
     private ControlModule module;
     private int actualState = 0;
 
-
     public void setActualState(int statusCode) {
         actualState = statusCode;
         switch (channelType) {
             case TRACK_SECTION:
             case BLOCK_SECTION:
                 TrackSection trackSection = (TrackSection) tracksideObject;
-                if (statusCode == TrackSectionState.FREE.getCode()) {
-                    trackSection.setVacancyState(TrackSectionState.FREE);
-                } else if (statusCode == TrackSectionState.OCCUPIED.getCode()) {
-                    trackSection.setVacancyState(TrackSectionState.OCCUPIED);
-                }
+                trackSection.updateVacancyState();
                 break;
             case SWITCH_PLUS:
                 Switch aSwitch = (Switch) tracksideObject;
@@ -81,5 +76,9 @@ public class InputChannel implements Serializable {
 
     public void setModule(ControlModule module) {
         this.module = module;
+    }
+
+    public int getActualState() {
+        return actualState;
     }
 }

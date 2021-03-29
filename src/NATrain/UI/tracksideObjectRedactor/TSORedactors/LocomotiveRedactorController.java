@@ -7,6 +7,7 @@ import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.UtilFunctions;
+import NATrain.сontrolModules.MQTTLocomotiveModule;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,7 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
         if (!isNameValid(Model.getLocomotives(), Locomotive.INITIAL_LOCOMOTIVE_NAME)) {
             return;
         }
+        locomotive.setModule(new MQTTLocomotiveModule(locomotive.getId() + "_MQTTLocomotiveModule", locomotive));
         updateModelAndClose(Model.getLocomotives(), locomotive);
     }
 }

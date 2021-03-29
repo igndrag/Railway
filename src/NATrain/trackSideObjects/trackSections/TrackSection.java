@@ -3,7 +3,8 @@ package NATrain.trackSideObjects.trackSections;
 
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.сontrolModules.InputChannel;
-import NATrain.сontrolModules.InputChannelType;
+
+import java.util.ArrayList;
 
 public class TrackSection extends TracksideObject {
 
@@ -19,7 +20,9 @@ public class TrackSection extends TracksideObject {
     }
 
     public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
-    private final InputChannel inputChannel = new InputChannel(InputChannelType.TRACK_SECTION, this);
+    private InputChannel evenBorder;
+    private final ArrayList<InputChannel> subsections = new ArrayList<>();
+    private InputChannel oddBorder;
     private int length = 0;
 
     private transient TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
@@ -69,14 +72,22 @@ public class TrackSection extends TracksideObject {
         return vacancyState;
     }
 
+    public InputChannel getEvenBorder() {
+        return evenBorder;
+    }
+
+    public ArrayList<InputChannel> getSubsections() {
+        return subsections;
+    }
+
+    public InputChannel getOddBorder() {
+        return oddBorder;
+    }
+
     public void setVacancyState(TrackSectionState vacancyState) {
         TrackSectionState oldState = this.vacancyState;
         this. vacancyState = vacancyState;
         propertyChangeSupport.firePropertyChange("occupationalProperty", oldState, vacancyState);
-    }
-
-    public InputChannel getInputChannel() {
-        return inputChannel;
     }
 
     public int getLength() {
@@ -85,6 +96,24 @@ public class TrackSection extends TracksideObject {
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    public void setEvenBorder(InputChannel evenBorder) {
+        this.evenBorder = evenBorder;
+    }
+
+    public void setOddBorder(InputChannel oddBorder) {
+        this.oddBorder = oddBorder;
+    }
+
+    public void updateVacancyState() {
+        for (InputChannel channel : subsections) {
+            if (channel.getActualState() == TrackSectionState.OCCUPIED.getCode() || channel.getActualState() == TrackSectionState.UNDEFINED.getCode()){
+                setVacancyState(TrackSectionState.OCCUPIED);
+                return;
+            }
+        }
+        setVacancyState(TrackSectionState.FREE);
     }
 
     @Override

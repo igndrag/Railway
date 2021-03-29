@@ -82,7 +82,7 @@ public class MQTTConnectionService {
             mqttClient.connect(connOpts); //connects the broker with connect options
             publish(topicName, "NATrainApp connected");
             Model.getControlModules().values().forEach(controlModule -> {
-                subscribe(topicName + "/controlModules/" + controlModule.getId(), new MyMqttCallback(controlModule));
+                subscribe(topicName + "/controlModules/responses/" + controlModule.getId(), new MyMqttCallback(controlModule));
             });
         } catch (MqttException e) {
             e.printStackTrace();

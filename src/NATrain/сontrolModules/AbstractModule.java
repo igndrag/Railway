@@ -16,7 +16,7 @@ public abstract class AbstractModule implements ControlModule, Serializable {
     protected String id;
     protected Map<Integer, InputChannel> inputChannels;
     protected Map<Integer, OutputChannel> outputChannels;
-    protected static final String GLOBAL_REQUEST_COMMAND_CODE = "10";
+    protected static final String GLOBAL_REQUEST_COMMAND_CODE = "99";
 
     public AbstractModule(String id) {
         this.id = id;

@@ -9,10 +9,7 @@ import NATrain.trackSideObjects.signals.SignalType;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
-import NATrain.сontrolModules.ControlModule;
-import NATrain.сontrolModules.OutputChannel;
-import NATrain.сontrolModules.OutputChannelType;
-import NATrain.сontrolModules.UniversalMQTTModule;
+import NATrain.сontrolModules.*;
 
 public class ModelMock {
 
@@ -79,7 +76,8 @@ public class ModelMock {
         Model.getTrackSections().put("1P", stationTrack);
 
         oneSwitch.setTrackSection(oneTrackSection);
-        controlModule.getInputChannels().put(0, oneTrackSection.getInputChannel());
+        oneTrackSection.getSubsections().add(new TrackSectionInputChannel(0, TrackSectionInputType.SUBSECTION, oneTrackSection));
+        controlModule.getInputChannels().put(0, oneTrackSection.getSubsections().get(0));
 
         Model.getTrackSections().put("1-3SP", oneTrackSection);
         Model.getTrackSections().put("SP", twoTrackSection);

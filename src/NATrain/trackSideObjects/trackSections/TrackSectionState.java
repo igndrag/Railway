@@ -2,8 +2,8 @@ package NATrain.trackSideObjects.trackSections;
 
 public enum TrackSectionState {
     FREE (1),
-    OCCUPIED (2),
-    UNDEFINED (0);
+    OCCUPIED (0),
+    UNDEFINED (-1);
 
     private int stateCode;
 

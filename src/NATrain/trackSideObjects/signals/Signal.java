@@ -23,7 +23,7 @@ public class Signal extends TracksideObject {
     }
 
     public static final String INITIAL_SIGNAL_NAME = "New Signal";
-    private static Pattern pattern = Pattern.compile("\\d+$");
+    private static final Pattern pattern = Pattern.compile("\\d+$");
 
     public Signal(String id, SignalType signalType) {
         super(id);

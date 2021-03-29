@@ -6,11 +6,11 @@ public abstract class AbstractMQTTModule extends AbstractModule{
     public AbstractMQTTModule(String id) {
         super(id);
     }
-    protected static final String commandTopicRoot = "NATrain/commands/";
+    protected static final String commandTopicRoot = "NATrain/controlModules/commands/";
 
     @Override
     public void sendCommand(int channelNumber, String command) {
-        MQTTConnectionService.publish(commandTopicRoot + id + "/ch" + channelNumber, command);
+        MQTTConnectionService.publish(commandTopicRoot + id, command);
     }
 
     @Override

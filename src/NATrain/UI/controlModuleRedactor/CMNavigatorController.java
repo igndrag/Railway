@@ -110,7 +110,7 @@ public class CMNavigatorController {
         FXMLLoader loader = new FXMLLoader(CMEditorController.class.getResource("CMEditor.fxml"));
         Stage controlModuleEditor = new Stage();
         controlModuleEditor.setTitle("Control Module Editor");
-        controlModuleEditor.setScene(new Scene(loader.load(), 800, 390));
+        controlModuleEditor.setScene(new Scene(loader.load(), 890, 440));
         controlModuleEditor.setResizable(false);
         CMEditorController controller = loader.getController();
         controller.initialize(controlModule, tableView);

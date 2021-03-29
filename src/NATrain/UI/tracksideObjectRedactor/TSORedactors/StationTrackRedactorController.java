@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
@@ -20,6 +21,10 @@ import java.util.stream.Collectors;
 
 public class StationTrackRedactorController extends TracksideObjectRedactorController {
 
+    public TextField centralElementCountTextField;
+    public RadioButton evenBorderCheckBox;
+    public RadioButton oddBorderCheckBox;
+    public RadioButton centralElementCheckBox;
     @FXML
     private ChoiceBox<Signal> evenSignalChoiceBox;
     @FXML
