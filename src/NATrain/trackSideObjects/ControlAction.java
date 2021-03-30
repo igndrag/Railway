@@ -1,6 +1,8 @@
 package NATrain.trackSideObjects;
 
 public enum ControlAction {
+    ALLOCATE_LOCOMOTIVE("Allocate locomotive"),
+
     SET_ROUT_FROM("Set rout from"),
     SET_ROUT_TO ("Set rout to"),
     SET_ROUTE_TO_TRACK("Set route to track"),

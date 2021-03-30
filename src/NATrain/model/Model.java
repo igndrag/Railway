@@ -180,7 +180,10 @@ public enum Model implements Serializable {
                 switches.values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.UNDEFINED));
                 controlModules = (Map<String ,ControlModule>) inputStream.readObject();
                 stationTracks = (Map<String, StationTrack>) inputStream.readObject();
+                stationTracks.values().forEach(TracksideObject::addPropertyChangeSupport);
+                stationTracks.values().forEach(track -> track.setVacancyState(TrackSectionState.UNDEFINED));
                 locomotives = (Map<String, Locomotive>) inputStream.readObject();
+                locomotives.values().forEach(TracksideObject::addPropertyChangeSupport);
                 routeTable = (CopyOnWriteArraySet<Route>) inputStream.readObject();
                 tracks = (Set<Track>) inputStream.readObject();
                 tracks.forEach(track -> {

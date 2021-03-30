@@ -1,15 +1,18 @@
 package NATrain.UI.workPlace.executors;
 
+import NATrain.UI.workPlace.LocomotiveSelectorController;
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.routes.Route;
+import NATrain.routes.StationTrack;
 import NATrain.routes.Track;
 import NATrain.routes.TrackDirection;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.TracksideObject;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -95,10 +98,18 @@ public class ActionExecutor {
                 aSwitch.changePosition();
                 break;
             case CHANGE_TRACK_LINE_DIRECTION:
-                Track track = ((BlockingControlQuad)firstSelectedQuad).getTrack();
+                Track track = ((BlockingControlQuad) firstSelectedQuad).getTrack();
                 TrackDirection newDirection = track.getTrackDirection() == TrackDirection.NORMAL ? TrackDirection.REVERSED : TrackDirection.NORMAL;
                 track.setTrackDirection(newDirection);
                 firstSelectedQuad.refresh();
+                break;
+            case ALLOCATE_LOCOMOTIVE:
+                try {
+                    toLocomotiveSelector(((SimpleTrackQuad)firstSelectedQuad).getFirstAssociatedTrack());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
         clearSelection();
     }
@@ -156,4 +167,18 @@ public class ActionExecutor {
         alternativeRouteSelector.initOwner(WorkPlaceController.getActiveController().getPrimaryStage());
         alternativeRouteSelector.show();
     }
+
+    private void toLocomotiveSelector(TrackSection track) throws IOException {
+        FXMLLoader loader = new FXMLLoader(LocomotiveSelectorController.class.getResource("LocomotiveSelector.fxml"));
+        Stage locomotiveSelector = new Stage();
+        locomotiveSelector.setTitle("Locomotive Selector");
+        locomotiveSelector.setScene(new Scene(loader.load(), 250, 350));
+        locomotiveSelector.setResizable(false);
+        LocomotiveSelectorController controller = loader.getController();
+        controller.initialize(track);
+        locomotiveSelector.initModality(Modality.WINDOW_MODAL);
+        locomotiveSelector.initOwner(WorkPlaceController.getActiveController().getPrimaryStage());
+        locomotiveSelector.show();
+    }
+
 }

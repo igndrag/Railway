@@ -1,8 +1,11 @@
 package NATrain.quads;
 
 import NATrain.quads.configurableInterfaces.FirstTrackConfigurable;
+import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.trackSections.TrackSection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
@@ -15,10 +18,15 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
     protected Shape isolatorElement;
 
     private static final List<ControlAction> availableActions = new ArrayList<>();
+    private static final List<ControlAction> availableActionsForStationTrack = new ArrayList<>();
 
     static {
         availableActions.add(ControlAction.SET_ROUTE_TO_TRACK);
-    }
+
+        availableActionsForStationTrack.add(ControlAction.SET_ROUTE_TO_TRACK);
+        availableActionsForStationTrack.add(ControlAction.ALLOCATE_LOCOMOTIVE);
+}
+
 
     public SimpleTrackQuad(int x, int y) {
         super(x, y);
@@ -36,7 +44,10 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
 
     @Override
     public List<ControlAction> getAvailableActions() {
-        return availableActions;
+        if (firstAssociatedTrack instanceof StationTrack)
+            return availableActionsForStationTrack;
+        else
+            return availableActions;
     }
 
     @Override

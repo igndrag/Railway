@@ -1,5 +1,6 @@
 package NATrain.trackSideObjects.locomotives;
 
+import NATrain.routes.Autopilot;
 import NATrain.routes.RouteDirection;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.signals.Signal;
@@ -10,17 +11,28 @@ public class Locomotive extends TracksideObject {
 
     private ControlModule controlModule;
     private LocomotiveState actualState = LocomotiveState.NOT_MOVING;
+    private Autopilot autopilot;
     int speed = 0;
     public boolean mainLight = false;
     public boolean rearLight = false;
 
-    private RouteDirection forwardDirection = RouteDirection.EVEN;  //for autopilot usage
-    private transient Signal nextSignal;                            //for autopilot usage
-    private boolean autoPilotOn = false;                            //for autopilot usage
+    private TrackSection location;
+    private RouteDirection forwardDirection = RouteDirection.EVEN;
+    private boolean autoPilotOn = false;
 
     public static final String INITIAL_LOCOMOTIVE_NAME = "New Locomotive";
 
-    private TrackSection location = TrackSection.EMPTY_TRACK_SECTION;
+    public void initAutopilot() {
+        this.autopilot = new Autopilot(this);
+    }
+
+    public RouteDirection getForwardDirection() {
+        return forwardDirection;
+    }
+
+    public void setForwardDirection(RouteDirection forwardDirection) {
+        this.forwardDirection = forwardDirection;
+    }
 
     public Locomotive(String id) {
         super(id);

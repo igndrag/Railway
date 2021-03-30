@@ -83,7 +83,7 @@ public class CMNavigatorController {
                     .forEach(tracksideObject -> tracksideObject.setModule(null));
 
             controlModules.remove(objectForDelete);
-            Model.getControlModules().remove(objectForDelete);
+            Model.getControlModules().remove(objectForDelete.getId());
             if (controlModules.size() == 0) {
                 editButton.setDisable(true);
                 deleteButton.setDisable(true);

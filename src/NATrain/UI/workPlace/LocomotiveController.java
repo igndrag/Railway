@@ -15,6 +15,10 @@ import org.w3c.dom.html.HTMLOptGroupElement;
 public class LocomotiveController {
 
     @FXML
+    private Label directionLabel;
+    @FXML
+    private Label locationLabel;
+    @FXML
     private Label idLabel;
     @FXML
     private Button autopilotToggleButton;
@@ -85,12 +89,16 @@ public class LocomotiveController {
     }
 
 
-        private void sendSpeedChangeCommand () {
-            if (actualSliderValue != speedSlider.getValue()) {
-                actualSliderValue = speedSlider.getValue();
-                int speed = (int) (speedSlider.getValue() * 128);
-                locomotive.getModule().sendCommand(MQTTLocomotiveModule.SET_SPEED_CHANNEL, String.format("%04d", speed));
-            }
+    private void sendSpeedChangeCommand() {
+        if (actualSliderValue != speedSlider.getValue()) {
+            actualSliderValue = speedSlider.getValue();
+            int speed = (int) (speedSlider.getValue() * 128);
+            locomotive.getModule().sendCommand(MQTTLocomotiveModule.SET_SPEED_CHANNEL, String.format("%04d", speed));
         }
-
     }
+
+
+
+}
+
+

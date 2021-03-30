@@ -161,7 +161,7 @@ public class TracksideObjectNavigatorController {
         FXMLLoader loader = new FXMLLoader(StationTrackRedactorController.class.getResource("StationTrackRedactor.fxml"));
         Stage stationTrackRedactor = new Stage();
         stationTrackRedactor.setTitle("Station Track Redactor");
-        stationTrackRedactor.setScene(new Scene(loader.load(), 240, 220));
+        stationTrackRedactor.setScene(new Scene(loader.load(), 220, 350));
         stationTrackRedactor.setResizable(false);
         StationTrackRedactorController controller = loader.getController();
         controller.init(stationTrack, stationTrackTableView, stationTrackList);

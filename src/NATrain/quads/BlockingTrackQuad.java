@@ -3,6 +3,8 @@ package NATrain.quads;
 import NATrain.quads.configurableInterfaces.BlockSectionConfigurable;
 import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.ControlAction;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public abstract class BlockingTrackQuad extends BlockingBaseQuad implements Bloc
     }
 
     private static final List<ControlAction> availableActions = new ArrayList<>();
-
+    
     static {
         availableActions.add(ControlAction.SET_ROUTE_TO_TRACK_LINE);
     }
