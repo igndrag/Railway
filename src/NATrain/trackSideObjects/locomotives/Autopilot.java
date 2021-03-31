@@ -1,5 +1,7 @@
-package NATrain.routes;
+package NATrain.trackSideObjects.locomotives;
 
+import NATrain.routes.AutopilotMode;
+import NATrain.routes.Route;
 import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.trackSections.TrackSection;
