@@ -88,7 +88,6 @@ public class LocomotiveController {
         });
     }
 
-
     private void sendSpeedChangeCommand() {
         if (actualSliderValue != speedSlider.getValue()) {
             actualSliderValue = speedSlider.getValue();
@@ -96,8 +95,6 @@ public class LocomotiveController {
             locomotive.getModule().sendCommand(MQTTLocomotiveModule.SET_SPEED_CHANNEL, String.format("%04d", speed));
         }
     }
-
-
 
 }
 

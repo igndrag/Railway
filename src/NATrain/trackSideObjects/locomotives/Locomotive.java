@@ -11,8 +11,8 @@ public class Locomotive extends TracksideObject {
 
     private ControlModule controlModule;
     private LocomotiveState actualState = LocomotiveState.NOT_MOVING;
-    private Autopilot autopilot;
-    int speed = 0;
+    private transient Autopilot autopilot;
+    private int speed = 0;
     public boolean mainLight = false;
     public boolean rearLight = false;
 
@@ -22,7 +22,7 @@ public class Locomotive extends TracksideObject {
 
     public static final String INITIAL_LOCOMOTIVE_NAME = "New Locomotive";
 
-    public void initAutopilot() {
+    public void createAutopilot() {
         this.autopilot = new Autopilot(this);
     }
 
@@ -32,6 +32,16 @@ public class Locomotive extends TracksideObject {
 
     public void setForwardDirection(RouteDirection forwardDirection) {
         this.forwardDirection = forwardDirection;
+        propertyChangeSupport.firePropertyChange("Forward Direction", null, forwardDirection);
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+        //propertyChangeSupport.firePropertyChange("Speed", null, speed);
     }
 
     public Locomotive(String id) {
@@ -44,6 +54,7 @@ public class Locomotive extends TracksideObject {
 
     public void setActualState(LocomotiveState actualState) {
         this.actualState = actualState;
+        propertyChangeSupport.firePropertyChange("Actual State", null, actualState);
     }
 
     public TrackSection getLocation() {
@@ -52,6 +63,7 @@ public class Locomotive extends TracksideObject {
 
     public void setLocation(TrackSection location) {
         this.location = location;
+       // propertyChangeSupport.firePropertyChange("Location", null, location);
     }
 
     public void setModule(ControlModule module) {

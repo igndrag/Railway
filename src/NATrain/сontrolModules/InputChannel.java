@@ -1,5 +1,7 @@
 package NATrain.сontrolModules;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.locomotives.Locomotive;
+import NATrain.trackSideObjects.locomotives.LocomotiveState;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
@@ -44,6 +46,16 @@ public class InputChannel implements Serializable {
                     aSwitch.setSwitchState(SwitchState.MINUS);
                 } else {
                     aSwitch.setSwitchState(SwitchState.UNDEFINED);
+                }
+                break;
+            case LOCOMOTIVE:
+                Locomotive locomotive = (Locomotive) tracksideObject;
+                if (statusCode == LocomotiveState.MOVING_FORWARD.getResponseCode()) {
+                    locomotive.setActualState(LocomotiveState.MOVING_FORWARD);
+                } else if (statusCode == LocomotiveState.MOVING_BACKWARD.getResponseCode()) {
+                    locomotive.setActualState(LocomotiveState.MOVING_BACKWARD);
+                } else if (statusCode == LocomotiveState.NOT_MOVING.getResponseCode()) {
+                    locomotive.setActualState(LocomotiveState.NOT_MOVING);
                 }
                 break;
         }

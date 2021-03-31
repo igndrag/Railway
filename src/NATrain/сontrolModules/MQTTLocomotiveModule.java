@@ -4,6 +4,7 @@ import NATrain.connectionService.MQTTConnectionService;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.locomotives.Locomotive;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MQTTLocomotiveModule extends AbstractModule {
@@ -17,9 +18,6 @@ public class MQTTLocomotiveModule extends AbstractModule {
     public static final  int FORWARD_COMMAND_CODE = 1;
     public static final  int BACKWARD_COMMAND_CODE = 2;
 
-
-
-
     // special commands codes
 
     public static final int HORN_COMMAND_CODE = 1;
@@ -31,6 +29,8 @@ public class MQTTLocomotiveModule extends AbstractModule {
     public MQTTLocomotiveModule(String id, Locomotive locomotive) {
         super(id);
         this.locomotive = locomotive;
+        this.inputChannels = new HashMap<Integer, InputChannel>();
+        inputChannels.put(0, new InputChannel(InputChannelType.LOCOMOTIVE, locomotive));
     }
 
     protected static final String commandTopicRoot = "NATrain/commands/locomotives";
@@ -47,7 +47,7 @@ public class MQTTLocomotiveModule extends AbstractModule {
 
     @Override
     public int getInputsCount() {
-        return 0;
+        return 1;
     }
 
     @Override
