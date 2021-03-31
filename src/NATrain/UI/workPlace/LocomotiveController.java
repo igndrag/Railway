@@ -2,15 +2,12 @@ package NATrain.UI.workPlace;
 
 import NATrain.quads.LocomotivePanelQuad;
 import NATrain.trackSideObjects.locomotives.Locomotive;
+import NATrain.trackSideObjects.locomotives.MovingDirection;
+import NATrain.сontrolModules.AbstractLocomotiveModule;
 import NATrain.сontrolModules.MQTTLocomotiveModule;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.TextFlow;
-import org.w3c.dom.html.HTMLOptGroupElement;
 
 public class LocomotiveController {
 
@@ -72,27 +69,27 @@ public class LocomotiveController {
         speedSlider.setMinorTickCount(5);
         speedSlider.setSnapToTicks(true);
         speedSlider.setOnMouseReleased(event -> {
-            sendSpeedChangeCommand();
+            setLocomotiveSpeed();
         });
         speedSlider.setOnKeyReleased(event -> {
-            sendSpeedChangeCommand();
+            setLocomotiveSpeed();
         });
         stopButton.setOnAction(event -> {
-            locomotive.getModule().sendCommand(MQTTLocomotiveModule.STOP_CHANNEL, "0");
+            locomotive.stop();
         });
         forwardToggleButton.setOnAction(event -> {
-            locomotive.getModule().sendCommand(MQTTLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, MQTTLocomotiveModule.FORWARD_COMMAND_CODE + "");
+            locomotive.setMovingDirection(MovingDirection.FORWARD);
         });
         backwardToggleButton.setOnAction(event -> {
-            locomotive.getModule().sendCommand(MQTTLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, MQTTLocomotiveModule.BACKWARD_COMMAND_CODE + "");
+            locomotive.setMovingDirection(MovingDirection.BACKWARD);
         });
     }
 
-    private void sendSpeedChangeCommand() {
+    private void setLocomotiveSpeed() {
         if (actualSliderValue != speedSlider.getValue()) {
             actualSliderValue = speedSlider.getValue();
             int speed = (int) (speedSlider.getValue() * 128);
-            locomotive.getModule().sendCommand(MQTTLocomotiveModule.SET_SPEED_CHANNEL, String.format("%04d", speed));
+            locomotive.setSpeed(speed);
         }
     }
 

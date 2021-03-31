@@ -124,7 +124,7 @@ public class Signal extends TracksideObject {
         });
     }
 
-    public GlobalSignalState getGlobalStatus() {
+    public static GlobalSignalState getGlobalStatus(SignalState signalState) {
         switch (signalState) {
             case RED:
             case BLUE:

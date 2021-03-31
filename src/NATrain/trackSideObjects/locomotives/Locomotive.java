@@ -1,11 +1,11 @@
 package NATrain.trackSideObjects.locomotives;
 
-import NATrain.routes.Autopilot;
 import NATrain.routes.RouteDirection;
 import NATrain.trackSideObjects.TracksideObject;
-import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.сontrolModules.AbstractLocomotiveModule;
 import NATrain.сontrolModules.ControlModule;
+import NATrain.сontrolModules.MQTTLocomotiveModule;
 
 public class Locomotive extends TracksideObject {
 
@@ -16,6 +16,7 @@ public class Locomotive extends TracksideObject {
     public boolean mainLight = false;
     public boolean rearLight = false;
 
+    private MovingDirection movingDirection;
     private TrackSection location;
     private RouteDirection forwardDirection = RouteDirection.EVEN;
     private boolean autoPilotOn = false;
@@ -32,16 +33,17 @@ public class Locomotive extends TracksideObject {
 
     public void setForwardDirection(RouteDirection forwardDirection) {
         this.forwardDirection = forwardDirection;
-        propertyChangeSupport.firePropertyChange("Forward Direction", null, forwardDirection);
+        //propertyChangeSupport.firePropertyChange("Forward Direction", null, forwardDirection);
     }
 
     public int getSpeed() {
         return speed;
     }
 
+
     public void setSpeed(int speed) {
         this.speed = speed;
-        //propertyChangeSupport.firePropertyChange("Speed", null, speed);
+        controlModule.sendCommand(MQTTLocomotiveModule.SET_SPEED_CHANNEL, String.format("%04d", speed));
     }
 
     public Locomotive(String id) {
@@ -54,7 +56,7 @@ public class Locomotive extends TracksideObject {
 
     public void setActualState(LocomotiveState actualState) {
         this.actualState = actualState;
-        propertyChangeSupport.firePropertyChange("Actual State", null, actualState);
+        propertyChangeSupport.firePropertyChange("Actual State", null, actualState); //for listening from UI controller
     }
 
     public TrackSection getLocation() {
@@ -66,12 +68,31 @@ public class Locomotive extends TracksideObject {
        // propertyChangeSupport.firePropertyChange("Location", null, location);
     }
 
+    public MovingDirection getMovingDirection() {
+        return movingDirection;
+    }
+
+    public void setMovingDirection(MovingDirection movingDirection) {
+        this.movingDirection = movingDirection;
+        if (movingDirection == MovingDirection.FORWARD) {
+            controlModule.sendCommand(AbstractLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, AbstractLocomotiveModule.FORWARD_COMMAND_CODE + "");
+        } else {
+            controlModule.sendCommand(AbstractLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, AbstractLocomotiveModule.BACKWARD_COMMAND_CODE + "");
+        }
+    }
+
     public void setModule(ControlModule module) {
         this.controlModule = module;
     }
 
     public ControlModule getModule() {
         return controlModule;
+    }
+
+    public void stop() {
+        speed = 0;
+        controlModule.sendCommand(MQTTLocomotiveModule.STOP_CHANNEL, "0" ); //command code doesn't matter on STOP channel
+        setActualState(LocomotiveState.NOT_MOVING);
     }
 
     @Override
