@@ -32,7 +32,6 @@ public class StationTrackRedactorController extends TracksideObjectRedactorContr
     @FXML
     private TextField lengthTextField;
 
-
     private StationTrack stationTrack;
 
     @Override

@@ -2,6 +2,7 @@ package NATrain.UI.workPlace.executors;
 
 import NATrain.routes.Route;
 import NATrain.routes.RouteDirection;
+import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.signals.GlobalSignalState;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
@@ -16,10 +17,11 @@ public class ArrivalRouteExecutor extends AbstractRouteExecutor {
     public void autoselectSignalState() {
         Signal signal = route.getSignal();
         GlobalSignalState nextSignalGlobalState;
+        StationTrack stationTrack = (StationTrack) route.getDestinationTrackSection();
         if (route.getRouteDirection() == RouteDirection.EVEN) {
-            nextSignalGlobalState = route.getStationTrack().getEvenSignal().getGlobalStatus();
+            nextSignalGlobalState = stationTrack.getEvenSignal().getGlobalStatus();
         } else {
-            nextSignalGlobalState = route.getStationTrack().getOddSignal().getGlobalStatus();
+            nextSignalGlobalState = stationTrack.getOddSignal().getGlobalStatus();
         }
 
         if (routeStatus == RouteStatus.READY && isAllSectionsFree()

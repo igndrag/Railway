@@ -20,8 +20,11 @@ import java.util.Comparator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
+import static NATrain.routes.RouteDirection.ODD;
+
 
 public class RouteEditorController {
+
 
     private Route route;
     private RouteType selectedRouteType;
@@ -30,13 +33,15 @@ public class RouteEditorController {
 
 
     @FXML
+    private ChoiceBox<StationTrack> departureTrackChoiceBox;
+    @FXML
+    private ChoiceBox<StationTrack> arrivalTrackChoiceBox;
+    @FXML
     private ToggleButton evenToggleButton;
     @FXML
     private ToggleButton oddToggleButton;
     @FXML
     private RadioButton reversedRadioButton;
-    @FXML
-    private ChoiceBox<StationTrack> stationTrackChoiceBox;
     @FXML
     private ToggleButton arrivalToggleButton;
     @FXML
@@ -48,7 +53,7 @@ public class RouteEditorController {
     @FXML
     private ChoiceBox<Signal> signalChoiceBox;
     @FXML
-    private ChoiceBox<Track> destinationTrackLineChoiceBox;
+    private ChoiceBox<Track> trackLineChoiceBox;
     @FXML
     private CheckBox maneuverCheckBox;
     @FXML
@@ -85,12 +90,20 @@ public class RouteEditorController {
         evenToggleButton.setToggleGroup(routeDirectionToggleGroup);
         oddToggleButton.setToggleGroup(routeDirectionToggleGroup);
 
-        stationTrackChoiceBox.setItems(FXCollections.observableArrayList(Model.getStationTracks().values()));
+        if (route.getRouteDirection() == RouteDirection.EVEN) {
+            evenToggleButton.setSelected(true);
+        }
+
+        if (route.getRouteDirection() == RouteDirection.ODD) {
+            oddToggleButton.setSelected(true);
+        }
+
+        arrivalTrackChoiceBox.setItems(FXCollections.observableArrayList(Model.getStationTracks().values()));
+        departureTrackChoiceBox.setItems(FXCollections.observableArrayList(Model.getStationTracks().values()));
 
         arrivalToggleButton.setOnAction(event -> {
             selectArrivalRouteType();
         });
-
 
         departureToggleButton.setOnAction(event -> {
             selectDepartureRouteType();
@@ -181,17 +194,27 @@ public class RouteEditorController {
 
         ObservableList<Track> TrackObservableList = FXCollections.observableArrayList(Model.getTracks());
         TrackObservableList.sort(Comparator.comparing(Track::getId));
-        destinationTrackLineChoiceBox.setItems(TrackObservableList);
-        if (route.getDestinationTrackLine() != null) {
-            destinationTrackLineChoiceBox.getSelectionModel().select(route.getDestinationTrackLine());
+        trackLineChoiceBox.setItems(TrackObservableList);
+
+        if (route.getDestinationTrackSection() instanceof TrackBlockSection) {
+            Track track = ((TrackBlockSection) route.getDestinationTrackSection()).getTrack();
+                trackLineChoiceBox.getSelectionModel().select(track);
             }
-        destinationTrackLineChoiceBox.setOnAction(event -> {
-            });
-
-
-
-        if (route.getDepartureTrackSection() != null) {
+        if (route.getDepartureTrackSection() instanceof TrackBlockSection) {
+            Track track = ((TrackBlockSection) route.getDepartureTrackSection()).getTrack();
+                trackLineChoiceBox.getSelectionModel().select(track);
         }
+
+        if (route.getDestinationTrackSection() instanceof StationTrack) {
+            StationTrack stationTrack = (StationTrack) route.getDestinationTrackSection();
+            arrivalTrackChoiceBox.getSelectionModel().select(stationTrack);
+        }
+
+        if (route.getDepartureTrackSection() instanceof StationTrack) {
+            StationTrack stationTrack = (StationTrack) route.getDepartureTrackSection();
+            departureTrackChoiceBox.getSelectionModel().select(stationTrack);
+        }
+
         ObservableList<TrackSection> allTrackSections = FXCollections.observableArrayList(Model.getTrackSections().values());
         allTrackSections.sort(Comparator.comparing(TracksideObject::getId));
         allTrackListView.setItems(allTrackSections);
@@ -228,9 +251,8 @@ public class RouteEditorController {
             route.setSignal(signalChoiceBox.getValue());
             route.setSwitchStatePositions(switchStatePositionsMap);
             route.setWithManeuver(maneuverCheckBox.isSelected());
-            if (!destinationTrackLineChoiceBox.getSelectionModel().isEmpty()) {
-                Track destinationTrack = destinationTrackLineChoiceBox.getValue();
-                route.setDestinationTrackLine(destinationTrack);
+            if (!trackLineChoiceBox.getSelectionModel().isEmpty()) {
+                Track destinationTrack = trackLineChoiceBox.getValue();
                 if (reversedRadioButton.isSelected()) {
                     route.setTVDS1(destinationTrack.getBlockSections().get(destinationTrack.getBlockSections().size() - 1));
                     route.setTVDS2(destinationTrack.getBlockSections().get(destinationTrack.getBlockSections().size() - 2));
@@ -240,19 +262,38 @@ public class RouteEditorController {
                 }
             }
 
-            route.setRouteDirection(evenToggleButton.isSelected() ? RouteDirection.EVEN : RouteDirection.ODD);
+            route.setRouteDirection(evenToggleButton.isSelected() ? RouteDirection.EVEN : ODD);
+
+            if (!trackLineChoiceBox.getSelectionModel().isEmpty()) {
+                route.setDestinationTrackLine(trackLineChoiceBox.getValue());
+            }
 
             ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>(selectedTrackListView.getItems());
             switch (selectedRouteType) {
                 case DEPARTURE:
                     route.setDestinationTrackSection(route.getTVDS1());
-                    route.setDepartureTrackSection(stationTrackChoiceBox.getValue());
+                    route.setDepartureTrackSection(departureTrackChoiceBox.getValue());
                     break;
                 case ARRIVAL:
-                    route.setDestinationTrackSection(stationTrackChoiceBox.getValue());
+                    route.setDestinationTrackSection(arrivalTrackChoiceBox.getValue());
+                    Track track = trackLineChoiceBox.getValue();
+                    if (route.getRouteDirection() == track.getNormalDirection()) {
+                        route.setDepartureTrackSection(track.getBlockSections().get(0));
+                    } else {
+                        route.setDepartureTrackSection(track.getBlockSections().get(track.getBlockSections().size() - 1));
+                    }
                     break;
                 case SHUNTING:
-                    route.setDestinationTrackSection(occupationalOrder.getLast());
+                    if (arrivalTrackChoiceBox.getSelectionModel().isEmpty()) {
+                        route.setDestinationTrackSection(occupationalOrder.getLast());
+                    } else {
+                        route.setDestinationTrackSection(arrivalTrackChoiceBox.getValue());
+                    }
+                    if (departureTrackChoiceBox.getSelectionModel().isEmpty()) {
+                        route.setDepartureTrackSection(occupationalOrder.getFirst());
+                    } else {
+                        route.setDepartureTrackSection(departureTrackChoiceBox.getValue());
+                    }
                     break;
             }
             route.setOccupationalOrder(occupationalOrder);
@@ -299,20 +340,23 @@ public class RouteEditorController {
 
     private void selectDepartureRouteType() {
         selectedRouteType = RouteType.DEPARTURE;
-
-        destinationTrackLineChoiceBox.setDisable(false);
+        arrivalTrackChoiceBox.setDisable(true);
+        departureTrackChoiceBox.setDisable(false);
+        trackLineChoiceBox.setDisable(false);
     }
 
     private void selectArrivalRouteType() {
         selectedRouteType = RouteType.ARRIVAL;
-
-        destinationTrackLineChoiceBox.setDisable(true);
+        arrivalTrackChoiceBox.setDisable(false);
+        trackLineChoiceBox.setDisable(false);
+        departureTrackChoiceBox.setDisable(true);
     }
 
     private void selectShuntingRouteType() {
         selectedRouteType = RouteType.SHUNTING;
-
-        destinationTrackLineChoiceBox.setDisable(true);
+        arrivalTrackChoiceBox.setDisable(false);
+        departureTrackChoiceBox.setDisable(false);
+        trackLineChoiceBox.setDisable(true);
     }
 
 

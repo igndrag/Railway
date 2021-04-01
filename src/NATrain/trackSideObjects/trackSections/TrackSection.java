@@ -73,7 +73,9 @@ public class TrackSection extends TracksideObject {
         if (!interlocked) {
             occupationFixed = false;
             deallocationFixed = false;
-            switches.forEach(aSwitch -> aSwitch.setSwitchState(aSwitch.getSwitchState())); // set the same position for right view in control module
+        }
+        if (switches.size() > 0) {                                                          // if some switches located on track section
+            switches.forEach(aSwitch -> aSwitch.setSwitchState(aSwitch.getSwitchState())); // set them to the same position for right view in control module
         }
     }
 

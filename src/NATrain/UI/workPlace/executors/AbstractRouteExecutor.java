@@ -4,6 +4,7 @@ import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.routes.Route;
 import NATrain.routes.RouteDirection;
 import NATrain.routes.RouteType;
+import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.*;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.switches.Switch;
@@ -43,8 +44,13 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
     public AbstractRouteExecutor(Route route) {
         this.route = route;
         occupationalOrder = new ConcurrentLinkedDeque<>(route.getOccupationalOrder()); // create copy for processing
-        if (route.getRouteType() == RouteType.SHUNTING) {
-            occupationalOrder.pollLast();
+
+        if (route.getRouteType() == RouteType.SHUNTING && occupationalOrder.getFirst() == route.getDepartureTrackSection()) { // if shunting route from usual track section
+            occupationalOrder.pollFirst();                                                                                      // we don't need to interlock this section in occupational order
+        }
+
+        if (route.getRouteType() == RouteType.SHUNTING && occupationalOrder.getLast() == route.getDestinationTrackSection()) { // if shunting route to usual track section
+            occupationalOrder.pollLast();                                                                                      // we don't need to interlock this section in occupational order
         }
         this.departureSection = route.getDepartureTrackSection();
         this.destinationSection = route.getDestinationTrackSection();
@@ -247,13 +253,14 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
             signalStateUpdaterMap.put(route.getTVDS1(), TVDS2signalStateUpdater);
             route.getTVDS2().addPropertyChangeListener(TVDS2signalStateUpdater);
         }
-        if (route.getRouteType() == RouteType.ARRIVAL && route.getStationTrack() != null) {
+        if (route.getRouteType() == RouteType.ARRIVAL) {
             SignalStateUpdater fromNextSignalUpdater = new SignalStateUpdater();
             Signal nextSignal;
+            StationTrack stationTrack = (StationTrack) route.getDestinationTrackSection();
             if (route.getRouteDirection() == RouteDirection.EVEN) {
-                nextSignal = route.getStationTrack().getEvenSignal();
+                nextSignal = stationTrack.getEvenSignal();
             } else {
-                nextSignal = route.getStationTrack().getOddSignal();
+                nextSignal = stationTrack.getOddSignal();
             }
             nextSignal.addPropertyChangeListener(fromNextSignalUpdater);
             signalStateUpdaterMap.put(nextSignal, fromNextSignalUpdater);

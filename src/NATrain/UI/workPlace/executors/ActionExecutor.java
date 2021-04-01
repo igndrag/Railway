@@ -67,7 +67,7 @@ public class ActionExecutor {
                 if (firstSelectedQuad instanceof SignalQuad) {
                     firstSignal = ((SignalQuad) firstSelectedQuad).getAssociatedSignal();
                 }
-                if (secondSelectedQuad instanceof ArrivalSignalQuad) {
+                if (firstSelectedQuad instanceof ArrivalSignalQuad) {
                     firstSignal = ((ArrivalSignalQuad) firstSelectedQuad).getAssociatedSignal();
                 }
                 switch (secondControlAction) {
@@ -140,7 +140,7 @@ public class ActionExecutor {
     private ObservableList<Route> findRoutes(Signal signal, TracksideObject tracksideObject) {
         List<Route> result = Model.getRouteTable().stream()
                 .filter(route -> route.getSignal() == signal)
-                .filter(route -> route.getDestinationTrackSection() == tracksideObject || route.getStationTrack() == tracksideObject)
+                .filter(route -> route.getDestinationTrackSection() == tracksideObject)
                 .collect(Collectors.toList());
         return FXCollections.observableArrayList(result);
     }

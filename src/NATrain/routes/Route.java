@@ -25,12 +25,19 @@ public class Route implements Serializable {
     private Boolean withManeuver = false;
     private TrackBlockSection TVDS1;
     private TrackBlockSection TVDS2;
-    private StationTrack stationTrack;
     private Track destinationTrackLine;
 
     public Route(String description, RouteType routeType) {
         this.description = description;
         this.routeType = routeType;
+    }
+
+    public Track getDestinationTrackLine() {
+        return destinationTrackLine;
+    }
+
+    public void setDestinationTrackLine(Track destinationTrackLine) {
+        this.destinationTrackLine = destinationTrackLine;
     }
 
     public RouteDirection getRouteDirection() {
@@ -75,22 +82,6 @@ public class Route implements Serializable {
 
     public void setDestinationTrackSection(TrackSection destinationTrackSection) {
         this.destinationTrackSection = destinationTrackSection;
-    }
-
-    public Track getDestinationTrackLine() {
-        return destinationTrackLine;
-    }
-
-    public void setDestinationTrackLine(Track destinationTrackLine) {
-        this.destinationTrackLine = destinationTrackLine;
-    }
-
-    public StationTrack getStationTrack() {
-        return stationTrack;
-    }
-
-    public void setStationTrack(StationTrack stationTrack) {
-        this.stationTrack = stationTrack;
     }
 
     public TrackBlockingType getTrackAutomationType() {
