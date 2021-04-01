@@ -29,7 +29,9 @@ public abstract class BlockingSignalQuad extends BlockingTrackQuad implements Bl
     public void refresh() {
         updateFirstTrackView();
         updateSecondTrackView();
+        if (firstSignalLampElement != null)
         updateBlockSignalView(firstSignal, firstSignalLampElement);
+        if (secondSignalLampElement != null)
         updateBlockSignalView(secondSignal, secondSignalLampElement);
         if (firstSignalLabel != null && firstSignal != Signal.EMPTY_SIGNAL) {
             firstSignalLabel.setText(firstSignal.getId());

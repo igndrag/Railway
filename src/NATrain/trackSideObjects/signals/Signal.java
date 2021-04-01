@@ -124,7 +124,7 @@ public class Signal extends TracksideObject {
         });
     }
 
-    public static GlobalSignalState getGlobalStatus(SignalState signalState) {
+    public static GlobalSignalState getGlobalStatusForState(SignalState signalState) {
         switch (signalState) {
             case RED:
             case BLUE:
@@ -141,6 +141,10 @@ public class Signal extends TracksideObject {
             default:
                 return GlobalSignalState.NOT_ACTIVE; //if not configured or not light
         }
+    }
+
+    public GlobalSignalState getGlobalStatus() {
+        return getGlobalStatusForState(signalState);
     }
 
     public RouteDirection getDirection() {

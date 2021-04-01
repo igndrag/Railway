@@ -86,6 +86,8 @@ public class SwitchRedactorController extends TracksideObjectRedactorController 
             alert.setContentText("It's necessary to set track section for correct interlock switch in route.");
             alert.show();
             return;
+        } else {
+            trackSectionChoiceBox.getValue().getSwitches().add(mySwitch);
         }
         if (normalInitialPositionToggleButton.isSelected())
             mySwitch.setNormalState(SwitchState.PLUS);

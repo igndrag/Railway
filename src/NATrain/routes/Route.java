@@ -13,10 +13,10 @@ import java.util.concurrent.ConcurrentMap;
 public class Route implements Serializable {
     static final long serialVersionUID = 1L;
 
+    protected RouteDirection routeDirection;
     protected RouteType routeType;
     private String description;
     private Signal signal;
-    private Signal nextSignal;
     private ConcurrentMap<Switch, SwitchState> switchStatePositions = new ConcurrentHashMap<>();
     private ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>();
     private TrackSection departureTrackSection;
@@ -25,13 +25,20 @@ public class Route implements Serializable {
     private Boolean withManeuver = false;
     private TrackBlockSection TVDS1;
     private TrackBlockSection TVDS2;
-    private Track destinationTrack;
-
-
+    private StationTrack stationTrack;
+    private Track destinationTrackLine;
 
     public Route(String description, RouteType routeType) {
         this.description = description;
         this.routeType = routeType;
+    }
+
+    public RouteDirection getRouteDirection() {
+        return routeDirection;
+    }
+
+    public void setRouteDirection(RouteDirection routeDirection) {
+        this.routeDirection = routeDirection;
     }
 
     public RouteType getRouteType() {
@@ -70,12 +77,20 @@ public class Route implements Serializable {
         this.destinationTrackSection = destinationTrackSection;
     }
 
-    public Track getDestinationTrack() {
-        return destinationTrack;
+    public Track getDestinationTrackLine() {
+        return destinationTrackLine;
     }
 
-    public void setDestinationTrack(Track destinationTrack) {
-        this.destinationTrack = destinationTrack;
+    public void setDestinationTrackLine(Track destinationTrackLine) {
+        this.destinationTrackLine = destinationTrackLine;
+    }
+
+    public StationTrack getStationTrack() {
+        return stationTrack;
+    }
+
+    public void setStationTrack(StationTrack stationTrack) {
+        this.stationTrack = stationTrack;
     }
 
     public TrackBlockingType getTrackAutomationType() {
@@ -113,14 +128,6 @@ public class Route implements Serializable {
 
     public void setSignal(Signal signal) {
         this.signal = signal;
-    }
-
-    public Signal getNextSignal() {
-        return nextSignal;
-    }
-
-    public void setNextSignal(Signal nextSignal) {
-        this.nextSignal = nextSignal;
     }
 
     public ConcurrentMap<Switch, SwitchState> getSwitchStatePositions() {
@@ -162,5 +169,4 @@ public class Route implements Serializable {
     public void setTVDS2(TrackBlockSection TVDS2) {
         this.TVDS2 = TVDS2;
     }
-
 }

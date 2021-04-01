@@ -49,6 +49,9 @@ public class ActionEmulatorController {
         signalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
         trackLineChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracks()));
 
+        trackChoiceBox.getItems().addAll(Model.getStationTracks().values());
+
+
         ToggleGroup toggleGroup = new ToggleGroup();
         plusToggleButton.setToggleGroup(toggleGroup);
         minusToggleButton.setToggleGroup(toggleGroup);

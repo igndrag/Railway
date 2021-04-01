@@ -77,7 +77,9 @@ public class BlockingQuadDTO implements Serializable {
 
     public static Quad castToQuad(BlockingQuadDTO quadDTO) {
         BlockingBaseQuad baseQuad = (BlockingBaseQuad) QuadFactory.createQuad(quadDTO.x, quadDTO.y, quadDTO.quadType);
-        baseQuad.showBlockSectionName(quadDTO.descriptionShown);
+
+        baseQuad.showBlockSectionName (quadDTO.descriptionShown);
+
 
         if (quadDTO.track == null) {
             baseQuad.track = Track.EMPTY_TRACK;

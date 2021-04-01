@@ -63,17 +63,24 @@ public class ActionExecutor {
         switch (firstControlAction) {
             case SET_ROUT_FROM:
                 ObservableList<Route> foundedRoutes = EMPTY_ROUTE_LIST;
+                Signal firstSignal = Signal.EMPTY_SIGNAL;
+                if (firstSelectedQuad instanceof SignalQuad) {
+                    firstSignal = ((SignalQuad) firstSelectedQuad).getAssociatedSignal();
+                }
+                if (secondSelectedQuad instanceof ArrivalSignalQuad) {
+                    firstSignal = ((ArrivalSignalQuad) firstSelectedQuad).getAssociatedSignal();
+                }
                 switch (secondControlAction) {
                     case SET_ROUT_TO:
-                        foundedRoutes = findRoutes(((SignalQuad) firstSelectedQuad).getAssociatedSignal(),
-                                ((SignalQuad) secondSelectedQuad).getAssociatedSignal());
+                        Signal secondSignal = ((SignalQuad) secondSelectedQuad).getAssociatedSignal();
+                        foundedRoutes = findRoutes(firstSignal, secondSignal);
                         break;
                     case SET_ROUTE_TO_TRACK:
-                        foundedRoutes = findRoutes(((SignalQuad) firstSelectedQuad).getAssociatedSignal(),
+                        foundedRoutes = findRoutes(firstSignal,
                                 ((SimpleTrackQuad) secondSelectedQuad).getFirstAssociatedTrack());
                         break;
                     case SET_ROUTE_TO_TRACK_LINE:
-                        foundedRoutes = findRoutsToTrackLine(((SignalQuad) firstSelectedQuad).getAssociatedSignal(),
+                        foundedRoutes = findRoutsToTrackLine(firstSignal,
                                 ((BlockingTrackQuad) secondSelectedQuad).getFirstBlockSection().getTrack());
                         break;
                     default:
@@ -133,7 +140,7 @@ public class ActionExecutor {
     private ObservableList<Route> findRoutes(Signal signal, TracksideObject tracksideObject) {
         List<Route> result = Model.getRouteTable().stream()
                 .filter(route -> route.getSignal() == signal)
-                .filter(route -> route.getDestinationTrackSection() == tracksideObject)
+                .filter(route -> route.getDestinationTrackSection() == tracksideObject || route.getStationTrack() == tracksideObject)
                 .collect(Collectors.toList());
         return FXCollections.observableArrayList(result);
     }
@@ -141,7 +148,7 @@ public class ActionExecutor {
     private ObservableList<Route> findRoutsToTrackLine(Signal signal, Track track) {
         List<Route> result = Model.getRouteTable().stream()
                 .filter(route -> route.getSignal() == signal)
-                .filter(route -> route.getDestinationTrack() == track)
+                .filter(route -> route.getDestinationTrackLine() == track)
                 .collect(Collectors.toList());
         return FXCollections.observableArrayList(result);
     }

@@ -269,7 +269,9 @@ public abstract class BlockingBaseQuad extends AbstractQuad {
     }
 
     public void showBlockSectionName(boolean show) {
-        blockSectionName.setVisible(show);
+        if (blockSectionName != null) {
+            blockSectionName.setVisible(show);
+        }
     }
 
     public Text getBlockSectionName() {

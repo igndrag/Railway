@@ -171,21 +171,24 @@ public enum Model implements Serializable {
                 mainGrid = new Quad[ySize][xSize];
                 trackSections = (Map<String, TrackSection>) inputStream.readObject();
                 trackSections.values().forEach(TracksideObject::addPropertyChangeSupport);
-                trackSections.values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.UNDEFINED));
                 signals = (Map<String, Signal>) inputStream.readObject();
                 signals.values().forEach(TracksideObject::addPropertyChangeSupport);
-                signals.values().forEach(signal -> signal.setSignalState(SignalState.UNDEFINED));
                 switches = (Map<String, Switch>) inputStream.readObject();
                 switches.values().forEach(TracksideObject::addPropertyChangeSupport);
-                switches.values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.UNDEFINED));
                 controlModules = (Map<String ,ControlModule>) inputStream.readObject();
                 stationTracks = (Map<String, StationTrack>) inputStream.readObject();
                 stationTracks.values().forEach(TracksideObject::addPropertyChangeSupport);
-                stationTracks.values().forEach(track -> track.setVacancyState(TrackSectionState.UNDEFINED));
                 locomotives = (Map<String, Locomotive>) inputStream.readObject();
                 locomotives.values().forEach(TracksideObject::addPropertyChangeSupport);
                 routeTable = (CopyOnWriteArraySet<Route>) inputStream.readObject();
                 tracks = (Set<Track>) inputStream.readObject();
+
+                trackSections.values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.UNDEFINED));
+                signals.values().forEach(signal -> signal.setSignalState(SignalState.UNDEFINED));
+                switches.values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.UNDEFINED));
+                stationTracks.values().forEach(track -> track.setVacancyState(TrackSectionState.UNDEFINED));
+
+
                 tracks.forEach(track -> {
                     track.setSignalQuads(new ArrayList<>());
                     track.setActiveSignalListeners(new HashMap<>());

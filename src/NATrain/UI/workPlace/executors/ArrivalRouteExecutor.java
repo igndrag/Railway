@@ -1,6 +1,7 @@
 package NATrain.UI.workPlace.executors;
 
 import NATrain.routes.Route;
+import NATrain.routes.RouteDirection;
 import NATrain.trackSideObjects.signals.GlobalSignalState;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
@@ -14,7 +15,13 @@ public class ArrivalRouteExecutor extends AbstractRouteExecutor {
     @Override
     public void autoselectSignalState() {
         Signal signal = route.getSignal();
-        GlobalSignalState nextSignalGlobalState = route.getNextSignal().getGlobalStatus();
+        GlobalSignalState nextSignalGlobalState;
+        if (route.getRouteDirection() == RouteDirection.EVEN) {
+            nextSignalGlobalState = route.getStationTrack().getEvenSignal().getGlobalStatus();
+        } else {
+            nextSignalGlobalState = route.getStationTrack().getOddSignal().getGlobalStatus();
+        }
+
         if (routeStatus == RouteStatus.READY && isAllSectionsFree()
                 && route.getDestinationTrackSection().getVacancyState() == TrackSectionState.FREE) {
             if (route.getWithManeuver()) {

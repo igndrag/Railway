@@ -2,6 +2,7 @@ package NATrain.trackSideObjects.trackSections;
 
 
 import NATrain.trackSideObjects.TracksideObject;
+import NATrain.trackSideObjects.switches.Switch;
 import NATrain.сontrolModules.InputChannel;
 
 import java.util.ArrayList;
@@ -20,16 +21,23 @@ public class TrackSection extends TracksideObject {
     }
 
     public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
+
     private InputChannel evenBorder;
+    private final ArrayList<Switch> switches = new ArrayList<>();
     private final ArrayList<InputChannel> subsections = new ArrayList<>();
     private InputChannel oddBorder;
     private int length = 0;
 
     private transient TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
 
+
     private transient boolean interlocked = false;
     private transient boolean occupationFixed = false;
     private transient boolean deallocationFixed = false;
+
+    public ArrayList<Switch> getSwitches() {
+        return switches;
+    }
 
     public boolean isOccupationFixed() {
         return occupationFixed;
@@ -65,6 +73,7 @@ public class TrackSection extends TracksideObject {
         if (!interlocked) {
             occupationFixed = false;
             deallocationFixed = false;
+            switches.forEach(aSwitch -> aSwitch.setSwitchState(aSwitch.getSwitchState())); // set the same position for right view in control module
         }
     }
 
@@ -88,6 +97,9 @@ public class TrackSection extends TracksideObject {
         TrackSectionState oldState = this.vacancyState;
         this. vacancyState = vacancyState;
         propertyChangeSupport.firePropertyChange("occupationalProperty", oldState, vacancyState);
+        if (switches.size() > 0) {                                                          // if some switches located on track section
+            switches.forEach(aSwitch -> aSwitch.setSwitchState(aSwitch.getSwitchState())); // set them to the same position for right view in control module
+        }
     }
 
     public int getLength() {

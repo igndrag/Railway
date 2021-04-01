@@ -1,5 +1,6 @@
 package NATrain.UI.routeTable;
 
+import NATrain.UI.UIUtils;
 import NATrain.model.Model;
 import NATrain.routes.*;
 import NATrain.trackSideObjects.*;
@@ -18,15 +19,24 @@ import java.util.Comparator;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.stream.Collectors;
 
 
 public class RouteEditorController {
+
     private Route route;
     private RouteType selectedRouteType;
     private ConcurrentHashMap<Switch, SwitchState> switchStatePositionsMap;
     private String initialName;
 
+
+    @FXML
+    private ToggleButton evenToggleButton;
+    @FXML
+    private ToggleButton oddToggleButton;
+    @FXML
+    private RadioButton reversedRadioButton;
+    @FXML
+    private ChoiceBox<StationTrack> stationTrackChoiceBox;
     @FXML
     private ToggleButton arrivalToggleButton;
     @FXML
@@ -38,15 +48,7 @@ public class RouteEditorController {
     @FXML
     private ChoiceBox<Signal> signalChoiceBox;
     @FXML
-    private ChoiceBox<Signal> nextSignalChoiceBox;
-    @FXML
-    private ChoiceBox<TrackSection> departureChoiceBox;
-    @FXML
     private ChoiceBox<Track> destinationTrackLineChoiceBox;
-    @FXML
-    private ChoiceBox<TrackBlockSection> TVDS1ChoiceBox;
-    @FXML
-    private ChoiceBox<TrackBlockSection> TVDS2ChoiceBox;
     @FXML
     private CheckBox maneuverCheckBox;
     @FXML
@@ -76,6 +78,14 @@ public class RouteEditorController {
         arrivalToggleButton.setToggleGroup(routeTypeToggleGroup);
         departureToggleButton.setToggleGroup(routeTypeToggleGroup);
         shuntingToggleButton.setToggleGroup(routeTypeToggleGroup);
+
+
+        ToggleGroup routeDirectionToggleGroup = new ToggleGroup();
+
+        evenToggleButton.setToggleGroup(routeDirectionToggleGroup);
+        oddToggleButton.setToggleGroup(routeDirectionToggleGroup);
+
+        stationTrackChoiceBox.setItems(FXCollections.observableArrayList(Model.getStationTracks().values()));
 
         arrivalToggleButton.setOnAction(event -> {
             selectArrivalRouteType();
@@ -164,45 +174,23 @@ public class RouteEditorController {
         maneuverCheckBox.setSelected(route.getWithManeuver());
 
         signalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
-        nextSignalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
 
         if (route.getSignal() != null) {
             signalChoiceBox.setValue(route.getSignal());
         }
 
-        if (route.getNextSignal() != null) {
-            nextSignalChoiceBox.setValue(route.getNextSignal());
-        }
-
         ObservableList<Track> TrackObservableList = FXCollections.observableArrayList(Model.getTracks());
         TrackObservableList.sort(Comparator.comparing(Track::getId));
         destinationTrackLineChoiceBox.setItems(TrackObservableList);
-        if (route.getDestinationTrack() != null) {
-            destinationTrackLineChoiceBox.getSelectionModel().select(route.getDestinationTrack());
-            TVDS1ChoiceBox.setItems(FXCollections.observableArrayList(destinationTrackLineChoiceBox.getValue().getBlockSections()));
-            TVDS2ChoiceBox.setItems(FXCollections.observableArrayList(destinationTrackLineChoiceBox.getValue().getBlockSections()));
-        }
+        if (route.getDestinationTrackLine() != null) {
+            destinationTrackLineChoiceBox.getSelectionModel().select(route.getDestinationTrackLine());
+            }
         destinationTrackLineChoiceBox.setOnAction(event -> {
-            TVDS1ChoiceBox.setItems(FXCollections.observableArrayList(destinationTrackLineChoiceBox.getValue().getBlockSections()));
-            TVDS2ChoiceBox.setItems(FXCollections.observableArrayList(destinationTrackLineChoiceBox.getValue().getBlockSections()));
-        });
+            });
 
-        if (route.getTVDS1() != null) {
-            TVDS1ChoiceBox.getSelectionModel().select(route.getTVDS1());
-        }
-        if (route.getTVDS2() != null) {
-            TVDS2ChoiceBox.getSelectionModel().select(route.getTVDS2());
-        }
 
-        ObservableList<TrackSection> arrivalDepartureTrackObservableList = FXCollections.observableArrayList(
-                Model.getTrackSections()
-                        .values()
-                        .stream()
-                        .filter(trackSection -> trackSection instanceof StationTrack)
-                        .collect(Collectors.toList()));
-        departureChoiceBox.setItems(arrivalDepartureTrackObservableList);
+
         if (route.getDepartureTrackSection() != null) {
-            departureChoiceBox.getSelectionModel().select(route.getDepartureTrackSection());
         }
         ObservableList<TrackSection> allTrackSections = FXCollections.observableArrayList(Model.getTrackSections().values());
         allTrackSections.sort(Comparator.comparing(TracksideObject::getId));
@@ -238,19 +226,31 @@ public class RouteEditorController {
             route.setRouteType(selectedRouteType);
             route.setDescription(descriptionTextField.getText());
             route.setSignal(signalChoiceBox.getValue());
-            route.setNextSignal(nextSignalChoiceBox.getValue());
             route.setSwitchStatePositions(switchStatePositionsMap);
             route.setWithManeuver(maneuverCheckBox.isSelected());
-            route.setTVDS1(TVDS1ChoiceBox.getValue());
-            route.setTVDS2(TVDS2ChoiceBox.getValue());
-            route.setDepartureTrackSection(departureChoiceBox.getValue());
+            if (!destinationTrackLineChoiceBox.getSelectionModel().isEmpty()) {
+                Track destinationTrack = destinationTrackLineChoiceBox.getValue();
+                route.setDestinationTrackLine(destinationTrack);
+                if (reversedRadioButton.isSelected()) {
+                    route.setTVDS1(destinationTrack.getBlockSections().get(destinationTrack.getBlockSections().size() - 1));
+                    route.setTVDS2(destinationTrack.getBlockSections().get(destinationTrack.getBlockSections().size() - 2));
+                } else {
+                    route.setTVDS1(destinationTrack.getBlockSections().get(0));
+                    route.setTVDS2(destinationTrack.getBlockSections().get(1));
+                }
+            }
+
+            route.setRouteDirection(evenToggleButton.isSelected() ? RouteDirection.EVEN : RouteDirection.ODD);
+
             ConcurrentLinkedDeque<TrackSection> occupationalOrder = new ConcurrentLinkedDeque<>(selectedTrackListView.getItems());
             switch (selectedRouteType) {
                 case DEPARTURE:
-                    route.setDestinationTrack(TVDS1ChoiceBox.getValue().getTrack());
-                    route.setDestinationTrackSection(TVDS1ChoiceBox.getValue());
+                    route.setDestinationTrackSection(route.getTVDS1());
+                    route.setDepartureTrackSection(stationTrackChoiceBox.getValue());
                     break;
                 case ARRIVAL:
+                    route.setDestinationTrackSection(stationTrackChoiceBox.getValue());
+                    break;
                 case SHUNTING:
                     route.setDestinationTrackSection(occupationalOrder.getLast());
                     break;
@@ -274,37 +274,14 @@ public class RouteEditorController {
             return false;
         }
 
+        if (!evenToggleButton.isSelected() && !oddToggleButton.isSelected()) {
+            UIUtils.showAlert("Please, choice route direction!");
+            return false;
+        }
+
         if (signalChoiceBox.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Please, choice signal for open the route!");
-            alert.show();
-            return false;
-        }
-
-        if (!nextSignalChoiceBox.isDisable() && nextSignalChoiceBox.getSelectionModel().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Please, choice next signal in route!");
-            alert.show();
-            return false;
-        }
-
-        if (!TVDS1ChoiceBox.isDisable() && TVDS1ChoiceBox.getSelectionModel().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Please, choice first track vacancy detection section (TVDS1)!");
-            alert.show();
-            return false;
-        }
-
-        if (!TVDS2ChoiceBox.isDisable() && TVDS2ChoiceBox.getSelectionModel().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Please, choice second track vacancy detection section (TVDS2)!");
-            alert.show();
-            return false;
-        }
-
-        if (!TVDS1ChoiceBox.isDisable() && !TVDS2ChoiceBox.isDisable() && TVDS1ChoiceBox.getValue().equals(TVDS2ChoiceBox.getValue())) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Please, choice different two track vacancy detection sections!");
             alert.show();
             return false;
         }
@@ -322,31 +299,19 @@ public class RouteEditorController {
 
     private void selectDepartureRouteType() {
         selectedRouteType = RouteType.DEPARTURE;
-        TVDS1ChoiceBox.setDisable(false);
-        TVDS2ChoiceBox.setDisable(false);
-        nextSignalChoiceBox.getSelectionModel().clearSelection();
-        nextSignalChoiceBox.setDisable(true);
+
         destinationTrackLineChoiceBox.setDisable(false);
     }
 
     private void selectArrivalRouteType() {
         selectedRouteType = RouteType.ARRIVAL;
-        TVDS1ChoiceBox.getSelectionModel().clearSelection();
-        TVDS1ChoiceBox.setDisable(true);
-        TVDS2ChoiceBox.getSelectionModel().clearSelection();
-        TVDS2ChoiceBox.setDisable(true);
-        nextSignalChoiceBox.setDisable(false);
+
         destinationTrackLineChoiceBox.setDisable(true);
     }
 
     private void selectShuntingRouteType() {
         selectedRouteType = RouteType.SHUNTING;
-        TVDS1ChoiceBox.getSelectionModel().clearSelection();
-        TVDS1ChoiceBox.setDisable(true);
-        TVDS2ChoiceBox.getSelectionModel().clearSelection();
-        TVDS2ChoiceBox.setDisable(true);
-        nextSignalChoiceBox.getSelectionModel().clearSelection();
-        nextSignalChoiceBox.setDisable(true);
+
         destinationTrackLineChoiceBox.setDisable(true);
     }
 

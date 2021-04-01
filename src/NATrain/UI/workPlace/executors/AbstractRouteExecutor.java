@@ -2,8 +2,10 @@ package NATrain.UI.workPlace.executors;
 
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.routes.Route;
+import NATrain.routes.RouteDirection;
 import NATrain.routes.RouteType;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
@@ -245,10 +247,16 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
             signalStateUpdaterMap.put(route.getTVDS1(), TVDS2signalStateUpdater);
             route.getTVDS2().addPropertyChangeListener(TVDS2signalStateUpdater);
         }
-        if (route.getNextSignal() != null) {
+        if (route.getRouteType() == RouteType.ARRIVAL && route.getStationTrack() != null) {
             SignalStateUpdater fromNextSignalUpdater = new SignalStateUpdater();
-            route.getNextSignal().addPropertyChangeListener(fromNextSignalUpdater);
-            signalStateUpdaterMap.put(route.getNextSignal(), fromNextSignalUpdater);
+            Signal nextSignal;
+            if (route.getRouteDirection() == RouteDirection.EVEN) {
+                nextSignal = route.getStationTrack().getEvenSignal();
+            } else {
+                nextSignal = route.getStationTrack().getOddSignal();
+            }
+            nextSignal.addPropertyChangeListener(fromNextSignalUpdater);
+            signalStateUpdaterMap.put(nextSignal, fromNextSignalUpdater);
         }
 
     }

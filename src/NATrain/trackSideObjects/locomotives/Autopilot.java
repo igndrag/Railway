@@ -53,7 +53,7 @@ public class Autopilot {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             SignalState signalState = (SignalState) evt.getNewValue();
-            switch (Signal.getGlobalStatus(signalState)) {
+            switch (Signal.getGlobalStatusForState(signalState)) {
                 case CLOSED:
                     locomotive.stop();
                     break;
@@ -79,13 +79,8 @@ public class Autopilot {
         this.nextLocation = movementPlan.peek();
     }
 
-
     private void stopTimerStart() {
     //todo
     }
-
-
-
-
 
 }

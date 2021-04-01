@@ -26,25 +26,25 @@ public class BSQ2_2 extends BlockingSignalQuad {
         secondTrackElement.setFill(BaseQuad.TRACK_UNDEFINED_ELEMENT_COLOR);
         addToQuadView(secondTrackElement);
 
-        Line firstSignalBottom = new Line(45, 55, 45, 75);
-        firstSignalBottom.setStrokeWidth(2);
-        addToQuadView(firstSignalBottom);
+        Line secondSignalBottom = new Line(45, 55, 45, 75);
+        secondSignalBottom.setStrokeWidth(2);
+        addToQuadView(secondSignalBottom);
 
-        Line firstSignalStand = new Line(45, 65, 50, 65);
-        firstSignalStand.setStrokeWidth(2);
-        addToQuadView(firstSignalStand);
+        Line secondSignalStand = new Line(45, 65, 50, 65);
+        secondSignalStand.setStrokeWidth(2);
+        addToQuadView(secondSignalStand);
 
-        Circle firstSignalBorder = new Circle(60, 65, 10);
-        addToQuadView(firstSignalBorder);
+        Circle secondSignalBorder = new Circle(60, 65, 10);
+        addToQuadView(secondSignalBorder);
 
-        firstSignalLampElement = new Circle(60, 65, 8, BaseQuad.TRACK_UNDEFINED_ELEMENT_COLOR);
-        addToQuadView(firstSignalLampElement);
+        secondSignalLampElement = new Circle(60, 65, 8, BaseQuad.TRACK_UNDEFINED_ELEMENT_COLOR);
+        addToQuadView(secondSignalLampElement);
 
-        firstSignalLabel = new Text();
-        firstSignalLabel.setTextAlignment(TextAlignment.RIGHT);
-        firstSignalLabel.setWrappingWidth(40);
-        firstSignalLabel.setX(0);
-        firstSignalLabel.setY(70);
-        addToQuadView(firstSignalLabel);
+        secondSignalLabel = new Text();
+        secondSignalLabel.setTextAlignment(TextAlignment.RIGHT);
+        secondSignalLabel.setWrappingWidth(40);
+        secondSignalLabel.setX(0);
+        secondSignalLabel.setY(70);
+        addToQuadView(secondSignalLabel);
     }
 }

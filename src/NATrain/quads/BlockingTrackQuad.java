@@ -20,11 +20,13 @@ public abstract class BlockingTrackQuad extends BlockingBaseQuad implements Bloc
 
 
     public void showBlockSectionName(boolean show) {
-        blockSectionName.setVisible(show);
+        if (blockSectionName != null) {
+            blockSectionName.setVisible(show);
+        }
     }
 
     private static final List<ControlAction> availableActions = new ArrayList<>();
-    
+
     static {
         availableActions.add(ControlAction.SET_ROUTE_TO_TRACK_LINE);
     }

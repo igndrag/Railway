@@ -94,6 +94,7 @@ public class WorkPlaceController {
         activeMode = true;
         activeController = this;
 
+        Model.getStationTracks().values().forEach(track -> track.setVacancyState(TrackSectionState.FREE));
         Model.getSignals().values().forEach(Signal::close);
         Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
         Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));// TODO change it to global request for tests on real model

@@ -37,7 +37,7 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
     @Override
     public void refresh() {
         updateFirstTrackView();
-        if (firstAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) {
+        if (firstAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) { // TODO do it only in constructor mode
             descriptionLabel.setText(firstAssociatedTrack.getId());
         }
     }
