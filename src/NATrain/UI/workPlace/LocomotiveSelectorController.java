@@ -24,7 +24,7 @@ public class LocomotiveSelectorController {
     @FXML
     private Button okButton;
 
-    public void initialize(TrackSection track) {
+    public void initialize(TrackSection trackSection) {
         locomotiveListView.setItems(FXCollections.observableArrayList(Model.getLocomotives().values()));
 
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -42,7 +42,8 @@ public class LocomotiveSelectorController {
                 return;
             }
             Locomotive locomotive = locomotiveListView.getSelectionModel().getSelectedItem();
-            locomotive.setLocation(track);
+            locomotive.setLocation(trackSection);
+            trackSection.allocateLocomotive(locomotive);
 
             if (evenToggleButton.isSelected()) {
                 locomotive.setForwardDirection(RouteDirection.EVEN);

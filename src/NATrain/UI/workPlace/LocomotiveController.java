@@ -1,13 +1,17 @@
 package NATrain.UI.workPlace;
 
+import NATrain.UI.workPlace.executors.ActionExecutor;
+import NATrain.UI.workPlace.executors.RouteExecutor;
 import NATrain.quads.LocomotivePanelQuad;
+import NATrain.routes.Route;
+import NATrain.trackSideObjects.locomotives.Autopilot;
 import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.locomotives.MovingDirection;
-import NATrain.сontrolModules.AbstractLocomotiveModule;
-import NATrain.сontrolModules.MQTTLocomotiveModule;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+
+import java.util.Optional;
 
 public class LocomotiveController {
 
@@ -18,7 +22,7 @@ public class LocomotiveController {
     @FXML
     private Label idLabel;
     @FXML
-    private Button autopilotToggleButton;
+    private ToggleButton autopilotToggleButton;
     @FXML
     private Label statusLabel;
     @FXML
@@ -41,12 +45,25 @@ public class LocomotiveController {
     private Button hornButton;
 
     private Locomotive locomotive;
+    private Autopilot autopilot;
     private LocomotivePanelQuad quad;
     private double actualSliderValue = 0;
+
+    public Label getLocationLabel() {
+        return locationLabel;
+    }
+
+    public LocomotivePanelQuad getPreview() {
+        return quad;
+    }
 
     public void init(Locomotive locomotive) {
         this.quad = new LocomotivePanelQuad();
         this.locomotive = locomotive;
+
+        locationLabel.setText("");
+        directionLabel.setText("");
+
         ToggleGroup toggleGroup = new ToggleGroup();
         forwardToggleButton.setToggleGroup(toggleGroup);
         backwardToggleButton.setToggleGroup(toggleGroup);
@@ -83,6 +100,31 @@ public class LocomotiveController {
         backwardToggleButton.setOnAction(event -> {
             locomotive.setMovingDirection(MovingDirection.BACKWARD);
         });
+
+        autopilotToggleButton.setOnAction(event -> {
+            if (autopilotToggleButton.isSelected()) {
+                this.autopilot = new Autopilot(locomotive, this);
+                checkRoutesInLocation();
+                directionLabel.setText(locomotive.getForwardDirection().toString());
+                runButton.setDisable(true);
+                speedSlider.setDisable(true);
+            } else {
+                autopilot.deactivate();
+                locationLabel.setText("");
+                directionLabel.setText("");
+            }
+        });
+
+    }
+
+    public boolean checkRoutesInLocation() {
+        Optional<Route> expectedRoute = ActionExecutor.getActiveRoutes().stream().map(RouteExecutor::getRoute).filter(route -> route.getDepartureTrackSection() == locomotive.getLocation()).findFirst();
+        if (expectedRoute.isPresent()) {
+            autopilot.setRoute(expectedRoute.get());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void setLocomotiveSpeed() {
@@ -92,7 +134,6 @@ public class LocomotiveController {
             locomotive.setSpeed(speed);
         }
     }
-
 }
 
 

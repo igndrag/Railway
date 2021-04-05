@@ -272,6 +272,10 @@ public class MosaicRedactorFxController {
         return selectedQuad;
     }
 
+    public static void unselectQuadType() {
+        selectedQuadType = null;
+    }
+
     private static void selectQuad(int x, int y) {
         Quad quadForSelect = Model.getMainGrid()[y][x];
         if (selectedQuad != null)

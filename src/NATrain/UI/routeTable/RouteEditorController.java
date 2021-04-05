@@ -276,11 +276,12 @@ public class RouteEditorController {
                     break;
                 case ARRIVAL:
                     route.setDestinationTrackSection(arrivalTrackChoiceBox.getValue());
+                    route.setDestinationTrack(arrivalTrackChoiceBox.getValue());
                     Track track = trackLineChoiceBox.getValue();
                     if (route.getRouteDirection() == track.getNormalDirection()) {
-                        route.setDepartureTrackSection(track.getBlockSections().get(0));
-                    } else {
                         route.setDepartureTrackSection(track.getBlockSections().get(track.getBlockSections().size() - 1));
+                    } else {
+                        route.setDepartureTrackSection(track.getBlockSections().get(0));
                     }
                     break;
                 case SHUNTING:
@@ -358,8 +359,6 @@ public class RouteEditorController {
         departureTrackChoiceBox.setDisable(false);
         trackLineChoiceBox.setDisable(true);
     }
-
-
 }
 
 

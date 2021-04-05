@@ -24,23 +24,25 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ActionExecutor {
+public enum ActionExecutor {
+
+    INSTANCE;
 
     public static final Quad EMPTY_QUAD = new EmptyQuad(-1, -1);
     public static final ObservableList<Route> EMPTY_ROUTE_LIST = FXCollections.observableArrayList();
 
-    private Quad firstSelectedQuad = EMPTY_QUAD;
-    private ControlAction firstControlAction;
-    private Quad secondSelectedQuad = EMPTY_QUAD;
-    private ControlAction secondControlAction;
+    private static Quad firstSelectedQuad = EMPTY_QUAD;
+    private static ControlAction firstControlAction;
+    private static Quad secondSelectedQuad = EMPTY_QUAD;
+    private static ControlAction secondControlAction;
 
     private static ObservableList<RouteExecutor> activeRoutes = FXCollections.observableArrayList();
 
-    public ObservableList<RouteExecutor> getActiveRoutes() {
+    public static ObservableList<RouteExecutor> getActiveRoutes() {
         return activeRoutes;
     }
 
-    public void executeControlAction(ControlAction controlAction, Quad quad) {
+    public static void executeControlAction(ControlAction controlAction, Quad quad) {
         System.out.println("Request on " + controlAction.getDescription() + " received from " + quad.getType());
         if (firstSelectedQuad == EMPTY_QUAD) {
             firstControlAction = controlAction;
@@ -59,7 +61,7 @@ public class ActionExecutor {
 
     }
 
-    private void execute() {
+    private static void execute() {
         switch (firstControlAction) {
             case SET_ROUT_FROM:
                 ObservableList<Route> foundedRoutes = EMPTY_ROUTE_LIST;
@@ -112,7 +114,11 @@ public class ActionExecutor {
                 break;
             case ALLOCATE_LOCOMOTIVE:
                 try {
-                    toLocomotiveSelector(((SimpleTrackQuad)firstSelectedQuad).getFirstAssociatedTrack());
+                    if (firstSelectedQuad instanceof SimpleTrackQuad) {
+                        toLocomotiveSelector(((SimpleTrackQuad) firstSelectedQuad).getFirstAssociatedTrack());
+                    } else if (firstSelectedQuad instanceof BlockingTrackQuad) {
+                        toLocomotiveSelector(((BlockingTrackQuad)firstSelectedQuad).getFirstBlockSection());
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -137,7 +143,7 @@ public class ActionExecutor {
         activeRoutes.add(routeExecutor);
     }
 
-    private ObservableList<Route> findRoutes(Signal signal, TracksideObject tracksideObject) {
+    private static ObservableList<Route> findRoutes(Signal signal, TracksideObject tracksideObject) {
         List<Route> result = Model.getRouteTable().stream()
                 .filter(route -> route.getSignal() == signal)
                 .filter(route -> route.getDestinationTrackSection() == tracksideObject)
@@ -145,7 +151,7 @@ public class ActionExecutor {
         return FXCollections.observableArrayList(result);
     }
 
-    private ObservableList<Route> findRoutsToTrackLine(Signal signal, Track track) {
+    private static ObservableList<Route> findRoutsToTrackLine(Signal signal, Track track) {
         List<Route> result = Model.getRouteTable().stream()
                 .filter(route -> route.getSignal() == signal)
                 .filter(route -> route.getDestinationTrackLine() == track)
@@ -153,7 +159,7 @@ public class ActionExecutor {
         return FXCollections.observableArrayList(result);
     }
 
-    public void clearSelection() {
+    public static void clearSelection() {
         firstSelectedQuad.unselect();
         firstSelectedQuad = EMPTY_QUAD;
         firstControlAction = null;
@@ -162,7 +168,7 @@ public class ActionExecutor {
         secondControlAction = null;
     }
 
-    private void toAlternativeRouteSelector(ObservableList<Route> routes) throws IOException {
+    private static void toAlternativeRouteSelector(ObservableList<Route> routes) throws IOException {
         FXMLLoader loader = new FXMLLoader(AlternativeRouteSelectorController.class.getResource("AlternativeRouteSelector.fxml"));
         Stage alternativeRouteSelector = new Stage();
         alternativeRouteSelector.setTitle("Alternative Route Selector");
@@ -175,7 +181,7 @@ public class ActionExecutor {
         alternativeRouteSelector.show();
     }
 
-    private void toLocomotiveSelector(TrackSection track) throws IOException {
+    private static void toLocomotiveSelector(TrackSection track) throws IOException {
         FXMLLoader loader = new FXMLLoader(LocomotiveSelectorController.class.getResource("LocomotiveSelector.fxml"));
         Stage locomotiveSelector = new Stage();
         locomotiveSelector.setTitle("Locomotive Selector");

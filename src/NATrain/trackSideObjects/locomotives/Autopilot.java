@@ -1,50 +1,120 @@
 package NATrain.trackSideObjects.locomotives;
 
-import NATrain.routes.AutopilotMode;
-import NATrain.routes.Route;
-import NATrain.routes.StationTrack;
+import NATrain.UI.workPlace.Blinker;
+import NATrain.UI.workPlace.LocomotiveController;
+import NATrain.UI.workPlace.WorkPlaceController;
+import NATrain.quads.BlockingTrackQuad;
+import NATrain.routes.*;
+import NATrain.trackSideObjects.signals.GlobalSignalState;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
-import NATrain.сontrolModules.MQTTLocomotiveModule;
-import com.sun.org.apache.regexp.internal.RE;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ConcurrentLinkedDeque;
+
+import static NATrain.trackSideObjects.trackSections.TrackSectionState.OCCUPIED;
 
 public class Autopilot {
 
     private AutopilotMode mode;
     private Route route;
     private Locomotive locomotive;
+    private LocomotiveController locomotiveController;
 
     private TrackSection nextLocation;
-    private PropertyChangeListener nextLocationListener;
-    private TrackSection destination;
+    private final PropertyChangeListener nextLocationListener = new NextLocationListener();
+    private final PropertyChangeListener nextSignalListener = new NextSignalListener();
+    private final NextSignalChooser nextSignalChooser = new NextSignalChooser();
+    private TrackSection lastSectionInRoute;
     private Signal nextSignal;
-    private NextLocationListener listener;
-    private Queue<TrackSection> movementPlan;
+    private ConcurrentLinkedDeque<TrackSection> movementPlan;
+    private int odometer = 0;
 
     public static final int FULL_SPEED = 1024;
     public static final int RESTRICTED_SPEED = 700;
 
-    public Autopilot(Locomotive locomotive) {
+    public Autopilot(Locomotive locomotive, LocomotiveController locomotiveController) {
         this.locomotive = locomotive;
+        this.locomotiveController = locomotiveController;
+        this.locomotive.setAutopilot(this);
+        locomotiveController.getLocationLabel().setText(locomotive.getLocation().getId());
     }
 
     public Signal getNextSignal() {
         return nextSignal;
     }
 
+    public void deactivate() {
+        nextSignal.removePropertyChangeListener(nextSignalListener); // remove listeners if autopilot deactivated accidentally
+        nextLocation.removePropertyChangeListener(nextLocationListener);
+        nextLocation.removePropertyChangeListener(nextSignalChooser);
+        nextSignal = Signal.EMPTY_SIGNAL;
+        locomotiveController.getPreview().refresh();
+        Blinker.unregisterQuad(locomotiveController.getPreview());
+    }
+
+    protected class NextSignalChooser implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getNewValue() == OCCUPIED) {
+                route.getOccupationalOrder().getFirst().removePropertyChangeListener(this);//delete listener from first section in route
+                nextSignal.removePropertyChangeListener(nextSignalListener);
+                switch (route.getRouteType()) {
+                    case DEPARTURE:
+                        Track track = route.getDestinationTrackLine();
+                        if (locomotive.getForwardDirection() == RouteDirection.EVEN) {
+                            nextSignal = track.getFirstSignalInEvenDirection();
+                        } else {
+                            nextSignal = track.getFirstSignalInOddDirection();
+                        }
+                        break;
+                    case ARRIVAL:
+                        if (route.getRouteDirection() == RouteDirection.EVEN) {
+                            nextSignal = route.getDestinationTrack().getEvenSignal();
+                        } else {
+                            nextSignal = route.getDestinationTrack().getOddSignal();
+                        }
+                }
+                locomotiveController.getPreview().setAssociatedSignal(nextSignal);
+                locomotiveController.getPreview().refresh();
+                nextSignal.addPropertyChangeListener(nextSignalListener);
+            }
+        }
+
+    }
+
     protected class NextLocationListener implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            nextLocation.removePropertyChangeListener(this);//delete listener from previous section
-            locomotive.setLocation(nextLocation);//TODO
-            if (nextLocation != destination) {
-                nextLocation.addPropertyChangeListener(this);
+            if (evt.getNewValue() == OCCUPIED) {
+                odometer = 0;
+                nextLocation.removePropertyChangeListener(this);//delete listener from previous section
+                locomotive.setLocation(nextLocation);
+                locomotiveController.getLocationLabel().setText(locomotive.getLocation().getId());
+                if (locomotive.getLocation() == lastSectionInRoute) {
+                    nextLocation = route.getDestinationTrackSection();
+                } else {
+                    nextLocation = movementPlan.poll();
+                }
+                if (locomotive.getLocation() == route.getDestinationTrackSection()) {
+                    switch (route.getRouteType()) {
+                        case ARRIVAL:    //in arrival routes
+                            if (!locomotiveController.checkRoutesInLocation()) { //check routes for next movement
+                                stopTimerStart();
+                            }//if don't find - start stop timer
+                            break;
+                        case DEPARTURE:
+                            //TODO
+                            break;
+                    }
+                } else {
+                    nextLocation.addPropertyChangeListener(this);
+                }
             }
         }
     }
@@ -53,10 +123,17 @@ public class Autopilot {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             SignalState signalState = (SignalState) evt.getNewValue();
+            if (locomotiveController.getPreview().getAssociatedSignal().getSignalState().isBlinking()) {
+                Blinker.registerQuad(locomotiveController.getPreview());
+            } else {
+                Blinker.unregisterQuad(locomotiveController.getPreview());
+            }
+            locomotiveController.getPreview().refresh();
             switch (Signal.getGlobalStatusForState(signalState)) {
-                case CLOSED:
-                    locomotive.stop();
-                    break;
+                case CLOSED: // stop timer will start when loco occupy the last section of route
+                     if (locomotive.getLocation() instanceof TrackBlockSection) {
+                         stopTimerStart();//and right now if locomotive is moving on trackline
+                     }
                 case OPENED_ON_RESTRICTED_SPEED:
                     locomotive.setSpeed(RESTRICTED_SPEED);
                     break;
@@ -68,19 +145,66 @@ public class Autopilot {
     }
 
     public void setRoute(Route route) {
-        this.route = route;
-        this.mode = AutopilotMode.STATION;
-        switch (route.getRouteType()) {
-            case ARRIVAL:
-               // StationTrack arrivalTrack = route. //TODO
+        this.lastSectionInRoute = route.getDestinationTrackSection();
+        this.movementPlan = new ConcurrentLinkedDeque<>(route.getOccupationalOrder()); //create local copy of occupational order
+        this.nextLocation = movementPlan.poll();
+        this.lastSectionInRoute = movementPlan.getLast();
+
+        switch (route.getSignal().getGlobalStatus()) {
+            case OPENED_ON_RESTRICTED_SPEED:
+                locomotive.setSpeed(RESTRICTED_SPEED);
+                break;
+            case OPENED:
+                locomotive.setSpeed(FULL_SPEED);
+                break;
+            case CLOSED: // something wrong (for correct route signal always opened
+                return;
         }
-        this.destination = route.getDestinationTrackSection();
-        this.movementPlan = new LinkedBlockingQueue<>(route.getOccupationalOrder()); //create local copy of occupational order
-        this.nextLocation = movementPlan.peek();
+        if (route.getRouteDirection() == locomotive.getForwardDirection()) { //move only forward
+            this.route = route;
+            this.mode = AutopilotMode.STATION;
+            nextLocation.addPropertyChangeListener(nextLocationListener);
+            nextLocation.addPropertyChangeListener(nextSignalChooser);
+            switch (route.getRouteType()) {
+                case DEPARTURE:
+                    StationTrack departureTrack = (StationTrack) route.getDepartureTrackSection();
+                    if (route.getRouteDirection() == RouteDirection.EVEN) {
+                        nextSignal = departureTrack.getEvenSignal();
+                    } else {
+                        nextSignal = departureTrack.getOddSignal();
+                    }
+                    break;
+                case ARRIVAL:
+                    nextSignal = route.getSignal();
+                    break;
+            }
+
+            locomotiveController.getPreview().setAssociatedSignal(nextSignal);
+            if (nextSignal.getSignalState().isBlinking()) {
+                Blinker.registerQuad(locomotiveController.getPreview());
+            }
+            locomotiveController.getPreview().refresh();
+            nextSignal.addPropertyChangeListener(nextSignalListener);
+        }
     }
 
     private void stopTimerStart() {
-    //todo
-    }
+        long length = locomotive.getLocation().getLength() - odometer;
+        long time = 2;  //TODO calculate this time SPEED/SECTION_LENGTH
+        Timeline stopTimer = new Timeline(
+                new KeyFrame(Duration.seconds(time),
+                        event -> {
+                            if (nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) { // check that signal still closed
+                                locomotive.stop();
+                                //nextSignal.removePropertyChangeListener(nextSignalListener);
+                            } else {
+                                locomotiveController.checkRoutesInLocation(); //if signal opened, set route to autopilot
 
+                            }
+                        }
+                ));
+        WorkPlaceController.getActiveController().log(String.format("Stop timer for %s activated. Time: %d", locomotive, time));
+        stopTimer.setCycleCount(1);
+        stopTimer.play();
+    }
 }

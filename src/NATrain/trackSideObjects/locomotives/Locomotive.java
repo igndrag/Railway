@@ -7,7 +7,10 @@ import NATrain.сontrolModules.AbstractLocomotiveModule;
 import NATrain.сontrolModules.ControlModule;
 import NATrain.сontrolModules.MQTTLocomotiveModule;
 
-public class Locomotive extends TracksideObject {
+import java.io.Serializable;
+
+public class Locomotive extends TracksideObject implements Serializable {
+    static final long serialVersionUID = 1L;
 
     private ControlModule controlModule;
     private LocomotiveState actualState = LocomotiveState.NOT_MOVING;
@@ -19,12 +22,15 @@ public class Locomotive extends TracksideObject {
     private MovingDirection movingDirection;
     private TrackSection location;
     private RouteDirection forwardDirection = RouteDirection.EVEN;
-    private boolean autoPilotOn = false;
 
     public static final String INITIAL_LOCOMOTIVE_NAME = "New Locomotive";
 
-    public void createAutopilot() {
-        this.autopilot = new Autopilot(this);
+    public Autopilot getAutopilot() {
+        return autopilot;
+    }
+
+    public void setAutopilot(Autopilot autopilot) {
+        this.autopilot = autopilot;
     }
 
     public RouteDirection getForwardDirection() {

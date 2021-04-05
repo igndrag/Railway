@@ -77,6 +77,7 @@ public class NavigatorFxController {
             primaryStage.show();
             if (controller.getSelectedQuad() != null) {
                 controller.getSelectedQuad().unselect();
+                MosaicRedactorFxController.unselectQuadType();
             }
         });
         primaryStage.hide();

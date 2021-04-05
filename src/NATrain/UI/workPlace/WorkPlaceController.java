@@ -67,9 +67,7 @@ public class WorkPlaceController {
     @FXML
     private ScrollPane workArea;
 
-    private ActionExecutor actionExecutor = new ActionExecutor();
-
-    private Stage primaryStage;
+        private Stage primaryStage;
 
     private static GridPane gridPane;
 
@@ -116,7 +114,7 @@ public class WorkPlaceController {
 
         Model.refreshAll();
 
-        routeStatusTableView.setItems(actionExecutor.getActiveRoutes());
+        routeStatusTableView.setItems(ActionExecutor.getActiveRoutes());
         routeIdColumn.setCellValueFactory(new PropertyValueFactory<>("routeDescription"));
         routeStatusColumn.setCellValueFactory(new PropertyValueFactory<>("routeStatus"));
 
@@ -173,7 +171,7 @@ public class WorkPlaceController {
             availableActions.forEach(controlAction -> {
                 MenuItem menuItem = new MenuItem(controlAction.getDescription());
                 menuItem.setOnAction(event -> {
-                    actionExecutor.executeControlAction(controlAction, quad);
+                    ActionExecutor.executeControlAction(controlAction, quad);
                 });
                 contextMenu.getItems().add(menuItem);
             });

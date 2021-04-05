@@ -6,6 +6,7 @@ import NATrain.model.Model;
 import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalType;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.UtilFunctions;
 import javafx.collections.FXCollections;
@@ -46,9 +47,9 @@ public class StationTrackRedactorController extends TracksideObjectRedactorContr
         this.observableList = observableList;
         lengthTextField.setText("" + stationTrack.getLength());
         evenSignalChoiceBox.setItems(FXCollections.observableArrayList(
-                Model.getSignals().values().stream().filter(Signal::isEven).collect(Collectors.toList())));
+                Model.getSignals().values().stream().filter(signal -> signal.getSignalType() == SignalType.STATION).collect(Collectors.toList())));
         oddSignalChoiceBox.setItems(FXCollections.observableArrayList(
-                Model.getSignals().values().stream().filter(Signal::isOdd).collect(Collectors.toList())));
+                Model.getSignals().values().stream().filter(signal -> signal.getSignalType() == SignalType.STATION).collect(Collectors.toList())));
     }
 
     @FXML

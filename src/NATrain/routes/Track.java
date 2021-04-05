@@ -13,6 +13,9 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
+import static NATrain.routes.RouteDirection.EVEN;
+import static NATrain.routes.RouteDirection.ODD;
+
 public class Track implements Serializable {
 
     static final long serialVersionUID = 1L;
@@ -20,7 +23,7 @@ public class Track implements Serializable {
     private transient Map<PropertyChangeListener, Set<TracksideObject>> activeSignalListeners = new HashMap<>();
     private transient List<BlockingBaseQuad> signalQuads = new ArrayList<>();
 
-    private RouteDirection normalDirection = RouteDirection.EVEN;
+    private RouteDirection normalDirection = EVEN;
     private String id;
     private TrackDirection trackDirection = TrackDirection.NORMAL;
     private boolean bidirectional = false;
@@ -55,6 +58,22 @@ public class Track implements Serializable {
 
     public void setActiveSignalListeners(Map<PropertyChangeListener, Set<TracksideObject>> activeSignalListeners) {
         this.activeSignalListeners = activeSignalListeners;
+    }
+
+    public Signal getFirstSignalInEvenDirection() {
+        if (normalDirection == EVEN) {
+          return blockSections.get(1).getNormalDirectionSignal();
+        } else {
+            return blockSections.get(blockSections.size()).getReversedDirectionSignal();
+        }
+    }
+
+    public Signal getFirstSignalInOddDirection() {
+        if (normalDirection == ODD) {
+            return blockSections.get(1).getNormalDirectionSignal();
+        } else {
+            return blockSections.get(blockSections.size()).getReversedDirectionSignal();
+        }
     }
 
     public List<BlockingBaseQuad> getSignalQuads() {

@@ -21,14 +21,14 @@
       <Button fx:id="runButton" layoutX="112.0" layoutY="177.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Run" />
       <Button fx:id="stopButton" layoutX="24.0" layoutY="177.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Stop" />
       <Button fx:id="hornButton" layoutX="24.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Horn" />
-      <Button fx:id="autopilotToggleButton" layoutX="68.0" layoutY="325.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Autopilot" />
       <Label fx:id="statusLabel" layoutX="91.0" layoutY="49.0" text="Status" textAlignment="CENTER" />
-      <Pane fx:id="previewPane" layoutX="127.0" layoutY="386.0" prefHeight="82.0" prefWidth="70.0" style="-fx-background-color: gray;" />
+      <Pane fx:id="previewPane" layoutX="127.0" layoutY="363.0" prefHeight="82.0" prefWidth="70.0" />
       <ToggleButton fx:id="rearLightToggleButton" layoutX="114.0" layoutY="269.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Rear Light" />
-      <Label layoutX="128.0" layoutY="361.0" text="Next Signal:" />
+      <Label layoutX="128.0" layoutY="362.0" text="Next Signal:" />
       <Label layoutX="17.0" layoutY="361.0" text="Location:" />
       <Label layoutX="17.0" layoutY="418.0" text="Forward Direction:" />
       <Label fx:id="locationLabel" layoutX="17.0" layoutY="385.0" text="Location_value" />
       <Label fx:id="directionLabel" layoutX="18.0" layoutY="442.0" text="Direction_value" />
+      <ToggleButton fx:id="autopilotToggleButton" layoutX="75.0" layoutY="315.0" mnemonicParsing="false" prefWidth="70.0" text="Autopilot" />
    </children>
 </Pane>

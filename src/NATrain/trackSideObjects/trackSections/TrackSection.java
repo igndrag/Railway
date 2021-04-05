@@ -2,6 +2,7 @@ package NATrain.trackSideObjects.trackSections;
 
 
 import NATrain.trackSideObjects.TracksideObject;
+import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.сontrolModules.InputChannel;
 
@@ -22,6 +23,7 @@ public class TrackSection extends TracksideObject {
 
     public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
 
+    private Locomotive locomotive;
     private InputChannel evenBorder;
     private final ArrayList<Switch> switches = new ArrayList<>();
     private final ArrayList<InputChannel> subsections = new ArrayList<>();
@@ -37,6 +39,18 @@ public class TrackSection extends TracksideObject {
 
     public ArrayList<Switch> getSwitches() {
         return switches;
+    }
+
+    public Locomotive getLocomotive() {
+        return locomotive;
+    }
+
+    public void allocateLocomotive(Locomotive locomotive) {
+        this.locomotive = locomotive;
+    }
+
+    public void deallocateLocomotive(Locomotive locomotive) {
+        this.locomotive = null;
     }
 
     public boolean isOccupationFixed() {

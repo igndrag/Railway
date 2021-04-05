@@ -26,10 +26,19 @@ public class Route implements Serializable {
     private TrackBlockSection TVDS1;
     private TrackBlockSection TVDS2;
     private Track destinationTrackLine;
+    private StationTrack destinationTrack;
 
     public Route(String description, RouteType routeType) {
         this.description = description;
         this.routeType = routeType;
+    }
+
+    public StationTrack getDestinationTrack() {
+        return destinationTrack;
+    }
+
+    public void setDestinationTrack(StationTrack destinationTrack) {
+        this.destinationTrack = destinationTrack;
     }
 
     public Track getDestinationTrackLine() {

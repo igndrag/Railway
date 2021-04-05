@@ -6,6 +6,7 @@ import NATrain.routes.RouteDirection;
 import NATrain.routes.RouteType;
 import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
@@ -58,6 +59,11 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
 
     public RouteStatus getRouteStatus() {
         return routeStatus;
+    }
+
+    @Override
+    public Route getRoute() {
+        return route;
     }
 
     private class SignalStateUpdater implements PropertyChangeListener {
@@ -291,6 +297,10 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                         routeStatus = RouteStatus.READY;
                         autoselectSignalState();
                         createListeners();
+                        Locomotive locomotive = route.getDepartureTrackSection().getLocomotive();
+                        if (locomotive != null && locomotive.getAutopilot() != null) {
+                            locomotive.getAutopilot().setRoute(route);
+                        }
                         service.shutdown();
                     }
                     if (cyclesCount.get() > tryToInterlockCount) {
