@@ -25,11 +25,14 @@ public class Autopilot {
     private Route route;
     private Locomotive locomotive;
     private LocomotiveController locomotiveController;
+    private TrackBlockSection blockSection;
+    private Track track;
 
     private TrackSection nextLocation;
     private final PropertyChangeListener nextLocationListener = new NextLocationListener();
     private final PropertyChangeListener nextSignalListener = new NextSignalListener();
-    private final NextSignalChooser nextSignalChooser = new NextSignalChooser();
+    private final PropertyChangeListener nextSignalChooser = new NextSignalChooser();
+    private final PropertyChangeListener nextBlockSectionListener = new NextBlockSectionListener();
     private TrackSection lastSectionInRoute;
     private Signal nextSignal;
     private ConcurrentLinkedDeque<TrackSection> movementPlan;
@@ -47,6 +50,36 @@ public class Autopilot {
 
     public Signal getNextSignal() {
         return nextSignal;
+    }
+
+    public void setBlockSection(TrackBlockSection blockSection) {
+        this.blockSection = blockSection;
+        this.track = blockSection.getTrack();
+        int blockSectionIndex = track.getBlockSections().indexOf(blockSection);
+        locomotive.setLocation(blockSection);
+        if (blockSectionIndex == 0 && track.getTrackDirection() == TrackDirection.REVERSED) {
+            nextSignal = track.getReversedDirectionArrivalSignal();
+            locomotiveController.getPreview().setAssociatedSignal(nextSignal);
+            locomotiveController.getPreview().refresh();
+            return;
+        }
+        if (blockSectionIndex == (track.getBlockSections().size() - 1) && track.getTrackDirection() == TrackDirection.NORMAL) {
+            nextSignal = track.getNormalDirectionArrivalSignal();
+            locomotiveController.getPreview().setAssociatedSignal(nextSignal);
+            locomotiveController.getPreview().refresh();
+            return;
+        }
+        if (track.getTrackDirection() == TrackDirection.NORMAL) {
+            nextLocation = track.getBlockSections().get(blockSectionIndex + 1);
+            nextSignal = ((TrackBlockSection)nextLocation).getNormalDirectionSignal();
+        } else {
+            nextLocation = track.getBlockSections().get(blockSectionIndex - 1);
+            nextSignal = ((TrackBlockSection)nextLocation).getReversedDirectionSignal();
+        }
+        locomotiveController.getPreview().setAssociatedSignal(nextSignal);
+        locomotiveController.getPreview().refresh();
+        nextSignal.addPropertyChangeListener(nextSignalListener);
+        nextLocation.addPropertyChangeListener(nextBlockSectionListener);
     }
 
     public void deactivate() {
@@ -109,7 +142,7 @@ public class Autopilot {
                             }//if don't find - start stop timer
                             break;
                         case DEPARTURE:
-                            //TODO
+                            setBlockSection(route.getTVDS2());
                             break;
                     }
                 } else {
@@ -131,9 +164,9 @@ public class Autopilot {
             locomotiveController.getPreview().refresh();
             switch (Signal.getGlobalStatusForState(signalState)) {
                 case CLOSED: // stop timer will start when loco occupy the last section of route
-                     if (locomotive.getLocation() instanceof TrackBlockSection) {
-                         stopTimerStart();//and right now if locomotive is moving on trackline
-                     }
+                    if (locomotive.getLocation() instanceof TrackBlockSection) {
+                        stopTimerStart();//and right now if locomotive is moving on trackline
+                    }
                 case OPENED_ON_RESTRICTED_SPEED:
                     locomotive.setSpeed(RESTRICTED_SPEED);
                     break;
@@ -143,6 +176,48 @@ public class Autopilot {
             }
         }
     }
+
+    protected class NextBlockSectionListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getNewValue() == OCCUPIED) {
+                odometer = 0;
+                nextSignal.removePropertyChangeListener(nextSignalListener);
+                nextLocation.removePropertyChangeListener(nextBlockSectionListener);
+                int blockSectionIndex = track.getBlockSections().indexOf(nextLocation);
+                locomotive.setLocation(nextLocation);
+                locomotiveController.getLocationLabel().setText(locomotive.getLocation().getId());
+
+                if (blockSectionIndex == 0 && track.getTrackDirection() == TrackDirection.REVERSED) {
+                    nextSignal = track.getReversedDirectionArrivalSignal();
+                    locomotiveController.getPreview().setAssociatedSignal(nextSignal);
+                    locomotiveController.getPreview().refresh();
+                    locomotiveController.checkRoutesInLocation();
+                    return;
+                }
+                if (blockSectionIndex == (track.getBlockSections().size() - 1) && track.getTrackDirection() == TrackDirection.NORMAL) {
+                    nextSignal = track.getNormalDirectionArrivalSignal();
+                    locomotiveController.getPreview().setAssociatedSignal(nextSignal);
+                    locomotiveController.getPreview().refresh();
+                    locomotiveController.checkRoutesInLocation();
+                    return;
+                }
+
+                if (track.getTrackDirection() == TrackDirection.NORMAL) {
+                    nextLocation = track.getBlockSections().get(blockSectionIndex + 1);
+                    nextSignal = ((TrackBlockSection)nextLocation).getNormalDirectionSignal();
+                } else {
+                    nextLocation = track.getBlockSections().get(blockSectionIndex - 1);
+                    nextSignal = ((TrackBlockSection)nextLocation).getReversedDirectionSignal();
+                }
+                locomotiveController.getPreview().setAssociatedSignal(nextSignal);
+                locomotiveController.getPreview().refresh();
+                nextSignal.addPropertyChangeListener(nextSignalListener);
+                nextLocation.addPropertyChangeListener(nextBlockSectionListener);
+            }
+        }
+    }
+
 
     public void setRoute(Route route) {
         this.lastSectionInRoute = route.getDestinationTrackSection();
@@ -196,11 +271,10 @@ public class Autopilot {
                         event -> {
                             if (nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) { // check that signal still closed
                                 locomotive.stop();
-                                //nextSignal.removePropertyChangeListener(nextSignalListener);
                             } else {
                                 locomotiveController.checkRoutesInLocation(); //if signal opened, set route to autopilot
-
                             }
+                            nextSignal.removePropertyChangeListener(nextSignalListener);
                         }
                 ));
         WorkPlaceController.getActiveController().log(String.format("Stop timer for %s activated. Time: %d", locomotive, time));

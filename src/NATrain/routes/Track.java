@@ -13,8 +13,7 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
-import static NATrain.routes.RouteDirection.EVEN;
-import static NATrain.routes.RouteDirection.ODD;
+import static NATrain.routes.RouteDirection.*;
 
 public class Track implements Serializable {
 
@@ -46,6 +45,24 @@ public class Track implements Serializable {
 
     public TrackDirection getTrackDirection() {
         return trackDirection;
+    }
+
+    public RouteDirection getRouteDirection() {
+        switch (normalDirection) {
+            case EVEN:
+                if (trackDirection == TrackDirection.NORMAL) {
+                    return EVEN;
+                } else {
+                    return ODD;
+                }
+            case ODD:
+                if (trackDirection == TrackDirection.NORMAL) {
+                    return ODD;
+                } else {
+                    return EVEN;
+                }
+        }
+        return UNDEFINED;
     }
 
     public List<TrackBlockSection> getBlockSections() {

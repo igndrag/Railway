@@ -4,6 +4,7 @@ import NATrain.UI.workPlace.executors.ActionExecutor;
 import NATrain.UI.workPlace.executors.RouteExecutor;
 import NATrain.quads.LocomotivePanelQuad;
 import NATrain.routes.Route;
+import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.locomotives.Autopilot;
 import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.locomotives.MovingDirection;
@@ -104,6 +105,9 @@ public class LocomotiveController {
         autopilotToggleButton.setOnAction(event -> {
             if (autopilotToggleButton.isSelected()) {
                 this.autopilot = new Autopilot(locomotive, this);
+                if (locomotive.getLocation() instanceof TrackBlockSection) {
+                    autopilot.setBlockSection((TrackBlockSection) locomotive.getLocation());
+                }
                 checkRoutesInLocation();
                 directionLabel.setText(locomotive.getForwardDirection().toString());
                 runButton.setDisable(true);
