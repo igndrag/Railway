@@ -207,6 +207,7 @@ public class WorkPlaceController {
         actionEmulator.setTitle("Action Emulator");
         actionEmulator.setScene(new Scene(loader.load(), 800, 160));
         ActionEmulatorController controller = loader.getController();
+        actionEmulator.setY(0);
         //controller.initialize();
         actionEmulator.setOnCloseRequest(event -> {
             actionEmulatorRadioMenuItem.setSelected(false);
@@ -219,6 +220,9 @@ public class WorkPlaceController {
         Stage locomotiveController = new Stage();
         locomotiveController.setTitle("Locomotive Controller");
         locomotiveController.setScene(new Scene(loader.load(), 220, 480));
+        locomotiveController.setResizable(false);
+        locomotiveController.setX(0);
+        locomotiveController.setY(0);
         LocomotiveController controller = loader.getController();
         controller.init(locomotive);
         locomotiveController.setOnCloseRequest(event -> {

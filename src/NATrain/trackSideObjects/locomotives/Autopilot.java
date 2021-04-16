@@ -55,6 +55,7 @@ public class Autopilot {
 
     public void setBlockSection(TrackBlockSection blockSection) {
         //       this.blockSection = blockSection;
+        route = null;
         this.track = blockSection.getTrack();
         int blockSectionIndex = track.getBlockSections().indexOf(blockSection);
         locomotive.setLocation(blockSection);
@@ -90,7 +91,9 @@ public class Autopilot {
             case NOT_ACTIVE:
                 //do nothing, just waiting next signal state change in NextSignalListener
         }
-        nextLocation.addPropertyChangeListener(nextBlockSectionListener);
+        if (nextLocation != null) { // if you allocate loco in last block section of trackline just waiting for set arrival route
+            nextLocation.addPropertyChangeListener(nextBlockSectionListener);
+        }
     }
 
     public void deactivate() {
@@ -295,10 +298,12 @@ public class Autopilot {
                         }
                 ));
         Timeline occupationalChecker = new Timeline(new KeyFrame(Duration.millis(10), event -> {
-            if (nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) { //check, that next signal really closed (increase delay for guarantied change of loco position and next signal in autopilot controller);
-                WorkPlaceController.getActiveController().log(String.format("Stop timer for %s activated. Time: %d", locomotive, time));
-                stopTimer.setCycleCount(1);
-                stopTimer.play();
+            if (nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) { //check, that next signal is really closed (increase delay for guarantied change of loco position and next signal in autopilot controller);
+                if (locomotive.getLocation() instanceof TrackBlockSection || (route != null && locomotive.getLocation() == route.getDestinationTrackSection())) { //and run stop timer if loco somewhere in trackline or in destination track section
+                    WorkPlaceController.getActiveController().log(String.format("Stop timer for %s activated. Time: %d", locomotive, time));
+                    stopTimer.setCycleCount(1);
+                    stopTimer.play();
+                }
             }
         }));
         occupationalChecker.setCycleCount(1);
