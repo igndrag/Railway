@@ -35,6 +35,10 @@ public class Locomotive extends TracksideObject implements Serializable {
         return autopilot;
     }
 
+    public ControlModule getControlModule() {
+        return controlModule;
+    }
+
     public void setAutopilot(Autopilot autopilot) {
         this.autopilot = autopilot;
     }

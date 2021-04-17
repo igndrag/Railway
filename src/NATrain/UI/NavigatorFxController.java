@@ -148,12 +148,8 @@ public class NavigatorFxController {
         Blinker.start();
         //controller.initialize();
         workPlace.setOnCloseRequest(event -> {
-            try {
                 WorkPlaceController.setActiveMode(false);
-                MQTTConnectionService.getClient().disconnect();
-            } catch (MqttException e) {
-                e.printStackTrace();
-            }
+      //        MQTTConnectionService.getClient().disconnect();
             primaryStage.show();
             Blinker.stop();
         });

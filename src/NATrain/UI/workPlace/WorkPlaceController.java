@@ -29,6 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -148,14 +149,15 @@ public class WorkPlaceController {
         }
         workArea.setContent(gridPane);
 
-        Model.getLocomotives().values().forEach(locomotive -> {
-            try {
-                showLocomotiveController(locomotive);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
+        Platform.runLater(() -> {
+                    Model.getLocomotives().values().forEach(locomotive -> {
+                        try {
+                            showLocomotiveController(locomotive);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                });
         //   ConnectionService connectionService = new ConnectionService("COM5");
         //   connectionService.start();
         log("Work Place initialized");
@@ -211,6 +213,7 @@ public class WorkPlaceController {
         actionEmulator.setOnCloseRequest(event -> {
             actionEmulatorRadioMenuItem.setSelected(false);
         });
+        actionEmulator.initOwner(primaryStage);
         actionEmulator.show();
     }
 
@@ -227,6 +230,7 @@ public class WorkPlaceController {
         locomotiveController.setOnCloseRequest(event -> {
             locomotiveControllerRadioMenuItem.setSelected(false);
         });
+        locomotiveController.initOwner(primaryStage);
         locomotiveController.show();
     }
 

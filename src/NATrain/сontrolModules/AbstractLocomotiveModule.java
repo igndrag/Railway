@@ -2,7 +2,10 @@ package NATrain.сontrolModules;
 
 import NATrain.trackSideObjects.locomotives.Locomotive;
 
-public abstract class AbstractLocomotiveModule extends AbstractModule{
+import java.io.Serializable;
+
+public abstract class AbstractLocomotiveModule extends AbstractModule implements Serializable {
+    static final long serialVersionUID = 1L;
 
     protected final Locomotive locomotive;
 

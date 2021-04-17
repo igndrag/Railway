@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MQTTLocomotiveModule extends AbstractLocomotiveModule {
+    static final long serialVersionUID = 1L;
 
     public MQTTLocomotiveModule(String id, Locomotive locomotive) {
         super(id, locomotive);

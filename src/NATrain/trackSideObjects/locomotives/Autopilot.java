@@ -54,7 +54,7 @@ public class Autopilot {
                 case FULL_SPEED:
                     odometerValue += 0.1 * locomotive.fullSpeed;
                     break;
-                case RESTRICTED_SPEED :
+                case RESTRICTED_SPEED:
                     odometerValue += 0.1 * locomotive.restrictedSpeed;
                     break;
                 default:
@@ -74,7 +74,7 @@ public class Autopilot {
     }
 
     public void setBlockSection(TrackBlockSection blockSection) {
-        //       this.blockSection = blockSection;
+        //deactivateListeners();
         route = null;
         this.track = blockSection.getTrack();
         int blockSectionIndex = track.getBlockSections().indexOf(blockSection);
@@ -116,10 +116,15 @@ public class Autopilot {
         }
     }
 
-    public void deactivate() {
-        nextSignal.removePropertyChangeListener(nextSignalListener); // remove listeners if autopilot deactivated accidentally
-        nextLocation.removePropertyChangeListener(nextLocationListener);
-        nextLocation.removePropertyChangeListener(nextSignalChooser);
+    public void deactivateListeners() {
+        if (nextSignal != null) {
+            nextSignal.removePropertyChangeListener(nextSignalListener); // remove listeners if autopilot deactivated accidentally
+        }
+        if (nextLocation != null) {
+            nextLocation.removePropertyChangeListener(nextBlockSectionListener);
+            nextLocation.removePropertyChangeListener(nextLocationListener);
+            nextLocation.removePropertyChangeListener(nextSignalChooser);
+        }
         nextSignal = Signal.EMPTY_SIGNAL;
         locomotiveController.getPreview().refresh();
         Blinker.unregisterQuad(locomotiveController.getPreview());
@@ -259,6 +264,7 @@ public class Autopilot {
 
 
     public void setRoute(Route route) {
+      //  deactivateListeners();
         this.lastSectionInRoute = route.getDestinationTrackSection();
         this.movementPlan = new ConcurrentLinkedDeque<>(route.getOccupationalOrder()); //create local copy of occupational order
         this.nextLocation = movementPlan.poll();
@@ -307,13 +313,13 @@ public class Autopilot {
         double length = locomotive.getLocation().getLength() - odometerValue;
         double time = 0;
         switch (locomotive.getSpeed()) {
-            case FULL_SPEED :
+            case FULL_SPEED:
                 time = length / locomotive.fullSpeed;
                 break;
-            case RESTRICTED_SPEED :
+            case RESTRICTED_SPEED:
                 time = length / locomotive.restrictedSpeed;
                 break;
-            }
+        }
 
         Timeline stopTimer = new Timeline(
                 new KeyFrame(Duration.seconds(time),

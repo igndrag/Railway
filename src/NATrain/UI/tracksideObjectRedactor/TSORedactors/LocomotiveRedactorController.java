@@ -37,6 +37,15 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
         textField.setText(locomotive.getId());
         this.tableView = tableView;
         this.observableList = observableList;
+
+        if (locomotive.getControlModule() != null) {
+            textField.setDisable(true);
+        } else {
+            textField.setOnMouseClicked(event -> {
+                textField.selectAll();
+            });
+        }
+
         fullSpeedTextField.setText(locomotive.getFullSpeed() + "");
         halfSpeedTextField.setText(locomotive.getRestrictedSpeed() + "");
 
@@ -47,7 +56,6 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
         halfSpeedTestButton.setOnAction(event -> {
             speedTest(Autopilot.RESTRICTED_SPEED);
         });
-
     }
 
     @FXML

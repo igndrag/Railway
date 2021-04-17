@@ -113,7 +113,7 @@ public class LocomotiveController {
                 runButton.setDisable(true);
                 speedSlider.setDisable(true);
             } else {
-                autopilot.deactivate();
+                autopilot.deactivateListeners();
                 locationLabel.setText("");
                 directionLabel.setText("");
             }
