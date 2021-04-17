@@ -15,7 +15,7 @@ public class MQTTLocomotiveModule extends AbstractLocomotiveModule {
         inputChannels.put(0, new InputChannel(InputChannelType.LOCOMOTIVE, locomotive));
     }
 
-    protected static final String commandTopicRoot = "NATrain/commands/locomotives";
+    static final String commandTopicRoot = "NATrain/commands/locomotives";
 
     @Override
     public void sendCommand(int channelNumber, String command) {
@@ -45,5 +45,9 @@ public class MQTTLocomotiveModule extends AbstractLocomotiveModule {
     @Override
     public String getConfiguredChannels(TracksideObject tracksideObject) {
         return locomotive.getId();
+    }
+
+    public static String getCommandTopicRoot() {
+        return commandTopicRoot;
     }
 }

@@ -1,6 +1,7 @@
 package NATrain;
 
 import NATrain.UI.NavigatorFxController;
+import NATrain.connectionService.MQTTConnectionService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
       //  ConnectionService service = new ConnectionService("COM8");
       //  service.start();
-
+        MQTTConnectionService.connect();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("UI/Navigator.fxml"));
         Parent root = loader.load();
@@ -23,6 +24,9 @@ public class Main extends Application {
         NavigatorFxController.setPrimaryStage(primaryStage);
         primaryStage.setResizable(false);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(event -> {
+            MQTTConnectionService.disconnect();
+        });
     }
 
 

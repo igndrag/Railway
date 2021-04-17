@@ -1,5 +1,6 @@
 package NATrain.trackSideObjects.locomotives;
 
+import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.routes.RouteDirection;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.trackSections.TrackSection;
@@ -9,11 +10,16 @@ import NATrain.сontrolModules.MQTTLocomotiveModule;
 
 import java.io.Serializable;
 
+import static javafx.animation.Animation.Status.PAUSED;
+
 public class Locomotive extends TracksideObject implements Serializable {
     static final long serialVersionUID = 1L;
 
     private ControlModule controlModule;
     private LocomotiveState actualState = LocomotiveState.NOT_MOVING;
+    protected int restrictedSpeed = 0; // mm/sec
+    protected int fullSpeed = 0; // mm/sec
+
     private transient Autopilot autopilot;
     private int speed = 0;
     public boolean mainLight = false;
@@ -46,10 +52,12 @@ public class Locomotive extends TracksideObject implements Serializable {
         return speed;
     }
 
-
     public void setSpeed(int speed) {
         this.speed = speed;
         controlModule.sendCommand(MQTTLocomotiveModule.SET_SPEED_CHANNEL, String.format("%04d", speed));
+        if (autopilot != null && speed > 0 && autopilot.getOdometer().getStatus() == PAUSED) {
+            autopilot.getOdometer().play();
+        }
     }
 
     public Locomotive(String id) {
@@ -99,6 +107,25 @@ public class Locomotive extends TracksideObject implements Serializable {
         speed = 0;
         controlModule.sendCommand(MQTTLocomotiveModule.STOP_CHANNEL, "0" ); //command code doesn't matter on STOP channel
         setActualState(LocomotiveState.NOT_MOVING);
+        if (autopilot != null) {
+            autopilot.getOdometer().pause();
+        }
+    }
+
+    public int getRestrictedSpeed() {
+        return restrictedSpeed;
+    }
+
+    public void setRestrictedSpeed(int restrictedSpeed) {
+        this.restrictedSpeed = restrictedSpeed;
+    }
+
+    public int getFullSpeed() {
+        return fullSpeed;
+    }
+
+    public void setFullSpeed(int fullSpeed) {
+        this.fullSpeed = fullSpeed;
     }
 
     @Override

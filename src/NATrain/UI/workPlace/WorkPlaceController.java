@@ -88,7 +88,6 @@ public class WorkPlaceController {
     }
 
     public void initialize() {
-        MQTTConnectionService.connect();
         activeMode = true;
         activeController = this;
 

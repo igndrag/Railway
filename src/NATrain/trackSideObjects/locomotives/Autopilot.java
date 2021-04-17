@@ -1,5 +1,6 @@
 package NATrain.trackSideObjects.locomotives;
 
+import NATrain.UI.UIUtils;
 import NATrain.UI.workPlace.Blinker;
 import NATrain.UI.workPlace.LocomotiveController;
 import NATrain.UI.workPlace.WorkPlaceController;
@@ -10,6 +11,7 @@ import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.signals.SignalType;
 import NATrain.trackSideObjects.trackSections.TrackSection;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -37,7 +39,8 @@ public class Autopilot {
     private TrackSection lastSectionInRoute;
     private Signal nextSignal;
     private ConcurrentLinkedDeque<TrackSection> movementPlan;
-    private int odometer = 0;
+    private Timeline odometer;
+    private double odometerValue = 0;
 
     public static final int FULL_SPEED = 1024;
     public static final int RESTRICTED_SPEED = 700;
@@ -46,7 +49,24 @@ public class Autopilot {
         this.locomotive = locomotive;
         this.locomotiveController = locomotiveController;
         this.locomotive.setAutopilot(this);
+        this.odometer = new Timeline(new KeyFrame(Duration.millis(100), event -> {
+            switch (locomotive.getSpeed()) {
+                case FULL_SPEED:
+                    odometerValue += 0.1 * locomotive.fullSpeed;
+                    break;
+                case RESTRICTED_SPEED :
+                    odometerValue += 0.1 * locomotive.restrictedSpeed;
+                    break;
+                default:
+                    WorkPlaceController.getActiveController().log("Wrong speed value fir odometer!");
+            }
+        }));
+        odometer.setCycleCount(Animation.INDEFINITE);
         locomotiveController.getLocationLabel().setText(locomotive.getLocation().getId());
+    }
+
+    public Timeline getOdometer() {
+        return odometer;
     }
 
     public Signal getNextSignal() {
@@ -139,7 +159,7 @@ public class Autopilot {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getNewValue() == OCCUPIED) {
-                odometer = 0;
+                odometerValue = 0;
                 nextLocation.removePropertyChangeListener(this);//delete listener from previous section
                 locomotive.setLocation(nextLocation);
                 locomotiveController.getLocationLabel().setText(locomotive.getLocation().getId());
@@ -195,7 +215,7 @@ public class Autopilot {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getNewValue() == OCCUPIED) {
-                odometer = 0;
+                odometerValue = 0;
                 nextSignal.removePropertyChangeListener(nextSignalListener);
                 nextLocation.removePropertyChangeListener(nextBlockSectionListener);
                 int blockSectionIndex = track.getBlockSections().indexOf(nextLocation);
@@ -284,8 +304,17 @@ public class Autopilot {
     }
 
     private void stopTimerStart() {
-        long length = locomotive.getLocation().getLength() - odometer;
-        long time = 2;  //TODO calculate this time SPEED/SECTION_LENGTH
+        double length = locomotive.getLocation().getLength() - odometerValue;
+        double time = 0;
+        switch (locomotive.getSpeed()) {
+            case FULL_SPEED :
+                time = length / locomotive.fullSpeed;
+                break;
+            case RESTRICTED_SPEED :
+                time = length / locomotive.restrictedSpeed;
+                break;
+            }
+
         Timeline stopTimer = new Timeline(
                 new KeyFrame(Duration.seconds(time),
                         event -> {
@@ -294,13 +323,12 @@ public class Autopilot {
                             } else {
                                 locomotiveController.checkRoutesInLocation(); //if signal opened, set route to autopilot
                             }
-                           // nextSignal.removePropertyChangeListener(nextSignalListener);
+                            // nextSignal.removePropertyChangeListener(nextSignalListener);
                         }
                 ));
         Timeline occupationalChecker = new Timeline(new KeyFrame(Duration.millis(10), event -> {
             if (nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) { //check, that next signal is really closed (increase delay for guarantied change of loco position and next signal in autopilot controller);
                 if (locomotive.getLocation() instanceof TrackBlockSection || (route != null && locomotive.getLocation() == route.getDestinationTrackSection())) { //and run stop timer if loco somewhere in trackline or in destination track section
-                    WorkPlaceController.getActiveController().log(String.format("Stop timer for %s activated. Time: %d", locomotive, time));
                     stopTimer.setCycleCount(1);
                     stopTimer.play();
                 }

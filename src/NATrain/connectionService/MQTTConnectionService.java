@@ -73,6 +73,13 @@ public class MQTTConnectionService {
         }
     }
 
+    public static void disconnect() {
+        try {
+            mqttClient.disconnect();
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
     public static void connect() {
         try {
             mqttClient = new MqttClient(broker, clientID, persistence);
