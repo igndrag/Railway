@@ -68,7 +68,7 @@ public class WorkPlaceController {
     @FXML
     private ScrollPane workArea;
 
-        private Stage primaryStage;
+    private Stage primaryStage;
 
     private static GridPane gridPane;
 
@@ -150,14 +150,16 @@ public class WorkPlaceController {
         workArea.setContent(gridPane);
 
         Platform.runLater(() -> {
-                    Model.getLocomotives().values().forEach(locomotive -> {
-                        try {
-                            showLocomotiveController(locomotive);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                });
+            int number = 0;
+            for (Locomotive locomotive : Model.getLocomotives().values()) {
+                try {
+                    showLocomotiveController(locomotive, number);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                number++;
+            }
+        });
         //   ConnectionService connectionService = new ConnectionService("COM5");
         //   connectionService.start();
         log("Work Place initialized");
@@ -214,16 +216,17 @@ public class WorkPlaceController {
             actionEmulatorRadioMenuItem.setSelected(false);
         });
         actionEmulator.initOwner(primaryStage);
+        actionEmulator.setAlwaysOnTop(true);
         actionEmulator.show();
     }
 
-    public void showLocomotiveController(Locomotive locomotive) throws IOException {
+    public void showLocomotiveController(Locomotive locomotive, int number) throws IOException {
         FXMLLoader loader = new FXMLLoader(LocomotiveController.class.getResource("LocomotiveController.fxml"));
         Stage locomotiveController = new Stage();
         locomotiveController.setTitle("Locomotive Controller");
         locomotiveController.setScene(new Scene(loader.load(), 220, 480));
         locomotiveController.setResizable(false);
-        locomotiveController.setX(0);
+        locomotiveController.setX(10 + number * 230);
         locomotiveController.setY(0);
         LocomotiveController controller = loader.getController();
         controller.init(locomotive);
@@ -231,6 +234,7 @@ public class WorkPlaceController {
             locomotiveControllerRadioMenuItem.setSelected(false);
         });
         locomotiveController.initOwner(primaryStage);
+        locomotiveController.setAlwaysOnTop(true);
         locomotiveController.show();
     }
 
