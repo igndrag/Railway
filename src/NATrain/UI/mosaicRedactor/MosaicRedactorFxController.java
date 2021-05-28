@@ -2,6 +2,7 @@ package NATrain.UI.mosaicRedactor;
 
 import NATrain.UI.NavigatorFxController;
 import NATrain.quads.*;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

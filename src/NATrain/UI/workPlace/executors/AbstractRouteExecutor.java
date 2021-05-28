@@ -1,6 +1,7 @@
 package NATrain.UI.workPlace.executors;
 
 import NATrain.UI.workPlace.WorkPlaceController;
+import NATrain.model.Model;
 import NATrain.routes.Route;
 import NATrain.routes.RouteDirection;
 import NATrain.routes.RouteType;
@@ -17,6 +18,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -297,9 +299,12 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                         routeStatus = RouteStatus.READY;
                         autoselectSignalState();
                         createListeners();
-                        Locomotive locomotive = route.getDepartureTrackSection().getLocomotive();
-                        if (locomotive != null && locomotive.getAutopilot() != null) {
-                            locomotive.getAutopilot().setRoute(route);
+                        TrackSection departureSection = route.getDepartureTrackSection();
+                        Optional<Locomotive> locomotive = Model.getLocomotives().values().stream().filter(
+                                loco -> (loco.getFrontTag().getTagLocation() == departureSection
+                                        && loco.getForwardDirection() == route.getRouteDirection())).findFirst();
+                        if (locomotive.isPresent() && locomotive.get().getAutopilot() != null) {
+                            locomotive.get().getAutopilot().setRoute(route);
                         }
                         service.shutdown();
                     }

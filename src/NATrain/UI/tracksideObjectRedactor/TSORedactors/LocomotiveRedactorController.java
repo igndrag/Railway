@@ -1,8 +1,10 @@
 package NATrain.UI.tracksideObjectRedactor.TSORedactors;
 
+import NATrain.UI.UIUtils;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
+import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.locomotives.Autopilot;
 import NATrain.trackSideObjects.locomotives.Locomotive;
@@ -17,9 +19,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+import sun.plugin.util.UIUtil;
 
 public class LocomotiveRedactorController extends TracksideObjectRedactorController {
 
+    @FXML
+    private TextField frontTagTextField1;
+    @FXML
+    private TextField frontTagTextField2;
+    @FXML
+    private TextField frontTagTextField3;
+    @FXML
+    private TextField frontTagTextField4;
+    @FXML
+    private TextField rearTagTextField1;
+    @FXML
+    private TextField rearTagTextField2;
+    @FXML
+    private TextField rearTagTextField3;
+    @FXML
+    private TextField rearTagTextField4;
     @FXML
     private TextField fullSpeedTextField;
     @FXML
@@ -56,6 +75,29 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
         halfSpeedTestButton.setOnAction(event -> {
             speedTest(Autopilot.RESTRICTED_SPEED);
         });
+
+        if (locomotive.getFrontTag() != null) {
+            RFIDTag frontTag = locomotive.getFrontTag();
+            frontTagTextField1.setText(frontTag.getUid()[0]);
+            frontTagTextField1.setDisable(true);
+            frontTagTextField2.setText(frontTag.getUid()[1]);
+            frontTagTextField2.setDisable(true);
+            frontTagTextField3.setText(frontTag.getUid()[2]);
+            frontTagTextField3.setDisable(true);
+            frontTagTextField4.setText(frontTag.getUid()[3]);
+            frontTagTextField4.setDisable(true);
+        }
+        if (locomotive.getRearTag() != null) {
+            RFIDTag rearTag = locomotive.getRearTag();
+            rearTagTextField1.setText(rearTag.getUid()[0]);
+            rearTagTextField1.setDisable(true);
+            rearTagTextField2.setText(rearTag.getUid()[1]);
+            rearTagTextField2.setDisable(true);
+            rearTagTextField3.setText(rearTag.getUid()[2]);
+            rearTagTextField3.setDisable(true);
+            rearTagTextField4.setText(rearTag.getUid()[3]);
+            rearTagTextField4.setDisable(true);
+        }
     }
 
     @FXML
@@ -66,8 +108,44 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
             return;
         }
 
+        if (!frontTagTextField1.isDisabled()) {
+            if (!isUidValid(frontTagTextField1.getText(),
+                    frontTagTextField2.getText(),
+                    frontTagTextField3.getText(),
+                    frontTagTextField4.getText())) {
+                return;
+            }
+
+            RFIDTag frontTag = new RFIDTag(
+                    frontTagTextField1.getText(),
+                    frontTagTextField2.getText(),
+                    frontTagTextField3.getText(),
+                    frontTagTextField4.getText());
+
+            frontTag.setId(String.format(("%s_front_tag"), locomotive.getId()));
+            locomotive.setFrontTag(frontTag);
+            Model.getTags().put(frontTag.getDecUid(), frontTag);
+        }
+
+        if (!rearTagTextField1.isDisabled()) {
+            if (!isUidValid(rearTagTextField1.getText(),
+                    rearTagTextField2.getText(),
+                    rearTagTextField3.getText(),
+                    rearTagTextField4.getText())) {
+                return;
+            }
+            RFIDTag rearTag = new RFIDTag(
+                    rearTagTextField1.getText(),
+                    rearTagTextField2.getText(),
+                    rearTagTextField3.getText(),
+                    rearTagTextField4.getText());
+            rearTag.setId(String.format(("%s_rear_tag"), locomotive.getId()));
+            locomotive.setRearTag(rearTag);
+            Model.getTags().put(rearTag.getDecUid(), rearTag);
+        }
+
         int expectedFullSpeed = UtilFunctions.parseIfPositiveNumeric(fullSpeedTextField.getText());
-        if (expectedFullSpeed > 0 ) {
+        if (expectedFullSpeed > 0) {
             locomotive.setFullSpeed(expectedFullSpeed);
         }
 
@@ -87,5 +165,27 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
         speedTester.setCycleCount(1);
         MQTTConnectionService.publish(MQTTLocomotiveModule.getCommandTopicRoot() + "/" + textField.getText(), String.format("%s:%s", MQTTLocomotiveModule.SET_SPEED_CHANNEL, String.format("%04d", speed)));
         speedTester.play();
+    }
+
+    private boolean checkByte(String expectedByte) {
+        try {
+            int expectedDec = Integer.parseInt(expectedByte, 16);
+            return 0 <= expectedDec && expectedDec < 256;
+        } catch (NumberFormatException e) {
+            UIUtils.showAlert(String.format("%s is incorrect byte.", expectedByte));
+            return false;
+        }
+    }
+
+    private boolean isUidValid(String b1, String b2, String b3, String b4) {
+        boolean bytesChecked = checkByte(b1) && checkByte(b2) && checkByte(b3) && checkByte(b4);
+        if (bytesChecked) {
+            long decUid = UtilFunctions.convertUidToLong(b1, b2, b3, b4);
+            if (Model.getTags().containsKey(decUid)) {
+                UIUtils.showAlert(String.format("Tag %s %s %s %s is already configured. Id: %s", b1, b2, b3, b4, Model.getTags().get(decUid).getId()));
+                return false;
+            }
+        }
+        return bytesChecked;
     }
 }

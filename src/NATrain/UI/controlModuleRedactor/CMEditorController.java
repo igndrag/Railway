@@ -23,8 +23,6 @@ import java.util.Optional;
 public class CMEditorController {
 
     @FXML
-    private ChoiceBox<InputChannel> inputChoiceBox;
-    @FXML
     private ChoiceBox<Track> inputTrackChoiceBox;
     @FXML
     private ChoiceBox<Track> outputTrackChoiceBox;
@@ -106,17 +104,6 @@ public class CMEditorController {
                     inputTrackChoiceBox.setDisable(false);
                     inputObjectChoiceBox.getItems().clear();
                     break;
-            }
-        });
-
-        inputObjectChoiceBox.setOnAction(event -> {
-            if (inputObjectChoiceBox.getValue() instanceof TrackSection) {
-                TrackSection trackSection = (TrackSection) inputObjectChoiceBox.getValue();
-                inputChoiceBox.setDisable(false);
-                inputChoiceBox.setItems(FXCollections.observableArrayList(trackSection.getSubsections()));
-            } else {
-                inputChoiceBox.setDisable(true);
-                inputChoiceBox.getSelectionModel().clearSelection();
             }
         });
 
@@ -203,12 +190,8 @@ public class CMEditorController {
         switch (inputTypeChoiceBox.getValue()) {
             case TRACK_SECTION:
             case BLOCK_SECTION:
-                if (inputChoiceBox.getSelectionModel().isEmpty()) {
-                    UIUtils.showAlert("Input Channel is not selected.");
-                    return;
-                } else {
-                    inputChannel = inputChoiceBox.getValue();
-                }
+                TrackSection trackSection = (TrackSection) object;
+                inputChannel = new InputChannel(InputChannelType.TRACK_SECTION, trackSection);
                 break;
             case SWITCH_PLUS:
                 inputChannel = ((Switch) object).getPlusInputChannel();

@@ -1,12 +1,14 @@
 package NATrain.trackSideObjects.trackSections;
 
 
+import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.сontrolModules.InputChannel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class TrackSection extends TracksideObject {
 
@@ -23,11 +25,8 @@ public class TrackSection extends TracksideObject {
 
     public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
 
-    private Locomotive locomotive;
-    private InputChannel evenBorder;
     private final ArrayList<Switch> switches = new ArrayList<>();
-    private final ArrayList<InputChannel> subsections = new ArrayList<>();
-    private InputChannel oddBorder;
+    private final HashSet<RFIDTag> tags = new HashSet<>();
     private int length = 0;
 
     private transient TrackSectionState vacancyState = TrackSectionState.UNDEFINED;
@@ -41,16 +40,8 @@ public class TrackSection extends TracksideObject {
         return switches;
     }
 
-    public Locomotive getLocomotive() {
-        return locomotive;
-    }
-
-    public void allocateLocomotive(Locomotive locomotive) {
-        this.locomotive = locomotive;
-    }
-
-    public void deallocateLocomotive(Locomotive locomotive) {
-        this.locomotive = null;
+    public HashSet<RFIDTag> getTags() {
+        return tags;
     }
 
     public boolean isOccupationFixed() {
@@ -83,7 +74,7 @@ public class TrackSection extends TracksideObject {
 
     public void setInterlocked(boolean interlocked) {
         this.interlocked = interlocked;
-        propertyChangeSupport.firePropertyChange("interlockProperty",null, interlocked);
+        propertyChangeSupport.firePropertyChange("interlockProperty", null, interlocked);
         if (!interlocked) {
             occupationFixed = false;
             deallocationFixed = false;
@@ -97,21 +88,9 @@ public class TrackSection extends TracksideObject {
         return vacancyState;
     }
 
-    public InputChannel getEvenBorder() {
-        return evenBorder;
-    }
-
-    public ArrayList<InputChannel> getSubsections() {
-        return subsections;
-    }
-
-    public InputChannel getOddBorder() {
-        return oddBorder;
-    }
-
     public void setVacancyState(TrackSectionState vacancyState) {
         TrackSectionState oldState = this.vacancyState;
-        this. vacancyState = vacancyState;
+        this.vacancyState = vacancyState;
         propertyChangeSupport.firePropertyChange("occupationalProperty", oldState, vacancyState);
         if (switches.size() > 0) {                                                          // if some switches located on track section
             switches.forEach(aSwitch -> aSwitch.setSwitchState(aSwitch.getSwitchState())); // set them to the same position for right view in control module
@@ -126,22 +105,12 @@ public class TrackSection extends TracksideObject {
         this.length = length;
     }
 
-    public void setEvenBorder(InputChannel evenBorder) {
-        this.evenBorder = evenBorder;
-    }
-
-    public void setOddBorder(InputChannel oddBorder) {
-        this.oddBorder = oddBorder;
-    }
-
     public void updateVacancyState() {
-        for (InputChannel channel : subsections) {
-            if (channel.getActualState() == TrackSectionState.OCCUPIED.getCode() || channel.getActualState() == TrackSectionState.UNDEFINED.getCode()){
-                setVacancyState(TrackSectionState.OCCUPIED);
-                return;
-            }
+        if (tags.size() == 0) {
+            setVacancyState(TrackSectionState.FREE);
+        } else {
+            setVacancyState(TrackSectionState.OCCUPIED);
         }
-        setVacancyState(TrackSectionState.FREE);
     }
 
     @Override

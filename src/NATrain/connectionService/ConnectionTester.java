@@ -1,5 +1,6 @@
 package NATrain.connectionService;
 
+import NATrain.trackSideObjects.RFIDTag;
 import arduino.Arduino;
 import com.fazecast.jSerialComm.SerialPort;
 
@@ -95,7 +96,9 @@ public class ConnectionTester extends Thread {
     }
 
     public static void main(String[] args) {
-        ConnectionTester connectionTester = new ConnectionTester("COM5");
-        connectionTester.start();
+     //   ConnectionTester connectionTester = new ConnectionTester("COM5");
+     //   connectionTester.start();
+       RFIDTag tag = new RFIDTag("0C", "6E", "4D", "4A");
+        System.out.println(tag.getDecUid());
     }
 }

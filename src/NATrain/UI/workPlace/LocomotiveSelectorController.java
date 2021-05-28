@@ -42,8 +42,10 @@ public class LocomotiveSelectorController {
                 return;
             }
             Locomotive locomotive = locomotiveListView.getSelectionModel().getSelectedItem();
-            locomotive.setLocation(trackSection);
-            trackSection.allocateLocomotive(locomotive);
+            locomotive.getFrontTag().setTagLocation(trackSection);
+            locomotive.getRearTag().setTagLocation(trackSection);
+            trackSection.getTags().add(locomotive.getFrontTag());
+            trackSection.getTags().add(locomotive.getRearTag());
 
             if (evenToggleButton.isSelected()) {
                 locomotive.setForwardDirection(RouteDirection.EVEN);

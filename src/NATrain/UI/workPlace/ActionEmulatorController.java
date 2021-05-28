@@ -41,6 +41,7 @@ public class ActionEmulatorController {
     private ToggleButton plusToggleButton;
     @FXML
     private ToggleButton minusToggleButton;
+
     @FXML
 
     public void initialize() {
@@ -158,7 +159,11 @@ public class ActionEmulatorController {
 
     @FXML
     protected void setAllSectionsFree() {
-        Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
+        Model.getTrackSections().values().forEach(trackSection -> {
+                    trackSection.getTags().clear();
+                    trackSection.updateVacancyState();
+                }
+        );
     }
 
     @FXML

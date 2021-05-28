@@ -78,7 +78,7 @@ public class Autopilot {
         route = null;
         this.track = blockSection.getTrack();
         int blockSectionIndex = track.getBlockSections().indexOf(blockSection);
-        locomotive.setLocation(blockSection);
+        //locomotive.setLocation(blockSection);
         if (blockSectionIndex == 0 && track.getTrackDirection() == TrackDirection.REVERSED) {
             nextSignal = track.getReversedDirectionArrivalSignal();
             locomotiveController.getPreview().setAssociatedSignal(nextSignal);
@@ -166,7 +166,7 @@ public class Autopilot {
             if (evt.getNewValue() == OCCUPIED) {
                 odometerValue = 0;
                 nextLocation.removePropertyChangeListener(this);//delete listener from previous section
-                locomotive.setLocation(nextLocation);
+          //    locomotive.setLocation(nextLocation);
                 locomotiveController.getLocationLabel().setText(locomotive.getLocation().getId());
                 if (locomotive.getLocation() == lastSectionInRoute) {
                     nextLocation = route.getDestinationTrackSection();
@@ -224,7 +224,7 @@ public class Autopilot {
                 nextSignal.removePropertyChangeListener(nextSignalListener);
                 nextLocation.removePropertyChangeListener(nextBlockSectionListener);
                 int blockSectionIndex = track.getBlockSections().indexOf(nextLocation);
-                locomotive.setLocation(nextLocation);
+                //locomotive.setLocation(nextLocation);
                 locomotiveController.getLocationLabel().setText(locomotive.getLocation().getId());
 
                 if (blockSectionIndex == 0 && track.getTrackDirection() == TrackDirection.REVERSED) {

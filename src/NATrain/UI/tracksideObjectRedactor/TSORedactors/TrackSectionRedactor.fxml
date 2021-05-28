@@ -10,7 +10,5 @@
       <Label layoutX="24.0" layoutY="11.0" text="Name" />
       <Label layoutX="26.0" layoutY="77.0" text="Length" />
       <TextField fx:id="lengthTextField" layoutX="102.0" layoutY="73.0" prefHeight="25.0" prefWidth="98.0" />
-      <Label layoutX="26.0" layoutY="120.0" text="Inputs Count" />
-      <TextField fx:id="inputsCountTextField" layoutX="102.0" layoutY="117.0" prefHeight="25.0" prefWidth="98.0" />
    </children>
 </Pane>

@@ -71,12 +71,23 @@ public class LocomotiveController {
         forwardToggleButton.setSelected(true);
         idLabel.setText(locomotive.getId());
         statusLabel.setText(locomotive.getActualState().getDescription());
-        if (locomotive.mainLight) {
-            frontLightToggleButton.setSelected(true);
-        }
-        if (locomotive.rearLight) {
-            rearLightToggleButton.setSelected(true);
-        }
+
+        frontLightToggleButton.setOnAction(event -> {
+            if (frontLightToggleButton.isSelected()) {
+                locomotive.setFrontLightOn();
+            } else {
+                locomotive.setFrontLightOff();
+            }
+        });
+
+        rearLightToggleButton.setOnAction(event -> {
+            if (rearLightToggleButton.isSelected()) {
+                locomotive.setRearLightOn();
+            } else {
+                locomotive.setRearLightOff();
+            }
+        });
+
         previewPane.getChildren().add(quad.getView());
         speedSlider.setMax(8);
         speedSlider.setMin(0);

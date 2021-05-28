@@ -41,9 +41,14 @@ public class MQTTConnectionService {
             for (String inputStatus : inputStatuses) {
                 String[] statusParts = inputStatus.split(":");
                 int portNumber = Integer.parseInt(statusParts[0]);
-                int inputStateCode = Integer.parseInt(statusParts[1]);
-                controlModule.getInputChannels().get(portNumber).setActualState(inputStateCode);
-            }
+                if (statusParts[1].length() < 2) {
+                    int inputStateCode = Integer.parseInt(statusParts[1]);
+                    controlModule.getInputChannels().get(portNumber).setActualState(inputStateCode);
+                } else {
+                    long decUid = Long.parseLong(statusParts[1]);
+                    controlModule.getInputChannels().get(portNumber).moveTag(decUid);
+                }
+                }
         }
 
         @Override
@@ -89,7 +94,8 @@ public class MQTTConnectionService {
             mqttClient.connect(connOpts); //connects the broker with connect options
             publish(topicName, "NATrainApp connected");
             Model.getControlModules().values().forEach(controlModule -> {
-                subscribe(topicName + "/controlModules/responses/" + controlModule.getId(), new MyMqttCallback(controlModule));
+                String topicForSubscribe = topicName + "/controlModules/responses/" + controlModule.getId();
+                subscribe(topicForSubscribe, new MyMqttCallback(controlModule));
             });
         } catch (MqttException e) {
             e.printStackTrace();

@@ -175,7 +175,7 @@ public class TracksideObjectNavigatorController {
         FXMLLoader loader = new FXMLLoader(LocomotiveRedactorController.class.getResource("LocomotiveRedactor.fxml"));
         Stage locomotiveRedactor = new Stage();
         locomotiveRedactor.setTitle("Locomotive Redactor");
-        locomotiveRedactor.setScene(new Scene(loader.load(), 240, 220));
+        locomotiveRedactor.setScene(new Scene(loader.load(), 220, 320));
         locomotiveRedactor.setResizable(false);
         LocomotiveRedactorController controller = loader.getController();
         controller.init(locomotive, locomotiveTableView, locomotiveList);

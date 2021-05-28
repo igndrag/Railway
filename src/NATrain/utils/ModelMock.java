@@ -76,8 +76,6 @@ public class ModelMock {
         Model.getTrackSections().put("1P", stationTrack);
 
         oneSwitch.setTrackSection(oneTrackSection);
-        oneTrackSection.getSubsections().add(new TrackSectionInputChannel(0, TrackSectionInputType.SUBSECTION, oneTrackSection));
-        controlModule.getInputChannels().put(0, oneTrackSection.getSubsections().get(0));
 
         Model.getTrackSections().put("1-3SP", oneTrackSection);
         Model.getTrackSections().put("SP", twoTrackSection);

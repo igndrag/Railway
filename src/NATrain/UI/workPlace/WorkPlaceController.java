@@ -13,6 +13,7 @@ import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.switches.SwitchState;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.trackSideObjects.trackSections.TrackSectionState;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -92,13 +93,13 @@ public class WorkPlaceController {
         activeMode = true;
         activeController = this;
 
-        Model.getStationTracks().values().forEach(track -> track.setVacancyState(TrackSectionState.FREE));
+        Model.getStationTracks().values().forEach(TrackSection::updateVacancyState);
         Model.getSignals().values().forEach(Signal::close);
-        Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.FREE));
+        Model.getTrackSections().values().forEach(TrackSection::updateVacancyState);
         Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));// TODO change it to global request for tests on real model
         Model.getTracks().forEach(track -> {
             track.getBlockSections().forEach(blockSection -> {
-                blockSection.setVacancyState(TrackSectionState.FREE);
+                blockSection.updateVacancyState();
                 if (blockSection.getNormalDirectionSignal() != Signal.EMPTY_SIGNAL) {
                     if (!blockSection.isLastInNormalDirection()) {
                         blockSection.getNormalDirectionSignal().setSignalState(SignalState.GREEN);
@@ -162,6 +163,7 @@ public class WorkPlaceController {
         });
         //   ConnectionService connectionService = new ConnectionService("COM5");
         //   connectionService.start();
+        MQTTConnectionService.connect();
         log("Work Place initialized");
         log("Good Lock!!!");
     }

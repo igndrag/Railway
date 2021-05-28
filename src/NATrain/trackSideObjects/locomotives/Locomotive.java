@@ -1,7 +1,8 @@
 package NATrain.trackSideObjects.locomotives;
 
-import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.routes.RouteDirection;
+import NATrain.trackSideObjects.AbstractMovableObject;
+import NATrain.trackSideObjects.Movable;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.сontrolModules.AbstractLocomotiveModule;
@@ -10,9 +11,10 @@ import NATrain.сontrolModules.MQTTLocomotiveModule;
 
 import java.io.Serializable;
 
+import static NATrain.сontrolModules.AbstractLocomotiveModule.*;
 import static javafx.animation.Animation.Status.PAUSED;
 
-public class Locomotive extends TracksideObject implements Serializable {
+public class Locomotive extends AbstractMovableObject implements Serializable{
     static final long serialVersionUID = 1L;
 
     private ControlModule controlModule;
@@ -22,11 +24,11 @@ public class Locomotive extends TracksideObject implements Serializable {
 
     private transient Autopilot autopilot;
     private int speed = 0;
-    public boolean mainLight = false;
+    public boolean frontLight = false;
     public boolean rearLight = false;
 
     private MovingDirection movingDirection;
-    private TrackSection location;
+
     private RouteDirection forwardDirection = RouteDirection.EVEN;
 
     public static final String INITIAL_LOCOMOTIVE_NAME = "New Locomotive";
@@ -58,7 +60,6 @@ public class Locomotive extends TracksideObject implements Serializable {
 
     public void setSpeed(int speed) {
         this.speed = speed;
-        controlModule.sendCommand(MQTTLocomotiveModule.SET_SPEED_CHANNEL, String.format("%04d", speed));
         if (autopilot != null && speed > 0 && autopilot.getOdometer().getStatus() == PAUSED) {
             autopilot.getOdometer().play();
         }
@@ -77,14 +78,6 @@ public class Locomotive extends TracksideObject implements Serializable {
         propertyChangeSupport.firePropertyChange("Actual State", null, actualState); //for listening from UI controller
     }
 
-    public TrackSection getLocation() {
-        return location;
-    }
-
-    public void setLocation(TrackSection location) {
-        this.location = location;
-       // propertyChangeSupport.firePropertyChange("Location", null, location);
-    }
 
     public MovingDirection getMovingDirection() {
         return movingDirection;
@@ -114,6 +107,26 @@ public class Locomotive extends TracksideObject implements Serializable {
         if (autopilot != null) {
             autopilot.getOdometer().pause();
         }
+    }
+
+    public void setFrontLightOn() {
+        frontLight = true;
+        controlModule.sendCommand(SPECIAL_COMMAND_CHANNEL, MAIN_LIGHT_ON_COMMAND_CODE + "");
+    }
+
+    public void setFrontLightOff() {
+        frontLight = false;
+        controlModule.sendCommand(SPECIAL_COMMAND_CHANNEL, MAIN_LIGHT_OFF_COMMAND_CODE + "");
+    }
+
+    public void setRearLightOn() {
+        rearLight = true;
+        controlModule.sendCommand(SPECIAL_COMMAND_CHANNEL, REAR_LIGHT_ON_COMMAND_CODE + "");
+    }
+
+    public void setRearLightOff() {
+        rearLight = false;
+        controlModule.sendCommand(SPECIAL_COMMAND_CHANNEL, REAR_LIGHT_OFF_COMMAND_CODE + "");
     }
 
     public int getRestrictedSpeed() {

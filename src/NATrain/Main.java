@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
       //  ConnectionService service = new ConnectionService("COM8");
       //  service.start();
-        MQTTConnectionService.connect();
+
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("UI/Navigator.fxml"));
         Parent root = loader.load();
@@ -24,9 +24,6 @@ public class Main extends Application {
         NavigatorFxController.setPrimaryStage(primaryStage);
         primaryStage.setResizable(false);
         primaryStage.show();
-        primaryStage.setOnCloseRequest(event -> {
-            MQTTConnectionService.disconnect();
-        });
     }
 
 

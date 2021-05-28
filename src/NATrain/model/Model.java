@@ -48,6 +48,8 @@ public enum Model implements Serializable {
 
     private static Set<Track> tracks = new CopyOnWriteArraySet<>();
 
+    private static Map<Long, RFIDTag> tags = new HashMap<>();
+
     public static Quad[][] getMainGrid() {
         return mainGrid;
     }
@@ -82,6 +84,10 @@ public enum Model implements Serializable {
 
     public static Set<Track> getTracks() {
         return tracks;
+    }
+
+    public static Map<Long, RFIDTag> getTags() {
+        return tags;
     }
 
     public static String getModelURL() {
@@ -140,6 +146,7 @@ public enum Model implements Serializable {
                 });
             });
 
+            objectOutputStream.writeObject(tags);
 
             Arrays.stream(mainGrid).flatMap(Arrays::stream).forEach(quad -> {
                 if (quad.getType() != QuadType.EMPTY_QUAD) {
@@ -182,7 +189,7 @@ public enum Model implements Serializable {
                 locomotives.values().forEach(TracksideObject::addPropertyChangeSupport);
                 routeTable = (CopyOnWriteArraySet<Route>) inputStream.readObject();
                 tracks = (Set<Track>) inputStream.readObject();
-
+                tags = (Map<Long, RFIDTag>) inputStream.readObject();
                 trackSections.values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.UNDEFINED));
                 signals.values().forEach(signal -> signal.setSignalState(SignalState.UNDEFINED));
                 switches.values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.UNDEFINED));

@@ -51,4 +51,5 @@ public class MQTTLocomotiveModule extends AbstractLocomotiveModule {
     public static String getCommandTopicRoot() {
         return commandTopicRoot;
     }
+
 }

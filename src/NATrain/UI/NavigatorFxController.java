@@ -56,8 +56,8 @@ public class NavigatorFxController {
 
     public void initialize() {
         AppConfigController.loadConfigs();
-        //Model.loadFromDisk();//
-        ModelMock.MockModel();
+        Model.loadFromDisk();//
+       // ModelMock.MockModel();
        }
 
     @FXML
@@ -149,7 +149,11 @@ public class NavigatorFxController {
         //controller.initialize();
         workPlace.setOnCloseRequest(event -> {
                 WorkPlaceController.setActiveMode(false);
-      //        MQTTConnectionService.getClient().disconnect();
+            try {
+                MQTTConnectionService.getClient().disconnect();
+            } catch (MqttException e) {
+                e.printStackTrace();
+            }
             primaryStage.show();
             Blinker.stop();
         });

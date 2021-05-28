@@ -46,7 +46,5 @@
       <Label layoutX="108.0" layoutY="276.0" text="Track" />
       <ChoiceBox fx:id="outputTrackChoiceBox" layoutX="452.0" layoutY="297.0" prefHeight="25.0" prefWidth="150.0" />
       <Label layoutX="453.0" layoutY="276.0" text="Track" />
-      <ChoiceBox fx:id="inputChoiceBox" layoutX="106.0" layoutY="407.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="107.0" layoutY="387.0" text="Input" />
    </children>
 </Pane>
