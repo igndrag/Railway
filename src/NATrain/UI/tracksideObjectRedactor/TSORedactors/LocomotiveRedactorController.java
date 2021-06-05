@@ -5,9 +5,11 @@ import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.trackSideObjects.RFIDTag;
+import NATrain.trackSideObjects.TagType;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.locomotives.Autopilot;
 import NATrain.trackSideObjects.locomotives.Locomotive;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.UtilFunctions;
 import NATrain.сontrolModules.MQTTLocomotiveModule;
 import javafx.animation.KeyFrame;
@@ -15,14 +17,24 @@ import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import sun.plugin.util.UIUtil;
 
+import java.io.IOException;
+
 public class LocomotiveRedactorController extends TracksideObjectRedactorController {
 
+    @FXML
+    public Button frontReadButton;
+    @FXML
+    public Button rearReadButton;
     @FXML
     private TextField frontTagTextField1;
     @FXML
@@ -49,6 +61,26 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
     private Button halfSpeedTestButton;
     @FXML
     private Locomotive locomotive;
+
+    protected void setFrontUid (String uid) {
+        String[] uidParts = uid.split(" ");
+        if (isUidValid(uidParts[0], uidParts[1], uidParts[2], uidParts[3])) {
+            frontTagTextField1.setText(uidParts[0]);
+            frontTagTextField2.setText(uidParts[1]);
+            frontTagTextField3.setText(uidParts[2]);
+            frontTagTextField4.setText(uidParts[3]);
+        }
+    }
+
+    protected void setRearUid (String uid) {
+        String[] uidParts = uid.split(" ");
+        if (isUidValid(uidParts[0], uidParts[1], uidParts[2], uidParts[3])) {
+            rearTagTextField1.setText(uidParts[0]);
+            rearTagTextField2.setText(uidParts[1]);
+            rearTagTextField3.setText(uidParts[2]);
+            rearTagTextField4.setText(uidParts[3]);
+        }
+    }
 
     @Override
     public void init(TracksideObject tracksideObject, TableView<TracksideObject> tableView, ObservableList<TracksideObject> observableList) {
@@ -86,6 +118,7 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
             frontTagTextField3.setDisable(true);
             frontTagTextField4.setText(frontTag.getUid()[3]);
             frontTagTextField4.setDisable(true);
+            frontReadButton.setText("Clear");
         }
         if (locomotive.getRearTag() != null) {
             RFIDTag rearTag = locomotive.getRearTag();
@@ -97,7 +130,24 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
             rearTagTextField3.setDisable(true);
             rearTagTextField4.setText(rearTag.getUid()[3]);
             rearTagTextField4.setDisable(true);
+            rearReadButton.setText("Clear");
         }
+
+        frontReadButton.setOnAction(event -> {
+            try {
+                toTagReader(this, TagType.FRONT_TAG);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        rearReadButton.setOnAction(event -> {
+            try {
+                toTagReader(this, TagType.REAR_TAG);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @FXML
@@ -116,7 +166,7 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
                 return;
             }
 
-            RFIDTag frontTag = new RFIDTag(
+            RFIDTag frontTag = new RFIDTag (
                     frontTagTextField1.getText(),
                     frontTagTextField2.getText(),
                     frontTagTextField3.getText(),
@@ -134,6 +184,7 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
                     rearTagTextField4.getText())) {
                 return;
             }
+
             RFIDTag rearTag = new RFIDTag(
                     rearTagTextField1.getText(),
                     rearTagTextField2.getText(),
@@ -170,14 +221,14 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
     private boolean checkByte(String expectedByte) {
         try {
             int expectedDec = Integer.parseInt(expectedByte, 16);
-            return 0 <= expectedDec && expectedDec < 256;
+            return 0 <= expectedDec && expectedDec <= 256;
         } catch (NumberFormatException e) {
             UIUtils.showAlert(String.format("%s is incorrect byte.", expectedByte));
             return false;
         }
     }
 
-    private boolean isUidValid(String b1, String b2, String b3, String b4) {
+    protected boolean isUidValid(String b1, String b2, String b3, String b4) {
         boolean bytesChecked = checkByte(b1) && checkByte(b2) && checkByte(b3) && checkByte(b4);
         if (bytesChecked) {
             long decUid = UtilFunctions.convertUidToLong(b1, b2, b3, b4);
@@ -188,4 +239,21 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
         }
         return bytesChecked;
     }
+
+    protected void toTagReader (LocomotiveRedactorController locomotiveRedactorController, TagType tagType) throws IOException {
+        FXMLLoader loader = new FXMLLoader(TrackSectionRedactorController.class.getResource("TagReader.fxml"));
+        Stage tagReader = new Stage();
+        tagReader.setTitle("TagReader");
+        tagReader.setScene(new Scene(loader.load(), 250, 170));
+        tagReader.setResizable(false);
+        TagReaderController controller = loader.getController();
+        controller.init(locomotiveRedactorController, tagType);
+        tagReader.initModality(Modality.WINDOW_MODAL);
+        tagReader.initOwner(frontReadButton.getScene().getWindow());
+        tagReader.show();
+        tagReader.setOnCloseRequest(event -> {
+            controller.closeReader();
+        });
+    }
+
 }

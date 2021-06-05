@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="170.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.TagReaderController">
+   <children>
+      <Button fx:id="closeButton" layoutX="100.0" layoutY="122.0" mnemonicParsing="false" text="Close" />
+      <Label layoutX="75.0" layoutY="61.0" text="Put Tag on reader" />
+      <Label fx:id="uidValue" layoutX="96.0" layoutY="78.0" />
+   </children>
+</AnchorPane>

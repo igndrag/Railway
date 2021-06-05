@@ -1,6 +1,7 @@
 package NATrain.UI;
 
 import NATrain.model.Model;
+import NATrain.utils.UtilFunctions;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -14,6 +15,7 @@ public class AppConfigController {
 
     private Stage primaryStage;
     private static final String configURL = "config.ntc";
+    public static int comPortNumber = 1;
 
 
     @FXML
@@ -34,6 +36,7 @@ public class AppConfigController {
 
     public void initialize() {
         modelPathTextField.setText(Model.getModelURL());
+        portNumberTextField.setText(String.valueOf(comPortNumber));
     }
 
     @FXML
@@ -58,6 +61,7 @@ public class AppConfigController {
                 FileInputStream fileInputStream = new FileInputStream(configPath.toFile());
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 String modelDirectoryAddress = (String) objectInputStream.readObject();
+                comPortNumber = (Integer) objectInputStream.readObject();
                 objectInputStream.close();
                 Model.setModelURL(modelDirectoryAddress);
             } else {
@@ -78,6 +82,14 @@ public class AppConfigController {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(modelPathTextField.getText());
             Model.setModelURL(modelPathTextField.getText());
+            int expectedPortNumber = UtilFunctions.parseIfPositiveNumeric(portNumberTextField.getText());
+            if (expectedPortNumber >= 0) {
+                objectOutputStream.writeObject(expectedPortNumber);
+                comPortNumber = expectedPortNumber;
+            } else {
+                objectOutputStream.writeObject(1);
+                comPortNumber = 1;
+            }
             objectOutputStream.close();
 
         } catch (IOException e) {

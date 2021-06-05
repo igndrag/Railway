@@ -3,8 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.LocomotiveRedactorController">
-   <Button layoutX="137.0" layoutY="281.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="270.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.LocomotiveRedactorController">
+   <Button layoutX="188.0" layoutY="285.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
    <TextField fx:id="textField" layoutX="22.0" layoutY="31.0" prefHeight="25.0" prefWidth="178.0" />
    <Label layoutX="24.0" layoutY="11.0" text="ID" />
    <Label layoutX="25.0" layoutY="62.0" text="Full Speed, mm/sec" />
@@ -14,13 +14,15 @@
    <TextField fx:id="halfSpeedTextField" layoutX="26.0" layoutY="130.0" prefHeight="25.0" prefWidth="103.0" />
    <Button fx:id="halfSpeedTestButton" layoutX="138.0" layoutY="130.0" mnemonicParsing="false" prefWidth="60.0" text="Test" />
    <TextField fx:id="frontTagTextField1" layoutX="26.0" layoutY="190.0" prefHeight="25.0" prefWidth="30.0" />
-   <TextField fx:id="frontTagTextField2" layoutX="67.0" layoutY="190.0" prefHeight="25.0" prefWidth="30.0" />
-   <TextField fx:id="frontTagTextField3" layoutX="110.0" layoutY="190.0" prefHeight="25.0" prefWidth="30.0" />
-   <TextField fx:id="frontTagTextField4" layoutX="151.0" layoutY="190.0" prefHeight="25.0" prefWidth="30.0" />
-   <TextField fx:id="rearTagTextField1" layoutX="27.0" layoutY="240.0" prefHeight="25.0" prefWidth="30.0" />
-   <TextField fx:id="rearTagTextField2" layoutX="68.0" layoutY="240.0" prefHeight="25.0" prefWidth="30.0" />
-   <TextField fx:id="rearTagTextField3" layoutX="110.0" layoutY="240.0" prefHeight="25.0" prefWidth="30.0" />
-   <TextField fx:id="rearTagTextField4" layoutX="151.0" layoutY="241.0" prefHeight="25.0" prefWidth="30.0" />
+   <TextField fx:id="frontTagTextField2" layoutX="63.0" layoutY="190.0" prefHeight="25.0" prefWidth="30.0" />
+   <TextField fx:id="frontTagTextField3" layoutX="100.0" layoutY="190.0" prefHeight="25.0" prefWidth="30.0" />
+   <TextField fx:id="frontTagTextField4" layoutX="138.0" layoutY="190.0" prefHeight="25.0" prefWidth="30.0" />
+   <TextField fx:id="rearTagTextField1" layoutX="26.0" layoutY="240.0" prefHeight="25.0" prefWidth="30.0" />
+   <TextField fx:id="rearTagTextField2" layoutX="62.0" layoutY="240.0" prefHeight="25.0" prefWidth="30.0" />
+   <TextField fx:id="rearTagTextField3" layoutX="100.0" layoutY="240.0" prefHeight="25.0" prefWidth="30.0" />
+   <TextField fx:id="rearTagTextField4" layoutX="138.0" layoutY="241.0" prefHeight="25.0" prefWidth="30.0" />
    <Label layoutX="26.0" layoutY="165.0" text="Front Tag" />
    <Label layoutX="26.0" layoutY="219.0" text="Rear Tag" />
+   <Button fx:id="frontReadButton" layoutX="188.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Read" />
+   <Button fx:id="rearReadButton" layoutX="188.0" layoutY="240.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Read" />
 </Pane>

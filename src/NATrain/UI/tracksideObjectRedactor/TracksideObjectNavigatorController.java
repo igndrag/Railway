@@ -175,7 +175,7 @@ public class TracksideObjectNavigatorController {
         FXMLLoader loader = new FXMLLoader(LocomotiveRedactorController.class.getResource("LocomotiveRedactor.fxml"));
         Stage locomotiveRedactor = new Stage();
         locomotiveRedactor.setTitle("Locomotive Redactor");
-        locomotiveRedactor.setScene(new Scene(loader.load(), 220, 320));
+        locomotiveRedactor.setScene(new Scene(loader.load(), 270, 320));
         locomotiveRedactor.setResizable(false);
         LocomotiveRedactorController controller = loader.getController();
         controller.init(locomotive, locomotiveTableView, locomotiveList);
@@ -412,8 +412,16 @@ public class TracksideObjectNavigatorController {
             //  objectForDelete.setControlModule(null);
 
             locomotiveList.remove(objectForDelete);
+            if (objectForDelete.getFrontTag() != null) {
+                Model.getTags().values().remove(objectForDelete.getFrontTag());
+            }
+
+            if (objectForDelete.getRearTag() != null) {
+                Model.getTags().values().remove(objectForDelete.getRearTag());
+            }
+
             Model.getLocomotives().remove(objectForDelete.getId());
-            if (signalList.size() == 0) {
+            if (locomotiveList.size() == 0) {
                 editLocomotiveButton.setDisable(true);
                 deleteLocomotiveButton.setDisable(true);
             }
