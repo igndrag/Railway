@@ -69,7 +69,7 @@ public abstract class BlockingSignalQuad extends BlockingTrackQuad implements Bl
     }
 
     private void updateBlockSignalView(Signal signal, Shape lampElement) {
-        if (signal != Signal.EMPTY_SIGNAL) {
+        if (signal != null && signal != Signal.EMPTY_SIGNAL) {
             lampElement.setFill(SIGNAL_LAMP_BACKGROUND_COLOR);
             switch (signal.getSignalState()) {
                 case UNDEFINED:

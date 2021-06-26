@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="io.github.java-native:jssc:2.9.2" type="repository">
+    <properties maven-id="io.github.java-native:jssc:2.9.2" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/github/java-native/jssc/2.9.2/jssc-2.9.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/scijava/native-lib-loader/2.3.3/native-lib-loader-2.3.3.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

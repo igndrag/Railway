@@ -88,6 +88,10 @@ public class LocomotiveController {
             }
         });
 
+        runButton.setOnAction(event -> {
+            locomotive.run();
+        });
+
         previewPane.getChildren().add(quad.getView());
         speedSlider.setMax(8);
         speedSlider.setMin(0);

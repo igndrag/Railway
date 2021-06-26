@@ -1,16 +1,13 @@
 package NATrain.UI.tracksideObjectRedactor.TSORedactors;
 
 import NATrain.UI.AppConfigController;
-import NATrain.connectionService.RequestExecutor;
 import NATrain.trackSideObjects.TagType;
-import arduino.Arduino;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class TagReaderController {
@@ -49,6 +46,7 @@ public class TagReaderController {
             serialPort = SerialPort.getCommPort("COM" + AppConfigController.comPortNumber);
             //serialPort = SerialPort.getCommPort("COM5");
             serialPort.openPort();
+            serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
             System.out.println("Connected to " + serialPort.getDescriptivePortName());
         }
 
@@ -66,11 +64,12 @@ public class TagReaderController {
                     if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
                         return;
                     try {
-                        Thread.sleep(30);
+                        Thread.sleep(50);
                         byte[] newData = new byte[serialPort.bytesAvailable()];
                         int numRead = serialPort.readBytes(newData, newData.length);
                         String uid = new String(newData).toUpperCase();
-                        if (uid.length() > 0) {
+                        //System.out.println(uid);
+                        if (uid.length() > 8) {
                             Platform.runLater(() -> {
                                 switch (tagType) {
                                     case FRONT_TAG:

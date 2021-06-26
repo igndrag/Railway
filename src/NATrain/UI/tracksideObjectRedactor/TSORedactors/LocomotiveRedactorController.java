@@ -64,6 +64,8 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
 
     protected void setFrontUid (String uid) {
         String[] uidParts = uid.split(" ");
+        if (uidParts.length < 4)
+            return;
         if (isUidValid(uidParts[0], uidParts[1], uidParts[2], uidParts[3])) {
             frontTagTextField1.setText(uidParts[0]);
             frontTagTextField2.setText(uidParts[1]);

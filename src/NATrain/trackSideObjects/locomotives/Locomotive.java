@@ -63,6 +63,9 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
         if (autopilot != null && speed > 0 && autopilot.getOdometer().getStatus() == PAUSED) {
             autopilot.getOdometer().play();
         }
+        if (actualState == LocomotiveState.MOVING_BACKWARD || actualState == LocomotiveState.MOVING_FORWARD) {
+            controlModule.sendCommand(SET_SPEED_CHANNEL, String.format("%04d", speed) );
+        }
     }
 
     public Locomotive(String id) {
@@ -98,6 +101,17 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
 
     public ControlModule getModule() {
         return controlModule;
+    }
+
+    public void run() {
+        if (speed > 0) {
+            if (movingDirection == MovingDirection.FORWARD) {
+                setActualState(LocomotiveState.MOVING_FORWARD);
+            } else {
+                setActualState(LocomotiveState.MOVING_BACKWARD);
+            }
+            controlModule.sendCommand(SET_SPEED_CHANNEL, String.format("%04d", speed) );
+        }
     }
 
     public void stop() {
