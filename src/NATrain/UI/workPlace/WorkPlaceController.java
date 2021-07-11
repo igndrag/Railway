@@ -32,11 +32,14 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.io.IOException;
 import java.util.List;
 
 public class WorkPlaceController {
+
 
     public static WorkPlaceController getActiveController() {
         return activeController;
@@ -67,6 +70,8 @@ public class WorkPlaceController {
     @FXML
     private Button routeCancellationButton;
     @FXML
+    private Button sendConfigsButton;
+    @FXML
     private ScrollPane workArea;
 
     private Stage primaryStage;
@@ -95,7 +100,7 @@ public class WorkPlaceController {
 
 
         Model.getStationTracks().values().forEach(TrackSection::updateVacancyState);
-       // Model.getSignals().values().forEach(Signal::close);
+        // Model.getSignals().values().forEach(Signal::close);
         Model.getTrackSections().values().forEach(TrackSection::updateVacancyState);
         Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));// TODO change it to global request for tests on real model
         Model.getTracks().forEach(track -> {
@@ -161,7 +166,33 @@ public class WorkPlaceController {
                 }
                 number++;
             }
+            try {
+                showMovableObjectsLocator();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
+
+        sendConfigsButton.setOnAction(event -> {
+            if (Model.getTags().keySet().size() > 0) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("98:"); //set configs command code
+                sb.append(String.format("%03d",Model.getTags().size()));
+                for (RFIDTag tag : Model.getTags().values()) {
+                    sb.append(":");
+                    sb.append(tag.getDecUid());
+                }
+                MqttMessage message = new MqttMessage(sb.toString().getBytes());
+                message.setQos(1);
+              //  message.setRetained(true);
+                try {
+                    MQTTConnectionService.getClient().publish("NATrain/system/", message);
+                } catch (MqttException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         //   ConnectionService connectionService = new ConnectionService("COM5");
         //   connectionService.start();
         MQTTConnectionService.connect();
@@ -241,11 +272,28 @@ public class WorkPlaceController {
         locomotiveController.show();
     }
 
+    public void showMovableObjectsLocator() throws IOException {
+        FXMLLoader loader = new FXMLLoader(LocomotiveController.class.getResource("Locator.fxml"));
+        Stage locator = new Stage();
+        locator.setTitle("Locator");
+        locator.setScene(new Scene(loader.load(), 600, 400));
+        locator.setResizable(false);
+        locator.setY(0);
+        LocatorController controller = loader.getController();
+        controller.init();
+        locator.initOwner(primaryStage);
+        locator.setAlwaysOnTop(true);
+        locator.show();
+    }
+
+
+
     @FXML
     private void cancelSelectedRoute() {
         if (!routeStatusTableView.getSelectionModel().isEmpty()) {
             routeStatusTableView.getSelectionModel().getSelectedItem().cancelRoute();
         }
     }
+
 }
 

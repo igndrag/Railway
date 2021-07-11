@@ -231,7 +231,7 @@ public class CMEditorController {
             }
         }
 
-        if (inputChannel.getModule() != null && inputChannel.getModule() != controlModule) { //configured to another module
+        if (inputChannel != null && inputChannel.getModule() != null && inputChannel.getModule() != controlModule) { //configured to another module
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(String.format("This channel is already configured on %d channel in %s module.", chNumber, inputChannel.getModule().getId()));
             alert.setContentText("Replace module?");
@@ -244,8 +244,9 @@ public class CMEditorController {
                 return;
             }
         }
+        if (inputChannel != null) {
         inputChannel.setChNumber(chNumber);
-        inputChannel.setModule(controlModule);
+        inputChannel.setModule(controlModule);}
         inputsTableView.getItems().add(inputChannel);
         inputsTableView.getItems().sort(Comparator.comparingInt(InputChannel::getChNumber));
         controlModule.getInputChannels().put(chNumber, inputChannel);

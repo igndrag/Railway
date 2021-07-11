@@ -3,8 +3,10 @@ package NATrain.UI.workPlace;
 import NATrain.UI.UIUtils;
 import NATrain.model.Model;
 import NATrain.routes.RouteDirection;
+import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.trackSideObjects.trackSections.TrackSectionState;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -42,10 +44,24 @@ public class LocomotiveSelectorController {
                 return;
             }
             Locomotive locomotive = locomotiveListView.getSelectionModel().getSelectedItem();
-            locomotive.getFrontTag().setTagLocation(trackSection);
-            locomotive.getRearTag().setTagLocation(trackSection);
-            trackSection.getTags().add(locomotive.getFrontTag());
-            trackSection.getTags().add(locomotive.getRearTag());
+            RFIDTag frontTag = locomotive.getFrontTag();
+            RFIDTag rearTag = locomotive.getRearTag();
+            if (frontTag.getTagLocation() != null) {
+                frontTag.getTagLocation().getTags().remove(frontTag);
+                frontTag.getTagLocation().updateVacancyState();
+            }
+            if (rearTag.getTagLocation() != null) {
+                rearTag.getTagLocation().getTags().remove(rearTag);
+                rearTag.getTagLocation().updateVacancyState();
+            }
+
+            frontTag.setTagLocation(trackSection);
+            rearTag.setTagLocation(trackSection);
+            trackSection.getTags().add(frontTag);
+            trackSection.getTags().add(rearTag);
+            trackSection.updateVacancyState();
+
+            LocatorController.refreshTable();
 
             if (evenToggleButton.isSelected()) {
                 locomotive.setForwardDirection(RouteDirection.EVEN);

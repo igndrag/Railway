@@ -3,13 +3,10 @@ package NATrain.trackSideObjects;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 
 public abstract class AbstractMovableObject extends TracksideObject implements Movable {
+    static final long serialVersionUID = 1L;
+
     private RFIDTag frontTag;
     private RFIDTag rearTag;
-    TrackSection location;
-
-    public TrackSection getLocation() {
-        return frontTag.getTagLocation();
-    }
 
     public AbstractMovableObject(String id) {
         super(id);

@@ -62,7 +62,7 @@ public class Autopilot {
             }
         }));
         odometer.setCycleCount(Animation.INDEFINITE);
-        locomotiveController.getLocationLabel().setText(locomotive.getLocation().getId());
+        locomotiveController.getLocationLabel().setText(locomotive.getFrontTagLocation().getId());
     }
 
     public Timeline getOdometer() {
@@ -167,13 +167,13 @@ public class Autopilot {
                 odometerValue = 0;
                 nextLocation.removePropertyChangeListener(this);//delete listener from previous section
           //    locomotive.setLocation(nextLocation);
-                locomotiveController.getLocationLabel().setText(locomotive.getLocation().getId());
-                if (locomotive.getLocation() == lastSectionInRoute) {
+                locomotiveController.getLocationLabel().setText(locomotive.getFrontTagLocation().getId());
+                if (locomotive.getFrontTagLocation() == lastSectionInRoute) {
                     nextLocation = route.getDestinationTrackSection();
                 } else {
                     nextLocation = movementPlan.poll();
                 }
-                if (locomotive.getLocation() == route.getDestinationTrackSection()) {
+                if (locomotive.getFrontTagLocation() == route.getDestinationTrackSection()) {
                     switch (route.getRouteType()) {
                         case ARRIVAL:    //in arrival routes
                             if (!locomotiveController.checkRoutesInLocation()) { //check routes for next movement
@@ -203,7 +203,7 @@ public class Autopilot {
             locomotiveController.getPreview().refresh();
             switch (Signal.getGlobalStatusForState(signalState)) {
                 case CLOSED: // stop timer will start when loco occupy the last section of route
-                    if (locomotive.getLocation() instanceof TrackBlockSection) {
+                    if (locomotive.getFrontTagLocation() instanceof TrackBlockSection) {
                         stopTimerStart();//and right now if locomotive is moving on trackline
                     }
                 case OPENED_ON_RESTRICTED_SPEED:
@@ -225,7 +225,7 @@ public class Autopilot {
                 nextLocation.removePropertyChangeListener(nextBlockSectionListener);
                 int blockSectionIndex = track.getBlockSections().indexOf(nextLocation);
                 //locomotive.setLocation(nextLocation);
-                locomotiveController.getLocationLabel().setText(locomotive.getLocation().getId());
+                locomotiveController.getLocationLabel().setText(locomotive.getFrontTagLocation().getId());
 
                 if (blockSectionIndex == 0 && track.getTrackDirection() == TrackDirection.REVERSED) {
                     nextSignal = track.getReversedDirectionArrivalSignal();
@@ -310,7 +310,7 @@ public class Autopilot {
     }
 
     private void stopTimerStart() {
-        double length = locomotive.getLocation().getLength() - odometerValue;
+        double length = locomotive.getFrontTagLocation().getLength() - odometerValue;
         double time = 0;
         switch (locomotive.getSpeed()) {
             case FULL_SPEED:
@@ -334,7 +334,7 @@ public class Autopilot {
                 ));
         Timeline occupationalChecker = new Timeline(new KeyFrame(Duration.millis(10), event -> {
             if (nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) { //check, that next signal is really closed (increase delay for guarantied change of loco position and next signal in autopilot controller);
-                if (locomotive.getLocation() instanceof TrackBlockSection || (route != null && locomotive.getLocation() == route.getDestinationTrackSection())) { //and run stop timer if loco somewhere in trackline or in destination track section
+                if (locomotive.getFrontTagLocation() instanceof TrackBlockSection || (route != null && locomotive.getFrontTagLocation() == route.getDestinationTrackSection())) { //and run stop timer if loco somewhere in trackline or in destination track section
                     stopTimer.setCycleCount(1);
                     stopTimer.play();
                 }

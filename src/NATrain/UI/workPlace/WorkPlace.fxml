@@ -29,6 +29,7 @@
             <Pane prefHeight="46.0" prefWidth="274.0">
                <children>
                   <Button fx:id="routeCancellationButton" layoutX="172.0" layoutY="12.0" mnemonicParsing="false" onAction="#cancelSelectedRoute" text="Cancel Route" />
+                  <Button fx:id="sendConfigsButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" text="Send configs" />
                </children>
             </Pane>
          </children>

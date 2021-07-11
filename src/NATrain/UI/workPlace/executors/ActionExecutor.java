@@ -1,5 +1,6 @@
 package NATrain.UI.workPlace.executors;
 
+import NATrain.UI.workPlace.LocatorController;
 import NATrain.UI.workPlace.LocomotiveSelectorController;
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;

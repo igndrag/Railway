@@ -129,6 +129,7 @@ public class ActionEmulatorController {
                 if (occupiedTrackToggleButton.isSelected()) {
                     trackSection.setVacancyState(TrackSectionState.OCCUPIED);
                 } else {
+                    trackSection.getTags().clear();
                     trackSection.setVacancyState(TrackSectionState.FREE);
                 }
             }

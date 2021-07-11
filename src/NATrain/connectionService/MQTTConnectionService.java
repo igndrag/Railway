@@ -23,11 +23,8 @@ public class MQTTConnectionService {
     }
 
     private static class MyMqttCallback implements MqttCallback {
-        private ControlModule controlModule;
 
-        public MyMqttCallback(ControlModule controlModule) {
-            this.controlModule = controlModule;
-        }
+        private ControlModule controlModule;
 
         @Override
         public void connectionLost(Throwable throwable) {
@@ -36,19 +33,23 @@ public class MQTTConnectionService {
 
         @Override
         public void messageArrived(String topic, MqttMessage message) throws Exception {
-           // RESPONSE INPUTNUMBER1:INPUTSTATUS1 INPUTNUMBER2:INPUTSTATUS2 ...
-           String[] inputStatuses = message.toString().split(" ");
+            // RESPONSE MODULE_ID:INPUTNUMBER1:INPUTSTATUS1 MODULE_ID:INPUTNUMBER2:INPUTSTATUS2
+            String[] inputStatuses = message.toString().split(" ");
             for (String inputStatus : inputStatuses) {
                 String[] statusParts = inputStatus.split(":");
-                int portNumber = Integer.parseInt(statusParts[0]);
-                if (statusParts[1].length() < 2) {
-                    int inputStateCode = Integer.parseInt(statusParts[1]);
-                    controlModule.getInputChannels().get(portNumber).setActualState(inputStateCode);
-                } else {
-                    long decUid = Long.parseLong(statusParts[1]);
-                    controlModule.getInputChannels().get(portNumber).moveTag(decUid);
+                controlModule = Model.getControlModules().get(statusParts[0]);
+                if (controlModule != null) {
+                    int portNumber = Integer.parseInt(statusParts[1]);
+                    if (statusParts[2].length() < 2) {
+                        int inputStateCode = Integer.parseInt(statusParts[2]);
+                        controlModule.getInputChannels().get(portNumber).setActualState(inputStateCode);
+                    } else {
+                        long decUid = Long.parseLong(statusParts[2]);
+                        System.out.printf("%s: %d:%d\n", controlModule.getId(), portNumber, decUid);
+                        controlModule.getInputChannels().get(portNumber).moveTag(decUid);
+                    }
                 }
-                }
+            }
         }
 
         @Override
@@ -85,6 +86,7 @@ public class MQTTConnectionService {
             e.printStackTrace();
         }
     }
+
     public static void connect() {
         try {
             mqttClient = new MqttClient(broker, clientID, persistence);
@@ -93,10 +95,9 @@ public class MQTTConnectionService {
             connOpts.setKeepAliveInterval(1000);
             mqttClient.connect(connOpts); //connects the broker with connect options
             publish(topicName, "NATrainApp connected");
-            Model.getControlModules().values().forEach(controlModule -> {
-                String topicForSubscribe = topicName + "/controlModules/responses/" + controlModule.getId();
-                subscribe(topicForSubscribe, new MyMqttCallback(controlModule));
-            });
+            String topicForSubscribe = topicName + "/controlModules/responses/#";
+            subscribe(topicForSubscribe, new MyMqttCallback());
+            System.out.println("Subscribed to: " + topicForSubscribe);
         } catch (MqttException e) {
             e.printStackTrace();
         }

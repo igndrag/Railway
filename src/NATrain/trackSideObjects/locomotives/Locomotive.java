@@ -81,7 +81,6 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
         propertyChangeSupport.firePropertyChange("Actual State", null, actualState); //for listening from UI controller
     }
 
-
     public MovingDirection getMovingDirection() {
         return movingDirection;
     }

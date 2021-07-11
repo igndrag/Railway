@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="370.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.LocatorController">
+   <children>
+      <TableView fx:id="locatorTable" layoutX="39.0" layoutY="21.0" prefHeight="330.0" prefWidth="526.0">
+        <columns>
+          <TableColumn fx:id="movableObjectColumn" prefWidth="211.0" text="Movble Object" />
+          <TableColumn fx:id="frontTagColumn" prefWidth="157.0" text="Front Tag" />
+            <TableColumn fx:id="rearTagColumn" prefWidth="157.0" text="Rear Tag" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

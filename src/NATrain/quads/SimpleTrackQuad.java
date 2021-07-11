@@ -22,6 +22,7 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
 
     static {
         availableActions.add(ControlAction.SET_ROUTE_TO_TRACK);
+        availableActions.add(ControlAction.ALLOCATE_LOCOMOTIVE);
 
         availableActionsForStationTrack.add(ControlAction.SET_ROUTE_TO_TRACK);
         availableActionsForStationTrack.add(ControlAction.ALLOCATE_LOCOMOTIVE);

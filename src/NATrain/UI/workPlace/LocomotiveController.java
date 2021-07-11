@@ -120,8 +120,8 @@ public class LocomotiveController {
         autopilotToggleButton.setOnAction(event -> {
             if (autopilotToggleButton.isSelected()) {
                 this.autopilot = new Autopilot(locomotive, this);
-                if (locomotive.getLocation() instanceof TrackBlockSection) {
-                    autopilot.setBlockSection((TrackBlockSection) locomotive.getLocation());
+                if (locomotive.getFrontTag().getTagLocation() instanceof TrackBlockSection) {
+                    autopilot.setBlockSection((TrackBlockSection) locomotive.getFrontTag().getTagLocation());
                 }
                 checkRoutesInLocation();
                 directionLabel.setText(locomotive.getForwardDirection().toString());
@@ -137,7 +137,7 @@ public class LocomotiveController {
     }
 
     public boolean checkRoutesInLocation() {
-        Optional<Route> expectedRoute = ActionExecutor.getActiveRoutes().stream().map(RouteExecutor::getRoute).filter(route -> route.getDepartureTrackSection() == locomotive.getLocation()).findFirst();
+        Optional<Route> expectedRoute = ActionExecutor.getActiveRoutes().stream().map(RouteExecutor::getRoute).filter(route -> route.getDepartureTrackSection() == locomotive.getFrontTag().getTagLocation()).findFirst();
         if (expectedRoute.isPresent()) {
             autopilot.setRoute(expectedRoute.get());
             return true;
