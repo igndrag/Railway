@@ -184,7 +184,7 @@ public class WorkPlaceController {
                 }
                 MqttMessage message = new MqttMessage(sb.toString().getBytes());
                 message.setQos(1);
-              //  message.setRetained(true);
+              //message.setRetained(true);
                 try {
                     MQTTConnectionService.getClient().publish("NATrain/system/", message);
                 } catch (MqttException e) {

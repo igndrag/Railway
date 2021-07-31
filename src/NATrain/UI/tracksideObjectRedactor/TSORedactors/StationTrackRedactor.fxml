@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.StationTrackRedactorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.StationTrackRedactorController">
    <children>
       <Button layoutX="137.0" layoutY="315.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
       <TextField fx:id="textField" layoutX="22.0" layoutY="31.0" prefHeight="25.0" prefWidth="178.0" />
@@ -18,10 +14,5 @@
       <ChoiceBox fx:id="oddSignalChoiceBox" layoutX="97.0" layoutY="153.0" prefHeight="25.0" prefWidth="103.0" />
       <Label layoutX="24.0" layoutY="116.0" text="Even Signal" />
       <Label layoutX="25.0" layoutY="157.0" text="Odd Signal" />
-      <Label layoutX="71.0" layoutY="187.0" text="Configuration" />
-      <TextField fx:id="centralElementCountTextField" layoutX="158.0" layoutY="243.0" prefHeight="25.0" prefWidth="37.0" />
-      <RadioButton fx:id="evenBorderCheckBox" contentDisplay="TOP" layoutX="27.0" layoutY="217.0" mnemonicParsing="false" text="Even Border" textOverrun="CLIP" />
-      <RadioButton fx:id="oddBorderCheckBox" contentDisplay="TOP" layoutX="28.0" layoutY="274.0" mnemonicParsing="false" text="Odd Border" textOverrun="CLIP" />
-      <RadioButton fx:id="centralElementCheckBox" contentDisplay="TOP" layoutX="27.0" layoutY="245.0" mnemonicParsing="false" text="Central Element" textOverrun="CLIP" />
    </children>
 </Pane>

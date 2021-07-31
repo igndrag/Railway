@@ -25,8 +25,6 @@ import java.util.Comparator;
 
 public class TracksideObjectNavigatorController {
 
-
-
     @FXML
     private TableView<TracksideObject> switchTableView;
     @FXML
@@ -171,7 +169,7 @@ public class TracksideObjectNavigatorController {
     }
 
 
-    private void toLocomotiveRedactor(Locomotive locomotive) throws IOException {
+    private void toLocomotiveRedactor(Locomotive locomotive, boolean edit) throws IOException {
         FXMLLoader loader = new FXMLLoader(LocomotiveRedactorController.class.getResource("LocomotiveRedactor.fxml"));
         Stage locomotiveRedactor = new Stage();
         locomotiveRedactor.setTitle("Locomotive Redactor");
@@ -179,6 +177,7 @@ public class TracksideObjectNavigatorController {
         locomotiveRedactor.setResizable(false);
         LocomotiveRedactorController controller = loader.getController();
         controller.init(locomotive, locomotiveTableView, locomotiveList);
+        controller.edit = edit;
         locomotiveRedactor.initModality(Modality.WINDOW_MODAL);
         locomotiveRedactor.initOwner(primaryStage);
         locomotiveRedactor.show();
@@ -399,7 +398,7 @@ public class TracksideObjectNavigatorController {
         newLocomotiveButton.setOnMouseClicked(event -> {
             try {
                 Locomotive locomotive = new Locomotive(Locomotive.INITIAL_LOCOMOTIVE_NAME);
-                toLocomotiveRedactor(locomotive);
+                toLocomotiveRedactor(locomotive, false);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -429,7 +428,7 @@ public class TracksideObjectNavigatorController {
 
         editLocomotiveButton.setOnAction(event -> {
             try {
-                toLocomotiveRedactor((Locomotive) locomotiveTableView.getSelectionModel().getSelectedItem());
+                toLocomotiveRedactor((Locomotive) locomotiveTableView.getSelectionModel().getSelectedItem(), true);
             } catch (IOException e) {
                 e.printStackTrace();
             }

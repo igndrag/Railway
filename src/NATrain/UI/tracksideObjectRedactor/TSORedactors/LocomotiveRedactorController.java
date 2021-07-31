@@ -90,6 +90,7 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
         textField.setText(locomotive.getId());
         this.tableView = tableView;
         this.observableList = observableList;
+        this.initialName = locomotive.getId();
 
         if (locomotive.getControlModule() != null) {
             textField.setDisable(true);
@@ -121,7 +122,36 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
             frontTagTextField4.setText(frontTag.getUid()[3]);
             frontTagTextField4.setDisable(true);
             frontReadButton.setText("Clear");
+            frontReadButton.setOnAction(event -> {
+                frontTagTextField1.setDisable(false);
+                frontTagTextField1.clear();
+                frontTagTextField2.setDisable(false);
+                frontTagTextField2.clear();
+                frontTagTextField3.setDisable(false);
+                frontTagTextField3.clear();
+                frontTagTextField4.setDisable(false);
+                frontTagTextField4.clear();
+                Model.getTags().remove(locomotive.getFrontTag().getDecUid());
+                locomotive.setFrontTag(null);
+                frontReadButton.setOnAction(ev -> {
+                    try {
+                        toTagReader(this, TagType.FRONT_TAG);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                frontReadButton.setText("Read");
+            });
+        } else {
+            frontReadButton.setOnAction(event -> {
+                try {
+                    toTagReader(this, TagType.FRONT_TAG);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
+
         if (locomotive.getRearTag() != null) {
             RFIDTag rearTag = locomotive.getRearTag();
             rearTagTextField1.setText(rearTag.getUid()[0]);
@@ -133,23 +163,35 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
             rearTagTextField4.setText(rearTag.getUid()[3]);
             rearTagTextField4.setDisable(true);
             rearReadButton.setText("Clear");
+            rearReadButton.setOnAction(event -> {
+                rearTagTextField1.setDisable(false);
+                rearTagTextField1.clear();
+                rearTagTextField2.setDisable(false);
+                rearTagTextField2.clear();
+                rearTagTextField3.setDisable(false);
+                rearTagTextField3.clear();
+                rearTagTextField4.setDisable(false);
+                rearTagTextField4.clear();
+                Model.getTags().remove(locomotive.getRearTag().getDecUid());
+                locomotive.setRearTag(null);
+                rearReadButton.setOnAction(ev -> {
+                    try {
+                        toTagReader(this, TagType.REAR_TAG);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                rearReadButton.setText("Read");
+            });
+        } else {
+            rearReadButton.setOnAction(event -> {
+                try {
+                    toTagReader(this, TagType.REAR_TAG);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
-
-        frontReadButton.setOnAction(event -> {
-            try {
-                toTagReader(this, TagType.FRONT_TAG);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        rearReadButton.setOnAction(event -> {
-            try {
-                toTagReader(this, TagType.REAR_TAG);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
     @FXML
@@ -176,7 +218,6 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
 
             frontTag.setId(String.format(("%s_front_tag"), locomotive.getId()));
             locomotive.setFrontTag(frontTag);
-            Model.getTags().put(frontTag.getDecUid(), frontTag);
         }
 
         if (!rearTagTextField1.isDisabled()) {
@@ -208,6 +249,12 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
         }
 
         locomotive.setModule(new MQTTLocomotiveModule(locomotive.getId() + "_MQTTLocomotiveModule", locomotive));
+        if (locomotive.getFrontTag() != null) {
+            Model.getTags().put(locomotive.getFrontTag().getDecUid(), locomotive.getFrontTag());
+        }
+        if (locomotive.getRearTag() != null) {
+            Model.getTags().put(locomotive.getRearTag().getDecUid(), locomotive.getRearTag());
+        }
         updateModelAndClose(Model.getLocomotives(), locomotive);
     }
 
