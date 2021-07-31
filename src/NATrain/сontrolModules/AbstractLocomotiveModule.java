@@ -26,7 +26,7 @@ public abstract class AbstractLocomotiveModule extends AbstractModule implements
     public static final int REAR_LIGHT_OFF_COMMAND_CODE = 5;
 
     public AbstractLocomotiveModule(String id, Locomotive locomotive) {
-        super(id);
+        super(id, 0, 0);
         this.locomotive = locomotive;
     }
 }

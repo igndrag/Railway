@@ -20,13 +20,9 @@ public interface ControlModule {
 
     void globalRequest();
 
-    default int getInputsCount() {
-        return getInputChannels().size();
-    }
+    int getInputsCount();
 
-    default int getOutputsCount() {
-        return getOutputChannels().size();
-    }
+    int getOutputsCount();
 
     default String getObjectNames() {
         TreeSet<String> trackSectionNames = new TreeSet<>();

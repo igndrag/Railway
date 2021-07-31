@@ -180,7 +180,7 @@ public class CMEditorController {
             return;
         }
         Integer chNumber = UtilFunctions.parseIfPositiveNumeric(inputNumberTextField.getText());
-        if (0 > chNumber || chNumber > 256) {
+        if (0 > chNumber || chNumber >= controlModule.getInputsCount()) {
             UIUtils.showAlert("Invalid channel number.");
             return;
         }
@@ -264,7 +264,7 @@ public class CMEditorController {
             return;
         }
         Integer chNumber = UtilFunctions.parseIfPositiveNumeric(outputNumberTextField.getText());
-        if (0 > chNumber || chNumber > 256) {
+        if (0 > chNumber || chNumber >= controlModule.getOutputsCount()) {
             UIUtils.showAlert("Invalid channel number.");
             return;
         }

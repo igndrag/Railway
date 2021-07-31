@@ -1,9 +1,10 @@
 package NATrain.сontrolModules;
 
 public enum ControlModuleType {
-    UNIVERSAL_MQTT_MODULE ("Universal MQTT Module"),
-    SWITCH_MQTT_MODULE ("Switch MQTT Module"),
-    RS485_MODULE ("RS485 Module");
+    SIGNAL_MQTT_CONTROLLER ("Signal MQTT Controller"),
+    SWITCH_MQTT_CONTROLLER("Switch MQTT Controller"),
+    REVERSE_LOOP_MQTT_CONTROLLER ("Reverse Loop MQTT Controller"),
+    UNIVERSAL_MQTT_MODULE ("Universal Controller");
 
     private String string;
 

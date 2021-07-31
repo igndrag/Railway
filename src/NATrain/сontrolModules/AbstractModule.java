@@ -14,12 +14,28 @@ public abstract class AbstractModule implements ControlModule, Serializable {
     
     protected ControlModuleType moduleType;
     protected String id;
+
+    protected int inputChannelCount;
+    protected int outputChannelCount;
     protected Map<Integer, InputChannel> inputChannels;
     protected Map<Integer, OutputChannel> outputChannels;
     protected static final String GLOBAL_REQUEST_COMMAND_CODE = "99";
 
-    public AbstractModule(String id) {
+    public AbstractModule(String id, int inputsCount, int outputsCount) {
         this.id = id;
+        this.inputChannelCount = inputsCount;
+        this.outputChannelCount = outputsCount;
+    }
+
+
+    @Override
+    public int getInputsCount() {
+        return inputChannelCount;
+    }
+
+    @Override
+    public int getOutputsCount() {
+        return outputChannelCount;
     }
 
     @Override

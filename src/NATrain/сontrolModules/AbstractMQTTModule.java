@@ -3,10 +3,13 @@ package NATrain.сontrolModules;
 import NATrain.connectionService.MQTTConnectionService;
 
 public abstract class AbstractMQTTModule extends AbstractModule{
-    public AbstractMQTTModule(String id) {
-        super(id);
+    public AbstractMQTTModule(String id, int inputsCount, int outputsCount) {
+        super(id, inputsCount, outputsCount);
     }
+
     protected static final String commandTopicRoot = "NATrain/controlModules/commands/";
+
+
 
     @Override
     public void sendCommand(int channelNumber, String command) {
@@ -17,4 +20,5 @@ public abstract class AbstractMQTTModule extends AbstractModule{
     public void globalRequest() {
         MQTTConnectionService.publish(commandTopicRoot + id, GLOBAL_REQUEST_COMMAND_CODE);
     }
+
 }

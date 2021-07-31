@@ -3,6 +3,7 @@ package NATrain.UI.controlModuleRedactor;
 import NATrain.model.Model;
 import NATrain.сontrolModules.ControlModule;
 import NATrain.сontrolModules.ControlModuleType;
+import NATrain.сontrolModules.SignalMQTTController;
 import NATrain.сontrolModules.UniversalMQTTModule;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,17 +17,17 @@ public class CMCreatorController {
     ObservableList<ControlModule> observableList;
 
     @FXML
-    private ToggleButton universalMQTTToggleButton;
+    private ToggleButton signalToggleButton;
     @FXML
-    private ToggleButton switchMQTTToggleButton;
+    private ToggleButton switchToggleButton;
     @FXML
-    private ToggleButton RS485ToggleButton;
+    private ToggleButton reverseLoopToggleButton;
     @FXML
     private ToggleButton checkConnectionButton;
     @FXML
     private TextField addressTextField;
 
-    ControlModuleType selectedType = ControlModuleType.UNIVERSAL_MQTT_MODULE;
+    ControlModuleType selectedType = ControlModuleType.SIGNAL_MQTT_CONTROLLER;
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -36,22 +37,22 @@ public class CMCreatorController {
         this.tableView = tableView;
         this.observableList = observableList;
         ToggleGroup toggleGroup = new ToggleGroup();
-        universalMQTTToggleButton.setToggleGroup(toggleGroup);
-        switchMQTTToggleButton.setToggleGroup(toggleGroup);
-        RS485ToggleButton.setToggleGroup(toggleGroup);
+        signalToggleButton.setToggleGroup(toggleGroup);
+        switchToggleButton.setToggleGroup(toggleGroup);
+        reverseLoopToggleButton.setToggleGroup(toggleGroup);
 
-        universalMQTTToggleButton.setSelected(true);
+        signalToggleButton.setSelected(true);
 
-        universalMQTTToggleButton.setOnAction(event -> {
-            selectedType = ControlModuleType.UNIVERSAL_MQTT_MODULE;
+        signalToggleButton.setOnAction(event -> {
+            selectedType = ControlModuleType.SIGNAL_MQTT_CONTROLLER;
         });
 
-        switchMQTTToggleButton.setOnAction(event -> {
-            selectedType = ControlModuleType.SWITCH_MQTT_MODULE;
+        switchToggleButton.setOnAction(event -> {
+            selectedType = ControlModuleType.SWITCH_MQTT_CONTROLLER;
         });
 
-        RS485ToggleButton.setOnAction(event -> {
-            selectedType = ControlModuleType.RS485_MODULE;
+        reverseLoopToggleButton.setOnAction(event -> {
+            selectedType = ControlModuleType.REVERSE_LOOP_MQTT_CONTROLLER;
         });
     }
 
@@ -77,8 +78,8 @@ public class CMCreatorController {
             String address = addressTextField.getText();
             ControlModule controlModule = null;
             switch (selectedType) {
-                case UNIVERSAL_MQTT_MODULE:
-                    controlModule = new UniversalMQTTModule(address);
+                case SIGNAL_MQTT_CONTROLLER:
+                    controlModule = new SignalMQTTController(address);
                     break;
                 default:
                     Alert a = new Alert(Alert.AlertType.WARNING);
