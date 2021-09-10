@@ -2,7 +2,6 @@ package NATrain.сontrolModules;
 
 import NATrain.trackSideObjects.signals.SignalLampType;
 import NATrain.trackSideObjects.TracksideObject;
-import org.json.JSONObject;
 
 import java.io.Serializable;
 
@@ -50,12 +49,12 @@ public class OutputChannel implements Serializable {
         return lampType;
     }
 
-    public void sendCommand (int commandCode) {
+    public void sendCommandCode(int commandCode) {
         if (module != null) {
             // JSONObject command = new JSONObject();
            // command.put("chNumber", chNumber);
            // command.put("commandCode", commandCode);
-            module.sendCommand(chNumber, String.format("%02d:%d", chNumber, commandCode));
+            module.sendCommandToChannel(chNumber, String.format("%02d:%02d", chNumber, commandCode));
         }
     }
 }

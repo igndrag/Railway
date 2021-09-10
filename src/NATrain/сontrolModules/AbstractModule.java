@@ -19,7 +19,8 @@ public abstract class AbstractModule implements ControlModule, Serializable {
     protected int outputChannelCount;
     protected Map<Integer, InputChannel> inputChannels;
     protected Map<Integer, OutputChannel> outputChannels;
-    protected static final String GLOBAL_REQUEST_COMMAND_CODE = "99";
+    public static final String GLOBAL_REQUEST_COMMAND_CODE = "99";
+    public static final int SWITCH_STATE_REQUEST_CODE = 96;
 
     public AbstractModule(String id, int inputsCount, int outputsCount) {
         this.id = id;

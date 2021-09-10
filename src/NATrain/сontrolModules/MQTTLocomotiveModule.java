@@ -19,8 +19,13 @@ public class MQTTLocomotiveModule extends AbstractLocomotiveModule {
     static final String commandTopicRoot = "NATrain/commands/locomotives";
 
     @Override
-    public void sendCommand(int channelNumber, String command) {
+    public void sendCommandToChannel(int channelNumber, String command) {
         MQTTConnectionService.publish(commandTopicRoot + "/" + locomotive.getId(), String.format("%s:%s", channelNumber, command));
+    }
+
+    @Override
+    public void sendMultipleCommand(String command) {
+        MQTTConnectionService.publish(commandTopicRoot + id, command);
     }
 
     @Override

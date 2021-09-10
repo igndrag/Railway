@@ -16,7 +16,9 @@ public interface ControlModule {
 
     Map<Integer, OutputChannel> getOutputChannels();
 
-    void sendCommand(int channelNumber, String command);
+    void sendCommandToChannel(int channelNumber, String command);
+
+    void sendMultipleCommand(String command);
 
     void globalRequest();
 

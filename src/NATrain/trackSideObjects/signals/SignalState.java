@@ -23,6 +23,8 @@ public enum SignalState {
         BLINKED_YELLOW.getLampStates().put(SignalLampType.YELLOW_LAMP, SignalLampState.BLINKING);
         YELLOW_AND_YELLOW.getLampStates().put(SignalLampType.YELLOW_LAMP, SignalLampState.LIGHT);
         YELLOW_AND_YELLOW.getLampStates().put(SignalLampType.SECOND_YELLOW_LAMP, SignalLampState.LIGHT);
+        YELLOW_AND_BLINKED_YELLOW.getLampStates().put(SignalLampType.YELLOW_LAMP, SignalLampState.BLINKING);
+        YELLOW_AND_BLINKED_YELLOW.getLampStates().put(SignalLampType.SECOND_YELLOW_LAMP, SignalLampState.LIGHT);
         WHITE.getLampStates().put(SignalLampType.WHITE_LAMP, SignalLampState.LIGHT);
         BLINKED_WHITE.getLampStates().put(SignalLampType.WHITE_LAMP, SignalLampState.BLINKING);
         BLUE.getLampStates().put(SignalLampType.BLUE_LAMP, SignalLampState.LIGHT);

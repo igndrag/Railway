@@ -9,9 +9,7 @@ import NATrain.UI.workPlace.Blinker;
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
-import NATrain.quads.AbstractQuad;
 import NATrain.utils.ModelMock;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,12 +18,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class NavigatorFxController {
 
@@ -148,7 +143,7 @@ public class NavigatorFxController {
         Blinker.start();
         //controller.initialize();
         workPlace.setOnCloseRequest(event -> {
-                WorkPlaceController.setActiveMode(false);
+                WorkPlaceController.setInactiveMode();
             try {
                 MQTTConnectionService.getClient().disconnect();
             } catch (MqttException e) {

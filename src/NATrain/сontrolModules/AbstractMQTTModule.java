@@ -12,7 +12,12 @@ public abstract class AbstractMQTTModule extends AbstractModule{
 
 
     @Override
-    public void sendCommand(int channelNumber, String command) {
+    public void sendCommandToChannel(int channelNumber, String command) {
+        MQTTConnectionService.publish(commandTopicRoot + id, command);
+    }
+
+    @Override
+    public void sendMultipleCommand(String command) {
         MQTTConnectionService.publish(commandTopicRoot + id, command);
     }
 

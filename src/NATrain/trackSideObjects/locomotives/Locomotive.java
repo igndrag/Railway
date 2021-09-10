@@ -2,9 +2,6 @@ package NATrain.trackSideObjects.locomotives;
 
 import NATrain.routes.RouteDirection;
 import NATrain.trackSideObjects.AbstractMovableObject;
-import NATrain.trackSideObjects.Movable;
-import NATrain.trackSideObjects.TracksideObject;
-import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.сontrolModules.AbstractLocomotiveModule;
 import NATrain.сontrolModules.ControlModule;
 import NATrain.сontrolModules.MQTTLocomotiveModule;
@@ -64,7 +61,7 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
             autopilot.getOdometer().play();
         }
         if (actualState == LocomotiveState.MOVING_BACKWARD || actualState == LocomotiveState.MOVING_FORWARD) {
-            controlModule.sendCommand(SET_SPEED_CHANNEL, String.format("%04d", speed) );
+            controlModule.sendCommandToChannel(SET_SPEED_CHANNEL, String.format("%04d", speed) );
         }
     }
 
@@ -88,9 +85,9 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
     public void setMovingDirection(MovingDirection movingDirection) {
         this.movingDirection = movingDirection;
         if (movingDirection == MovingDirection.FORWARD) {
-            controlModule.sendCommand(AbstractLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, AbstractLocomotiveModule.FORWARD_COMMAND_CODE + "");
+            controlModule.sendCommandToChannel(AbstractLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, String.format("%04d", AbstractLocomotiveModule.FORWARD_COMMAND_CODE));
         } else {
-            controlModule.sendCommand(AbstractLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, AbstractLocomotiveModule.BACKWARD_COMMAND_CODE + "");
+            controlModule.sendCommandToChannel(AbstractLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, String.format("%04d", AbstractLocomotiveModule.BACKWARD_COMMAND_CODE ));
         }
     }
 
@@ -109,13 +106,13 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
             } else {
                 setActualState(LocomotiveState.MOVING_BACKWARD);
             }
-            controlModule.sendCommand(SET_SPEED_CHANNEL, String.format("%04d", speed) );
+            controlModule.sendCommandToChannel(SET_SPEED_CHANNEL, String.format("%04d", speed) );
         }
     }
 
     public void stop() {
         speed = 0;
-        controlModule.sendCommand(MQTTLocomotiveModule.STOP_CHANNEL, "0" ); //command code doesn't matter on STOP channel
+        controlModule.sendCommandToChannel(MQTTLocomotiveModule.STOP_CHANNEL, "0" ); //command code doesn't matter on STOP channel
         setActualState(LocomotiveState.NOT_MOVING);
         if (autopilot != null) {
             autopilot.getOdometer().pause();
@@ -124,22 +121,22 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
 
     public void setFrontLightOn() {
         frontLight = true;
-        controlModule.sendCommand(SPECIAL_COMMAND_CHANNEL, MAIN_LIGHT_ON_COMMAND_CODE + "");
+        controlModule.sendCommandToChannel(SPECIAL_COMMAND_CHANNEL, String.format("%04d",MAIN_LIGHT_ON_COMMAND_CODE));
     }
 
     public void setFrontLightOff() {
         frontLight = false;
-        controlModule.sendCommand(SPECIAL_COMMAND_CHANNEL, MAIN_LIGHT_OFF_COMMAND_CODE + "");
+        controlModule.sendCommandToChannel(SPECIAL_COMMAND_CHANNEL, String.format("%04d",MAIN_LIGHT_OFF_COMMAND_CODE));
     }
 
     public void setRearLightOn() {
         rearLight = true;
-        controlModule.sendCommand(SPECIAL_COMMAND_CHANNEL, REAR_LIGHT_ON_COMMAND_CODE + "");
+        controlModule.sendCommandToChannel(SPECIAL_COMMAND_CHANNEL, String.format("%04d", REAR_LIGHT_ON_COMMAND_CODE));
     }
 
     public void setRearLightOff() {
         rearLight = false;
-        controlModule.sendCommand(SPECIAL_COMMAND_CHANNEL, REAR_LIGHT_OFF_COMMAND_CODE + "");
+        controlModule.sendCommandToChannel(SPECIAL_COMMAND_CHANNEL, String.format("%04d", REAR_LIGHT_OFF_COMMAND_CODE));
     }
 
     public int getRestrictedSpeed() {

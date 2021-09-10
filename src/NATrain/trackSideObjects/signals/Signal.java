@@ -4,6 +4,7 @@ import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.routes.RouteDirection;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.сontrolModules.ControlModule;
 import NATrain.сontrolModules.OutputChannel;
 
 import java.util.*;
@@ -16,6 +17,7 @@ import static NATrain.trackSideObjects.signals.SignalState.*;
 public class Signal extends TracksideObject {
     static final long serialVersionUID = 1L;
 
+    private transient Set<ControlModule> assignedModules;
     public static final Signal EMPTY_SIGNAL = new Signal("None", Collections.emptySet(), SignalType.EMPTY_SIGNAL);
 
     static {
@@ -118,10 +120,24 @@ public class Signal extends TracksideObject {
         setSignalState(closedSignalState);
     }
 
+    public void init() {
+        assignedModules = new HashSet<>();
+        assignedModules = lamps.values().stream().map(OutputChannel::getModule).filter(Objects::nonNull).collect(Collectors.toSet());
+    }
+
     private void sendOutputCommands(SignalState signalState) {
-        lamps.forEach((signalLampType, outputChannel) -> {
-            outputChannel.sendCommand(signalState.getLampStates().getOrDefault(signalLampType, SignalLampState.NOT_LIGHT).getCode());
-        });
+        if (!assignedModules.isEmpty()) {
+            assignedModules.forEach(controlModule -> {
+                StringBuilder sb = new StringBuilder();
+                lamps.forEach((signalLampType, outputChannel) -> {
+                    //outputChannel.sendCommandCode(signalState.getLampStates().getOrDefault(signalLampType, SignalLampState.NOT_LIGHT).getCode());
+                    if (outputChannel.getModule() == controlModule) {
+                        sb.append(String.format("%02d:%02d_", outputChannel.getChNumber(), signalState.getLampStates().getOrDefault(signalLampType, SignalLampState.NOT_LIGHT).getCode()));
+                    }
+                });
+                controlModule.sendMultipleCommand(sb.toString());
+            });
+        }
     }
 
     public static GlobalSignalState getGlobalStatusForState(SignalState signalState) {

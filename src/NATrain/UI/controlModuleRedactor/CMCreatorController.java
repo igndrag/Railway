@@ -1,10 +1,7 @@
 package NATrain.UI.controlModuleRedactor;
 
 import NATrain.model.Model;
-import NATrain.сontrolModules.ControlModule;
-import NATrain.сontrolModules.ControlModuleType;
-import NATrain.сontrolModules.SignalMQTTController;
-import NATrain.сontrolModules.UniversalMQTTModule;
+import NATrain.сontrolModules.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -80,6 +77,9 @@ public class CMCreatorController {
             switch (selectedType) {
                 case SIGNAL_MQTT_CONTROLLER:
                     controlModule = new SignalMQTTController(address);
+                    break;
+                case SWITCH_MQTT_CONTROLLER:
+                    controlModule = new SwitchMQTTController(address);
                     break;
                 default:
                     Alert a = new Alert(Alert.AlertType.WARNING);

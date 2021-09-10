@@ -12,9 +12,11 @@ import NATrain.trackSideObjects.*;
 import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
+import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.trackSideObjects.trackSections.TrackSectionState;
+import NATrain.сontrolModules.AbstractModule;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -90,21 +92,26 @@ public class WorkPlaceController {
         return activeMode;
     }
 
-    public static void setActiveMode(boolean activeMode) {
-        activeMode = activeMode;
+    public static void setInactiveMode() {
+        activeMode = false;
     }
 
     public void initialize() {
         activeMode = true;
         activeController = this;
-
+        MQTTConnectionService.connect();
 
         Model.getStationTracks().values().forEach(TrackSection::updateVacancyState);
-        // Model.getSignals().values().forEach(Signal::close);
         Model.getTrackSections().values().forEach(TrackSection::updateVacancyState);
         Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));// TODO change it to global request for tests on real model
         Model.getTracks().forEach(track -> {
             track.getBlockSections().forEach(blockSection -> {
+                if (blockSection.getNormalDirectionSignal() != null) {
+                    blockSection.getNormalDirectionSignal().init();
+                }
+                if (blockSection.getReversedDirectionSignal() != null) {
+                    blockSection.getReversedDirectionSignal().init();
+                }
                 blockSection.updateVacancyState();
                 if (blockSection.getNormalDirectionSignal() != Signal.EMPTY_SIGNAL) {
                     if (!blockSection.isLastInNormalDirection()) {
@@ -118,6 +125,13 @@ public class WorkPlaceController {
                 }
             });
         });
+
+        Model.getSignals().values().forEach(signal -> {
+            signal.init();
+            signal.close();
+        });
+
+        Model.getSwitches().values().forEach(Switch::init);
 
         Model.refreshAll();
 
@@ -180,7 +194,7 @@ public class WorkPlaceController {
                 sb.append(String.format("%03d",Model.getTags().size()));
                 for (RFIDTag tag : Model.getTags().values()) {
                     sb.append(":");
-                    sb.append(tag.getDecUid());
+                    sb.append(String.format("%10d", tag.getDecUid()));
                 }
                 MqttMessage message = new MqttMessage(sb.toString().getBytes());
                 message.setQos(1);
@@ -195,7 +209,7 @@ public class WorkPlaceController {
 
         //   ConnectionService connectionService = new ConnectionService("COM5");
         //   connectionService.start();
-        MQTTConnectionService.connect();
+
         log("Work Place initialized");
         log("Good Lock!!!");
     }

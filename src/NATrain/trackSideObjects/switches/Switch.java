@@ -4,10 +4,7 @@ import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.trackSideObjects.trackSections.TrackSectionState;
 import NATrain.trackSideObjects.TracksideObject;
-import NATrain.сontrolModules.InputChannel;
-import NATrain.сontrolModules.InputChannelType;
-import NATrain.сontrolModules.OutputChannel;
-import NATrain.сontrolModules.OutputChannelType;
+import NATrain.сontrolModules.*;
 
 import java.io.Serializable;
 public class Switch extends TracksideObject implements Serializable {
@@ -27,9 +24,11 @@ public class Switch extends TracksideObject implements Serializable {
     private final InputChannel minusInputChannel = new InputChannel(InputChannelType.SWITCH_MINUS, this);
     private final OutputChannel plusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_PLUS, this, null);
     private final OutputChannel minusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_MINUS, this, null);
+    private final OutputChannel stateRequestOutputChannel = new OutputChannel(OutputChannelType.STATE_REQUEST, this, null);
 
     public Switch(String id) {
         super(id);
+        stateRequestOutputChannel.setChNumber(AbstractModule.SWITCH_STATE_REQUEST_CODE);
     }
 
     public void setParedSwitch(Switch anotherSwitch) {
@@ -96,6 +95,11 @@ public class Switch extends TracksideObject implements Serializable {
         return minusOutputChannel;
     }
 
+    public void init() {
+        stateRequestOutputChannel.setModule(plusOutputChannel.getModule());
+        stateRequestOutputChannel.sendCommandCode(0);
+    }
+
     public void changePosition() {
         if (isChangePositionAvailable()) {
             if (switchState == SwitchState.PLUS)
@@ -120,10 +124,10 @@ public class Switch extends TracksideObject implements Serializable {
     public void sendOutputCommand(SwitchState switchState) {
         switch (switchState) {
             case PLUS:
-                plusOutputChannel.sendCommand(CONTROL_IMPULSE_COMMAND_CODE);
+                plusOutputChannel.sendCommandCode(CONTROL_IMPULSE_COMMAND_CODE);
                 break;
             case MINUS:
-                minusOutputChannel.sendCommand(CONTROL_IMPULSE_COMMAND_CODE);
+                minusOutputChannel.sendCommandCode(CONTROL_IMPULSE_COMMAND_CODE);
                 break;
         }
     }
