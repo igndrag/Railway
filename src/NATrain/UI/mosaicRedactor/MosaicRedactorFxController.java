@@ -123,7 +123,6 @@ public class MosaicRedactorFxController {
         loadMenuItem.setOnAction(event -> {
             Model.loadFromDisk();
             initMainGrid();
-
         });
 
         //*** left panel initializing ***//
@@ -227,6 +226,7 @@ public class MosaicRedactorFxController {
                 quad.setGridLineVisible(true);
                 Group quadView = quad.getView();
                 quadPane.getChildren().add(quadView);
+                quad.refresh();
                 configQuadView(quadView, i, j);
                 gridPane.add(quadPane, i, j);
             }
@@ -333,7 +333,6 @@ public class MosaicRedactorFxController {
                     Pane parent = (Pane) quadView.getParent();
                     parent.getChildren().clear();
                 }
-
             }
 
             if (event.getClickCount() == 2) {

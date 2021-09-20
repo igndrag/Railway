@@ -44,7 +44,12 @@ public class MQTTConnectionService {
                         int inputStateCode = Integer.parseInt(statusParts[2]);
                         controlModule.getInputChannels().get(portNumber).setActualState(inputStateCode);
                     } else {
-                        long decUid = Long.parseLong(statusParts[2]);
+                        long decUid = 0;
+                        try {
+                            decUid = Long.parseLong(statusParts[2]);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
                         System.out.printf("%s: %d:%d\n", controlModule.getId(), portNumber, decUid);
                         controlModule.getInputChannels().get(portNumber).moveTag(decUid);
                     }
@@ -91,6 +96,7 @@ public class MQTTConnectionService {
         try {
             mqttClient = new MqttClient(broker, clientID, persistence);
             MqttConnectOptions connOpts = new MqttConnectOptions();
+            connOpts.setMaxInflight(100);
             connOpts.setCleanSession(true); //no persistent session
             connOpts.setKeepAliveInterval(1000);
             mqttClient.connect(connOpts); //connects the broker with connect options

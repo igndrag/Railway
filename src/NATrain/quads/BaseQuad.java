@@ -2,10 +2,14 @@ package NATrain.quads;
 
 import NATrain.quads.configurableInterfaces.Configurable;
 import NATrain.routes.Track;
+import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import javafx.scene.text.Text;
+
+import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 
 
 public abstract class BaseQuad extends AbstractQuad implements Configurable {
@@ -86,17 +90,35 @@ public abstract class BaseQuad extends AbstractQuad implements Configurable {
 
     @Override
     public void activateListeners() {
+        if (quadListeners == null) {
+            quadListeners = new HashMap<>();
+        }
+
         if (firstAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) {
-            firstAssociatedTrack.addPropertyChangeListener(new FirstTrackViewUpdater());
+            PropertyChangeListener firstAssociatedTrackListener = new FirstTrackViewUpdater();
+            quadListeners.put(firstAssociatedTrack, firstAssociatedTrackListener);
+            firstAssociatedTrack.addPropertyChangeListener(firstAssociatedTrackListener);
         }
         if (secondAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) {
-            secondAssociatedTrack.addPropertyChangeListener(new SecondTrackViewUpdater());
+            PropertyChangeListener secondAssociatedTrackListener = new SecondTrackViewUpdater();
+            quadListeners.put(secondAssociatedTrack, secondAssociatedTrackListener);
+            secondAssociatedTrack.addPropertyChangeListener(secondAssociatedTrackListener);
         }
         if (associatedSwitch != Switch.EMPTY_SWITCH) {
-            associatedSwitch.addPropertyChangeListener(new SwitchTrackViewUpdater());
+            PropertyChangeListener switchStateListener = new SwitchTrackViewUpdater();
+            quadListeners.put(associatedSwitch, switchStateListener);
+            associatedSwitch.addPropertyChangeListener(switchStateListener);
         }
         if (associatedSignal != Signal.EMPTY_SIGNAL) {
-            associatedSignal.addPropertyChangeListener(new SignalQuadViewUpdater(this));
+            PropertyChangeListener signalListener = new SignalQuadViewUpdater(this);
+            quadListeners.put(associatedSignal, signalListener);
+            associatedSignal.addPropertyChangeListener(signalListener);
         }
+    }
+
+    @Override
+    public void deactivateListeners() {
+        quadListeners.forEach(TracksideObject::removePropertyChangeListener);
+        quadListeners.clear();
     }
 }

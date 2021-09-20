@@ -3,6 +3,7 @@ package NATrain.model;
 import NATrain.routes.StationTrack;
 import NATrain.routes.Route;
 import NATrain.routes.Track;
+import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
 import NATrain.trackSideObjects.locomotives.Locomotive;
@@ -197,9 +198,7 @@ public enum Model implements Serializable {
 
 
                 tracks.forEach(track -> {
-                    track.setSignalQuads(new ArrayList<>());
-                    track.setActiveSignalListeners(new HashMap<>());
-
+                    track.init();
                     track.getBlockSections().forEach(blockSection -> {
                         blockSection.addPropertyChangeSupport();
                         blockSection.setVacancyState(TrackSectionState.UNDEFINED);
@@ -251,5 +250,27 @@ public enum Model implements Serializable {
 
     public void getOddStationSignals() {
 
+    }
+
+    public static void allObjectsToDefault() {
+        tracks.forEach(track -> {
+            track.getBlockSections().forEach(blockSection -> {
+                Signal normalDirectionSignal = blockSection.getNormalDirectionSignal();
+                if (normalDirectionSignal != null && normalDirectionSignal != Signal.EMPTY_SIGNAL) {
+                    normalDirectionSignal.setSignalState(SignalState.UNDEFINED);
+                }
+                Signal reversedDirectionSignal = blockSection.getReversedDirectionSignal();
+                if (reversedDirectionSignal != null && reversedDirectionSignal != Signal.EMPTY_SIGNAL) {
+                    reversedDirectionSignal.setSignalState(SignalState.UNDEFINED);
+                }
+                if (blockSection != TrackBlockSection.EMPTY_BLOCK_SECTION) {
+                    blockSection.setVacancyState(TrackSectionState.UNDEFINED);
+                }
+            });
+        });
+
+        Model.getSignals().values().forEach(signal -> signal.setSignalState(SignalState.UNDEFINED));
+        Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.UNDEFINED));
+        Model.getStationTracks().values().forEach(stationTrack -> stationTrack.setVacancyState(TrackSectionState.UNDEFINED));
     }
 }

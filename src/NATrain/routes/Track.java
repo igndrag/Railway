@@ -19,8 +19,8 @@ public class Track implements Serializable {
 
     static final long serialVersionUID = 1L;
     public static final Track EMPTY_TRACK = new Track("none");
-    private transient Map<PropertyChangeListener, Set<TracksideObject>> activeSignalListeners = new HashMap<>();
-    private transient List<BlockingBaseQuad> signalQuads = new ArrayList<>();
+    private transient Map<PropertyChangeListener, Set<TracksideObject>> activeSignalListeners;
+    private transient Set<BlockingBaseQuad> signalQuads;
 
     private RouteDirection normalDirection = EVEN;
     private String id;
@@ -73,10 +73,6 @@ public class Track implements Serializable {
         return activeSignalListeners;
     }
 
-    public void setActiveSignalListeners(Map<PropertyChangeListener, Set<TracksideObject>> activeSignalListeners) {
-        this.activeSignalListeners = activeSignalListeners;
-    }
-
     public Signal getFirstSignalInEvenDirection() {
         if (normalDirection == EVEN) {
           return blockSections.get(1).getNormalDirectionSignal();
@@ -93,13 +89,11 @@ public class Track implements Serializable {
         }
     }
 
-    public List<BlockingBaseQuad> getSignalQuads() {
+    public Set<BlockingBaseQuad> getSignalQuads() {
         return signalQuads;
     }
 
-    public void setSignalQuads(List<BlockingBaseQuad> signalQuads) {
-        this.signalQuads = signalQuads;
-    }
+
 
     public void setTrackDirection(TrackDirection trackDirection) {
         //TODO make property change support for recreate listeners for BSQs
@@ -107,11 +101,7 @@ public class Track implements Serializable {
             if (isAllBlockSectionsFree()) {
                 deactivateSignalListeners();
                 this.trackDirection = trackDirection;
-                signalQuads.forEach(quad -> {
-                    quad.activateSignalStateAutoselectors();
-                    quad.refresh();
-                });
-
+                activateSignalListeners();
             } else {
                 //WorkPlaceController.getActiveController().log(String.format("Track direction change of %s is impossible. Track isn't free.", this.id));
             }
@@ -172,6 +162,13 @@ public class Track implements Serializable {
         return true;
     }
 
+    public void activateSignalListeners() {
+        signalQuads.forEach(quad -> {
+            quad.activateSignalStateAutoselectors();
+            quad.refresh();
+        });
+    }
+
     public void deactivateSignalListeners() {
         activeSignalListeners.forEach((listener, objects) -> {
             objects.forEach(object -> {
@@ -204,4 +201,8 @@ public class Track implements Serializable {
         return id;
     }
 
+    public void init() {
+        signalQuads = new HashSet<>();
+        activeSignalListeners = new HashMap<>();
+    }
 }

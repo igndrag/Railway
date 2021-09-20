@@ -26,10 +26,11 @@
                 <TableColumn fx:id="routeStatusColumn" prefWidth="83.0" text="Status" />
               </columns>
             </TableView>
-            <Pane prefHeight="46.0" prefWidth="274.0">
+            <Pane prefHeight="53.0" prefWidth="274.0">
                <children>
-                  <Button fx:id="routeCancellationButton" layoutX="172.0" layoutY="12.0" mnemonicParsing="false" onAction="#cancelSelectedRoute" text="Cancel Route" />
-                  <Button fx:id="sendConfigsButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" text="Send configs" />
+                  <Button fx:id="routeCancellationButton" layoutX="171.0" layoutY="11.0" mnemonicParsing="false" onAction="#cancelSelectedRoute" text="Cancel Route" />
+                  <Button fx:id="sendConfigsButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Send configs" />
+                  <Button fx:id="updateButton" layoutX="103.0" layoutY="11.0" mnemonicParsing="false" onAction="#cancelSelectedRoute" text="UPDATE" />
                </children>
             </Pane>
          </children>

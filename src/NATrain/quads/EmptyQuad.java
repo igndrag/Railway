@@ -50,6 +50,11 @@ public class EmptyQuad extends AbstractQuad {
     }
 
     @Override
+    public void deactivateListeners() {
+        //do nothing
+    }
+
+    @Override
     public List<ControlAction> getAvailableActions() {
         return Collections.emptyList();
     }

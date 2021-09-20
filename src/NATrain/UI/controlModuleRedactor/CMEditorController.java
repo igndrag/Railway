@@ -80,6 +80,7 @@ public class CMEditorController {
         inputs = FXCollections.observableArrayList(controlModule.getInputChannels().values());
         outputs = FXCollections.observableArrayList(controlModule.getOutputChannels().values());
         ObservableList<TracksideObject> trackSections = FXCollections.observableArrayList(Model.getTrackSections().values());
+        ObservableList<TracksideObject> stationTracks = FXCollections.observableArrayList(Model.getStationTracks().values());
         ObservableList<TracksideObject> switches = FXCollections.observableArrayList(Model.getSwitches().values());
         ObservableList<TracksideObject> signals = FXCollections.observableArrayList(Model.getSignals().values());
         ObservableList<Track> tracks = FXCollections.observableArrayList(Model.getTracks());
@@ -98,6 +99,10 @@ public class CMEditorController {
                     break;
                 case TRACK_SECTION:
                     inputObjectChoiceBox.setItems(trackSections);
+                    inputTrackChoiceBox.setDisable(true);
+                    break;
+                case STATION_TRACK:
+                    inputObjectChoiceBox.setItems(stationTracks);
                     inputTrackChoiceBox.setDisable(true);
                     break;
                 case BLOCK_SECTION:
@@ -190,6 +195,7 @@ public class CMEditorController {
         switch (inputTypeChoiceBox.getValue()) {
             case TRACK_SECTION:
             case BLOCK_SECTION:
+            case STATION_TRACK:
                 TrackSection trackSection = (TrackSection) object;
                 inputChannel = new InputChannel(InputChannelType.TRACK_SECTION, trackSection);
                 break;

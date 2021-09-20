@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public abstract class BlockingBaseQuad extends AbstractQuad {
@@ -83,11 +84,19 @@ public abstract class BlockingBaseQuad extends AbstractQuad {
 
     @Override
     public void activateListeners() {
+        if (quadListeners == null) {
+            quadListeners = new HashMap<>();
+        }
         if (this instanceof BlockingSignalQuad) {
             track.getSignalQuads().add(this);
         }
         activateBlockSectionsListeners();
-        activateSignalStateAutoselectors();
+    }
+
+    @Override
+    public void deactivateListeners() {
+        quadListeners.forEach(TracksideObject::removePropertyChangeListener);//deactivating of signal autoselectors realized in Track class
+        quadListeners.clear();
     }
 
     public void activateSignalStateAutoselectors() {
@@ -176,10 +185,15 @@ public abstract class BlockingBaseQuad extends AbstractQuad {
 
     private void activateBlockSectionsListeners() {
         if (firstBlockSection != TrackBlockSection.EMPTY_BLOCK_SECTION) {
-            firstBlockSection.addPropertyChangeListener(new FirstTrackViewUpdater());
+            PropertyChangeListener firstBlockSectionListener = new FirstTrackViewUpdater();
+            quadListeners.put(firstBlockSection, firstBlockSectionListener);
+            firstBlockSection.addPropertyChangeListener(firstBlockSectionListener);
+
         }
         if (secondBlockSection != TrackBlockSection.EMPTY_BLOCK_SECTION) {
-            secondBlockSection.addPropertyChangeListener(new SecondTrackViewUpdater());
+            PropertyChangeListener secondBlockSectionListener = new SecondTrackViewUpdater();
+            quadListeners.put(secondBlockSection, secondBlockSectionListener);
+            secondBlockSection.addPropertyChangeListener(secondBlockSectionListener);
         }
     }
 
@@ -194,23 +208,28 @@ public abstract class BlockingBaseQuad extends AbstractQuad {
             this.TVDS2 = TVDS2;
             this.trackSignal = trackSignal;
             this.trackDirection = trackDirection;
+            this.trackDirection = trackDirection;
         }
 
         @Override
         public void autoselectSignalState() {
+            SignalState newSignalState = SignalState.UNDEFINED;
             if (trackDirection == track.getTrackDirection()) {
                 if (TVDS1.getVacancyState() == TrackSectionState.OCCUPIED) {
-                    trackSignal.setSignalState(SignalState.RED);
+                    newSignalState = SignalState.RED;
                 } else if (TVDS2.getVacancyState() == TrackSectionState.OCCUPIED) {
-                    trackSignal.setSignalState(SignalState.YELLOW);
+                    newSignalState = SignalState.YELLOW;
                 } else if (TVDS1.getVacancyState() == TrackSectionState.FREE &&
                         TVDS2.getVacancyState() == TrackSectionState.FREE) {
-                    trackSignal.setSignalState(SignalState.GREEN);
+                    newSignalState = SignalState.GREEN;
                 }
             } else {
-                trackSignal.setSignalState(SignalState.NOT_LIGHT);
+                newSignalState = SignalState.NOT_LIGHT;
             }
-            updateSignalView();
+            if (newSignalState != trackSignal.getSignalState()) {
+                trackSignal.setSignalState(newSignalState);
+                updateSignalView();
+            }
         }
 
         @Override

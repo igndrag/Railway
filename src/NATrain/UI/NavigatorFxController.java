@@ -144,6 +144,9 @@ public class NavigatorFxController {
         //controller.initialize();
         workPlace.setOnCloseRequest(event -> {
                 WorkPlaceController.setInactiveMode();
+                WorkPlaceController.deactivateTrackSignalAutoselectors();
+                WorkPlaceController.deactivateTracksideObjectStateListeners();
+                Model.allObjectsToDefault();
             try {
                 MQTTConnectionService.getClient().disconnect();
             } catch (MqttException e) {

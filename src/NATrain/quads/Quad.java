@@ -14,6 +14,7 @@ public interface Quad { // that's the price of bad design((
     Group getView();
     void setGridLineVisible(Boolean show);
     void activateListeners();
+    void deactivateListeners();
     void updateFirstTrackView();
     void updateSecondTrackView();
     void updateSignalView();

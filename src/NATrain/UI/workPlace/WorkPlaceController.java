@@ -8,6 +8,7 @@ import NATrain.UI.workPlace.executors.RouteStatus;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.quads.*;
+import NATrain.routes.Track;
 import NATrain.trackSideObjects.*;
 import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
@@ -43,6 +44,8 @@ import java.util.List;
 public class WorkPlaceController {
 
 
+
+
     public static WorkPlaceController getActiveController() {
         return activeController;
     }
@@ -74,6 +77,8 @@ public class WorkPlaceController {
     @FXML
     private Button sendConfigsButton;
     @FXML
+    private Button updateButton;
+    @FXML
     private ScrollPane workArea;
 
     private Stage primaryStage;
@@ -96,7 +101,13 @@ public class WorkPlaceController {
         activeMode = false;
     }
 
+    private static int rows;
+    private static int columns;
+
     public void initialize() {
+        rows = Model.getMainGrid().length;
+        columns = Model.getMainGrid()[0].length;
+
         activeMode = true;
         activeController = this;
         MQTTConnectionService.connect();
@@ -143,9 +154,6 @@ public class WorkPlaceController {
 
         NavigatorFxController.showGridLines = false;
         gridPane = new GridPane();
-        int rows = Model.getMainGrid().length;
-        int columns = Model.getMainGrid()[0].length;
-
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -168,6 +176,9 @@ public class WorkPlaceController {
                 gridPane.add(quadPane, i, j);
             }
         }
+
+        Model.getTracks().forEach(Track::activateSignalListeners);
+
         workArea.setContent(gridPane);
 
         Platform.runLater(() -> {
@@ -207,6 +218,24 @@ public class WorkPlaceController {
             }
         });
 
+        updateButton.setOnAction(event -> {
+            Model.getSignals().values().forEach(signal -> {
+                signal.setSignalState(signal.getSignalState());
+            });
+            Model.getTracks().forEach(track -> {
+                track.getBlockSections().forEach(blockSection -> {
+                    Signal normalDirectionSignal = blockSection.getNormalDirectionSignal();
+                    Signal reversedDirectionSignal = blockSection.getReversedDirectionSignal();
+                    if (normalDirectionSignal != null && normalDirectionSignal != Signal.EMPTY_SIGNAL) {
+                        normalDirectionSignal.setSignalState(normalDirectionSignal.getSignalState());
+                    }
+                    if (reversedDirectionSignal != null && reversedDirectionSignal != Signal.EMPTY_SIGNAL) {
+                        reversedDirectionSignal.setSignalState(reversedDirectionSignal.getSignalState());
+                    }
+                });
+            });
+        });
+
         //   ConnectionService connectionService = new ConnectionService("COM5");
         //   connectionService.start();
 
@@ -236,6 +265,21 @@ public class WorkPlaceController {
         }
 
         Model.refreshAll();
+    }
+
+    public static void deactivateTrackSignalAutoselectors() {
+        Model.getTracks().forEach(Track::deactivateSignalListeners);
+    }
+
+    public static void deactivateTracksideObjectStateListeners() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Pane quadPane = new Pane();
+                Group quadView;
+                Quad quad = Model.getMainGrid()[j][i];
+                quad.deactivateListeners();
+            }
+        }
     }
 
     public synchronized void log(String message) {
@@ -299,8 +343,6 @@ public class WorkPlaceController {
         locator.setAlwaysOnTop(true);
         locator.show();
     }
-
-
 
     @FXML
     private void cancelSelectedRoute() {
