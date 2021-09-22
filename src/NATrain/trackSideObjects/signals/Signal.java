@@ -132,7 +132,9 @@ public class Signal extends TracksideObject {
                 lamps.forEach((signalLampType, outputChannel) -> {
                     //outputChannel.sendCommandCode(signalState.getLampStates().getOrDefault(signalLampType, SignalLampState.NOT_LIGHT).getCode());
                     if (outputChannel.getModule() == controlModule) {
-                        sb.append(String.format("%02d:%02d_", outputChannel.getChNumber(), signalState.getLampStates().getOrDefault(signalLampType, SignalLampState.NOT_LIGHT).getCode()));
+                        int commandCode = signalState.getLampStates().getOrDefault(signalLampType, SignalLampState.NOT_LIGHT).getCode();
+                        outputChannel.setLastCommandCode(commandCode);
+                        sb.append(String.format("%02d:%02d_", outputChannel.getChNumber(), commandCode));
                     }
                 });
                 controlModule.sendMultipleCommand(sb.toString());

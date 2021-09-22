@@ -29,7 +29,7 @@ public abstract class BlockingTrackQuad extends BlockingBaseQuad implements Bloc
 
     static {
         availableActions.add(ControlAction.SET_ROUTE_TO_TRACK_LINE);
-        availableActions.add(ControlAction.ALLOCATE_LOCOMOTIVE);
+        availableActions.add(ControlAction.ALLOCATE_MOVABLE_MODEl);
     }
 
     @Override

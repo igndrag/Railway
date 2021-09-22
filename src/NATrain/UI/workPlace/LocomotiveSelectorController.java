@@ -4,10 +4,12 @@ import NATrain.UI.UIUtils;
 import NATrain.model.Model;
 import NATrain.routes.RouteDirection;
 import NATrain.trackSideObjects.RFIDTag;
-import NATrain.trackSideObjects.locomotives.Locomotive;
+import NATrain.trackSideObjects.movableObjects.Locomotive;
+import NATrain.trackSideObjects.movableObjects.Movable;
+import NATrain.trackSideObjects.movableObjects.MovableObjectType;
 import NATrain.trackSideObjects.trackSections.TrackSection;
-import NATrain.trackSideObjects.trackSections.TrackSectionState;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -18,7 +20,7 @@ import javafx.stage.Stage;
 public class LocomotiveSelectorController {
 
     @FXML
-    private ListView<Locomotive> locomotiveListView;
+    private ListView<Movable> movableObjectsListView;
     @FXML
     private ToggleButton evenToggleButton;
     @FXML
@@ -27,7 +29,10 @@ public class LocomotiveSelectorController {
     private Button okButton;
 
     public void initialize(TrackSection trackSection) {
-        locomotiveListView.setItems(FXCollections.observableArrayList(Model.getLocomotives().values()));
+        ObservableList<Movable> movableObjects = FXCollections.observableArrayList(Model.getLocomotives().values());
+        movableObjects.addAll(Model.getWagons().values());
+        movableObjectsListView.setItems(movableObjects);
+
 
         ToggleGroup toggleGroup = new ToggleGroup();
 
@@ -35,38 +40,48 @@ public class LocomotiveSelectorController {
         oddToggleButton.setToggleGroup(toggleGroup);
 
         okButton.setOnAction(event -> {
-            if (locomotiveListView.getSelectionModel().isEmpty()) {
-                UIUtils.showAlert("Select Locomotive, please.");
+            if (movableObjectsListView.getSelectionModel().isEmpty()) {
+                UIUtils.showAlert("Select movable object, please.");
                 return;
-            }
-            if (!evenToggleButton.isSelected() && !oddToggleButton.isSelected()) {
+            } else
+            if (movableObjectsListView.getSelectionModel().getSelectedItem().getMovableObjectType() == MovableObjectType.LOCOMOTIVE &&
+                    !evenToggleButton.isSelected() &&
+                    !oddToggleButton.isSelected()) {
                 UIUtils.showAlert("Select forward direction, please.");
                 return;
             }
-            Locomotive locomotive = locomotiveListView.getSelectionModel().getSelectedItem();
-            RFIDTag frontTag = locomotive.getFrontTag();
-            RFIDTag rearTag = locomotive.getRearTag();
-            if (frontTag.getTagLocation() != null) {
+            Movable movableObject = movableObjectsListView.getSelectionModel().getSelectedItem();
+            RFIDTag frontTag = movableObject.getFrontTag();
+            RFIDTag rearTag = movableObject.getRearTag();
+            if (frontTag != null && frontTag.getTagLocation() != null) {
                 frontTag.getTagLocation().getTags().remove(frontTag);
                 frontTag.getTagLocation().updateVacancyState();
             }
-            if (rearTag.getTagLocation() != null) {
+            if (rearTag != null && rearTag.getTagLocation() != null) {
                 rearTag.getTagLocation().getTags().remove(rearTag);
                 rearTag.getTagLocation().updateVacancyState();
             }
+            if (frontTag != null && frontTag != RFIDTag.EMPTY_TAG) {
+                frontTag.setTagLocation(trackSection);
+                trackSection.getTags().add(frontTag);
+            }
 
-            frontTag.setTagLocation(trackSection);
-            rearTag.setTagLocation(trackSection);
-            trackSection.getTags().add(frontTag);
-            trackSection.getTags().add(rearTag);
+            if (rearTag != null && rearTag != RFIDTag.EMPTY_TAG) {
+                rearTag.setTagLocation(trackSection);
+                trackSection.getTags().add(rearTag);
+            }
+
             trackSection.updateVacancyState();
 
             LocatorController.refreshTable();
 
-            if (evenToggleButton.isSelected()) {
-                locomotive.setForwardDirection(RouteDirection.EVEN);
-            } else {
-                locomotive.setForwardDirection(RouteDirection.ODD);
+            if (movableObject.getMovableObjectType() == MovableObjectType.LOCOMOTIVE) {
+                Locomotive locomotive = (Locomotive) movableObject;
+                if (evenToggleButton.isSelected()) {
+                    locomotive.setForwardDirection(RouteDirection.EVEN);
+                } else {
+                    locomotive.setForwardDirection(RouteDirection.ODD);
+                }
             }
 
             Stage stage = (Stage) okButton.getScene().getWindow();

@@ -2,12 +2,11 @@ package NATrain.сontrolModules;
 import NATrain.UI.workPlace.LocatorController;
 import NATrain.model.Model;
 import NATrain.trackSideObjects.*;
-import NATrain.trackSideObjects.locomotives.Locomotive;
-import NATrain.trackSideObjects.locomotives.LocomotiveState;
+import NATrain.trackSideObjects.movableObjects.Locomotive;
+import NATrain.trackSideObjects.movableObjects.LocomotiveState;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
-import NATrain.trackSideObjects.trackSections.TrackSectionState;
 
 import java.io.Serializable;
 
@@ -56,7 +55,7 @@ public class InputChannel implements Serializable {
     public void moveTag(long decUid) {
         RFIDTag tag = Model.getTags().get(decUid);
         TrackSection trackSection = (TrackSection) tracksideObject;
-        if (!trackSection.getTags().contains(tag)) { //do nothing for already located tag
+        if (tag != null && !trackSection.getTags().contains(tag)) { //do nothing for already located tag
             if (tag.getTagLocation() != null) {
                 tag.getTagLocation().getTags().remove(tag);
                 tag.getTagLocation().updateVacancyState();

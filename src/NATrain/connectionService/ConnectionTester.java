@@ -98,7 +98,7 @@ public class ConnectionTester extends Thread {
     public static void main(String[] args) {
      //   ConnectionTester connectionTester = new ConnectionTester("COM5");
      //   connectionTester.start();
-       RFIDTag tag = new RFIDTag("FF", "FF", "FF", "FF");
-        System.out.println(tag.getDecUid());
+     //  RFIDTag tag = new RFIDTag("FF", "FF", "FF", "FF");
+     //   System.out.println(tag.getDecUid());
     }
 }

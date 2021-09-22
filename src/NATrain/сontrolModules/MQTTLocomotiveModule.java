@@ -2,9 +2,8 @@ package NATrain.сontrolModules;
 
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.trackSideObjects.TracksideObject;
-import NATrain.trackSideObjects.locomotives.Locomotive;
+import NATrain.trackSideObjects.movableObjects.Locomotive;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MQTTLocomotiveModule extends AbstractLocomotiveModule {

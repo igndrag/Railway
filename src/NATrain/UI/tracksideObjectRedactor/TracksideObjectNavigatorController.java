@@ -4,7 +4,9 @@ import NATrain.UI.tracksideObjectRedactor.TSORedactors.*;
 import NATrain.model.Model;
 import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.*;
-import NATrain.trackSideObjects.locomotives.Locomotive;
+import NATrain.trackSideObjects.movableObjects.Locomotive;
+import NATrain.trackSideObjects.movableObjects.MovableObjectType;
+import NATrain.trackSideObjects.movableObjects.Wagon;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalType;
 import NATrain.trackSideObjects.switches.Switch;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.util.Comparator;
 
 public class TracksideObjectNavigatorController {
+
 
     @FXML
     private TableView<TracksideObject> switchTableView;
@@ -96,11 +99,25 @@ public class TracksideObjectNavigatorController {
     @FXML
     private Button deleteLocomotiveButton;
 
+    @FXML
+    private TableView<TracksideObject> wagonsTableView;
+    @FXML
+    private TableColumn<Wagon,String> wagonIdCol;
+    @FXML
+    private TableColumn<Wagon, MovableObjectType> wagonTypeCol;
+    @FXML
+    private Button newWagonButton;
+    @FXML
+    private Button editWagonButton;
+    @FXML
+    private Button deleteWagonButton;
+
     protected ObservableList<TracksideObject> trackSectionList;
     protected ObservableList<TracksideObject> stationTrackList;
     protected ObservableList<TracksideObject> switchList;
     protected ObservableList<TracksideObject> signalList;
     protected ObservableList<TracksideObject> locomotiveList;
+    protected ObservableList<TracksideObject> wagonList;
 
     private static Stage primaryStage;
 
@@ -114,6 +131,7 @@ public class TracksideObjectNavigatorController {
         initSignalTab();
         initStationTrackTab();
         initLocomotiveTab();
+        initWagonTab();
     }
 
     protected void toTrackSectionRedactor (TrackSection trackSection) throws IOException {
@@ -181,6 +199,20 @@ public class TracksideObjectNavigatorController {
         locomotiveRedactor.initModality(Modality.WINDOW_MODAL);
         locomotiveRedactor.initOwner(primaryStage);
         locomotiveRedactor.show();
+    }
+
+    private void toWagonRedactor(Wagon wagon, boolean edit) throws IOException {
+        FXMLLoader loader = new FXMLLoader(LocomotiveRedactorController.class.getResource("WagonRedactor.fxml"));
+        Stage wagonRedactor = new Stage();
+        wagonRedactor.setTitle("Wagon Redactor");
+        wagonRedactor.setScene(new Scene(loader.load(), 270, 320));
+        wagonRedactor.setResizable(false);
+        WagonRedactorController controller = loader.getController();
+        controller.init(wagon, wagonsTableView, wagonList);
+        controller.edit = edit;
+        wagonRedactor.initModality(Modality.WINDOW_MODAL);
+        wagonRedactor.initOwner(primaryStage);
+        wagonRedactor.show();
     }
 
     public void initTrackSectionsTab() {
@@ -441,5 +473,63 @@ public class TracksideObjectNavigatorController {
                 }
         });
     }
+
+    public void initWagonTab() {
+        wagonIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        wagonTypeCol.setCellValueFactory(new PropertyValueFactory<>("movableObjectType"));
+        editWagonButton.setDisable(true);
+        deleteWagonButton.setDisable(true);
+        wagonList = FXCollections.observableArrayList(Model.getWagons().values());
+        wagonList.sort(Comparator.comparing(TracksideObject::getId));
+        wagonsTableView.setItems(wagonList);
+
+        newWagonButton.setOnMouseClicked(event -> {
+            try {
+                Wagon wagon = new Wagon(Wagon.INITIAL_WAGON_NAME);
+                toWagonRedactor(wagon, false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        deleteWagonButton.setOnAction(event -> {
+            Wagon objectForDelete = (Wagon) wagonsTableView.getSelectionModel().getSelectedItem();
+            // if (objectForDelete.getControlModule() != null)
+            //      objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
+            //  objectForDelete.setControlModule(null);
+
+            locomotiveList.remove(objectForDelete);
+            if (objectForDelete.getFrontTag() != null) {
+                Model.getTags().values().remove(objectForDelete.getFrontTag());
+            }
+
+            if (objectForDelete.getRearTag() != null) {
+                Model.getTags().values().remove(objectForDelete.getRearTag());
+            }
+
+            Model.getWagons().remove(objectForDelete.getId());
+            if (wagonList.size() == 0) {
+                editWagonButton.setDisable(true);
+                deleteWagonButton.setDisable(true);
+            }
+        });
+
+        editWagonButton.setOnAction(event -> {
+            try {
+                toWagonRedactor((Wagon) wagonsTableView.getSelectionModel().getSelectedItem(), true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        wagonsTableView.setOnMouseClicked(event -> {
+            if (wagonsTableView.getSelectionModel().getSelectedItem() != null) {
+                editWagonButton.setDisable(false);
+                deleteWagonButton.setDisable(false);
+            }
+        });
+    }
+
+
 
 }

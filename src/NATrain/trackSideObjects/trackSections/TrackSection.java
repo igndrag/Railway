@@ -3,9 +3,7 @@ package NATrain.trackSideObjects.trackSections;
 
 import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.TracksideObject;
-import NATrain.trackSideObjects.locomotives.Locomotive;
 import NATrain.trackSideObjects.switches.Switch;
-import NATrain.сontrolModules.InputChannel;
 
 import java.util.ArrayList;
 import java.util.HashSet;

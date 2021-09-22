@@ -113,7 +113,7 @@ public enum ActionExecutor {
                 track.setTrackDirection(newDirection);
                 firstSelectedQuad.refresh();
                 break;
-            case ALLOCATE_LOCOMOTIVE:
+            case ALLOCATE_MOVABLE_MODEl:
                 try {
                     if (firstSelectedQuad instanceof SimpleTrackQuad) {
                         toLocomotiveSelector(((SimpleTrackQuad) firstSelectedQuad).getFirstAssociatedTrack());

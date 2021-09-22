@@ -6,7 +6,8 @@ import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
-import NATrain.trackSideObjects.locomotives.Locomotive;
+import NATrain.trackSideObjects.movableObjects.Locomotive;
+import NATrain.trackSideObjects.movableObjects.Wagon;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.switches.Switch;
@@ -47,6 +48,8 @@ public enum Model implements Serializable {
 
     private static Map<String, Locomotive> locomotives = new ConcurrentHashMap<>();
 
+    private static Map<String, Wagon> wagons = new ConcurrentHashMap<>();
+
     private static Set<Track> tracks = new CopyOnWriteArraySet<>();
 
     private static Map<Long, RFIDTag> tags = new HashMap<>();
@@ -82,6 +85,8 @@ public enum Model implements Serializable {
     public static Map<String, Locomotive> getLocomotives() {
         return locomotives;
     }
+
+    public static Map<String, Wagon> getWagons() {return wagons;}
 
     public static Set<Track> getTracks() {
         return tracks;
@@ -124,6 +129,7 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(controlModules);
             objectOutputStream.writeObject(stationTracks);
             objectOutputStream.writeObject(locomotives);
+            objectOutputStream.writeObject(wagons);
             objectOutputStream.writeObject(routeTable);
             tracks.forEach(track -> { // change EMPTY_SIGNALs to null fow writing
                 track.getBlockSections().forEach(blockSection -> {
@@ -188,6 +194,7 @@ public enum Model implements Serializable {
                 stationTracks.values().forEach(TracksideObject::addPropertyChangeSupport);
                 locomotives = (Map<String, Locomotive>) inputStream.readObject();
                 locomotives.values().forEach(TracksideObject::addPropertyChangeSupport);
+                wagons = (Map<String, Wagon>) inputStream.readObject();
                 routeTable = (CopyOnWriteArraySet<Route>) inputStream.readObject();
                 tracks = (Set<Track>) inputStream.readObject();
                 tags = (Map<Long, RFIDTag>) inputStream.readObject();

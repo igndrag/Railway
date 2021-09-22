@@ -22,12 +22,11 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
 
     static {
         availableActions.add(ControlAction.SET_ROUTE_TO_TRACK);
-        availableActions.add(ControlAction.ALLOCATE_LOCOMOTIVE);
+        availableActions.add(ControlAction.ALLOCATE_MOVABLE_MODEl);
 
         availableActionsForStationTrack.add(ControlAction.SET_ROUTE_TO_TRACK);
-        availableActionsForStationTrack.add(ControlAction.ALLOCATE_LOCOMOTIVE);
+        availableActionsForStationTrack.add(ControlAction.ALLOCATE_MOVABLE_MODEl);
 }
-
 
     public SimpleTrackQuad(int x, int y) {
         super(x, y);

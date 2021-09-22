@@ -1,6 +1,6 @@
 package NATrain.сontrolModules;
 
-import NATrain.trackSideObjects.locomotives.Locomotive;
+import NATrain.trackSideObjects.movableObjects.Locomotive;
 
 import java.io.Serializable;
 

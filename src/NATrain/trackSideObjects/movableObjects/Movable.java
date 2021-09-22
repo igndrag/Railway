@@ -1,5 +1,6 @@
-package NATrain.trackSideObjects;
+package NATrain.trackSideObjects.movableObjects;
 
+import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 
 public interface Movable {
@@ -23,4 +24,6 @@ public interface Movable {
             return getRearTag().getTagLocation();
         }
     }
+
+    MovableObjectType getMovableObjectType();
 }

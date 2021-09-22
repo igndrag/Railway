@@ -19,9 +19,9 @@ public class TagReaderController {
 
     private SerialReader reader;
 
-    private LocomotiveRedactorController controller;
+    private TagConfigurable controller;
 
-    public void init(LocomotiveRedactorController controller, TagType tagType) {
+    public void init(TagConfigurable controller, TagType tagType) {
         this.controller = controller;
         this.tagType = tagType;
 

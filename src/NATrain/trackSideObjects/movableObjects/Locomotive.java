@@ -1,7 +1,6 @@
-package NATrain.trackSideObjects.locomotives;
+package NATrain.trackSideObjects.movableObjects;
 
 import NATrain.routes.RouteDirection;
-import NATrain.trackSideObjects.AbstractMovableObject;
 import NATrain.сontrolModules.AbstractLocomotiveModule;
 import NATrain.сontrolModules.ControlModule;
 import NATrain.сontrolModules.MQTTLocomotiveModule;

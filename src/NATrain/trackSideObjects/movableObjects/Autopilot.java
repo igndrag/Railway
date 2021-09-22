@@ -1,10 +1,8 @@
-package NATrain.trackSideObjects.locomotives;
+package NATrain.trackSideObjects.movableObjects;
 
-import NATrain.UI.UIUtils;
 import NATrain.UI.workPlace.Blinker;
 import NATrain.UI.workPlace.LocomotiveController;
 import NATrain.UI.workPlace.WorkPlaceController;
-import NATrain.quads.BlockingTrackQuad;
 import NATrain.routes.*;
 import NATrain.trackSideObjects.signals.GlobalSignalState;
 import NATrain.trackSideObjects.signals.Signal;
@@ -58,7 +56,7 @@ public class Autopilot {
                     odometerValue += 0.1 * locomotive.restrictedSpeed;
                     break;
                 default:
-                    WorkPlaceController.getActiveController().log("Wrong speed value fir odometer!");
+                    WorkPlaceController.getActiveController().log("Wrong speed value for odometer!");
             }
         }));
         odometer.setCycleCount(Animation.INDEFINITE);

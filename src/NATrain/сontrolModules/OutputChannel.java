@@ -13,12 +13,16 @@ public class OutputChannel implements Serializable {
     private ControlModule module;
     private TracksideObject tracksideObject;
     private SignalLampType lampType;
-    private int actualStatusCode;
+    private int lastCommandCode;
 
     public OutputChannel(OutputChannelType channelType, TracksideObject tracksideObject, SignalLampType lampType) {
         this.channelType = channelType;
         this.tracksideObject = tracksideObject;
         this.lampType = lampType;
+    }
+
+    public void setLastCommandCode(int lastCommandCode) {
+        this.lastCommandCode = lastCommandCode;
     }
 
     public int getChNumber() {
@@ -54,7 +58,12 @@ public class OutputChannel implements Serializable {
             // JSONObject command = new JSONObject();
            // command.put("chNumber", chNumber);
            // command.put("commandCode", commandCode);
-            module.sendCommandToChannel(chNumber, String.format("%02d:%02d", chNumber, commandCode));
+            lastCommandCode = commandCode;
+            module.sendCommandToChannel(chNumber, String.format("%02d:%02d_", chNumber, commandCode));
         }
+    }
+
+    public void sendLastCommandAgain() {
+        module.sendCommandToChannel(chNumber, String.format("%02d:%02d_", chNumber, lastCommandCode));
     }
 }

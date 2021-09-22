@@ -2,6 +2,7 @@ package NATrain.connectionService;
 
 import NATrain.model.Model;
 import NATrain.сontrolModules.ControlModule;
+import NATrain.сontrolModules.OutputChannel;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
@@ -13,6 +14,8 @@ public class MQTTConnectionService {
     static String clientID = "NATrainsApp";
     static MqttClient mqttClient;
     static MemoryPersistence persistence = new MemoryPersistence();
+
+    public static int SELF_STATUS_REQUEST_COMMAND_CODE = 96;
 
     public static MqttClient getClient() {
         return mqttClient;
@@ -40,18 +43,22 @@ public class MQTTConnectionService {
                 controlModule = Model.getControlModules().get(statusParts[0]);
                 if (controlModule != null) {
                     int portNumber = Integer.parseInt(statusParts[1]);
-                    if (statusParts[2].length() < 2) {
-                        int inputStateCode = Integer.parseInt(statusParts[2]);
-                        controlModule.getInputChannels().get(portNumber).setActualState(inputStateCode);
+                    if (portNumber == SELF_STATUS_REQUEST_COMMAND_CODE) {
+                        controlModule.getOutputChannels().values().forEach(OutputChannel::sendLastCommandAgain);
                     } else {
-                        long decUid = 0;
-                        try {
-                            decUid = Long.parseLong(statusParts[2]);
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                        if (statusParts[2].length() < 2) {
+                            int inputStateCode = Integer.parseInt(statusParts[2]);
+                            controlModule.getInputChannels().get(portNumber).setActualState(inputStateCode);
+                        } else {
+                            long decUid = 0;
+                            try {
+                                decUid = Long.parseLong(statusParts[2]);
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                            System.out.printf("%s: %d:%d\n", controlModule.getId(), portNumber, decUid);
+                            controlModule.getInputChannels().get(portNumber).moveTag(decUid);
                         }
-                        System.out.printf("%s: %d:%d\n", controlModule.getId(), portNumber, decUid);
-                        controlModule.getInputChannels().get(portNumber).moveTag(decUid);
                     }
                 }
             }

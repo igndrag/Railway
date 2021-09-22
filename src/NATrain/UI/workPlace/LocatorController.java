@@ -1,9 +1,8 @@
 package NATrain.UI.workPlace;
 
 import NATrain.model.Model;
-import NATrain.trackSideObjects.Movable;
+import NATrain.trackSideObjects.movableObjects.Movable;
 import NATrain.trackSideObjects.trackSections.TrackSection;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;

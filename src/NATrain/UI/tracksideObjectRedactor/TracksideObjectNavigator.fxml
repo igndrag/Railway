@@ -78,7 +78,6 @@
               </Pane>
           </content>
       </Tab>
-
       <Tab text="Locomotives">
           <content>
               <Pane prefHeight="490.0" prefWidth="301.0">
@@ -96,5 +95,24 @@
               </Pane>
           </content>
       </Tab>
+      <Tab text="Wagons">
+          <content>
+              <Pane prefHeight="490.0" prefWidth="301.0">
+                  <children>
+                      <TableView fx:id="wagonsTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                          <columns>
+                              <TableColumn fx:id="wagonIdCol" prefWidth="108.0" text="ID" />
+                              <TableColumn fx:id="wagonTypeCol" prefWidth="341.0" text="Wagon Type" />
+                          </columns>
+                      </TableView>
+                      <Button fx:id="newWagonButton" layoutX="400.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="New" />
+                      <Button fx:id="editWagonButton" layoutX="320.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Edit" />
+                      <Button fx:id="deleteWagonButton" layoutX="240.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Delete" />
+                  </children>
+              </Pane>
+          </content>
+      </Tab>
+
+
   </tabs>
 </TabPane>

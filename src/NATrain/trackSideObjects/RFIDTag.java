@@ -11,14 +11,19 @@ public class RFIDTag implements Serializable {
     private String id;
     private long decUid;
     private TrackSection tagLocation;
+    private TagType tagType;
 
-    public RFIDTag(String b1, String b2, String b3, String b4) {
+    public static RFIDTag EMPTY_TAG = new RFIDTag("ff", "ff", "ff", "ff", TagType.EMPTY_TAG);
+
+
+    public RFIDTag(String b1, String b2, String b3, String b4, TagType tagType) {
         this.uid = new String[4];
         uid[0] = b1;
         uid[1] = b2;
         uid[2] = b3;
         uid[3] = b4;
         decUid = UtilFunctions.convertUidToLong(b1, b2, b3, b4);
+        this.tagType = tagType;
     }
 
     public TrackSection getTagLocation() {
@@ -43,6 +48,10 @@ public class RFIDTag implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public TagType getTagType() {
+        return tagType;
     }
 
     @Override

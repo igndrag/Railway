@@ -10,14 +10,12 @@ import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.routes.Track;
 import NATrain.trackSideObjects.*;
-import NATrain.trackSideObjects.locomotives.Locomotive;
+import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
-import NATrain.trackSideObjects.trackSections.TrackSectionState;
-import NATrain.сontrolModules.AbstractModule;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,7 +31,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -142,6 +139,8 @@ public class WorkPlaceController {
             signal.close();
         });
 
+        sendApprovedTags();
+
         Model.getSwitches().values().forEach(Switch::init);
 
         Model.refreshAll();
@@ -199,24 +198,10 @@ public class WorkPlaceController {
         });
 
         sendConfigsButton.setOnAction(event -> {
-            if (Model.getTags().keySet().size() > 0) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("98:"); //set configs command code
-                sb.append(String.format("%03d",Model.getTags().size()));
-                for (RFIDTag tag : Model.getTags().values()) {
-                    sb.append(":");
-                    sb.append(String.format("%10d", tag.getDecUid()));
-                }
-                MqttMessage message = new MqttMessage(sb.toString().getBytes());
-                message.setQos(1);
-              //message.setRetained(true);
-                try {
-                    MQTTConnectionService.getClient().publish("NATrain/system/", message);
-                } catch (MqttException e) {
-                    e.printStackTrace();
-                }
-            }
+            sendApprovedTags();
         });
+
+
 
         updateButton.setOnAction(event -> {
             Model.getSignals().values().forEach(signal -> {
@@ -241,6 +226,28 @@ public class WorkPlaceController {
 
         log("Work Place initialized");
         log("Good Lock!!!");
+    }
+
+    private void sendApprovedTags() {
+        if (Model.getTags().keySet().size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("98:"); //set configs command code
+            sb.append(String.format("%03d_",Model.getTags().size()));
+            for (RFIDTag tag : Model.getTags().values()) {
+                sb.append(String.format("%010d", tag.getDecUid()));
+                sb.append(":");
+            }
+            sb.append("_");
+            MqttMessage message = new MqttMessage(sb.toString().getBytes());
+            message.setQos(1);
+
+          //message.setRetained(true);
+            try {
+                MQTTConnectionService.getClient().publish("NATrain/system", message);
+            } catch (MqttException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

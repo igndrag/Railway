@@ -7,7 +7,7 @@ import NATrain.routes.RouteDirection;
 import NATrain.routes.RouteType;
 import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.*;
-import NATrain.trackSideObjects.locomotives.Locomotive;
+import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;

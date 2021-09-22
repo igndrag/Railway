@@ -1,4 +1,4 @@
-package NATrain.trackSideObjects.locomotives;
+package NATrain.trackSideObjects.movableObjects;
 
 public enum LocomotiveState {
     MOVING_FORWARD ("Moving Forward", 0),
