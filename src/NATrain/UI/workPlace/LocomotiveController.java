@@ -8,6 +8,7 @@ import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.movableObjects.Autopilot;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.movableObjects.MovingDirection;
+import NATrain.trackSideObjects.movableObjects.RFIDAutopilot;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
@@ -119,16 +120,13 @@ public class LocomotiveController {
 
         autopilotToggleButton.setOnAction(event -> {
             if (autopilotToggleButton.isSelected()) {
-                this.autopilot = new Autopilot(locomotive, this);
-                if (locomotive.getFrontTag().getTagLocation() instanceof TrackBlockSection) {
-                    autopilot.setBlockSection((TrackBlockSection) locomotive.getFrontTag().getTagLocation());
-                }
+                this.autopilot = new RFIDAutopilot(locomotive, this);
                 checkRoutesInLocation();
                 directionLabel.setText(locomotive.getForwardDirection().toString());
                 runButton.setDisable(true);
                 speedSlider.setDisable(true);
             } else {
-                autopilot.deactivateListeners();
+                //autopilot.deactivateListeners();
                 locationLabel.setText("");
                 directionLabel.setText("");
             }
@@ -139,7 +137,7 @@ public class LocomotiveController {
     public boolean checkRoutesInLocation() {
         Optional<Route> expectedRoute = ActionExecutor.getActiveRoutes().stream().map(RouteExecutor::getRoute).filter(route -> route.getDepartureTrackSection() == locomotive.getFrontTag().getTagLocation()).findFirst();
         if (expectedRoute.isPresent()) {
-            autopilot.setRoute(expectedRoute.get());
+            autopilot.executeRoute(expectedRoute.get());
             return true;
         } else {
             return false;

@@ -48,8 +48,22 @@ public class StationTrackRedactorController extends TracksideObjectRedactorContr
         lengthTextField.setText("" + stationTrack.getLength());
         evenSignalChoiceBox.setItems(FXCollections.observableArrayList(
                 Model.getSignals().values().stream().filter(signal -> signal.getSignalType() == SignalType.STATION).collect(Collectors.toList())));
+        evenSignalChoiceBox.getItems().add(Signal.EMPTY_SIGNAL);
         oddSignalChoiceBox.setItems(FXCollections.observableArrayList(
                 Model.getSignals().values().stream().filter(signal -> signal.getSignalType() == SignalType.STATION).collect(Collectors.toList())));
+        oddSignalChoiceBox.getItems().add(Signal.EMPTY_SIGNAL);
+
+        if (stationTrack.getEvenSignal() != null && stationTrack.getEvenSignal() != Signal.EMPTY_SIGNAL) {
+            evenSignalChoiceBox.getSelectionModel().select(stationTrack.getEvenSignal());
+        } else {
+            evenSignalChoiceBox.getSelectionModel().select(Signal.EMPTY_SIGNAL);
+        }
+
+        if (stationTrack.getOddSignal() != null && stationTrack.getOddSignal() != Signal.EMPTY_SIGNAL) {
+            oddSignalChoiceBox.getSelectionModel().select(stationTrack.getOddSignal());
+        } else {
+            oddSignalChoiceBox.getSelectionModel().select(Signal.EMPTY_SIGNAL);
+        }
     }
 
     @FXML

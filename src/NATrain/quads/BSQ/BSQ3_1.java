@@ -41,9 +41,9 @@ public class BSQ3_1 extends BlockingSignalQuad {
         addToQuadView(firstSignalLampElement);
 
         firstSignalLabel = new Text();
-        firstSignalLabel.setTextAlignment(TextAlignment.CENTER);
-        firstSignalLabel.setWrappingWidth(20);
-        firstSignalLabel.setX(65);
+        firstSignalLabel.setTextAlignment(TextAlignment.RIGHT);
+        firstSignalLabel.setWrappingWidth(30);
+        firstSignalLabel.setX(55);
         firstSignalLabel.setY(55);
         addToQuadView(firstSignalLabel);
 
@@ -62,9 +62,9 @@ public class BSQ3_1 extends BlockingSignalQuad {
         addToQuadView(secondSignalLampElement);
 
         secondSignalLabel = new Text();
-        secondSignalLabel.setTextAlignment(TextAlignment.CENTER);
+        secondSignalLabel.setTextAlignment(TextAlignment.LEFT);
         secondSignalLabel.setWrappingWidth(30);
-        secondSignalLabel.setX(0);
+        secondSignalLabel.setX(5);
         secondSignalLabel.setY(35);
         addToQuadView(secondSignalLabel);
     }

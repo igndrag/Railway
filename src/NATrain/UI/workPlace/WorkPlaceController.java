@@ -40,9 +40,6 @@ import java.util.List;
 
 public class WorkPlaceController {
 
-
-
-
     public static WorkPlaceController getActiveController() {
         return activeController;
     }

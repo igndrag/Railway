@@ -33,13 +33,14 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
         return autopilot;
     }
 
+    public void setAutopilot(Autopilot autopilot) {
+        this.autopilot = autopilot;
+    }
+
     public ControlModule getControlModule() {
         return controlModule;
     }
 
-    public void setAutopilot(Autopilot autopilot) {
-        this.autopilot = autopilot;
-    }
 
     public RouteDirection getForwardDirection() {
         return forwardDirection;
@@ -56,8 +57,9 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
 
     public void setSpeed(int speed) {
         this.speed = speed;
-        if (autopilot != null && speed > 0 && autopilot.getOdometer().getStatus() == PAUSED) {
-            autopilot.getOdometer().play();
+        if (autopilot != null && speed > 0 ){
+                //&& railCircuitAutopilot.getOdometer().getStatus() == PAUSED) { //TODO use it if you use rail circuits
+            //railCircuitAutopilot.getOdometer().play();
         }
         if (actualState == LocomotiveState.MOVING_BACKWARD || actualState == LocomotiveState.MOVING_FORWARD) {
             controlModule.sendCommandToChannel(SET_SPEED_CHANNEL, String.format("%04d", speed) );
@@ -114,7 +116,7 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
         controlModule.sendCommandToChannel(MQTTLocomotiveModule.STOP_CHANNEL, "0" ); //command code doesn't matter on STOP channel
         setActualState(LocomotiveState.NOT_MOVING);
         if (autopilot != null) {
-            autopilot.getOdometer().pause();
+            //railCircuitAutopilot.getOdometer().pause();
         }
     }
 

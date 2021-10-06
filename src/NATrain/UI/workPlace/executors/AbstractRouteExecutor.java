@@ -304,7 +304,7 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                                 loco -> (loco.getFrontTag().getTagLocation() == departureSection
                                         && loco.getForwardDirection() == route.getRouteDirection())).findFirst();
                         if (locomotive.isPresent() && locomotive.get().getAutopilot() != null) {
-                            locomotive.get().getAutopilot().setRoute(route);
+                            locomotive.get().getAutopilot().executeRoute(route);
                         }
                         service.shutdown();
                     }

@@ -2,6 +2,7 @@ package NATrain.quads;
 import NATrain.UI.NavigatorFxController;
 import NATrain.UI.workPlace.Blinker;
 import NATrain.routes.StationTrack;
+import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
@@ -140,8 +141,8 @@ public abstract class AbstractQuad implements Quad, Paintable {
     }
 
     protected static void refreshBlockSectionState(TrackSection associatedTrackSection, Shape blockSectionElement) {
-        if (associatedTrackSection == TrackSection.EMPTY_TRACK_SECTION) {
-            blockSectionElement.setFill(TRACK_UNDEFINED_ELEMENT_COLOR);
+        if (associatedTrackSection == null || associatedTrackSection == TrackBlockSection.EMPTY_BLOCK_SECTION || associatedTrackSection == TrackSection.EMPTY_TRACK_SECTION) {
+            blockSectionElement.setFill(BaseQuad.TRACK_UNDEFINED_ELEMENT_COLOR);
         } else {
             switch (associatedTrackSection.getVacancyState()) {
                 case UNDEFINED:

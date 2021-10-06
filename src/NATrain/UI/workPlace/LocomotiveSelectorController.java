@@ -83,13 +83,8 @@ public class LocomotiveSelectorController {
                     locomotive.setForwardDirection(RouteDirection.ODD);
                 }
             }
-
             Stage stage = (Stage) okButton.getScene().getWindow();
             stage.close();
-
         });
-
     }
-
-
 }

@@ -214,11 +214,11 @@ public class MosaicRedactorFxController {
     private void initMainGrid() {
         gridPane = new GridPane();
 //        gridPane.setCache(false);
-        int raws = Model.getMainGrid().length;
+        int rows = Model.getMainGrid().length;
         int columns = Model.getMainGrid()[0].length;
 
         //gridPane.setPadding(new Insets(5));
-        for (int i = 0; i < raws; i++) {
+        for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 Pane quadPane = new Pane();
                 //quadPane.setPadding(new Insets(5));

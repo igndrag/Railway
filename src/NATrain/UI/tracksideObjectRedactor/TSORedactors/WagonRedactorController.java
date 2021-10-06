@@ -2,19 +2,13 @@ package NATrain.UI.tracksideObjectRedactor.TSORedactors;
 
 import NATrain.UI.UIUtils;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectRedactorController;
-import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.TagType;
 import NATrain.trackSideObjects.TracksideObject;
-import NATrain.trackSideObjects.movableObjects.Autopilot;
-import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.movableObjects.MovableObjectType;
 import NATrain.trackSideObjects.movableObjects.Wagon;
 import NATrain.utils.UtilFunctions;
-import NATrain.сontrolModules.MQTTLocomotiveModule;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +20,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -225,6 +218,7 @@ public class WagonRedactorController extends TracksideObjectRedactorController i
 
             frontTag.setId(String.format(("%s_front_tag"), wagon.getId()));
             wagon.setFrontTag(frontTag);
+            Model.getTags().put(frontTag.getDecUid(), frontTag);
         }
 
         if (!shortBaseCheckBox.isSelected()) {

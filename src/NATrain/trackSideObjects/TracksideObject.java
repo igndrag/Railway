@@ -5,7 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public abstract class TracksideObject implements Serializable, Controllable {
+public abstract class TracksideObject implements Serializable, Controllable, Listenable {
     static final long serialVersionUID = 1L;
 
     protected transient PropertyChangeSupport propertyChangeSupport;
@@ -17,7 +17,9 @@ public abstract class TracksideObject implements Serializable, Controllable {
     }
 
     public void addPropertyChangeSupport() {
-        this.propertyChangeSupport = new PropertyChangeSupport(this);
+        if (this.propertyChangeSupport == null) {
+            this.propertyChangeSupport = new PropertyChangeSupport(this);
+        }
     }
 
     public String getId() {
@@ -28,10 +30,12 @@ public abstract class TracksideObject implements Serializable, Controllable {
         this.id = id;
     }
 
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }

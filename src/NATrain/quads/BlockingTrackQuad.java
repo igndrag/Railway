@@ -40,7 +40,7 @@ public abstract class BlockingTrackQuad extends BlockingBaseQuad implements Bloc
     @Override
     public void refresh() {
         updateFirstTrackView();
-        if (firstBlockSection != TrackBlockSection.EMPTY_BLOCK_SECTION) {
+        if (firstBlockSection != null && firstBlockSection != TrackBlockSection.EMPTY_BLOCK_SECTION) {
             blockSectionName.setText(firstBlockSection.getId());
         }
     }

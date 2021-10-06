@@ -7,7 +7,7 @@ import NATrain.model.Model;
 import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.TagType;
 import NATrain.trackSideObjects.TracksideObject;
-import NATrain.trackSideObjects.movableObjects.Autopilot;
+import NATrain.trackSideObjects.movableObjects.railCircuitAutopilot;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.utils.UtilFunctions;
 import NATrain.сontrolModules.MQTTLocomotiveModule;
@@ -103,11 +103,11 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
         halfSpeedTextField.setText(locomotive.getRestrictedSpeed() + "");
 
         fullSpeedTestButton.setOnAction(event -> {
-            speedTest(Autopilot.FULL_SPEED);
+            speedTest(railCircuitAutopilot.FULL_SPEED);
         });
 
         halfSpeedTestButton.setOnAction(event -> {
-            speedTest(Autopilot.RESTRICTED_SPEED);
+            speedTest(railCircuitAutopilot.RESTRICTED_SPEED);
         });
 
         if (locomotive.getFrontTag() != null) {

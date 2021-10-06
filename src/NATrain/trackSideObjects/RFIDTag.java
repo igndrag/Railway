@@ -3,10 +3,21 @@ package NATrain.trackSideObjects;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.UtilFunctions;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 
-public class RFIDTag implements Serializable {
+public class RFIDTag implements Serializable, Listenable {
     static final long serialVersionUID = 1L;
+
+    protected transient PropertyChangeSupport propertyChangeSupport;
+
+    public void addPropertyChangeSupport() {
+        if (this.propertyChangeSupport == null) {
+            this.propertyChangeSupport = new PropertyChangeSupport(this);
+        }
+    }
+
     private String[] uid;
     private String id;
     private long decUid;
@@ -32,6 +43,9 @@ public class RFIDTag implements Serializable {
 
     public void setTagLocation(TrackSection tagLocation) {
         this.tagLocation = tagLocation;
+        if (this.propertyChangeSupport != null) { //for RFID autopilot
+            propertyChangeSupport.firePropertyChange("location", null, tagLocation);
+        }
     }
 
     public long getDecUid() {
@@ -52,6 +66,22 @@ public class RFIDTag implements Serializable {
 
     public TagType getTagType() {
         return tagType;
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) { //only one listener
+        if (propertyChangeSupport != null) {
+              if (propertyChangeSupport.getPropertyChangeListeners() != null) {
+                  PropertyChangeListener previousListener = propertyChangeSupport.getPropertyChangeListeners()[0];
+                  propertyChangeSupport.removePropertyChangeListener(previousListener);
+              }
+            propertyChangeSupport.addPropertyChangeListener(listener);
+        }
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
     @Override
