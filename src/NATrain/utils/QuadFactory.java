@@ -77,10 +77,16 @@ public class QuadFactory {
                 return new DTQ2_1(x, y);
             case DTQ2_2:
                 return new DTQ2_2(x, y);
+            case DTQ3_1:
+                return new DTQ3_1(x, y);
             case SIQ1_1:
                 return new SIQ1_1(x, y);
             case SIQ1_2:
                 return new SIQ1_2(x, y);
+            case SIQ1_3:
+                return new SIQ1_3(x, y);
+            case SIQ1_4:
+                return new SIQ1_4(x, y);
             case SIQ2_1:
                 return new SIQ2_1(x, y);
             case SIQ2_2:
@@ -93,6 +99,10 @@ public class QuadFactory {
                 return new SIQ3_1(x, y);
             case SIQ3_2:
                 return new SIQ3_2(x, y);
+            case SIQ3_3:
+                return new SIQ3_3(x, y);
+            case SIQ3_4:
+                return new SIQ3_4(x, y);
             case SIQ4_1:
                 return new SIQ4_1(x, y);
             case SIQ4_2:
@@ -157,6 +167,10 @@ public class QuadFactory {
                 return new SIQA3_1(x, y);
             case SIQA3_2:
                 return new SIQA3_2(x, y);
+            case SIQA3_3:
+                return new SIQA3_3(x, y);
+            case SIQA3_4:
+                return new SIQA3_4(x, y);
             case SIQA4_1:
                 return new SIQA4_1(x, y);
             case SIQA4_2:
