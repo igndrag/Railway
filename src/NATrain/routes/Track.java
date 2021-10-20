@@ -77,7 +77,7 @@ public class Track implements Serializable {
         if (normalDirection == EVEN) {
           return blockSections.get(1).getNormalDirectionSignal();
         } else {
-            return blockSections.get(blockSections.size()).getReversedDirectionSignal();
+            return blockSections.get(blockSections.size() - 2).getReversedDirectionSignal();
         }
     }
 
@@ -85,15 +85,13 @@ public class Track implements Serializable {
         if (normalDirection == ODD) {
             return blockSections.get(1).getNormalDirectionSignal();
         } else {
-            return blockSections.get(blockSections.size()).getReversedDirectionSignal();
+            return blockSections.get(blockSections.size() - 2).getReversedDirectionSignal();
         }
     }
 
     public Set<BlockingBaseQuad> getSignalQuads() {
         return signalQuads;
     }
-
-
 
     public void setTrackDirection(TrackDirection trackDirection) {
         //TODO make property change support for recreate listeners for BSQs
@@ -194,6 +192,21 @@ public class Track implements Serializable {
         }
         result.sort(Comparator.comparing(TracksideObject::getId));
         return result;
+    }
+
+    public TrackBlockSection getFirstSectionInActualDirection() {
+        if (trackDirection == TrackDirection.NORMAL) {
+            return blockSections.get(0);
+        } else {
+            return blockSections.get(blockSections.size() - 1);
+        }
+    }
+    public TrackBlockSection getLastSectionInActualDirection() {
+        if (trackDirection == TrackDirection.NORMAL) {
+            return blockSections.get(blockSections.size() - 1);
+        } else {
+            return blockSections.get(0);
+        }
     }
 
     @Override

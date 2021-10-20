@@ -71,7 +71,7 @@ public class RFIDTag implements Serializable, Listenable {
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) { //only one listener
         if (propertyChangeSupport != null) {
-              if (propertyChangeSupport.getPropertyChangeListeners() != null) {
+              if (propertyChangeSupport.getPropertyChangeListeners() != null && propertyChangeSupport.getPropertyChangeListeners().length > 0) {
                   PropertyChangeListener previousListener = propertyChangeSupport.getPropertyChangeListeners()[0];
                   propertyChangeSupport.removePropertyChangeListener(previousListener);
               }

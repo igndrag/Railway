@@ -178,9 +178,9 @@ public class TrackRedactorController {
                         StringBuilder reversedDirectionSignalName = new StringBuilder();
                         reversedDirectionSignalName.append(signalPrefixTextField.getText());
                         if (even) {
-                            reversedDirectionSignalName.append(2*(i - 1) - 1);
+                            reversedDirectionSignalName.append(2*sectionsCount - 2*(i-1) - 1);
                         } else {
-                            reversedDirectionSignalName.append(2*(i - 1));
+                            reversedDirectionSignalName.append(2*sectionsCount - 2*(i-1));
                         }
                         reversedDirectionSignalName.append("RD");
                         blockSection.setBidirectional(true);

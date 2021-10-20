@@ -51,8 +51,8 @@ public class NavigatorFxController {
 
     public void initialize() {
         AppConfigController.loadConfigs();
-        //Model.loadFromDisk();//
-        ModelMock.MockModel();
+        Model.loadFromDisk();//
+        //ModelMock.MockModel();
        }
 
     @FXML

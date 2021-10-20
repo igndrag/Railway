@@ -55,16 +55,17 @@ public class InputChannel implements Serializable {
     public void moveTag(long decUid) {
         RFIDTag tag = Model.getTags().get(decUid);
         TrackSection trackSection = (TrackSection) tracksideObject;
+
         if (tag != null && !trackSection.getTags().contains(tag)) { //do nothing for already located tag
+            trackSection.getTags().add(tag);
+            trackSection.updateVacancyState();
             if (tag.getTagLocation() != null) {
                 tag.getTagLocation().getTags().remove(tag);
                 tag.getTagLocation().updateVacancyState();
             }
-            tag.setTagLocation(trackSection);
-            trackSection.getTags().add(tag);
-            trackSection.updateVacancyState();
             LocatorController.refreshTable();
         }
+        tag.setTagLocation(trackSection); //even if tag in section set tag location for handling of passing
     }
 
 

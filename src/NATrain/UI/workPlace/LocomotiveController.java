@@ -5,10 +5,7 @@ import NATrain.UI.workPlace.executors.RouteExecutor;
 import NATrain.quads.LocomotivePanelQuad;
 import NATrain.routes.Route;
 import NATrain.routes.TrackBlockSection;
-import NATrain.trackSideObjects.movableObjects.Autopilot;
-import NATrain.trackSideObjects.movableObjects.Locomotive;
-import NATrain.trackSideObjects.movableObjects.MovingDirection;
-import NATrain.trackSideObjects.movableObjects.RFIDAutopilot;
+import NATrain.trackSideObjects.movableObjects.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
@@ -121,12 +118,22 @@ public class LocomotiveController {
         autopilotToggleButton.setOnAction(event -> {
             if (autopilotToggleButton.isSelected()) {
                 this.autopilot = new RFIDAutopilot(locomotive, this);
+                locomotive.setSpeed(0);
+                locomotive.setMovingDirection(MovingDirection.FORWARD);
+                locomotive.setActualState(LocomotiveState.NOT_MOVING);
                 checkRoutesInLocation();
                 directionLabel.setText(locomotive.getForwardDirection().toString());
+                forwardToggleButton.setSelected(true);
+                backwardToggleButton.setSelected(false);
+                forwardToggleButton.setDisable(true);
+                backwardToggleButton.setDisable(true);
                 runButton.setDisable(true);
                 speedSlider.setDisable(true);
             } else {
-                //autopilot.deactivateListeners();
+                autopilot.disable();
+                runButton.setDisable(false);
+                forwardToggleButton.setDisable(false);
+                backwardToggleButton.setDisable(false);
                 locationLabel.setText("");
                 directionLabel.setText("");
             }

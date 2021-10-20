@@ -136,7 +136,7 @@ public class WorkPlaceController {
             signal.close();
         });
 
-        sendApprovedTags();
+        //sendApprovedTags();
 
         Model.getSwitches().values().forEach(Switch::init);
 

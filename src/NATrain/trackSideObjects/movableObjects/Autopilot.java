@@ -7,7 +7,7 @@ import NATrain.routes.Track;
 public interface Autopilot {
     void executeRoute(Route route);
     //void enable();
-    //void disable();
+    void disable();
     AutopilotMode getMode();
     //void executeTrackLineMovement(Track track);
 }
