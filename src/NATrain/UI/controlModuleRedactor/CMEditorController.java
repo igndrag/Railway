@@ -365,7 +365,7 @@ public class CMEditorController {
         controlModule.getOutputChannels().put(chNumber, outputChannel);
         chNumber++;
         outputNumberTextField.setText(chNumber.toString());
-        outputObjectChoiceBox.getSelectionModel().clearSelection();
+        //outputObjectChoiceBox.getSelectionModel().clearSelection();
         lampTypeChoiceBox.getSelectionModel().clearSelection();
     }
 

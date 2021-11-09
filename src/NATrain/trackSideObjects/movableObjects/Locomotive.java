@@ -61,13 +61,14 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
                 //&& railCircuitAutopilot.getOdometer().getStatus() == PAUSED) { //TODO use it if you use rail circuits
             //railCircuitAutopilot.getOdometer().play();
         }
-        if (actualState == LocomotiveState.MOVING_BACKWARD || actualState == LocomotiveState.MOVING_FORWARD) {
+       // if (actualState == LocomotiveState.MOVING_BACKWARD || actualState == LocomotiveState.MOVING_FORWARD) {
             controlModule.sendCommandToChannel(SET_SPEED_CHANNEL, String.format("%04d", speed) );
-        }
+       // }
     }
 
     public Locomotive(String id) {
         super(id);
+        movableObjectType = MovableObjectType.LOCOMOTIVE;
     }
 
     public LocomotiveState getActualState() {

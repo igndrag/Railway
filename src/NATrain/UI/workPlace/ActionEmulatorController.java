@@ -107,6 +107,7 @@ public class ActionEmulatorController {
         freeBlockSectionToggleButton.setOnAction(event -> {
             if (!blockSectionChoiceBox.getSelectionModel().isEmpty()) {
                 blockSectionChoiceBox.getValue().setVacancyState(TrackSectionState.FREE);
+                blockSectionChoiceBox.getValue().getTags().clear();
             }
         });
 

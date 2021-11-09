@@ -498,7 +498,7 @@ public class TracksideObjectNavigatorController {
             //      objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
             //  objectForDelete.setControlModule(null);
 
-            locomotiveList.remove(objectForDelete);
+            wagonList.remove(objectForDelete);
             if (objectForDelete.getFrontTag() != null) {
                 Model.getTags().values().remove(objectForDelete.getFrontTag());
             }
@@ -506,6 +506,8 @@ public class TracksideObjectNavigatorController {
             if (objectForDelete.getRearTag() != null) {
                 Model.getTags().values().remove(objectForDelete.getRearTag());
             }
+
+            objectForDelete.deallocateMovableObject();
 
             Model.getWagons().remove(objectForDelete.getId());
             if (wagonList.size() == 0) {

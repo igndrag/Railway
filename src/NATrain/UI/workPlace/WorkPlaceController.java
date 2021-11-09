@@ -298,6 +298,7 @@ public class WorkPlaceController {
 
     public void refreshRouteStatusTable() {
         routeStatusTableView.refresh();
+        routeStatusTableView.getItems().stream().filter(routeExecutor -> routeExecutor.getRouteStatus() == RouteStatus.CREATED).forEach(RouteExecutor::executeRoute);
     }
 
     public void showActionEmulator(ActionEvent actionEvent) throws IOException {

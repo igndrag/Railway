@@ -2,10 +2,12 @@ package NATrain.UI.workPlace;
 
 import NATrain.UI.workPlace.executors.ActionExecutor;
 import NATrain.UI.workPlace.executors.RouteExecutor;
+import NATrain.UI.workPlace.executors.RouteStatus;
 import NATrain.quads.LocomotivePanelQuad;
 import NATrain.routes.Route;
 import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.movableObjects.*;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
@@ -117,11 +119,13 @@ public class LocomotiveController {
 
         autopilotToggleButton.setOnAction(event -> {
             if (autopilotToggleButton.isSelected()) {
-                this.autopilot = new RFIDAutopilot(locomotive, this);
                 locomotive.setSpeed(0);
+                locomotive.run();
                 locomotive.setMovingDirection(MovingDirection.FORWARD);
                 locomotive.setActualState(LocomotiveState.NOT_MOVING);
-                checkRoutesInLocation();
+                if (autopilot == null) {
+                    autopilot = new RFIDAutopilot(locomotive, this);
+                }
                 directionLabel.setText(locomotive.getForwardDirection().toString());
                 forwardToggleButton.setSelected(true);
                 backwardToggleButton.setSelected(false);
@@ -129,11 +133,13 @@ public class LocomotiveController {
                 backwardToggleButton.setDisable(true);
                 runButton.setDisable(true);
                 speedSlider.setDisable(true);
+                autopilot.enable();
             } else {
                 autopilot.disable();
                 runButton.setDisable(false);
                 forwardToggleButton.setDisable(false);
                 backwardToggleButton.setDisable(false);
+                speedSlider.setDisable(false);
                 locationLabel.setText("");
                 directionLabel.setText("");
             }
@@ -141,15 +147,6 @@ public class LocomotiveController {
 
     }
 
-    public boolean checkRoutesInLocation() {
-        Optional<Route> expectedRoute = ActionExecutor.getActiveRoutes().stream().map(RouteExecutor::getRoute).filter(route -> route.getDepartureTrackSection() == locomotive.getFrontTag().getTagLocation()).findFirst();
-        if (expectedRoute.isPresent()) {
-            autopilot.executeRoute(expectedRoute.get());
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     private void setLocomotiveSpeed() {
         if (actualSliderValue != speedSlider.getValue()) {

@@ -7,6 +7,7 @@ import NATrain.model.Model;
 import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.TagType;
 import NATrain.trackSideObjects.TracksideObject;
+import NATrain.trackSideObjects.movableObjects.MovableObjectType;
 import NATrain.trackSideObjects.movableObjects.railCircuitAutopilot;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.utils.UtilFunctions;
@@ -256,6 +257,8 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
         if (locomotive.getRearTag() != null) {
             Model.getTags().put(locomotive.getRearTag().getDecUid(), locomotive.getRearTag());
         }
+
+        locomotive.setMovableObjectType(MovableObjectType.LOCOMOTIVE);// TODO delete after tests
         updateModelAndClose(Model.getLocomotives(), locomotive);
     }
 

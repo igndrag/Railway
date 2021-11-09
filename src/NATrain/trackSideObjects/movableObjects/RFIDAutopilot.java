@@ -2,40 +2,34 @@ package NATrain.trackSideObjects.movableObjects;
 
 import NATrain.UI.workPlace.Blinker;
 import NATrain.UI.workPlace.LocomotiveController;
-import NATrain.UI.workPlace.WorkPlaceController;
+import NATrain.UI.workPlace.executors.ActionExecutor;
+import NATrain.UI.workPlace.executors.RouteExecutor;
+import NATrain.UI.workPlace.executors.RouteStatus;
 import NATrain.routes.*;
 import NATrain.trackSideObjects.signals.GlobalSignalState;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
-import NATrain.trackSideObjects.signals.SignalType;
 import NATrain.trackSideObjects.trackSections.TrackSection;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.concurrent.ConcurrentLinkedDeque;
-
-import static NATrain.trackSideObjects.trackSections.TrackSectionState.OCCUPIED;
 
 public class RFIDAutopilot implements Autopilot {
 
     private AutopilotMode mode;
     private Route route;
-    private Locomotive locomotive;
-    private LocomotiveController locomotiveController;
+    private final Locomotive locomotive;
+    private final LocomotiveController locomotiveController;
 
     private final PropertyChangeListener frontTagListener = new FrontTagListener();
     private final PropertyChangeListener nextSignalListener = new NextSignalListener();
     private Signal nextSignal;
+    private AutopilotStatus status;
 
-    private boolean stoppedBeforeSignal = false;
 
-    public static final int FULL_SPEED = 800; //max value is 1024
-    public static final int RESTRICTED_SPEED = 550;
-    public static final int SUPER_RESTRICTED_SPEED = 300; // impossible to start))
+    public static final int FULL_SPEED = 850; //max value is 1024
+    public static final int RESTRICTED_SPEED = 650;
+    public static final int SUPER_RESTRICTED_SPEED = 500; // impossible to start))
 
     public RFIDAutopilot(Locomotive locomotive, LocomotiveController locomotiveController) {
         this.locomotive = locomotive;
@@ -43,7 +37,7 @@ public class RFIDAutopilot implements Autopilot {
         this.locomotive.setAutopilot(this);
         locomotiveController.getLocationLabel().setText(locomotive.getFrontTagLocation().getId());
         locomotive.getFrontTag().addPropertyChangeSupport();
-        locomotive.getFrontTag().addPropertyChangeListener(frontTagListener);
+        this.status = AutopilotStatus.CREATED;
     }
 
     @Override
@@ -52,8 +46,31 @@ public class RFIDAutopilot implements Autopilot {
     }
 
     @Override
+    public void enable() {
+        locomotiveController.getLocationLabel().setText(locomotive.getFrontTagLocation().getId());
+        locomotive.getFrontTag().addPropertyChangeListener(frontTagListener);
+        this.status = AutopilotStatus.WAITING;
+        checkPreparedRoute();
+    }
+
+    @Override
     public void disable() {
+        route = null;
         deactivateListeners();
+        status = AutopilotStatus.DEACTIVATED;
+    }
+
+    @Override
+    public void checkPreparedRoute() {
+        if (locomotive.getFrontTag() != null && locomotive.getFrontTag().getTagLocation() != null) {
+            ActionExecutor.getActiveRoutes().stream()
+                    .filter(routeExecutor -> {
+                        return routeExecutor.getRouteStatus() != RouteStatus.COMPLETED;
+                    })
+                    .map(RouteExecutor::getRoute)
+                    .filter(activeRoute -> activeRoute.getDepartureTrackSection() == locomotive.getFrontTagLocation())
+                    .findFirst().ifPresent(this::executeRoute);
+        }
     }
 
     public Signal getNextSignal() {
@@ -72,18 +89,26 @@ public class RFIDAutopilot implements Autopilot {
     }
 
 
+
+
     protected class FrontTagListener implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             boolean signalChanged = false;
             TrackSection occupiedSection = (TrackSection) evt.getNewValue();
-            boolean passed = occupiedSection == locomotive.getRearTagLocation();
+            boolean passed = occupiedSection == locomotive.getRearTagLocation() && nextSignal != route.getSignal(); //avoid pass checking in start section
             //SECTION PASSED LOGIC
-            if (passed && nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) { //SECTION PASSED!!! GOOD TRICK ALWAYS WORKS))
-                if (occupiedSection instanceof TrackBlockSection || occupiedSection == route.getDestinationTrackSection()) {
-                    locomotive.stop();
-                    locomotive.setActualState(LocomotiveState.NOT_MOVING);
-                    stoppedBeforeSignal = true;
+            if (passed) { //SECTION PASSED!!! GOOD TRICK ALWAYS WORKS))
+                if ((occupiedSection instanceof TrackBlockSection &&
+                        occupiedSection == route.getDestinationTrackLine().getLastSectionInActualDirection())
+                        || occupiedSection == route.getDestinationTrackSection()) {
+                    if (nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) {
+                        locomotive.stop();
+                        locomotive.setActualState(LocomotiveState.NOT_MOVING);
+                        nextSignal.removePropertyChangeListener(nextSignalListener);
+                        status = AutopilotStatus.WAITING;
+                    }
+                    checkPreparedRoute();
                 }
             }
 
@@ -111,6 +136,7 @@ public class RFIDAutopilot implements Autopilot {
                     }
                 } else if (occupiedSection instanceof TrackBlockSection) {
                     signalChanged = true;
+                    status = AutopilotStatus.MOVING_ON_TRACKLINE;
                     nextSignal.removePropertyChangeListener(nextSignalListener);
                     TrackBlockSection blockSection = (TrackBlockSection) occupiedSection;
                     Track track = blockSection.getTrack();
@@ -136,10 +162,14 @@ public class RFIDAutopilot implements Autopilot {
                         }
                     }
                 }
-            }
 
-            if (route != null && !route.getOccupationalOrder().contains(occupiedSection)) { // don't change speed while route isn't completed
-                locomotiveSpeedAutoselect(nextSignal.getSignalState());
+                if ((status == AutopilotStatus.MOVING_ON_TRACKLINE) ||
+                   (status == AutopilotStatus.ARRIVAL_ROUTE_EXECUTION && occupiedSection instanceof StationTrack)) {
+                        // don't change speed while route isn't completed or loco has started a trackline moving
+                        assert nextSignal != null;
+                        locomotiveSpeedAutoselect(nextSignal.getSignalState());
+                }
+
             }
 
             if (signalChanged) {
@@ -150,6 +180,7 @@ public class RFIDAutopilot implements Autopilot {
             }
         }
     }
+
 
 
     protected class NextSignalListener implements PropertyChangeListener {
@@ -169,14 +200,15 @@ public class RFIDAutopilot implements Autopilot {
     private void locomotiveSpeedAutoselect(SignalState signalState) {
         switch (Signal.getGlobalStatusForState(signalState)) {
             case CLOSED:
-                if (stoppedBeforeSignal) {
+                if (status == AutopilotStatus.WAITING) {
                     break;
-                } else {
+                } else if (nextSignal != route.getSignal()) {
                     locomotive.setSpeed(SUPER_RESTRICTED_SPEED);
+                    System.out.printf("Signal: %s superrestricted!", nextSignal.getId());
                     locomotive.run();
                 }
+                break;
             case OPENED_ON_RESTRICTED_SPEED:
-                stoppedBeforeSignal = false;
                 if (locomotive.getActualState() == LocomotiveState.NOT_MOVING) {
                     locomotive.setMovingDirection(MovingDirection.FORWARD);
                 }
@@ -188,7 +220,6 @@ public class RFIDAutopilot implements Autopilot {
                 if (locomotive.getActualState() == LocomotiveState.NOT_MOVING) {
                     locomotive.setMovingDirection(MovingDirection.FORWARD);
                 }
-                stoppedBeforeSignal = false;
                 locomotive.setSpeed(FULL_SPEED);
                 locomotive.setActualState(LocomotiveState.MOVING_FORWARD);
                 locomotive.run();
@@ -199,7 +230,23 @@ public class RFIDAutopilot implements Autopilot {
     @Override
     public void executeRoute(Route route) {
         this.route = route;
+        if (nextSignal != null) {
+            nextSignal.removePropertyChangeListener(nextSignalListener);
+        }
+
         nextSignal = route.getSignal();
+
+        switch (route.getRouteType()) {
+            case ARRIVAL:
+                status = AutopilotStatus.ARRIVAL_ROUTE_EXECUTION;
+                break;
+            case DEPARTURE:
+                status = AutopilotStatus.DEPARTURE_ROUTE_EXECUTION;
+                break;
+        }
+
+        locomotive.setMovingDirection(MovingDirection.FORWARD);
+
         switch (route.getSignal().getGlobalStatus()) {
             case OPENED_ON_RESTRICTED_SPEED:
                 locomotive.setSpeed(RESTRICTED_SPEED);

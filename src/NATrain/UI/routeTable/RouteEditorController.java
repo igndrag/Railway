@@ -277,6 +277,7 @@ public class RouteEditorController {
                 case ARRIVAL:
                     route.setDestinationTrackSection(arrivalTrackChoiceBox.getValue());
                     route.setDestinationTrack(arrivalTrackChoiceBox.getValue());
+                    occupationalOrder.add(arrivalTrackChoiceBox.getValue());
                     Track track = trackLineChoiceBox.getValue();
                     if (route.getRouteDirection() == track.getNormalDirection()) {
                         route.setDepartureTrackSection(track.getBlockSections().get(track.getBlockSections().size() - 1));

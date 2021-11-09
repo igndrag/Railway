@@ -174,7 +174,7 @@ public abstract class railCircuitAutopilot implements Autopilot{
                 if (locomotive.getFrontTagLocation() == route.getDestinationTrackSection()) {
                     switch (route.getRouteType()) {
                         case ARRIVAL:    //in arrival routes
-                            if (!locomotiveController.checkRoutesInLocation()) { //check routes for next movement
+                            if (true) { //TODO check routes for next movement
                                 stopTimerStart();
                             }//if don't find - start stop timer
                             break;
@@ -230,13 +230,13 @@ public abstract class railCircuitAutopilot implements Autopilot{
                     locomotiveController.getPreview().setAssociatedSignal(nextSignal);
                     locomotiveController.getPreview().getDescriptionLabel().setText(nextSignal.getId());
                     locomotiveController.getPreview().refresh();
-                    locomotiveController.checkRoutesInLocation();
+                    checkPreparedRoute();
                 } else if (blockSectionIndex == (track.getBlockSections().size() - 1) && track.getTrackDirection() == TrackDirection.NORMAL) {
                     nextSignal = track.getNormalDirectionArrivalSignal();
                     locomotiveController.getPreview().setAssociatedSignal(nextSignal);
                     locomotiveController.getPreview().getDescriptionLabel().setText(nextSignal.getId());
                     locomotiveController.getPreview().refresh();
-                    locomotiveController.checkRoutesInLocation();
+                    checkPreparedRoute();
                 } else if (track.getTrackDirection() == TrackDirection.NORMAL) {
                     nextLocation = track.getBlockSections().get(blockSectionIndex + 1);
                     nextSignal = ((TrackBlockSection) nextLocation).getNormalDirectionSignal();
@@ -325,7 +325,7 @@ public abstract class railCircuitAutopilot implements Autopilot{
                             if (nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) { // check that signal still closed
                                 locomotive.stop();
                             } else {
-                                locomotiveController.checkRoutesInLocation(); //if signal opened, set route to autopilot
+                                checkPreparedRoute(); //if signal opened, set route to autopilot
                             }
                             // nextSignal.removePropertyChangeListener(nextSignalListener);
                         }

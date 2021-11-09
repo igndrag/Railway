@@ -28,6 +28,8 @@ import static java.util.concurrent.TimeUnit.*;
 
 public abstract class AbstractRouteExecutor implements RouteExecutor {
 
+    private final int STRONG_LOCK_CANCELLATION_PAUSE = 1; //180
+    private final int SOFT_LOCK_CANCELLATION_PAUSE = 1; //30
     RouteStatus routeStatus = RouteStatus.CREATED;
     Route route;
     private static WorkPlaceController workPlaceController;
@@ -191,7 +193,7 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
     }
 
     public void cancelRoute() {
-        int safetyPause = strongLock ? 180 : 30;
+        int safetyPause = strongLock ? STRONG_LOCK_CANCELLATION_PAUSE : SOFT_LOCK_CANCELLATION_PAUSE;
         routeStatus = RouteStatus.CANCELLATION;
         workPlaceController.refreshRouteStatusTable();
         workPlaceController.log(String.format("Route: %s is cancelling with %ds safety pause.", route.getDescription(), safetyPause));

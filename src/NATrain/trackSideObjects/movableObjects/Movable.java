@@ -1,5 +1,6 @@
 package NATrain.trackSideObjects.movableObjects;
 
+import NATrain.model.Model;
 import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 
@@ -26,4 +27,24 @@ public interface Movable {
     }
 
     MovableObjectType getMovableObjectType();
+
+    default void deallocateMovableObject() {
+        if (getFrontTag() != null) {
+            getFrontTag().setTagLocation(null);
+            TrackSection occupiedSection = getFrontTagLocation();
+            if (occupiedSection != null) {
+                occupiedSection.getTags().remove(getFrontTag());
+                occupiedSection.updateVacancyState();
+            }
+        }
+
+        if (getRearTag() != null) {
+            getRearTag().setTagLocation(null);
+            TrackSection occupiedSection = getRearTagLocation();
+            if (occupiedSection != null) {
+                occupiedSection.getTags().remove(getRearTag());
+                occupiedSection.updateVacancyState();
+            }
+        }
+    }
 }
