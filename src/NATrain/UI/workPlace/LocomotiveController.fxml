@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/8.0.241" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.LocomotiveController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.LocomotiveController">
    <children>
       <Label fx:id="idLabel" layoutX="34.0" layoutY="7.0" text="Locomotive ID">
          <font>
@@ -30,5 +27,6 @@
       <Label fx:id="locationLabel" layoutX="17.0" layoutY="385.0" text="Location_value" />
       <Label fx:id="directionLabel" layoutX="18.0" layoutY="442.0" text="Direction_value" />
       <ToggleButton fx:id="autopilotToggleButton" layoutX="75.0" layoutY="315.0" mnemonicParsing="false" prefWidth="70.0" text="Autopilot" />
+      <ToggleButton fx:id="engineToggleButton" layoutX="26.0" layoutY="269.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Engine" />
    </children>
 </Pane>

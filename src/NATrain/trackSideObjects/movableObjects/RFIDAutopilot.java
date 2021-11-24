@@ -27,9 +27,6 @@ public class RFIDAutopilot implements Autopilot {
     private AutopilotStatus status;
 
 
-    public static final int FULL_SPEED = 850; //max value is 1024
-    public static final int RESTRICTED_SPEED = 650;
-    public static final int SUPER_RESTRICTED_SPEED = 500; // impossible to start))
 
     public RFIDAutopilot(Locomotive locomotive, LocomotiveController locomotiveController) {
         this.locomotive = locomotive;

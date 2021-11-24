@@ -157,6 +157,10 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
         this.fullSpeed = fullSpeed;
     }
 
+    public boolean isMoving() {
+        return (actualState == LocomotiveState.MOVING_FORWARD || actualState == LocomotiveState.MOVING_BACKWARD) && speed > 0;
+    }
+
     @Override
     public String getModules() {
         return getModule().getId();

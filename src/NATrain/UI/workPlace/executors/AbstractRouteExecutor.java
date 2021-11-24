@@ -13,6 +13,7 @@ import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.trackSideObjects.trackSections.TrackSectionState;
+import NATrain.utils.Sound;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -24,6 +25,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static NATrain.trackSideObjects.trackSections.TrackSectionState.OCCUPIED;
 import static java.util.concurrent.TimeUnit.*;
 
 public abstract class AbstractRouteExecutor implements RouteExecutor {
@@ -41,6 +43,8 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
     private final ConcurrentLinkedDeque<TrackSection> occupationalOrder;
     private static final int delayForChangeSwitchPositions = 2;
     private static final int tryToInterlockCount = 3;
+
+    private DepartureTrackSectionListener departureTrackSectionListener;
 
     public static void setWorkPlaceController(WorkPlaceController workPlaceController) {
         AbstractRouteExecutor.workPlaceController = workPlaceController;
@@ -101,10 +105,10 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                 }
 
                 if (thisSection.isInterlocked()) {
-                    if (event.getOldValue() == TrackSectionState.FREE && event.getNewValue() == TrackSectionState.OCCUPIED) {
+                    if (event.getOldValue() == TrackSectionState.FREE && event.getNewValue() == OCCUPIED) {
                         thisSection.fixOccupation();
                     }
-                    if (thisSection.isOccupationFixed() && event.getOldValue() == TrackSectionState.OCCUPIED && event.getNewValue() == TrackSectionState.FREE) {
+                    if (thisSection.isOccupationFixed() && event.getOldValue() == OCCUPIED && event.getNewValue() == TrackSectionState.FREE) {
                         thisSection.fixDeallocation();
                     }
                 }
@@ -117,6 +121,9 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                         trackSectionUnlockerMap.remove(thisSection);
                         if (trackSectionUnlockerMap.isEmpty()) {
                             routeStatus = RouteStatus.COMPLETED;
+                            if (route.getRouteType() == RouteType.ARRIVAL) {
+                                route.getRouteCompletedSound().playAfterAttentionSound();
+                            }
                             removeSignalUpdaters();
                             workPlaceController.refreshRouteStatusTable();
                         }
@@ -128,15 +135,15 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
     }
 
     private boolean checkTrackSections() {
-        if (departureSection.getVacancyState() == TrackSectionState.OCCUPIED)
+        if (departureSection.getVacancyState() == OCCUPIED)
             strongLock = true;
         for (TrackSection trackSection : occupationalOrder) {
-            if (trackSection.getVacancyState() == TrackSectionState.OCCUPIED || trackSection.isInterlocked()) {
+            if (trackSection.getVacancyState() == OCCUPIED || trackSection.isInterlocked()) {
                 workPlaceController.log("   Track Sections check failed. " + trackSection.getId() + " is occupied or interlocked in route.");
                 return false;
             }
         }
-        if (route.getRouteType() != RouteType.SHUNTING && destinationSection.getVacancyState() == TrackSectionState.OCCUPIED) {
+        if (route.getRouteType() != RouteType.SHUNTING && destinationSection.getVacancyState() == OCCUPIED) {
             workPlaceController.log("   Track Sections check failed. Last section isn't free in not shunting route.");
             return false;
         }
@@ -189,6 +196,12 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
         occupationalOrder.forEach(trackSection -> trackSection.setInterlocked(true));
         workPlaceController.log(route.getDescription() + " is ready. Sections are interlocked.");
         routeStatus = RouteStatus.READY;
+        if (route.getDepartureTrackSection().getVacancyState() == OCCUPIED) {
+            route.getRouteReadySound().playAfterAttentionSound();
+        } else {
+            departureTrackSectionListener = new DepartureTrackSectionListener();
+            route.getDepartureTrackSection().addPropertyChangeListener(departureTrackSectionListener);
+        }
         workPlaceController.refreshRouteStatusTable();
     }
 
@@ -201,6 +214,9 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleWithFixedDelay(
                 () -> {
+                    if (departureTrackSectionListener != null) {
+                        departureSection.removePropertyChangeListener(departureTrackSectionListener);
+                    }
                     departureSection.setInterlocked(false);
                     destinationSection.setInterlocked(false);
                     route.getOccupationalOrder().forEach(trackSection -> trackSection.setInterlocked(false));
@@ -319,10 +335,20 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
 
     protected boolean isAllSectionsFree() {
         for (TrackSection trackSection : route.getOccupationalOrder()) {
-            if (trackSection.getVacancyState() == TrackSectionState.OCCUPIED)
+            if (trackSection.getVacancyState() == OCCUPIED)
                 return false;
         }
         return true;
+    }
+
+    private class DepartureTrackSectionListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getNewValue() == OCCUPIED) {
+               ((TrackSection) evt.getSource()).removePropertyChangeListener(this);
+               route.getRouteReadySound().playAfterAttentionSound();
+            }
+        }
     }
 
     public String getRouteDescription() {

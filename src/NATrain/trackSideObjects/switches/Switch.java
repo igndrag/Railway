@@ -4,6 +4,7 @@ import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.trackSideObjects.trackSections.TrackSectionState;
 import NATrain.trackSideObjects.TracksideObject;
+import NATrain.utils.Sound;
 import NATrain.сontrolModules.*;
 
 import java.io.Serializable;
@@ -25,6 +26,12 @@ public class Switch extends TracksideObject implements Serializable {
     private final OutputChannel plusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_PLUS, this, null);
     private final OutputChannel minusOutputChannel = new OutputChannel(OutputChannelType.SWITCH_TO_MINUS, this, null);
     private final OutputChannel stateRequestOutputChannel = new OutputChannel(OutputChannelType.STATE_REQUEST, this, null);
+
+    private static transient Sound switchSound;
+
+    static {
+        switchSound = new Sound("/sounds/switch.wav", 0.4f);
+    }
 
     public Switch(String id) {
         super(id);
@@ -124,9 +131,11 @@ public class Switch extends TracksideObject implements Serializable {
     public void sendOutputCommand(SwitchState switchState) {
         switch (switchState) {
             case PLUS:
+                switchSound.play();
                 plusOutputChannel.sendCommandCode(CONTROL_IMPULSE_COMMAND_CODE);
                 break;
             case MINUS:
+                switchSound.play();
                 minusOutputChannel.sendCommandCode(CONTROL_IMPULSE_COMMAND_CODE);
                 break;
         }

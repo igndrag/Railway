@@ -4,6 +4,7 @@ import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.utils.Sound;
 
 import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,10 +29,21 @@ public class Route implements Serializable {
     private Track destinationTrackLine;
     private StationTrack destinationTrack;
 
+    private Sound routeReadySound;
+    private Sound routeCompletedSound;
+    private String routeReadySoundFolder;
+    private String routeCompletedSoundFolder;
+
     public Route(String description, RouteType routeType) {
         this.description = description;
         this.routeType = routeType;
     }
+
+    public void initSounds() {
+        routeReadySound = new Sound(routeReadySoundFolder, 40);
+        routeCompletedSound = new Sound(routeCompletedSoundFolder, 40);
+    }
+
 
     public StationTrack getDestinationTrack() {
         return destinationTrack;
@@ -168,5 +180,31 @@ public class Route implements Serializable {
 
     public void setTVDS2(TrackBlockSection TVDS2) {
         this.TVDS2 = TVDS2;
+    }
+
+    public String getRouteReadySoundFolder() {
+        return routeReadySoundFolder;
+    }
+
+    public void setRouteReadySoundFolder(String routeReadySoundFolder) {
+        this.routeReadySoundFolder = routeReadySoundFolder;
+    }
+
+    public String getRouteCompletedSoundFolder() {
+        return routeCompletedSoundFolder;
+    }
+
+    public void setRouteCompletedSoundFolder(String routeCompletedSoundFolder) {
+        this.routeCompletedSoundFolder = routeCompletedSoundFolder;
+    }
+
+    public Sound getRouteReadySound() {
+        //return routeReadySound;//TODO change for custom sounds
+        return Sound.getTestSound();
+    }
+
+    public Sound getRouteCompletedSound() {
+        //return routeCompletedSound; //TODO change for custom sounds
+        return Sound.getTestSound();
     }
 }
