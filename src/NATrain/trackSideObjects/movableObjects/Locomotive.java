@@ -86,11 +86,13 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
 
     public void setMovingDirection(MovingDirection movingDirection) {
         this.movingDirection = movingDirection;
+/*
         if (movingDirection == MovingDirection.FORWARD) {
             controlModule.sendCommandToChannel(AbstractLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, String.format("%04d", AbstractLocomotiveModule.FORWARD_COMMAND_CODE));
         } else {
             controlModule.sendCommandToChannel(AbstractLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, String.format("%04d", AbstractLocomotiveModule.BACKWARD_COMMAND_CODE ));
         }
+*/
     }
 
     public void setModule(ControlModule module) {
@@ -109,12 +111,19 @@ public class Locomotive extends AbstractMovableObject implements Serializable{
                 setActualState(LocomotiveState.MOVING_BACKWARD);
             }
             controlModule.sendCommandToChannel(SET_SPEED_CHANNEL, String.format("%04d", speed) );
+
+            if (movingDirection == MovingDirection.FORWARD) {
+                controlModule.sendCommandToChannel(AbstractLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, String.format("%04d", AbstractLocomotiveModule.FORWARD_COMMAND_CODE));
+            } else {
+                controlModule.sendCommandToChannel(AbstractLocomotiveModule.SET_MOVE_DIRECTION_CHANNEL, String.format("%04d", AbstractLocomotiveModule.BACKWARD_COMMAND_CODE ));
+            }
         }
     }
 
     public void stop() {
         speed = 0;
         controlModule.sendCommandToChannel(MQTTLocomotiveModule.STOP_CHANNEL, "0" ); //command code doesn't matter on STOP channel
+        controlModule.sendCommandToChannel(SET_SPEED_CHANNEL, String.format("%04d", speed) );
         setActualState(LocomotiveState.NOT_MOVING);
         if (autopilot != null) {
             //railCircuitAutopilot.getOdometer().pause();

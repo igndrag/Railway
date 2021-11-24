@@ -55,8 +55,10 @@ public class Sound {
         }
     }
     public void play(){
-        clip.setFramePosition(0);
-        clip.start();
+        if (!clip.isRunning()) {
+            clip.setFramePosition(0);
+            clip.start();
+        }
     }
 
     public void playAfterAttentionSound() {
@@ -78,6 +80,7 @@ public class Sound {
     public void loop(){
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
+
     public void stop(){
         clip.stop();
     }

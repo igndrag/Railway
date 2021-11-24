@@ -30,7 +30,7 @@ public class Switch extends TracksideObject implements Serializable {
     private static transient Sound switchSound;
 
     static {
-        switchSound = new Sound("/sounds/switch.wav", 0.4f);
+        switchSound = new Sound("/sounds/switch.wav", 0.7f);
     }
 
     public Switch(String id) {

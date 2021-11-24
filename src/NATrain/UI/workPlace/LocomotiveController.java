@@ -3,6 +3,7 @@ package NATrain.UI.workPlace;
 import NATrain.quads.LocomotivePanelQuad;
 import NATrain.trackSideObjects.movableObjects.*;
 import NATrain.utils.Sound;
+import NATrain.сontrolModules.AbstractLocomotiveModule;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
@@ -69,6 +70,8 @@ public class LocomotiveController {
     private Sound dieselSound;
     private Sound actualDieselSound;
 
+    private int selectedSpeed = 0;
+
     public Label getLocationLabel() {
         return locationLabel;
     }
@@ -78,17 +81,17 @@ public class LocomotiveController {
     }
 
     public void init(Locomotive locomotive) {
-        dieselStartSound = new Sound("/sounds/diesel_start.wav", 0.4f);
+        dieselStartSound = new Sound("/sounds/diesel_start.wav", 0.3f);
         dieselStopSound = new Sound("/sounds/diesel_stop.wav", 0.4f);
         dieselSound = new Sound("/sounds/diesel_hh.wav", 0.4f);
-        dieselLowSpeedSound = new Sound("/sounds/diesel_low.wav", 0.4f);
-        dieselHalfSpeedSound = new Sound("/sounds/diesel_normal.wav", 0.4f);
-        dieselFullSpeedSound = new Sound("/sounds/diesel_full.wav", 0.4f);
+        dieselLowSpeedSound = new Sound("/sounds/diesel_low.wav", 0.3f);
+        dieselHalfSpeedSound = new Sound("/sounds/diesel_normal.wav", 0.2f);
+        dieselFullSpeedSound = new Sound("/sounds/diesel_full.wav", 0.5f);
 
-        hornSound = new Sound("/sounds/horn.wav", 0.4f);
-        fullSpeedClapSound = new Sound("/sounds/rail_clap_full_speed.wav", 0.4f);
-        halfSpeedClapSound = new Sound("/sounds/rail_clap_normal_speed.wav", 0.4f);
-        lowSpeedClapSound = new Sound("/sounds/rail_clap_low_speed.wav", 0.4f);
+        hornSound = new Sound("/sounds/tifon.wav", 0.4f);
+        fullSpeedClapSound = new Sound("/sounds/rail_clap_full_speed.wav", 0.8f);
+        halfSpeedClapSound = new Sound("/sounds/rail_clap_normal_speed.wav", 0.8f);
+        lowSpeedClapSound = new Sound("/sounds/rail_clap_low_speed.wav", 0.8f);
         longBrakingSound = new Sound("/sounds/super_restricted.wav", 0.4f);
         shortBrakingSound = new Sound("/sounds/braking.wav", 0.4f);
 
@@ -103,6 +106,10 @@ public class LocomotiveController {
         forwardToggleButton.setToggleGroup(toggleGroup);
         backwardToggleButton.setToggleGroup(toggleGroup);
         forwardToggleButton.setSelected(true);
+
+        stopButton.setDisable(true);
+        runButton.setDisable(true);
+
         idLabel.setText(locomotive.getId());
         statusLabel.setText(locomotive.getActualState().getDescription());
 
@@ -123,6 +130,7 @@ public class LocomotiveController {
         });
 
         runButton.setOnAction(event -> {
+            locomotive.setSpeed(selectedSpeed);
             locomotive.run();
             playRailClack();
         });
@@ -142,8 +150,10 @@ public class LocomotiveController {
         speedSlider.setOnKeyReleased(event -> {
             setLocomotiveSpeed();
         });
+
+        speedSlider.setDisable(true);
+
         stopButton.setOnAction(event -> {
-            locomotive.stop();
             if (actualRailClapSound != longBrakingSound && locomotive.isMoving()) {
                 shortBrakingSound.play();
             }
@@ -155,14 +165,18 @@ public class LocomotiveController {
             }
             if (engineStarted) {
                 actualDieselSound = dieselSound;
-                actualDieselSound.play();
+                actualDieselSound.loop();
             }
+            locomotive.stop();
             actualRailClapSound = null;
         });
+
         forwardToggleButton.setOnAction(event -> {
+            locomotive.stop();
             locomotive.setMovingDirection(MovingDirection.FORWARD);
         });
         backwardToggleButton.setOnAction(event -> {
+            locomotive.stop();
             locomotive.setMovingDirection(MovingDirection.BACKWARD);
         });
 
@@ -176,17 +190,25 @@ public class LocomotiveController {
                     engineToggleButton.setSelected(false);
                 } else {
                     Sound.playSoundAndLoop(dieselStartSound, dieselSound);
+                    locomotive.setMovingDirection(MovingDirection.FORWARD);
                     actualDieselSound = dieselSound;
                     engineStarted = true;
+                    runButton.setDisable(false);
+                    stopButton.setDisable(false);
+                    speedSlider.setDisable(false);
                 }
             } else {
                 if (dieselStopSound.getClip().isRunning()) {
                     engineToggleButton.setSelected(false);
                 } else {
+                    locomotive.stop();
                     actualDieselSound.stop();
                     actualDieselSound = null;
                     dieselStopSound.play();
                     engineStarted = false;
+                    runButton.setDisable(true);
+                    stopButton.setDisable(true);
+                    speedSlider.setDisable(true);
                 }
             }
         });
@@ -223,11 +245,11 @@ public class LocomotiveController {
     private void setLocomotiveSpeed() {
         if (actualSliderValue != speedSlider.getValue()) {
             actualSliderValue = speedSlider.getValue();
-            int speed = (int) (464 + speedSlider.getValue() * 70);
-            if (locomotive.getSpeed() > speed && speed > Autopilot.SUPER_RESTRICTED_SPEED && locomotive.isMoving()) {
+            selectedSpeed = (int) (464 + speedSlider.getValue() * 70);
+            if (locomotive.getSpeed() > selectedSpeed && selectedSpeed > Autopilot.SUPER_RESTRICTED_SPEED && locomotive.isMoving()) {
                 shortBrakingSound.play();
             }
-            locomotive.setSpeed(speed);
+            locomotive.setSpeed(selectedSpeed);
             playRailClack();
         }
     }
