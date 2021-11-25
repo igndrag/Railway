@@ -53,6 +53,9 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
     public AbstractRouteExecutor(Route route) {
         this.route = route;
         occupationalOrder = new ConcurrentLinkedDeque<>(route.getOccupationalOrder()); // create copy for processing
+        if (route.getRouteType() == RouteType.ARRIVAL) {
+            occupationalOrder.add(route.getDestinationTrackSection());
+        }
 
         if (route.getRouteType() == RouteType.SHUNTING && occupationalOrder.getFirst() == route.getDepartureTrackSection()) { // if shunting route from usual track section
             occupationalOrder.pollFirst();                                                                                      // we don't need to interlock this section in occupational order
@@ -114,8 +117,9 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                 }
                     if (previousSection.notInterlocked()
                             && thisSection.isOccupationFixed()
-                            && (thisSection.isDeallocationFixed() || route.getRouteType() == RouteType.ARRIVAL && thisSection == destinationSection)
-                            && nextSection.isOccupationFixed()) {
+                            && thisSection.isDeallocationFixed()
+                            && (nextSection.isOccupationFixed() || (route.getRouteType() == RouteType.ARRIVAL && nextSection == destinationSection && destinationSection.getVacancyState() == OCCUPIED)) ||
+                            (route.getRouteType() == RouteType.ARRIVAL && thisSection == destinationSection && previousSection.isOccupationFixed())) {
                         thisSection.setInterlocked(false);
                         thisSection.removePropertyChangeListener(this);
                         trackSectionUnlockerMap.remove(thisSection);
