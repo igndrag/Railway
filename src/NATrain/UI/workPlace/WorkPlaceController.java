@@ -16,8 +16,6 @@ import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
-import NATrain.utils.Sound;
-import NATrain.utils.SoundPlayer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,11 +40,6 @@ import java.util.List;
 
 public class WorkPlaceController {
 
-    @FXML
-    private Button backgroundSoundButton;
-    @FXML
-    private Button soundTestButton;
-
     public static WorkPlaceController getActiveController() {
         return activeController;
     }
@@ -63,6 +56,9 @@ public class WorkPlaceController {
     private RadioMenuItem locomotiveControllerRadioMenuItem;
     @FXML
     private RadioMenuItem connectionServiceEmulatorRadioMenuItem;
+    @FXML
+    private RadioMenuItem soundPlayerRadioMenuItem;
+
     @FXML
     private TextFlow log;
     @FXML
@@ -228,14 +224,6 @@ public class WorkPlaceController {
         //   ConnectionService connectionService = new ConnectionService("COM5");
         //   connectionService.start();
 
-        soundTestButton.setOnAction(event -> {
-            Sound.testSound();
-        });
-
-        backgroundSoundButton.setOnAction(event -> {
-            SoundPlayer.playBackgroundSound("");
-        });
-
         log("Work Place initialized");
         log("Good Lock!!!");
     }
@@ -349,8 +337,27 @@ public class WorkPlaceController {
         locomotiveController.initOwner(primaryStage);
         locomotiveController.setAlwaysOnTop(true);
         locomotiveController.show();
+    }
+
+    public void showSoundPlayer() throws IOException {
+        FXMLLoader loader = new FXMLLoader(SoundPlayer.class.getResource("SoundController.fxml"));
+        Stage soundPlayer = new Stage();
+        soundPlayer.setTitle("Sound Player");
+        soundPlayer.setScene(new Scene(loader.load(), 280, 230));
+        soundPlayer.setResizable(false);
+        SoundPlayer controller = loader.getController();
+        controller.init();
+        soundPlayer.setOnCloseRequest(event -> {
+            controller.deactivate();
+            soundPlayerRadioMenuItem.setSelected(false);
+        });
+        soundPlayer.initOwner(primaryStage);
+        soundPlayer.setAlwaysOnTop(true);
+        soundPlayer.show();
 
     }
+
+
 
     public void showMovableObjectsLocator() throws IOException {
         FXMLLoader loader = new FXMLLoader(LocomotiveController.class.getResource("Locator.fxml"));

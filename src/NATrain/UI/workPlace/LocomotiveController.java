@@ -14,6 +14,8 @@ import java.util.Optional;
 public class LocomotiveController {
 
 
+    public ToggleButton backgroundSoundToggleButton2;
+    public ToggleButton backgroundSoundToggleButton1;
     @FXML
     private Label directionLabel;
     @FXML

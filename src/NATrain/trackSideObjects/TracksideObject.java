@@ -1,7 +1,5 @@
 package NATrain.trackSideObjects;
 
-import NATrain.utils.SoundPlayer;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
@@ -9,8 +7,6 @@ import java.util.Arrays;
 
 public abstract class TracksideObject implements Serializable, Controllable, Listenable {
     static final long serialVersionUID = 1L;
-
-    protected transient SoundPlayer soundPlayer;
 
     protected transient PropertyChangeSupport propertyChangeSupport;
     protected String id;

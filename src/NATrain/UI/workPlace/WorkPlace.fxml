@@ -18,9 +18,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="soundTestButton" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" text="Button" />
-                  <Button fx:id="backgroundSoundButton" layoutX="201.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
-               </children>
+                 </children>
             </Pane>
             <TableView fx:id="routeStatusTableView" prefHeight="303.0" prefWidth="274.0" VBox.vgrow="ALWAYS">
               <columns>
@@ -57,6 +55,7 @@
             <items>
                   <RadioMenuItem fx:id="locomotiveControllerRadioMenuItem" mnemonicParsing="false" text="Locomotive Control Pane" />
                   <RadioMenuItem fx:id="actionEmulatorRadioMenuItem" mnemonicParsing="false" onAction="#showActionEmulator" text="Action Emulator Pane" />
+                  <RadioMenuItem fx:id="soundPlayerRadioMenuItem" mnemonicParsing="false" onAction="#showSoundPlayer" text="Sound Pane" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
