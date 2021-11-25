@@ -336,7 +336,11 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
     protected boolean isAllSectionsFree() {
         for (TrackSection trackSection : route.getOccupationalOrder()) {
             if (trackSection.getVacancyState() == OCCUPIED)
-                return false;
+                if (route.getRouteType() == RouteType.SHUNTING && trackSection == route.getDepartureTrackSection()) {
+                    continue;
+                } else {
+                    return false;
+                }
         }
         return true;
     }
