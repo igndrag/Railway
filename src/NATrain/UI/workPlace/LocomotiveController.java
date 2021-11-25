@@ -3,13 +3,12 @@ package NATrain.UI.workPlace;
 import NATrain.quads.LocomotivePanelQuad;
 import NATrain.trackSideObjects.movableObjects.*;
 import NATrain.utils.Sound;
-import NATrain.сontrolModules.AbstractLocomotiveModule;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-
-import java.util.HashSet;
-import java.util.Optional;
+import javafx.stage.Stage;
 
 public class LocomotiveController {
 
@@ -97,6 +96,55 @@ public class LocomotiveController {
         longBrakingSound = new Sound("/sounds/super_restricted.wav", 0.4f);
         shortBrakingSound = new Sound("/sounds/braking.wav", 0.4f);
 
+        speedSlider.getScene().setOnKeyTyped(event -> {
+            if(event.getCode().equals(KeyCode.ENTER) || event.getCharacter().equals("\r")) {
+                if (engineStarted) {
+                    stopEngine();
+                } else {
+                    startEngine();
+                }
+            } else
+            if (event.getCharacter().equals("d")) {
+                int actualSliderPosition = (int) Math.round(speedSlider.getValue());
+                if (actualSliderPosition < 8) {
+                    speedSlider.setValue(actualSliderPosition + 1);
+                } else {
+                    speedSlider.setValue(8);
+                }
+                setLocomotiveSpeed();
+            } else
+            if (event.getCharacter().equals("a")) {
+                int actualSliderPosition = (int) Math.round(speedSlider.getValue());
+                if (actualSliderPosition > 0) {
+                    speedSlider.setValue(actualSliderValue - 1);
+                } else {
+                    speedSlider.setValue(0);
+                }
+                setLocomotiveSpeed();
+            } else
+            if (event.getCharacter().equals("s")) {
+                if (locomotive.isMoving()) {
+                    stopLocomotive();
+                }
+            } else
+            if (event.getCharacter().equals("w")) {
+                if (!locomotive.isMoving()) {
+                    runLocomotive();
+                }
+            } else
+            if (event.getCharacter().equals("e")) {
+                stopLocomotive();
+                locomotive.setMovingDirection(MovingDirection.FORWARD);
+                forwardToggleButton.setSelected(true);
+            } else
+            if (event.getCharacter().equals("q")) {
+                stopLocomotive();
+                locomotive.setMovingDirection(MovingDirection.BACKWARD);
+                backwardToggleButton.setSelected(true);
+            }
+        });
+
+
 
         this.quad = new LocomotivePanelQuad();
         this.locomotive = locomotive;
@@ -132,9 +180,7 @@ public class LocomotiveController {
         });
 
         runButton.setOnAction(event -> {
-            locomotive.setSpeed(selectedSpeed);
-            locomotive.run();
-            playRailClack();
+            runLocomotive();
         });
 
         previewPane.getChildren().add(quad.getView());
@@ -156,29 +202,15 @@ public class LocomotiveController {
         speedSlider.setDisable(true);
 
         stopButton.setOnAction(event -> {
-            if (actualRailClapSound != longBrakingSound && locomotive.isMoving()) {
-                shortBrakingSound.play();
-            }
-            if (actualRailClapSound != null) {
-                actualRailClapSound.stop();
-            }
-            if (engineStarted && actualDieselSound != null) {
-                actualDieselSound.stop();
-            }
-            if (engineStarted) {
-                actualDieselSound = dieselSound;
-                actualDieselSound.loop();
-            }
-            locomotive.stop();
-            actualRailClapSound = null;
+            stopLocomotive();
         });
 
         forwardToggleButton.setOnAction(event -> {
-            locomotive.stop();
+            stopLocomotive();
             locomotive.setMovingDirection(MovingDirection.FORWARD);
         });
         backwardToggleButton.setOnAction(event -> {
-            locomotive.stop();
+            stopLocomotive();
             locomotive.setMovingDirection(MovingDirection.BACKWARD);
         });
 
@@ -188,30 +220,9 @@ public class LocomotiveController {
 
         engineToggleButton.setOnAction(event -> {
             if (engineToggleButton.isSelected()) {
-                if (dieselStopSound.getClip().isRunning()) {
-                    engineToggleButton.setSelected(false);
-                } else {
-                    Sound.playSoundAndLoop(dieselStartSound, dieselSound);
-                    locomotive.setMovingDirection(MovingDirection.FORWARD);
-                    actualDieselSound = dieselSound;
-                    engineStarted = true;
-                    runButton.setDisable(false);
-                    stopButton.setDisable(false);
-                    speedSlider.setDisable(false);
-                }
+                startEngine();
             } else {
-                if (dieselStopSound.getClip().isRunning()) {
-                    engineToggleButton.setSelected(false);
-                } else {
-                    locomotive.stop();
-                    actualDieselSound.stop();
-                    actualDieselSound = null;
-                    dieselStopSound.play();
-                    engineStarted = false;
-                    runButton.setDisable(true);
-                    stopButton.setDisable(true);
-                    speedSlider.setDisable(true);
-                }
+                stopEngine();
             }
         });
 
@@ -242,6 +253,59 @@ public class LocomotiveController {
                 directionLabel.setText("");
             }
         });
+    }
+
+    private void runLocomotive() {
+        locomotive.setSpeed(selectedSpeed);
+        locomotive.run();
+        playRailClack();
+    }
+
+    private void stopLocomotive() {
+        if (actualRailClapSound != longBrakingSound && locomotive.isMoving()) {
+            shortBrakingSound.play();
+        }
+        if (actualRailClapSound != null) {
+            actualRailClapSound.stop();
+        }
+        if (engineStarted && actualDieselSound != null) {
+            actualDieselSound.stop();
+        }
+        if (engineStarted) {
+            actualDieselSound = dieselSound;
+            actualDieselSound.loop();
+        }
+        locomotive.stop();
+        actualRailClapSound = null;
+    }
+
+    private void startEngine() {
+            if (dieselStopSound.getClip().isRunning()) {
+                engineToggleButton.setSelected(false);
+            } else {
+                Sound.playSoundAndLoop(dieselStartSound, dieselSound);
+                locomotive.setMovingDirection(MovingDirection.FORWARD);
+                actualDieselSound = dieselSound;
+                engineStarted = true;
+                runButton.setDisable(false);
+                stopButton.setDisable(false);
+                speedSlider.setDisable(false);
+            }
+    }
+
+    private void stopEngine() {
+        if (dieselStopSound.getClip().isRunning()) {
+            engineToggleButton.setSelected(false);
+        } else {
+            locomotive.stop();
+            actualDieselSound.stop();
+            actualDieselSound = null;
+            dieselStopSound.play();
+            engineStarted = false;
+            runButton.setDisable(true);
+            stopButton.setDisable(true);
+            speedSlider.setDisable(true);
+        }
     }
 
     private void setLocomotiveSpeed() {
