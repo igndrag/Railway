@@ -32,27 +32,58 @@ public enum Model implements Serializable {
     protected static Integer xSize = 20; //default size
     protected static Integer ySize = 20;
 
-    private static Quad[][] mainGrid = new Quad[20][20];
+    private static Quad[][] mainGrid;
 
-    private static Set<Route> routeTable = new CopyOnWriteArraySet<>();
+    private static Set<Route> routeTable;
 
-    private static Map<String, Switch> switches = new ConcurrentHashMap<>();
+    private static Map<String, Switch> switches;
 
-    private static Map<String, Signal> signals = new ConcurrentHashMap<>();
+    private static Map<String, Signal> signals;
 
-    private static Map<String, TrackSection> trackSections = new ConcurrentHashMap<>();
+    private static Map<String, TrackSection> trackSections;
 
-    private static Map<String, ControlModule> controlModules = new ConcurrentHashMap<>();
+    private static Map<String, ControlModule> controlModules;
 
-    private static Map<String, StationTrack> stationTracks = new ConcurrentHashMap<>();
+    private static Map<String, StationTrack> stationTracks;
 
-    private static Map<String, Locomotive> locomotives = new ConcurrentHashMap<>();
+    private static Map<String, Locomotive> locomotives;
 
-    private static Map<String, Wagon> wagons = new ConcurrentHashMap<>();
+    private static Map<String, Wagon> wagons;
 
-    private static Set<Track> tracks = new CopyOnWriteArraySet<>();
+    private static Set<Track> tracks;
 
-    private static Map<Long, RFIDTag> tags = new HashMap<>();
+    private static Map<Long, RFIDTag> tags;
+
+    public static void initEmptyModel() {
+
+        mainGrid = new Quad[ySize][xSize];
+
+        routeTable = new CopyOnWriteArraySet<>();
+
+        switches = new ConcurrentHashMap<>();
+
+        signals = new ConcurrentHashMap<>();
+
+        trackSections = new ConcurrentHashMap<>();
+
+        controlModules = new ConcurrentHashMap<>();
+
+        stationTracks = new ConcurrentHashMap<>();
+
+        locomotives = new ConcurrentHashMap<>();
+
+        wagons = new ConcurrentHashMap<>();
+
+        tracks = new CopyOnWriteArraySet<>();
+
+        tags = new HashMap<>();
+
+        for (int y = 0; y < ySize; y++) {
+            for (int x = 0; x < xSize; x++ ) {
+                mainGrid[y][x] = new EmptyQuad(x,y);
+            }
+        }
+    }
 
     public static Quad[][] getMainGrid() {
         return mainGrid;

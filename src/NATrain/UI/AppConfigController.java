@@ -17,7 +17,6 @@ public class AppConfigController {
     private static final String configURL = "config.ntc";
     public static int comPortNumber = 1;
 
-
     @FXML
     private TextField modelPathTextField;
     @FXML
@@ -35,7 +34,11 @@ public class AppConfigController {
     }
 
     public void initialize() {
-        modelPathTextField.setText(Model.getModelURL());
+        if (Model.getModelURL() == null) {
+            modelPathTextField.setText("Not selected");
+        } else {
+            modelPathTextField.setText(Model.getModelURL());
+        }
         portNumberTextField.setText(String.valueOf(comPortNumber));
     }
 
@@ -48,10 +51,10 @@ public class AppConfigController {
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(primaryStage);//Указываем текущую сцену CodeNote.mainStage
         if (file != null) {
-            saveConfigs();//Save
             modelPathTextField.setText(file.getAbsolutePath());
+        } else {
+            UIUtils.showAlert("Wrong model location!");
         }
-
     }
 
     public static void loadConfigs() {
@@ -82,6 +85,17 @@ public class AppConfigController {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(modelPathTextField.getText());
             Model.setModelURL(modelPathTextField.getText());
+            File expectedModelFile = new File(modelPathTextField.getText());
+            if (!expectedModelFile.exists()) {
+                try {
+                    expectedModelFile.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Model.saveOnDisk();
+            } else {
+                Model.loadFromDisk();
+            }
             int expectedPortNumber = UtilFunctions.parseIfPositiveNumeric(portNumberTextField.getText());
             if (expectedPortNumber >= 0) {
                 objectOutputStream.writeObject(expectedPortNumber);

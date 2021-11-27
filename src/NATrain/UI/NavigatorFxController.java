@@ -51,13 +51,29 @@ public class NavigatorFxController {
 
     public void initialize() {
         AppConfigController.loadConfigs();
-        Model.loadFromDisk();//
-        //ModelMock.MockModel();
-       }
+    }
+
+    public void checkModelURLConfigured() {
+        if (Model.getModelURL() != null) {
+            File expectedModelFile = new File(Model.getModelURL());
+            if (expectedModelFile.exists()) {
+                Model.loadFromDisk();
+            } else {
+                Model.initEmptyModel();
+            }
+        } else {
+            try {
+                Model.initEmptyModel();
+                toAppConfig();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @FXML
     private void toMosaicRedactor(ActionEvent actionEvent) throws IOException {
-       // Model.loadFromDisk();
+        // Model.loadFromDisk();
         FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("MosaicRedactor.fxml"));
         Stage mosaicRedactor = new Stage();
         mosaicRedactor.setTitle("Mosaic Redactor");
@@ -68,7 +84,7 @@ public class NavigatorFxController {
         controller.activateKeyListeners();
         //controller.initialize();
         mosaicRedactor.setOnCloseRequest(event -> {
-        //    Model.saveOnDisk();
+                Model.saveOnDisk();
             primaryStage.show();
             if (controller.getSelectedQuad() != null) {
                 controller.getSelectedQuad().unselect();
@@ -97,7 +113,7 @@ public class NavigatorFxController {
     }
 
     @FXML
-    private void toControlModuleRedactor (ActionEvent actionEvent) throws IOException{
+    private void toControlModuleRedactor(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(CMNavigatorController.class.getResource("CMNavigator.fxml"));
         Stage controlModuleNavigator = new Stage();
         controlModuleNavigator.setTitle("Control Module Navigator");
@@ -114,7 +130,7 @@ public class NavigatorFxController {
     }
 
     @FXML
-    private void toRouteTable() throws IOException{
+    private void toRouteTable() throws IOException {
         FXMLLoader loader = new FXMLLoader(RouteTableController.class.getResource("RouteTable.fxml"));
         Stage routeTable = new Stage();
         routeTable.setTitle("Route Table");
@@ -133,7 +149,7 @@ public class NavigatorFxController {
     }
 
     @FXML
-    private void toWorkPlace () throws IOException {
+    private void toWorkPlace() throws IOException {
         FXMLLoader loader = new FXMLLoader(WorkPlaceController.class.getResource("WorkPlace.fxml"));
         Stage workPlace = new Stage();
         workPlace.setTitle("Work Place");
@@ -143,10 +159,10 @@ public class NavigatorFxController {
         Blinker.start();
         //controller.initialize();
         workPlace.setOnCloseRequest(event -> {
-                WorkPlaceController.setInactiveMode();
-                WorkPlaceController.deactivateTrackSignalAutoselectors();
-                WorkPlaceController.deactivateTracksideObjectStateListeners();
-                Model.allObjectsToDefault();
+            WorkPlaceController.setInactiveMode();
+            WorkPlaceController.deactivateTrackSignalAutoselectors();
+            WorkPlaceController.deactivateTracksideObjectStateListeners();
+            Model.allObjectsToDefault();
             try {
                 MQTTConnectionService.getClient().disconnect();
             } catch (MqttException e) {
@@ -198,7 +214,6 @@ public class NavigatorFxController {
     private void loadCollection(MouseEvent mouseEvent) {
         Model.loadFromDisk();
     }
-
 
 
 }

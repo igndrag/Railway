@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Railway">
+    <output-path>$PROJECT_DIR$/out/artifacts/Railway</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="alias" value="" />
+        <option name="appClass" value="NATrain.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="keystore" value="" />
+        <option name="title" value="NTrain main app" />
+        <option name="vendor" value="" />
+        <option name="version" value="1.0" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="Railway.jar">
+        <element id="module-output" name="Railway" />
+        <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fazecast/jSerialComm/2.7.0/jSerialComm-2.7.0.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/github/java-native/jssc/2.9.2/jssc-2.9.2.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.2.5/org.eclipse.paho.client.mqttv3-1.2.5.jar" path-in-jar="/" />
+      </element>
+    </root>
+  </artifact>
+</component>

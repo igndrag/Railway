@@ -1,7 +1,6 @@
 package NATrain;
 
 import NATrain.UI.NavigatorFxController;
-import NATrain.connectionService.MQTTConnectionService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,9 +20,11 @@ public class Main extends Application {
         primaryStage.setTitle("NATrain");
         primaryStage.setScene(new Scene(root, 1030, 140));
         NavigatorFxController controller = loader.getController();
+        controller.initialize();
         NavigatorFxController.setPrimaryStage(primaryStage);
         primaryStage.setResizable(false);
         primaryStage.show();
+        controller.checkModelURLConfigured();
     }
 
 
