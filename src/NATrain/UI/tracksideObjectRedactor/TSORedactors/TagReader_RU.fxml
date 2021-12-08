@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="170.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.TagReaderController">
+   <children>
+      <Button fx:id="closeButton" layoutX="93.0" layoutY="124.0" mnemonicParsing="false" text="Закрыть" />
+      <Label layoutX="37.0" layoutY="63.0" text="Приложите метку к считывателю" />
+      <Label fx:id="uidValue" layoutX="96.0" layoutY="78.0" />
+   </children>
+</AnchorPane>

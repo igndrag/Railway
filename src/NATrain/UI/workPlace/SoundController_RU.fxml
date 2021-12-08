@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.SoundPlayer">
+   <children>
+      <ToggleButton fx:id="backgroundSoundToggleButton1" layoutX="70.0" layoutY="19.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="151.0" text="Фоновый шум 1" />
+      <ToggleButton fx:id="backgroundSoundToggleButton2" layoutX="71.0" layoutY="56.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="151.0" text="Фоновый шум 2" />
+      <Button fx:id="meteorButton" layoutX="153.0" layoutY="102.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Метеорит" />
+      <Button fx:id="stormButton" layoutX="14.0" layoutY="102.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Гром" />
+      <Button fx:id="roadCrossingRingButton" layoutX="15.0" layoutY="143.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Звонок переезда" />
+      <Button fx:id="customSoundButton1" layoutX="153.0" layoutY="144.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Дополнительный 1" />
+      <Button fx:id="customSoundButton2" layoutX="17.0" layoutY="185.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Дополнительный 2" />
+      <Button fx:id="customSoundButton3" layoutX="153.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Дополнительный 3" />
+   </children>
+</Pane>

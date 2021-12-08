@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.routeTable.RouteTableController">
+   <children>
+      <TableView fx:id="routeTable" layoutX="32.0" layoutY="27.0" prefHeight="268.0" prefWidth="549.0">
+        <columns>
+          <TableColumn fx:id="routeTypeColumn" prefWidth="88.0" text="Тип маршрута" />
+          <TableColumn fx:id="descriptionColumn" prefWidth="187.0" text="Описание" />
+            <TableColumn fx:id="signalColumn" prefWidth="77.0" text="Сигнал" />
+            <TableColumn fx:id="switchPositionsColumn" prefWidth="195.0" text="Положения стрелок" />
+        </columns>
+      </TableView>
+      <Button fx:id="newButton" layoutX="520.0" layoutY="310.0" mnemonicParsing="false" prefWidth="60.0" text="Создать" />
+      <Button fx:id="editButton" layoutX="411.0" layoutY="310.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" text="Редактировать" />
+      <Button fx:id="deleteButton" layoutX="336.0" layoutY="310.0" mnemonicParsing="false" prefWidth="60.0" text="Удалить" />
+   </children>
+</Pane>

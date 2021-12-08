@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.mosaicRedactor.MosaicRedactorFxController">
+   <left>
+      <Accordion maxHeight="600.0" minHeight="400.0" prefHeight="402.0" prefWidth="150.0" BorderPane.alignment="TOP_CENTER">
+        <panes>
+          <TitledPane alignment="TOP_LEFT" animated="false" maxHeight="400.0" text="Простые путевые элементы">
+               <content>
+                  <ScrollPane fx:id="simpleTrackSectionIcons" prefHeight="200.0" prefWidth="200.0">
+                    </ScrollPane>
+               </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Двойные путевые элементы">
+            <content>
+              <ScrollPane fx:id="doubleTrackSectionIcons" prefHeight="200.0" prefWidth="200.0">
+                      </ScrollPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Стрелки">
+            <content>
+              <ScrollPane fx:id="switchIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+            <TitledPane animated="false" text="Сигналы">
+                <content>
+                    <ScrollPane fx:id="signalIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
+            </TitledPane>
+            <TitledPane animated="false" layoutX="10.0" layoutY="60.0" text="Блок-участки">
+               <content>
+                  <ScrollPane fx:id="blockSectionIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" layoutX="10.0" layoutY="387.0" text="Перегонные сигналы">
+               <content>
+                  <ScrollPane fx:id="trackSignalIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" layoutX="10.0" layoutY="60.0" text="Контроль пререгона">
+               <content>
+                  <ScrollPane fx:id="trackControlIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="CustomElementIcons" animated="false" layoutX="10.0" layoutY="110.0" text="Специальные элементы">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </TitledPane>
+        </panes>
+      </Accordion>
+   </left>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Файл">
+            <items>
+              <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" text="Сохранить" />
+                  <MenuItem fx:id="loadMenuItem" mnemonicParsing="false" text="Загрузить" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Справка">
+            <items>
+              <MenuItem mnemonicParsing="false" text="О проекте" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <TextFlow fx:id="textFlowPanel" minHeight="100.0" prefHeight="100.0" prefWidth="600.0" BorderPane.alignment="TOP_LEFT">
+         <padding>
+            <Insets bottom="20.0" left="10.0" top="20.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin></TextFlow>
+   </bottom>
+   <center>
+      <ScrollPane fx:id="workArea" depthTest="ENABLE" minHeight="350.0" minWidth="350.0" pannable="true" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: -fx-box-border,-fx-background; -fx-background-insets: 0, 1; -fx-padding: 1.0;" BorderPane.alignment="CENTER" />
+   </center>
+   <right>
+      <VBox maxWidth="100.0" minHeight="300.0" minWidth="150.0" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Строк" />
+            <TextField fx:id="rawsNumber" text="20" />
+            <Label text="Колонок" />
+            <TextField fx:id="columnsNumber" text="20" />
+            <AnchorPane prefHeight="43.0" prefWidth="150.0">
+               <children>
+                  <Button fx:id="testButton" layoutX="98.0" mnemonicParsing="false" onAction="#buttonClicked" text="Button" />
+               </children>
+            </AnchorPane>
+            <TableView fx:id="propertyTable" prefHeight="132.0" prefWidth="150.0">
+              <columns>
+                <TableColumn fx:id="propNameCol" prefWidth="75.0" text="Property" />
+                <TableColumn fx:id="propValueCol" prefWidth="75.0" text="Value" />
+              </columns>
+            </TableView>
+            <Pane prefHeight="130.0" prefWidth="150.0">
+               <children>
+                  <CheckBox fx:id="gridLinesCheckBox" layoutX="23.0" layoutY="125.0" mnemonicParsing="false" onAction="#showGridLines" text="Показать сетку" />
+                  <ToggleButton fx:id="eraserToggleButton" layoutX="31.0" layoutY="24.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="88.0" text="Ластик" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </right>
+</BorderPane>

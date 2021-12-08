@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.mosaicRedactor.TrackQuadConfiguratorFxController">
+
+   <children>
+      <Pane fx:id="quadViewPane" layoutX="20.0" layoutY="30.0" prefHeight="80.0" prefWidth="90" />
+      <CheckBox fx:id="showBlockSectionNameCheckBox" layoutX="28.0" layoutY="136.0" mnemonicParsing="false" text="Показывать ID" />
+      <CheckBox fx:id="reverseCheckBox" layoutX="28.0" layoutY="168.0" mnemonicParsing="false" text="Реверсировать отображение" />
+      <ChoiceBox fx:id="trackChoiceBox" layoutX="220.0" layoutY="40.0" prefWidth="150.0" />
+      <Label layoutX="225.0" layoutY="20.0" text="Перегон" />
+      <Label layoutX="225.0" layoutY="78.0" text="Первый блок-участок" />
+      <ChoiceBox fx:id="firstBlockSectionChoiceBox" layoutX="220.0" layoutY="100.0" prefWidth="150.0" />
+      <Button graphicTextGap="10.0" layoutX="278.0" layoutY="202.0" mnemonicParsing="false" onAction="#saveAndClose" text="Сохранить">
+         <padding>
+            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+         </padding>
+      </Button>
+      <Label layoutX="225.0" layoutY="140.0" text="Второй блок-участок" />
+      <ChoiceBox fx:id="secondBlockSectionChoiceBox" layoutX="220.0" layoutY="162.0" prefWidth="150.0" />
+   </children>
+</Pane>

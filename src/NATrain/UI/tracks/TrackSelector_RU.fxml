@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracks.TrackSelectorController">
+   <children>
+      <TableView fx:id="tracksTableView" layoutX="23.0" layoutY="32.0" prefHeight="200.0" prefWidth="552.0">
+        <columns>
+          <TableColumn fx:id="idColumn" prefWidth="83.0" text="ID" />
+            <TableColumn fx:id="blockingTypeColumn" prefWidth="241.0" text="Тип автоматики" />
+          <TableColumn fx:id="blockSectionCountColumn" prefWidth="99.0" text="Блок-участков" />
+            <TableColumn fx:id="bidirectionalColumn" prefWidth="128.0" text="Смена направления" />
+        </columns>
+      </TableView>
+      <Button fx:id="newButton" layoutX="515.0" layoutY="251.0" mnemonicParsing="false" prefWidth="60.0" text="Создать" />
+      <Button fx:id="editButton" layoutX="402.0" layoutY="251.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="97.0" text="Редактировать" />
+      <Button fx:id="deleteButton" layoutX="324.0" layoutY="251.0" mnemonicParsing="false" prefWidth="60.0" text="Удалить" />
+   </children>
+</Pane>

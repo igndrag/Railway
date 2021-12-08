@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="237.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.LocomotiveController">
+   <children>
+      <Label fx:id="idLabel" layoutX="34.0" layoutY="7.0" text="Locomotive ID">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Slider fx:id="speedSlider" layoutX="41.0" layoutY="119.0" />
+      <ToggleButton fx:id="forwardToggleButton" layoutX="137.0" layoutY="78.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="75.0" text="Вперед" />
+      <ToggleButton fx:id="backwardToggleButton" layoutX="27.0" layoutY="78.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="70.0" text="Назад" />
+      <ToggleButton fx:id="frontLightToggleButton" layoutX="121.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="Свет передний" />
+      <Button fx:id="runButton" layoutX="119.0" layoutY="177.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="Пуск" />
+      <Button fx:id="stopButton" layoutX="19.0" layoutY="177.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Стоп" />
+      <Button fx:id="hornButton" layoutX="19.0" layoutY="223.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Гудок" />
+      <Label fx:id="statusLabel" layoutX="91.0" layoutY="49.0" text="Status" textAlignment="CENTER" />
+      <Pane fx:id="previewPane" layoutX="127.0" layoutY="363.0" prefHeight="82.0" prefWidth="70.0" />
+      <ToggleButton fx:id="rearLightToggleButton" layoutX="121.0" layoutY="269.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="Свет задний" />
+      <Label layoutX="128.0" layoutY="362.0" text="Next Signal:" />
+      <Label layoutX="17.0" layoutY="361.0" text="Location:" />
+      <Label layoutX="17.0" layoutY="418.0" text="Forward Direction:" />
+      <Label fx:id="locationLabel" layoutX="17.0" layoutY="385.0" text="Location_value" />
+      <Label fx:id="directionLabel" layoutX="18.0" layoutY="442.0" text="Direction_value" />
+      <ToggleButton fx:id="autopilotToggleButton" layoutX="82.0" layoutY="315.0" mnemonicParsing="false" prefWidth="70.0" text="Автопилот" />
+      <ToggleButton fx:id="engineToggleButton" layoutX="21.0" layoutY="269.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Двигатель" />
+   </children>
+</Pane>

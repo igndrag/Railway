@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMEditorController">
+   <children>
+      <Label layoutX="21.0" layoutY="23.0" text="Входы" />
+      <Label layoutX="447.0" layoutY="22.0" text="Выходы" />
+      <TableView fx:id="inputsTableView" layoutX="22.0" layoutY="48.0" prefHeight="171.0" prefWidth="407.0">
+        <columns>
+          <TableColumn fx:id="inputNumberColumn" prefWidth="29.0" text="№" />
+          <TableColumn fx:id="inputTypeColumn" prefWidth="179.0" text="Тип" />
+            <TableColumn fx:id="inputObjectColumn" prefWidth="103.0" text="Объект макета" />
+            <TableColumn fx:id="inputObjectColumn1" prefWidth="103.0" text="Описание" />
+        </columns>
+      </TableView>
+      <TableView fx:id="outputsTableView" layoutX="447.0" layoutY="48.0" prefHeight="171.0" prefWidth="423.0">
+         <columns>
+            <TableColumn fx:id="outputNumberColumn" prefWidth="29.0" text="№" />
+            <TableColumn fx:id="outputTypeColumn" prefWidth="135.0" text="Тип" />
+            <TableColumn fx:id="lampColumn" prefWidth="154.0" text="Лампа" />
+            <TableColumn fx:id="outputObjectColumn" prefWidth="103.0" text="Объект макета" />
+         </columns>
+      </TableView>
+      <Button fx:id="addInputButton" layoutX="275.0" layoutY="243.0" mnemonicParsing="false" onAction="#addInputChannel" prefHeight="23.0" prefWidth="75.0" text="Добавить" />
+      <Button fx:id="deleteInputButton" layoutX="275.0" layoutY="297.0" mnemonicParsing="false" onAction="#deleteInputChannel" prefHeight="23.0" prefWidth="75.0" text="Удалить" />
+      <ChoiceBox fx:id="inputTypeChoiceBox" layoutX="107.0" layoutY="242.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="108.0" layoutY="221.0" text="Тип входа" />
+      <ChoiceBox fx:id="inputObjectChoiceBox" layoutX="107.0" layoutY="350.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="108.0" layoutY="329.0" text="Объект макета\блок участок" />
+      <TextField fx:id="inputNumberTextField" layoutX="22.0" layoutY="241.0" prefHeight="25.0" prefWidth="51.0" />
+      <Label layoutX="23.0" layoutY="220.0" text="№ канала" />
+      <Button fx:id="addOutputButton" layoutX="795.0" layoutY="244.0" mnemonicParsing="false" onAction="#addOutputChannel" prefHeight="23.0" prefWidth="75.0" text="Добавить" />
+      <Button layoutX="793.0" layoutY="297.0" mnemonicParsing="false" onAction="#deleteOutputChannel" prefHeight="23.0" prefWidth="75.0" text="Удалить" />
+      <ChoiceBox fx:id="outputTypeChoiceBox" layoutX="612.0" layoutY="243.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="613.0" layoutY="222.0" text="Тип выхода" />
+      <ChoiceBox fx:id="outputObjectChoiceBox" layoutX="612.0" layoutY="297.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="613.0" layoutY="276.0" text="Объект макета\блок участок" />
+      <TextField fx:id="outputNumberTextField" layoutX="524.0" layoutY="242.0" prefHeight="25.0" prefWidth="60.0" />
+      <Label layoutX="532.0" layoutY="223.0" text="№ канала" />
+      <Label fx:id="CMTypeLabel" layoutX="22.0" layoutY="5.0" text="CMTypeLabel" />
+      <ChoiceBox fx:id="lampTypeChoiceBox" layoutX="612.0" layoutY="350.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="613.0" layoutY="331.0" text="Лампа" />
+      <ChoiceBox fx:id="inputTrackChoiceBox" layoutX="107.0" layoutY="297.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="108.0" layoutY="276.0" text="Перегон" />
+      <ChoiceBox fx:id="outputTrackChoiceBox" layoutX="452.0" layoutY="297.0" prefHeight="25.0" prefWidth="135.0" />
+      <Label layoutX="453.0" layoutY="276.0" text="Перегон" />
+   </children>
+</Pane>

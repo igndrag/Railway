@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.AppConfigController">
+   <children>
+      <TextField fx:id="modelPathTextField" layoutX="26.0" layoutY="35.0" prefHeight="23.0" prefWidth="322.0" />
+      <Label fx:id="testResultLabel" layoutX="332.0" layoutY="88.0" text="test result" />
+      <Button fx:id="browseButton" layoutX="369.0" layoutY="35.0" mnemonicParsing="false" onAction="#browse" prefWidth="65.0" text="Обзор..." />
+      <ColorPicker fx:id="backgroundColorPicker" layoutX="26.0" layoutY="141.0" />
+      <TextField fx:id="portNumberTextField" layoutX="26.0" layoutY="84.0" />
+      <Label layoutX="26.0" layoutY="67.0" text="Номер COM-порта" />
+      <Label layoutX="27.0" layoutY="120.0" text="Цвет фона:" />
+      <Button fx:id="testConnectionButton" layoutX="186.0" layoutY="84.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Проверить соединение" />
+      <Label layoutX="26.0" layoutY="17.0" text="Расположение файла модели" />
+      <Button fx:id="saveButton" layoutX="357.0" layoutY="160.0" mnemonicParsing="false" onAction="#saveConfigs" prefHeight="23.0" prefWidth="77.0" text="Сохранить" />
+   </children>
+</Pane>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="270.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.LocomotiveRedactorController">
+   <children>
+      <Button layoutX="193.0" layoutY="285.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
+      <TextField fx:id="textField" layoutX="17.0" layoutY="31.0" prefHeight="25.0" prefWidth="183.0" />
+      <Label layoutX="17.0" layoutY="11.0" text="ID" />
+      <Label layoutX="18.0" layoutY="62.0" text="Полная скорость" />
+      <TextField fx:id="fullSpeedTextField" layoutX="16.0" layoutY="79.0" prefHeight="25.0" prefWidth="112.0" />
+      <Label layoutX="19.0" layoutY="113.0" text="Сниженная скорость" />
+      <TextField fx:id="halfSpeedTextField" layoutX="17.0" layoutY="130.0" prefHeight="25.0" prefWidth="112.0" />
+      <TextField fx:id="frontTagTextField1" layoutX="20.0" layoutY="190.0" prefHeight="25.0" prefWidth="36.0" />
+      <TextField fx:id="frontTagTextField2" layoutX="63.0" layoutY="190.0" prefHeight="25.0" prefWidth="36.0" />
+      <TextField fx:id="frontTagTextField3" layoutX="104.0" layoutY="190.0" prefHeight="25.0" prefWidth="36.0" />
+      <TextField fx:id="frontTagTextField4" layoutX="146.0" layoutY="190.0" prefHeight="25.0" prefWidth="36.0" />
+      <TextField fx:id="rearTagTextField1" layoutX="20.0" layoutY="240.0" prefHeight="25.0" prefWidth="36.0" />
+      <TextField fx:id="rearTagTextField2" layoutX="62.0" layoutY="240.0" prefHeight="25.0" prefWidth="36.0" />
+      <TextField fx:id="rearTagTextField3" layoutX="105.0" layoutY="240.0" prefHeight="25.0" prefWidth="36.0" />
+      <TextField fx:id="rearTagTextField4" layoutX="146.0" layoutY="241.0" prefHeight="25.0" prefWidth="36.0" />
+      <Label layoutX="21.0" layoutY="165.0" text="Передняя метка" />
+      <Label layoutX="21.0" layoutY="219.0" text="Задняя метка" />
+      <Button fx:id="frontReadButton" layoutX="193.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Чтение" />
+      <Button fx:id="rearReadButton" layoutX="194.0" layoutY="240.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Чтение" />
+      <Label layoutX="139.0" layoutY="84.0" text="0...1024" />
+      <Label layoutX="139.0" layoutY="135.0" text="0...1024" />
+   </children>
+</Pane>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="140.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.NavigatorFxController">
+   <children>
+      <Button fx:id="mosaicRedactorButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="28.0" layoutY="20.0" mnemonicParsing="false" onAction="#toMosaicRedactor" prefHeight="100.0" prefWidth="120.0" text="Редактор модели" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/puzzles_icon.png" />
+               </image></ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Button>
+      <Button fx:id="trackSideObjectRedactorButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="173.0" layoutY="20.0" mnemonicParsing="false" onAction="#toTracksideObjectRedactor" prefHeight="100.0" prefWidth="120.0" text="Объекты макета" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/track_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="455.0" layoutY="20.0" mnemonicParsing="false" onAction="#toRouteTable" prefHeight="100.0" prefWidth="120.0" text="Таблица маршрутов" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/routes_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="597.0" layoutY="20.0" mnemonicParsing="false" onAction="#toControlModuleRedactor" prefHeight="100.0" prefWidth="120.0" text="Оборудование" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/hardware_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button fx:id="controlButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="742.0" layoutY="20.0" mnemonicParsing="false" onAction="#toWorkPlace" onMouseClicked="#loadCollection" prefHeight="100.0" prefWidth="120.0" text="Управление" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/control_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button fx:id="settingButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="888.0" layoutY="20.0" mnemonicParsing="false" onAction="#toAppConfig" onMouseClicked="#saveCollection" prefHeight="100.0" prefWidth="120.0" text="Настройки" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/settings_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="315.0" layoutY="20.0" mnemonicParsing="false" onAction="#toTrackSelector" prefHeight="100.0" prefWidth="120.0" text="Перегоны" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/tracks_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+   </children>
+</AnchorPane>

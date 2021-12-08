@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.SignalRedactorController">
+   <children>
+      <Button fx:id="saveButton" layoutX="255.0" layoutY="181.0" mnemonicParsing="false" onAction="#saveAndClose" prefHeight="23.0" prefWidth="75.0" text="Сохранить" />
+      <TextField fx:id="textField" layoutX="128.0" layoutY="32.0" prefHeight="25.0" prefWidth="199.0" />
+      <Label layoutX="130.0" layoutY="12.0" text="ID" />
+      <Label layoutX="130.0" layoutY="70.0" text="Тип сигнала" />
+      <ToggleButton fx:id="stationToggleButton" layoutX="127.0" layoutY="93.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Поездной" />
+      <ToggleButton fx:id="trimmerToggleButton" layoutX="232.0" layoutY="94.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="95.0" text="Маневровый" />
+      <Pane fx:id="signalPreview" layoutX="14.0" layoutY="14.0" prefHeight="190.0" prefWidth="40.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Pane>
+      <CheckBox fx:id="yellowLampCheckBox" layoutX="60.0" layoutY="13.0" mnemonicParsing="false" />
+      <CheckBox fx:id="greenLampCheckBox" layoutX="60.0" layoutY="43.0" mnemonicParsing="false" />
+      <CheckBox fx:id="redLampCheckBox" layoutX="60.0" layoutY="73.0" mnemonicParsing="false" />
+      <CheckBox fx:id="secondYellowLampCheckBox" layoutX="60.0" layoutY="103.0" mnemonicParsing="false" />
+      <CheckBox fx:id="secondGreenLampCheckBox" layoutX="60.0" layoutY="133.0" mnemonicParsing="false" />
+      <CheckBox fx:id="whiteLampCheckBox" layoutX="60.0" layoutY="163.0" mnemonicParsing="false" />
+      <CheckBox fx:id="greenLineCheckBox" layoutX="60.0" layoutY="190.0" mnemonicParsing="false" />
+      <CheckBox fx:id="trimmerRedLampCheckBox" layoutX="234.0" layoutY="133.0" mnemonicParsing="false" text="красный огонь" />
+   </children>
+</Pane>

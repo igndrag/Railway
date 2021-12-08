@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.ActionEmulatorController">
+   <children>
+      <ToggleButton fx:id="interlockTrackToggleButton" layoutX="20.0" layoutY="78.0" mnemonicParsing="false" prefWidth="70.0" text="Замкнут" />
+      <ToggleButton fx:id="occupiedTrackToggleButton" layoutX="117.0" layoutY="78.0" mnemonicParsing="false" prefWidth="70.0" text="Занят" />
+      <ChoiceBox fx:id="trackChoiceBox" layoutX="20.0" layoutY="39.0" prefHeight="23.0" prefWidth="167.0" />
+      <Label layoutX="20.0" layoutY="14.0" text="Изолированная секция" />
+      <Label layoutX="217.0" layoutY="14.0" text="Сигнал:" />
+      <ChoiceBox fx:id="signalChoiceBox" layoutX="217.0" layoutY="39.0" prefHeight="23.0" prefWidth="167.0" />
+      <ChoiceBox fx:id="signalStateChoiceBox" layoutX="217.0" layoutY="123.0" prefHeight="23.0" prefWidth="167.0" />
+      <Label layoutX="217.0" layoutY="101.0" text="Показание:" />
+      <Label layoutX="411.0" layoutY="18.0" text="Стрелка:" />
+      <ChoiceBox fx:id="switchChoiceBox" layoutX="411.0" layoutY="40.0" prefHeight="23.0" prefWidth="167.0" />
+      <ToggleButton fx:id="plusToggleButton" layoutX="411.0" layoutY="124.0" mnemonicParsing="false" prefWidth="70.0" text="Плюс" />
+      <ToggleButton fx:id="minusToggleButton" layoutX="506.0" layoutY="124.0" mnemonicParsing="false" prefWidth="70.0" text="Минус" />
+      <Button fx:id="allFreeButton" layoutX="99.0" layoutY="121.0" mnemonicParsing="false" onAction="#setAllSectionsFree" prefHeight="25.0" prefWidth="88.0" text="Все свободно" />
+      <Button fx:id="allClosedButton" layoutX="316.0" layoutY="80.0" mnemonicParsing="false" onAction="#setAllSignalClosed" text="All closed" />
+      <ChoiceBox fx:id="trackLineChoiceBox" layoutX="604.0" layoutY="40.0" prefHeight="23.0" prefWidth="167.0" />
+      <Label layoutX="605.0" layoutY="18.0" text="Перегон:" />
+      <ChoiceBox fx:id="blockSectionChoiceBox" layoutX="605.0" layoutY="88.0" prefHeight="23.0" prefWidth="167.0" />
+      <Label layoutX="606.0" layoutY="66.0" text="Блок-участок перегона:" />
+      <ToggleButton fx:id="occupiedBlockSectionToggleButton" layoutX="606.0" layoutY="122.0" mnemonicParsing="false" prefWidth="70.0" text="Занят" />
+      <ToggleButton fx:id="freeBlockSectionToggleButton" layoutX="701.0" layoutY="124.0" mnemonicParsing="false" prefWidth="70.0" text="Свободен" />
+   </children>
+</Pane>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="200.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.workPlace.executors.AlternativeRouteSelectorController">
+   <children>
+      <TableView fx:id="alternativeRoutsTableView" layoutX="25.0" layoutY="17.0" prefHeight="136.0" prefWidth="446.0">
+        <columns>
+          <TableColumn fx:id="routeDescriptionColumn" prefWidth="222.0" text="Описание маршрута" />
+          <TableColumn fx:id="switchPositionsColumn" maxWidth="366.0" minWidth="75.0" prefWidth="223.0" text="Положения стрелок" />
+        </columns>
+      </TableView>
+      <Button fx:id="okButton" layoutX="400.0" layoutY="165.0" mnemonicParsing="false" prefWidth="70.0" text="Выбрать" />
+   </children>
+</AnchorPane>

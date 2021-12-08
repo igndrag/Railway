@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.SwitchRedactorController">
+   <children>
+      <Button fx:id="saveButton" layoutX="220.0" layoutY="220.0" mnemonicParsing="false" onAction="#saveAndClose" prefHeight="23.0" prefWidth="85.0" text="Сохранить" />
+      <ChoiceBox fx:id="paredSwitchChoiceBox" layoutX="219.0" layoutY="178.0" prefHeight="25.0" prefWidth="85.0" />
+      <TextField fx:id="textField" layoutX="110.0" layoutY="32.0" prefHeight="25.0" prefWidth="195.0" />
+      <Label layoutX="112.0" layoutY="12.0" text="ID" />
+      <RadioButton fx:id="paredCheckbox" layoutX="111.0" layoutY="182.0" mnemonicParsing="false" text="спарена с..." />
+      <Pane fx:id="switchPreview" layoutX="21.0" layoutY="20.0" prefHeight="80.0" prefWidth="90.0" />
+      <ChoiceBox fx:id="trackSectionChoiceBox" layoutX="219.0" layoutY="75.0" prefHeight="25.0" prefWidth="85.0" />
+      <Label layoutX="114.0" layoutY="77.0" text="в составе участка..." />
+   </children>
+</Pane>
