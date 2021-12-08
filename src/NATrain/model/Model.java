@@ -1,5 +1,6 @@
 package NATrain.model;
 
+import NATrain.UI.scenario.Scenario;
 import NATrain.routes.StationTrack;
 import NATrain.routes.Route;
 import NATrain.routes.Track;
@@ -53,6 +54,8 @@ public enum Model implements Serializable {
     private static Set<Track> tracks;
 
     private static Map<Long, RFIDTag> tags;
+
+    public static Set<Scenario> scenarios = new HashSet<>();
 
     public static void initEmptyModel() {
 
@@ -149,7 +152,11 @@ public enum Model implements Serializable {
             ArrayList<BlockingQuadDTO> notEmptyTrackQuadDTOs = new ArrayList<>();
 
             File modelFile = new File(modelURL);
-            modelFile.createNewFile();
+
+            if (!modelFile.exists()) {
+                modelFile.createNewFile();
+            }
+
             FileOutputStream fileOutputStream = new FileOutputStream(modelFile);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(xSize);
