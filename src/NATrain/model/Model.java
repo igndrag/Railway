@@ -1,5 +1,6 @@
 package NATrain.model;
 
+import NATrain.UI.AppConfigController;
 import NATrain.UI.scenario.Scenario;
 import NATrain.routes.StationTrack;
 import NATrain.routes.Route;
@@ -27,8 +28,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public enum Model implements Serializable {
 
     INSTANCE;
-
-    private static String modelURL;
 
     protected static Integer xSize = 20; //default size
     protected static Integer ySize = 20;
@@ -130,14 +129,6 @@ public enum Model implements Serializable {
         return tags;
     }
 
-    public static String getModelURL() {
-        return modelURL;
-    }
-
-    public static void setModelURL(String modelURL) {
-        Model.modelURL = modelURL;
-    }
-
     public static void refreshAll() {
         Arrays.stream(mainGrid).flatMap(Arrays::stream).parallel().forEach(Quad::refresh);
     }
@@ -151,7 +142,7 @@ public enum Model implements Serializable {
             ArrayList<QuadDTO> notEmptyQuadDTOs = new ArrayList<>();
             ArrayList<BlockingQuadDTO> notEmptyTrackQuadDTOs = new ArrayList<>();
 
-            File modelFile = new File(modelURL);
+            File modelFile = new File(AppConfigController.getModelURL());
 
             if (!modelFile.exists()) {
                 modelFile.createNewFile();
@@ -213,9 +204,9 @@ public enum Model implements Serializable {
 
     public static void loadFromDisk() {
         try {
-            Path path = Paths.get(modelURL);
+            Path path = Paths.get(AppConfigController.getModelURL());
             if (path.toFile().exists()) {
-                File modelFile = new File(modelURL);
+                File modelFile = new File(AppConfigController.getModelURL());
                 FileInputStream fileInputStream = new FileInputStream(modelFile);
                 ObjectInputStream inputStream = new ObjectInputStream(fileInputStream);
                 xSize = (Integer) inputStream.readObject();

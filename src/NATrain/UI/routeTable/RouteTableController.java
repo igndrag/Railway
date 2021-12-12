@@ -1,5 +1,7 @@
 package NATrain.UI.routeTable;
 
+import NATrain.UI.AppConfigController;
+import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.model.Model;
 import NATrain.routes.Route;
 import NATrain.routes.RouteType;
@@ -98,7 +100,14 @@ public class RouteTableController {
     }
 
     protected void toRouteEditor(Route route) throws IOException {
-        FXMLLoader loader = new FXMLLoader(RouteEditorController.class.getResource("RouteEditor.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(RouteEditorController.class.getResource("RouteEditor_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(RouteEditorController.class.getResource("RouteEditor.fxml"));
+        }
         Stage routeEditor = new Stage();
         routeEditor.setTitle("Route Editor");
         routeEditor.setScene(new Scene(loader.load(), 640, 490));

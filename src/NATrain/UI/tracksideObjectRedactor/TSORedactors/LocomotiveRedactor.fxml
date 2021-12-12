@@ -9,10 +9,8 @@
    <Label layoutX="17.0" layoutY="11.0" text="ID" />
    <Label layoutX="18.0" layoutY="62.0" text="Full Speed, mm/sec" />
    <TextField fx:id="fullSpeedTextField" layoutX="16.0" layoutY="79.0" prefHeight="25.0" prefWidth="112.0" />
-   <Button fx:id="fullSpeedTestButton" layoutX="140.0" layoutY="79.0" mnemonicParsing="false" prefWidth="60.0" text="Test" />
    <Label layoutX="19.0" layoutY="113.0" text="Half Speed, mm/sec" />
    <TextField fx:id="halfSpeedTextField" layoutX="17.0" layoutY="130.0" prefHeight="25.0" prefWidth="112.0" />
-   <Button fx:id="halfSpeedTestButton" layoutX="141.0" layoutY="130.0" mnemonicParsing="false" prefWidth="60.0" text="Test" />
    <TextField fx:id="frontTagTextField1" layoutX="20.0" layoutY="190.0" prefHeight="25.0" prefWidth="36.0" />
    <TextField fx:id="frontTagTextField2" layoutX="63.0" layoutY="190.0" prefHeight="25.0" prefWidth="36.0" />
    <TextField fx:id="frontTagTextField3" layoutX="104.0" layoutY="190.0" prefHeight="25.0" prefWidth="36.0" />

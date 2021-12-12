@@ -1,5 +1,6 @@
 package NATrain.UI.mosaicRedactor;
 
+import NATrain.UI.AppConfigController;
 import NATrain.UI.NavigatorFxController;
 import NATrain.quads.*;
 import NATrain.trackSideObjects.trackSections.TrackSection;
@@ -288,8 +289,15 @@ public class MosaicRedactorFxController {
     private static void toQuadConfigurator(int x, int y) throws IOException {
         if (Model.getMainGrid()[y][x].isEmpty())
             return;
+        FXMLLoader loader;
         if (Model.getMainGrid()[y][x] instanceof BlockingBaseQuad) {
-            FXMLLoader loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator.fxml"));
+            switch (AppConfigController.getLanguage()) {
+                case RU:
+                    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
+                    break;
+                default:
+                    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator.fxml"));
+            }
             Stage trackQuadConfigurator = new Stage();
             trackQuadConfigurator.setTitle("Track Quad Configurator");
             trackQuadConfigurator.setScene(new Scene(loader.load(), 400, 240));
@@ -300,7 +308,13 @@ public class MosaicRedactorFxController {
             trackQuadConfigurator.initOwner(primaryStage);
             trackQuadConfigurator.show();
         } else if (Model.getMainGrid()[y][x] instanceof ArrivalSignalQuad) {
-            FXMLLoader loader = new FXMLLoader(ArrivalSignalQuadConfiguratorFxController.class.getResource("ArrivalSignalQuadConfigurator.fxml"));
+            switch (AppConfigController.getLanguage()) {
+                case RU:
+                    loader = new FXMLLoader(ArrivalSignalQuadConfiguratorFxController.class.getResource("ArrivalSignalQuadConfigurator_RU.fxml"));
+                    break;
+                default:
+                    loader = new FXMLLoader(ArrivalSignalQuadConfiguratorFxController.class.getResource("ArrivalSignalQuadConfigurator.fxml"));
+            }
             Stage quadConfigurator = new Stage();
             quadConfigurator.setTitle("Quad Configurator");
             quadConfigurator.setScene(new Scene(loader.load(), 400, 240));
@@ -311,7 +325,13 @@ public class MosaicRedactorFxController {
             quadConfigurator.initOwner(primaryStage);
             quadConfigurator.show();
         } else {
-            FXMLLoader loader = new FXMLLoader(QuadConfiguratorFxController.class.getResource("QuadConfigurator.fxml"));
+            switch (AppConfigController.getLanguage()) {
+                case RU:
+                    loader = new FXMLLoader(QuadConfiguratorFxController.class.getResource("QuadConfigurator_RU.fxml"));
+                    break;
+                default:
+                    loader = new FXMLLoader(QuadConfiguratorFxController.class.getResource("QuadConfigurator.fxml"));
+            }
             Stage quadConfigurator = new Stage();
             quadConfigurator.setTitle("Quad Configurator");
             quadConfigurator.setScene(new Scene(loader.load(), 400, 300));

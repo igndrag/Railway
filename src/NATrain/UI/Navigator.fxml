@@ -53,7 +53,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="controlButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="742.0" layoutY="20.0" mnemonicParsing="false" onAction="#toWorkPlace" onMouseClicked="#loadCollection" prefHeight="100.0" prefWidth="120.0" text="Control" textAlignment="CENTER">
+      <Button fx:id="controlButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="742.0" layoutY="20.0" mnemonicParsing="false" onAction="#toWorkPlace" prefHeight="100.0" prefWidth="120.0" text="Control" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -65,7 +65,7 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="settingButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="888.0" layoutY="20.0" mnemonicParsing="false" onAction="#toAppConfig" onMouseClicked="#saveCollection" prefHeight="100.0" prefWidth="120.0" text="Settings" textAlignment="CENTER">
+      <Button fx:id="settingButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="888.0" layoutY="20.0" mnemonicParsing="false" onAction="#toAppConfig" prefHeight="100.0" prefWidth="120.0" text="Settings" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>

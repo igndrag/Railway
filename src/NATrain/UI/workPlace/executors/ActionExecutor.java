@@ -1,5 +1,7 @@
 package NATrain.UI.workPlace.executors;
 
+import NATrain.UI.AppConfigController;
+import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.workPlace.LocatorController;
 import NATrain.UI.workPlace.LocomotiveSelectorController;
 import NATrain.UI.workPlace.WorkPlaceController;
@@ -170,7 +172,14 @@ public enum ActionExecutor {
     }
 
     private static void toAlternativeRouteSelector(ObservableList<Route> routes) throws IOException {
-        FXMLLoader loader = new FXMLLoader(AlternativeRouteSelectorController.class.getResource("AlternativeRouteSelector.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("AlternativeRouteSelector_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("AlternativeRouteSelector.fxml"));
+        }
         Stage alternativeRouteSelector = new Stage();
         alternativeRouteSelector.setTitle("Alternative Route Selector");
         alternativeRouteSelector.setScene(new Scene(loader.load(), 500, 200));
@@ -183,7 +192,14 @@ public enum ActionExecutor {
     }
 
     private static void toLocomotiveSelector(TrackSection track) throws IOException {
-        FXMLLoader loader = new FXMLLoader(LocomotiveSelectorController.class.getResource("LocomotiveSelector.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("LocomotiveSelector_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("LocomotiveSelector.fxml"));
+        }
         Stage locomotiveSelector = new Stage();
         locomotiveSelector.setTitle("Locomotive Selector");
         locomotiveSelector.setScene(new Scene(loader.load(), 250, 350));

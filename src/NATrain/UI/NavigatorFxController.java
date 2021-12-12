@@ -49,21 +49,9 @@ public class NavigatorFxController {
         return primaryStage;
     }
 
-    public void initialize() {
-        AppConfigController.loadConfigs();
-    }
-
-    public void checkModelURLConfigured() {
-        if (Model.getModelURL() != null) {
-            File expectedModelFile = new File(Model.getModelURL());
-            if (expectedModelFile.exists()) {
-                Model.loadFromDisk();
-            } else {
-                Model.initEmptyModel();
-            }
-        } else {
+    public void initialize(Boolean configured) {
+        if (!configured) {
             try {
-                Model.initEmptyModel();
                 toAppConfig();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -71,10 +59,18 @@ public class NavigatorFxController {
         }
     }
 
+
     @FXML
     private void toMosaicRedactor(ActionEvent actionEvent) throws IOException {
         // Model.loadFromDisk();
-        FXMLLoader loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("MosaicRedactor.fxml"));
+        FXMLLoader loader;
+                switch (AppConfigController.getLanguage()) {
+                    case RU:
+                        loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("MosaicRedactor_RU.fxml"));
+                        break;
+                    default:
+                        loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("MosaicRedactor.fxml"));
+                }
         Stage mosaicRedactor = new Stage();
         mosaicRedactor.setTitle("Mosaic Redactor");
         mosaicRedactor.setScene(new Scene(loader.load(), 800, 600));
@@ -97,13 +93,18 @@ public class NavigatorFxController {
 
     @FXML
     private void toTracksideObjectRedactor(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(TracksideObjectNavigatorController.class.getResource("TracksideObjectNavigator.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(TracksideObjectNavigatorController.class.getResource("TracksideObjectNavigator_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(TracksideObjectNavigatorController.class.getResource("TracksideObjectNavigator.fxml"));
+        }
         Stage tracksideObjectRedactor = new Stage();
         tracksideObjectRedactor.setTitle("Trackside Object Navigator");
         tracksideObjectRedactor.setScene(new Scene(loader.load(), 500, 500));
         tracksideObjectRedactor.setResizable(false);
-        //MosaicRedactorFxController controller = loader.getController();
-        //controller.initialize();
         TracksideObjectNavigatorController.setPrimaryStage(tracksideObjectRedactor);
         tracksideObjectRedactor.setOnCloseRequest(event -> {
             primaryStage.show();
@@ -114,7 +115,14 @@ public class NavigatorFxController {
 
     @FXML
     private void toControlModuleRedactor(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(CMNavigatorController.class.getResource("CMNavigator.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(CMNavigatorController.class.getResource("CMNavigator_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(CMNavigatorController.class.getResource("CMNavigator.fxml"));
+        }
         Stage controlModuleNavigator = new Stage();
         controlModuleNavigator.setTitle("Control Module Navigator");
         controlModuleNavigator.setScene(new Scene(loader.load(), 1000, 415));
@@ -131,7 +139,14 @@ public class NavigatorFxController {
 
     @FXML
     private void toRouteTable() throws IOException {
-        FXMLLoader loader = new FXMLLoader(RouteTableController.class.getResource("RouteTable.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(RouteTableController.class.getResource("RouteTable_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(RouteTableController.class.getResource("RouteTable.fxml"));
+        }
         Stage routeTable = new Stage();
         routeTable.setTitle("Route Table");
         routeTable.setScene(new Scene(loader.load(), 600, 350));
@@ -150,7 +165,14 @@ public class NavigatorFxController {
 
     @FXML
     private void toWorkPlace() throws IOException {
-        FXMLLoader loader = new FXMLLoader(WorkPlaceController.class.getResource("WorkPlace.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(WorkPlaceController.class.getResource("WorkPlace_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(WorkPlaceController.class.getResource("WorkPlace.fxml"));
+        }
         Stage workPlace = new Stage();
         workPlace.setTitle("Work Place");
         workPlace.setScene(new Scene(loader.load(), 800, 510));
@@ -177,7 +199,14 @@ public class NavigatorFxController {
 
     @FXML
     public void toAppConfig() throws IOException {
-        FXMLLoader loader = new FXMLLoader(AppConfigController.class.getResource("AppConfig.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(AppConfigController.class.getResource("AppConfig_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(AppConfigController.class.getResource("AppConfig.fxml"));
+        }
         Stage appConfig = new Stage();
         appConfig.setTitle("Application Configs");
         appConfig.setScene(new Scene(loader.load(), 450, 200));
@@ -192,7 +221,14 @@ public class NavigatorFxController {
 
     @FXML
     private void toTrackSelector() throws IOException {
-        FXMLLoader loader = new FXMLLoader(TrackSelectorController.class.getResource("TrackSelector.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(TrackSelectorController.class.getResource("TrackSelector_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(TrackSelectorController.class.getResource("TrackSelector.fxml"));
+        }
         Stage trackSelector = new Stage();
         trackSelector.setTitle("Track Selector");
         trackSelector.setScene(new Scene(loader.load(), 600, 300));
@@ -204,16 +240,4 @@ public class NavigatorFxController {
         primaryStage.hide();
         trackSelector.show();
     }
-
-    @FXML
-    private void saveCollection(MouseEvent mouseEvent) {
-        Model.saveOnDisk();
-    }
-
-    @FXML
-    private void loadCollection(MouseEvent mouseEvent) {
-        Model.loadFromDisk();
-    }
-
-
 }

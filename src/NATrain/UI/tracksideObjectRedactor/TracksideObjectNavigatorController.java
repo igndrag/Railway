@@ -1,5 +1,7 @@
 package NATrain.UI.tracksideObjectRedactor;
 
+import NATrain.UI.AppConfigController;
+import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.tracksideObjectRedactor.TSORedactors.*;
 import NATrain.model.Model;
 import NATrain.routes.StationTrack;
@@ -135,7 +137,14 @@ public class TracksideObjectNavigatorController {
     }
 
     protected void toTrackSectionRedactor (TrackSection trackSection) throws IOException {
-        FXMLLoader loader = new FXMLLoader(TrackSectionRedactorController.class.getResource("TrackSectionRedactor.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(TrackSectionRedactorController.class.getResource("TrackSectionRedactor_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(TrackSectionRedactorController.class.getResource("TrackSectionRedactor.fxml"));
+        }
         Stage trackSectionRedactor = new Stage();
         trackSectionRedactor.setTitle("Track Section Redactor");
         trackSectionRedactor.setScene(new Scene(loader.load(), 240, 220));
@@ -148,7 +157,14 @@ public class TracksideObjectNavigatorController {
     }
 
     private void toSwitchRedactor (Switch mySwitch) throws IOException {
-        FXMLLoader loader = new FXMLLoader(SwitchRedactorController.class.getResource("SwitchRedactor.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(SwitchRedactorController.class.getResource("SwitchRedactor_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(SwitchRedactorController.class.getResource("SwitchRedactor.fxml"));
+        }
         Stage switchRedactor = new Stage();
         switchRedactor.setTitle("Switch Redactor");
         switchRedactor.setScene(new Scene(loader.load(), 330, 260));
@@ -161,7 +177,14 @@ public class TracksideObjectNavigatorController {
     }
 
     private void toSignalRedactor (Signal signal) throws IOException {
-        FXMLLoader loader = new FXMLLoader(SignalRedactorController.class.getResource("SignalRedactor.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(SignalRedactorController.class.getResource("SignalRedactor_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(SignalRedactorController.class.getResource("SignalRedactor.fxml"));
+        }
         Stage signalRedactor = new Stage();
         signalRedactor.setTitle("Signal Redactor");
         signalRedactor.setScene(new Scene(loader.load(), 350, 220));
@@ -174,7 +197,14 @@ public class TracksideObjectNavigatorController {
     }
 
     private void toStationTrackRedactor(StationTrack stationTrack) throws IOException {
-        FXMLLoader loader = new FXMLLoader(StationTrackRedactorController.class.getResource("StationTrackRedactor.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(StationTrackRedactorController.class.getResource("StationTrackRedactor_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(StationTrackRedactorController.class.getResource("StationTrackRedactor.fxml"));
+        }
         Stage stationTrackRedactor = new Stage();
         stationTrackRedactor.setTitle("Station Track Redactor");
         stationTrackRedactor.setScene(new Scene(loader.load(), 220, 350));
@@ -188,7 +218,14 @@ public class TracksideObjectNavigatorController {
 
 
     private void toLocomotiveRedactor(Locomotive locomotive, boolean edit) throws IOException {
-        FXMLLoader loader = new FXMLLoader(LocomotiveRedactorController.class.getResource("LocomotiveRedactor.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(LocomotiveRedactorController.class.getResource("LocomotiveRedactor_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(LocomotiveRedactorController.class.getResource("LocomotiveRedactor.fxml"));
+        }
         Stage locomotiveRedactor = new Stage();
         locomotiveRedactor.setTitle("Locomotive Redactor");
         locomotiveRedactor.setScene(new Scene(loader.load(), 270, 320));
@@ -202,7 +239,14 @@ public class TracksideObjectNavigatorController {
     }
 
     private void toWagonRedactor(Wagon wagon, boolean edit) throws IOException {
-        FXMLLoader loader = new FXMLLoader(LocomotiveRedactorController.class.getResource("WagonRedactor.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(WagonRedactorController.class.getResource("WagonRedactor_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(WagonRedactorController.class.getResource("WagonRedactor.fxml"));
+        }
         Stage wagonRedactor = new Stage();
         wagonRedactor.setTitle("Wagon Redactor");
         wagonRedactor.setScene(new Scene(loader.load(), 270, 320));
@@ -531,7 +575,4 @@ public class TracksideObjectNavigatorController {
             }
         });
     }
-
-
-
 }

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.mosaicRedactor.MosaicRedactorFxController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.mosaicRedactor.MosaicRedactorFxController">
    <left>
       <Accordion maxHeight="600.0" minHeight="400.0" prefHeight="402.0" prefWidth="150.0" BorderPane.alignment="TOP_CENTER">
         <panes>
@@ -49,7 +48,7 @@
             </TitledPane>
             <TitledPane fx:id="CustomElementIcons" animated="false" layoutX="10.0" layoutY="110.0" text="Специальные элементы">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <Pane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </TitledPane>
         </panes>
@@ -91,11 +90,11 @@
             <TextField fx:id="rawsNumber" text="20" />
             <Label text="Колонок" />
             <TextField fx:id="columnsNumber" text="20" />
-            <AnchorPane prefHeight="43.0" prefWidth="150.0">
+            <Pane prefHeight="43.0" prefWidth="150.0">
                <children>
-                  <Button fx:id="testButton" layoutX="98.0" mnemonicParsing="false" onAction="#buttonClicked" text="Button" />
+                  <Button fx:id="testButton" layoutX="87.0" layoutY="9.0" mnemonicParsing="false" onAction="#buttonClicked" text="Button" />
                </children>
-            </AnchorPane>
+            </Pane>
             <TableView fx:id="propertyTable" prefHeight="132.0" prefWidth="150.0">
               <columns>
                 <TableColumn fx:id="propNameCol" prefWidth="75.0" text="Property" />

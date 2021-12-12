@@ -1,5 +1,6 @@
 package NATrain.UI.tracks;
 
+import NATrain.UI.AppConfigController;
 import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.model.Model;
 import NATrain.routes.Track;
@@ -93,7 +94,14 @@ public class TrackSelectorController {
     }
 
     private void toTrackRedactor(Track track) throws IOException {
-        FXMLLoader loader = new FXMLLoader(TrackRedactorController.class.getResource("TrackRedactor.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(TrackRedactorController.class.getResource("TrackRedactor_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(TrackRedactorController.class.getResource("TrackRedactor.fxml"));
+        }
         Stage trackRedactor = new Stage();
         trackRedactor.setTitle("Track Redactor");
         trackRedactor.setScene(new Scene(loader.load(), 465, 480));

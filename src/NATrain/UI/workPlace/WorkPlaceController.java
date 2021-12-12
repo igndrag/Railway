@@ -1,6 +1,8 @@
 package NATrain.UI.workPlace;
 
+import NATrain.UI.AppConfigController;
 import NATrain.UI.NavigatorFxController;
+import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.workPlace.executors.ActionExecutor;
 import NATrain.UI.workPlace.executors.AbstractRouteExecutor;
 import NATrain.UI.workPlace.executors.RouteExecutor;
@@ -197,12 +199,6 @@ public class WorkPlaceController {
             }
         });
 
-        sendConfigsButton.setOnAction(event -> {
-            sendApprovedTags();
-        });
-
-
-
         updateButton.setOnAction(event -> {
             Model.getSignals().values().forEach(signal -> {
                 signal.setSignalState(signal.getSignalState());
@@ -305,7 +301,14 @@ public class WorkPlaceController {
     }
 
     public void showActionEmulator(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(ActionEmulatorController.class.getResource("ActionEmulator.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(ActionEmulatorController.class.getResource("ActionEmulator_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(ActionEmulatorController.class.getResource("ActionEmulator.fxml"));
+        }
         Stage actionEmulator = new Stage();
         actionEmulator.setTitle("Action Emulator");
         actionEmulator.setScene(new Scene(loader.load(), 800, 160));
@@ -321,7 +324,14 @@ public class WorkPlaceController {
     }
 
     public void showLocomotiveController(Locomotive locomotive, int number) throws IOException {
-        FXMLLoader loader = new FXMLLoader(LocomotiveController.class.getResource("LocomotiveController.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(LocomotiveController.class.getResource("LocomotiveController_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(LocomotiveController.class.getResource("LocomotiveController.fxml"));
+        }
         Stage locomotiveController = new Stage();
         locomotiveController.setTitle("Locomotive Controller");
         locomotiveController.setScene(new Scene(loader.load(), 220, 480));
@@ -340,7 +350,14 @@ public class WorkPlaceController {
     }
 
     public void showSoundPlayer() throws IOException {
-        FXMLLoader loader = new FXMLLoader(SoundPlayer.class.getResource("SoundController.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(SoundPlayer.class.getResource("SoundController_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(SoundPlayer.class.getResource("SoundController.fxml"));
+        }
         Stage soundPlayer = new Stage();
         soundPlayer.setTitle("Sound Player");
         soundPlayer.setScene(new Scene(loader.load(), 280, 230));
@@ -360,7 +377,14 @@ public class WorkPlaceController {
 
 
     public void showMovableObjectsLocator() throws IOException {
-        FXMLLoader loader = new FXMLLoader(LocomotiveController.class.getResource("Locator.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(LocatorController.class.getResource("Locator_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(LocatorController.class.getResource("Locator.fxml"));
+        }
         Stage locator = new Stage();
         locator.setTitle("Locator");
         locator.setScene(new Scene(loader.load(), 600, 400));

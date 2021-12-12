@@ -53,11 +53,7 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
     @FXML
     private TextField fullSpeedTextField;
     @FXML
-    private Button fullSpeedTestButton;
-    @FXML
     private TextField halfSpeedTextField;
-    @FXML
-    private Button halfSpeedTestButton;
     @FXML
     private Locomotive locomotive;
 
@@ -102,14 +98,6 @@ public class LocomotiveRedactorController extends TracksideObjectRedactorControl
 
         fullSpeedTextField.setText(locomotive.getFullSpeed() + "");
         halfSpeedTextField.setText(locomotive.getRestrictedSpeed() + "");
-
-        fullSpeedTestButton.setOnAction(event -> {
-            speedTest(railCircuitAutopilot.FULL_SPEED);
-        });
-
-        halfSpeedTestButton.setOnAction(event -> {
-            speedTest(railCircuitAutopilot.RESTRICTED_SPEED);
-        });
 
         if (locomotive.getFrontTag() != null) {
             RFIDTag frontTag = locomotive.getFrontTag();

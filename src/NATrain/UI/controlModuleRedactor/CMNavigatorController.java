@@ -1,5 +1,7 @@
 package NATrain.UI.controlModuleRedactor;
 
+import NATrain.UI.AppConfigController;
+import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.model.Model;
 import NATrain.сontrolModules.ControlModule;
 import javafx.collections.FXCollections;
@@ -107,7 +109,14 @@ public class CMNavigatorController {
     }
 
     private void toControlModuleRedactor(ControlModule controlModule) throws IOException {
-        FXMLLoader loader = new FXMLLoader(CMEditorController.class.getResource("CMEditor.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(CMEditorController.class.getResource("CMEditor_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(CMEditorController.class.getResource("CMEditor.fxml"));
+        }
         Stage controlModuleEditor = new Stage();
         controlModuleEditor.setTitle("Control Module Editor");
         controlModuleEditor.setScene(new Scene(loader.load(), 890, 440));
@@ -123,7 +132,14 @@ public class CMNavigatorController {
     }
 
     private void toControlModuleCreator() throws IOException {
-        FXMLLoader loader = new FXMLLoader(CMCreatorController.class.getResource("CMCreator.fxml"));
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                loader = new FXMLLoader(CMCreatorController.class.getResource("CMCreator_RU.fxml"));
+                break;
+            default:
+                loader = new FXMLLoader(CMCreatorController.class.getResource("CMCreator.fxml"));
+        }
         Stage controlModuleCreator = new Stage();
         controlModuleCreator.setTitle("Control Module Creator");
         controlModuleCreator.setScene(new Scene(loader.load(), 300, 270));

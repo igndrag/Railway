@@ -2,6 +2,7 @@ package NATrain.UI;
 
 import NATrain.model.Model;
 import NATrain.utils.UtilFunctions;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -13,9 +14,12 @@ import java.nio.file.Paths;
 
 public class AppConfigController {
 
+
     private Stage primaryStage;
     private static final String configURL = "config.ntc";
     public static int comPortNumber = 1;
+    private static Lang language = Lang.ENG;
+    private static String modelURL;
 
     @FXML
     private TextField modelPathTextField;
@@ -27,17 +31,29 @@ public class AppConfigController {
     private TextField portNumberTextField;
     @FXML
     private Button testConnectionButton;
+    @FXML
+    private ChoiceBox<Lang> languageChoiceBox;
 
+    public static Lang getLanguage() {
+        return language;
+    }
+
+    public static String getModelURL() {
+        return modelURL;
+    }
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
     public void initialize() {
-        if (Model.getModelURL() == null) {
+        languageChoiceBox.setItems(FXCollections.observableArrayList(Lang.values()));
+        if (modelURL == null) {
             modelPathTextField.setText("Not selected");
+            languageChoiceBox.getSelectionModel().select(Lang.ENG);
         } else {
-            modelPathTextField.setText(Model.getModelURL());
+            modelPathTextField.setText(modelURL);
+            languageChoiceBox.getSelectionModel().select(language);
         }
         portNumberTextField.setText(String.valueOf(comPortNumber));
     }
@@ -65,11 +81,9 @@ public class AppConfigController {
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 String modelDirectoryAddress = (String) objectInputStream.readObject();
                 comPortNumber = (Integer) objectInputStream.readObject();
+                language = (Lang) objectInputStream.readObject();
                 objectInputStream.close();
-                Model.setModelURL(modelDirectoryAddress);
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Model file isn't configured, load process failed!");
+                modelURL = modelDirectoryAddress;
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -84,7 +98,7 @@ public class AppConfigController {
             FileOutputStream fileOutputStream = new FileOutputStream(configPath.toFile());
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(modelPathTextField.getText());
-            Model.setModelURL(modelPathTextField.getText());
+            modelURL = modelPathTextField.getText();
             File expectedModelFile = new File(modelPathTextField.getText());
             if (!expectedModelFile.exists()) {
                 try {
@@ -104,6 +118,8 @@ public class AppConfigController {
                 objectOutputStream.writeObject(1);
                 comPortNumber = 1;
             }
+            objectOutputStream.writeObject(languageChoiceBox.getSelectionModel().getSelectedItem());
+            language = languageChoiceBox.getValue();
             objectOutputStream.close();
 
         } catch (IOException e) {

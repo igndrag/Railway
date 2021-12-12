@@ -5,6 +5,7 @@ import NATrain.quads.configurableInterfaces.BlockSignalConfigurable;
 import NATrain.routes.TrackDirection;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.signals.Signal;
+import NATrain.trackSideObjects.signals.SignalState;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import java.util.Collections;
@@ -69,7 +70,8 @@ public abstract class BlockingSignalQuad extends BlockingTrackQuad implements Bl
     }
 
     private void updateBlockSignalView(Signal signal, Shape lampElement) {
-        if (signal != null && signal != Signal.EMPTY_SIGNAL) {
+        if (signal != null && signal.getSignalState() != null && signal != Signal.EMPTY_SIGNAL) {
+
             lampElement.setFill(SIGNAL_LAMP_BACKGROUND_COLOR);
             switch (signal.getSignalState()) {
                 case UNDEFINED:
