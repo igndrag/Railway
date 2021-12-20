@@ -195,10 +195,10 @@ public enum ActionExecutor {
         FXMLLoader loader;
         switch (AppConfigController.getLanguage()) {
             case RU:
-                loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("LocomotiveSelector_RU.fxml"));
+                loader = new FXMLLoader(LocomotiveSelectorController.class.getResource("LocomotiveSelector_RU.fxml"));
                 break;
             default:
-                loader = new FXMLLoader(MosaicRedactorFxController.class.getResource("LocomotiveSelector.fxml"));
+                loader = new FXMLLoader(LocomotiveSelectorController.class.getResource("LocomotiveSelector.fxml"));
         }
         Stage locomotiveSelector = new Stage();
         locomotiveSelector.setTitle("Locomotive Selector");

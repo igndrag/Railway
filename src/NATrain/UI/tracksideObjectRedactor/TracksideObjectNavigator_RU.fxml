@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane maxHeight="500.0" maxWidth="500.0" minHeight="500.0" minWidth="350.0" prefHeight="500.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController">
+<TabPane maxHeight="500.0" maxWidth="532.0" minHeight="500.0" minWidth="350.0" prefHeight="500.0" prefWidth="532.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController">
   <tabs>
     <Tab text="Изолированные секции">
          <content>
-            <Pane prefHeight="471.0" prefWidth="451.0">
+            <Pane prefHeight="471.0" prefWidth="530.0">
                <children>
-                  <TableView fx:id="trackSectionsTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                  <TableView fx:id="trackSectionsTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="490.0">
                     <columns>
                         <TableColumn fx:id="trackSectionIdCol" prefWidth="70.0" text="ID" />
                         <TableColumn fx:id="trackSectionLengthCol" prefWidth="70.0" text="Длина" />
-                        <TableColumn fx:id="trackSectionControlModuleCol" prefWidth="309.0" text="Модуль управления" />
+                        <TableColumn fx:id="trackSectionControlModuleCol" prefWidth="349.0" text="Модуль управления" />
                     </columns>
                   </TableView>
                   <Button fx:id="newTrackSectionButton" layoutX="412.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Создать" />
@@ -28,10 +27,10 @@
           <content>
               <Pane prefHeight="490.0" prefWidth="301.0">
                   <children>
-                      <TableView fx:id="switchTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                      <TableView fx:id="switchTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="490.0">
                           <columns>
                               <TableColumn fx:id="switchIdCol" prefWidth="70.0" text="ID" />
-                              <TableColumn fx:id="switchControlModuleCol" prefWidth="378.0" text="Модуль управления" />
+                              <TableColumn fx:id="switchControlModuleCol" prefWidth="419.0" text="Модуль управления" />
                           </columns>
                       </TableView>
                       <Button fx:id="newSwitchButton" layoutX="412.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Создать" />
@@ -46,10 +45,10 @@
           <content>
               <Pane prefHeight="490.0" prefWidth="301.0">
                   <children>
-                      <TableView fx:id="signalTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                      <TableView fx:id="signalTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="490.0">
                           <columns>
                               <TableColumn fx:id="signalIdCol" prefWidth="70.0" text="ID" />
-                              <TableColumn fx:id="signalControlModuleCol" prefWidth="379.0" text="Модуль управления" />
+                              <TableColumn fx:id="signalControlModuleCol" prefWidth="419.0" text="Модуль управления" />
                           </columns>
                       </TableView>
                       <Button fx:id="newSignalButton" layoutX="412.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Создать" />
@@ -63,17 +62,17 @@
           <content>
               <Pane prefHeight="490.0" prefWidth="301.0">
                   <children>
-                      <TableView fx:id="stationTrackTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                      <TableView fx:id="stationTrackTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="490.0">
                           <columns>
                               <TableColumn fx:id="stationTrackIdCol" prefWidth="60.0" text="ID" />
                               <TableColumn fx:id="stationTrackLengthCol" prefWidth="64.0" text="Length" />
                               <TableColumn fx:id="stationTrackEvenSignalCol" prefWidth="94.0" text="Четный сигнал" />
                         <TableColumn fx:id="stationTrackOddSignalCol" prefWidth="106.0" text="Нечетный сигнал" />
-                        <TableColumn fx:id="stationTrackControlModuleCol" prefWidth="126.0" text="Модуль управления" />
+                        <TableColumn fx:id="stationTrackControlModuleCol" prefWidth="165.0" text="Модуль управления" />
                           </columns>
                       </TableView>
                       <Button fx:id="newStationTrackButton" layoutX="412.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Создать" />
-                      <Button fx:id="editStationTrackButton" layoutX="302.0" layoutY="432.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" text="Редактировать"/>
+                      <Button fx:id="editStationTrackButton" layoutX="302.0" layoutY="432.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" text="Редактировать" />
                       <Button fx:id="deleteStationTrackButton" layoutX="225.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Удалить" />
                   </children>
               </Pane>
@@ -83,14 +82,14 @@
           <content>
               <Pane prefHeight="490.0" prefWidth="301.0">
                   <children>
-                      <TableView fx:id="locomotiveTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                      <TableView fx:id="locomotiveTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="490.0">
                           <columns>
                               <TableColumn fx:id="locomotiveIdCol" prefWidth="108.0" text="ID" />
-                              <TableColumn fx:id="locomotiveControlModuleCol" prefWidth="341.0" text="Модуль управления" />
+                              <TableColumn fx:id="locomotiveControlModuleCol" prefWidth="381.0" text="Модуль управления" />
                           </columns>
                       </TableView>
-                      <Button fx:id="newLocomotiveButton" layoutX="412.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Создать"  />
-                      <Button fx:id="editLocomotiveButton" layoutX="302.0" layoutY="432.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" text="Редактировать"/>
+                      <Button fx:id="newLocomotiveButton" layoutX="412.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Создать" />
+                      <Button fx:id="editLocomotiveButton" layoutX="302.0" layoutY="432.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" text="Редактировать" />
                       <Button fx:id="deleteLocomotiveButton" layoutX="225.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Удалить" />
                   </children>
               </Pane>
@@ -100,14 +99,14 @@
           <content>
               <Pane prefHeight="490.0" prefWidth="301.0">
                   <children>
-                      <TableView fx:id="wagonsTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="450.0">
+                      <TableView fx:id="wagonsTableView" layoutX="23.0" layoutY="14.0" prefHeight="405.0" prefWidth="493.0">
                           <columns>
                               <TableColumn fx:id="wagonIdCol" prefWidth="108.0" text="ID" />
-                              <TableColumn fx:id="wagonTypeCol" prefWidth="341.0" text="Тип вагона" />
+                              <TableColumn fx:id="wagonTypeCol" prefWidth="384.0" text="Тип вагона" />
                           </columns>
                       </TableView>
                       <Button fx:id="newWagonButton" layoutX="412.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Создать" />
-                      <Button fx:id="editWagonButton" layoutX="302.0" layoutY="432.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" text="Редактировать"/>
+                      <Button fx:id="editWagonButton" layoutX="302.0" layoutY="432.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" text="Редактировать" />
                       <Button fx:id="deleteWagonButton" layoutX="225.0" layoutY="432.0" mnemonicParsing="false" prefWidth="60.0" text="Удалить" />
                   </children>
               </Pane>

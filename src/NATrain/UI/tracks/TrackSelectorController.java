@@ -104,7 +104,7 @@ public class TrackSelectorController {
         }
         Stage trackRedactor = new Stage();
         trackRedactor.setTitle("Track Redactor");
-        trackRedactor.setScene(new Scene(loader.load(), 465, 480));
+        trackRedactor.setScene(new Scene(loader.load(), 500, 480));
         trackRedactor.setResizable(false);
         TrackRedactorController controller = loader.getController();
         controller.initialize(track, tracksTableView);

@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMCreatorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMCreatorController">
    <children>
-      <Button layoutX="205.0" layoutY="231.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
+      <Button layoutX="205.0" layoutY="231.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Create" />
       <Label layoutX="38.0" layoutY="11.0" text="Type" />
-      <ToggleButton fx:id="signalToggleButton" layoutX="35.0" layoutY="36.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230.0" text="Signal MQTT Controller" />
+      <ToggleButton fx:id="signalToggleButton" layoutX="35.0" layoutY="36.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230.0" text="Signal RFID MQTT Controller" />
       <ToggleButton fx:id="switchToggleButton" layoutX="35.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230.0" text="Switch MQTT controller" />
       <ToggleButton fx:id="reverseLoopToggleButton" layoutX="35.0" layoutY="106.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230.0" text="Reverse Loop MQTT Controller" />
       <ToggleButton fx:id="checkConnectionButton" layoutX="35.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Check connection" />

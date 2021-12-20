@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMNavigatorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMNavigatorController">
     <children>
         <TableView fx:id="tableView" layoutX="25.0" layoutY="16.0" prefHeight="340.0" prefWidth="947.0">
             <columns>
@@ -16,7 +15,7 @@
             </columns>
         </TableView>
         <Button fx:id="newButton" layoutX="911.0" layoutY="371.0" mnemonicParsing="false" prefWidth="60.0" text="Создать" />
-        <Button fx:id="editButton" layoutX="797.0" layoutY="371.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" text="Редактировать" />
-        <Button fx:id="deleteButton" layoutX="718.0" layoutY="371.0" mnemonicParsing="false" prefWidth="60.0" text="Удалить" />
+        <Button fx:id="editButton" layoutX="782.0" layoutY="371.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Редактировать" />
+        <Button fx:id="deleteButton" layoutX="703.0" layoutY="371.0" mnemonicParsing="false" prefWidth="60.0" text="Удалить" />
     </children>
 </Pane>

@@ -334,7 +334,7 @@ public class WorkPlaceController {
         }
         Stage locomotiveController = new Stage();
         locomotiveController.setTitle("Locomotive Controller");
-        locomotiveController.setScene(new Scene(loader.load(), 220, 480));
+        locomotiveController.setScene(new Scene(loader.load(), 230, 480));
         locomotiveController.setResizable(false);
         locomotiveController.setX(10 + number * 230);
         locomotiveController.setY(0);

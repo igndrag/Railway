@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMEditorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.controlModuleRedactor.CMEditorController">
    <children>
       <Label layoutX="21.0" layoutY="23.0" text="Inputs" />
       <Label layoutX="447.0" layoutY="22.0" text="Outputs" />
@@ -18,8 +18,8 @@
       <TableView fx:id="outputsTableView" layoutX="447.0" layoutY="48.0" prefHeight="171.0" prefWidth="423.0">
          <columns>
             <TableColumn fx:id="outputNumberColumn" prefWidth="29.0" text="№" />
-            <TableColumn fx:id="outputTypeColumn" prefWidth="135.0" text="Type" />
-            <TableColumn fx:id="lampColumn" prefWidth="154.0" text="Lamp" />
+            <TableColumn fx:id="outputTypeColumn" prefWidth="179.0" text="Type" />
+            <TableColumn fx:id="lampColumn" prefWidth="110.0" text="Lamp" />
             <TableColumn fx:id="outputObjectColumn" prefWidth="103.0" text="Trackside Object" />
          </columns>
       </TableView>
