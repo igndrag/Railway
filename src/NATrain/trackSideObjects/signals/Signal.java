@@ -2,6 +2,7 @@ package NATrain.trackSideObjects.signals;
 
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.routes.RouteDirection;
+import NATrain.trackSideObjects.Controllable;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.сontrolModules.ControlModule;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static NATrain.trackSideObjects.signals.SignalState.*;
 
-public class Signal extends TracksideObject {
+public class Signal extends TracksideObject implements Controllable {
     static final long serialVersionUID = 1L;
 
     private transient Set<ControlModule> assignedModules;

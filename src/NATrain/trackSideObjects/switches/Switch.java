@@ -1,6 +1,7 @@
 package NATrain.trackSideObjects.switches;
 
 import NATrain.UI.workPlace.WorkPlaceController;
+import NATrain.trackSideObjects.Controllable;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.trackSideObjects.trackSections.TrackSectionState;
 import NATrain.trackSideObjects.TracksideObject;
@@ -8,7 +9,7 @@ import NATrain.utils.Sound;
 import NATrain.сontrolModules.*;
 
 import java.io.Serializable;
-public class Switch extends TracksideObject implements Serializable {
+public class Switch extends TracksideObject implements Controllable {
     static final long serialVersionUID = 1L;
 
     public static final int CONTROL_IMPULSE_COMMAND_CODE = 8;

@@ -11,6 +11,7 @@ import NATrain.quads.BCQ.*;
 import NATrain.quads.SIQ.*;
 import NATrain.quads.STQ.*;
 import NATrain.quads.SWQ.*;
+import NATrain.quads.custom.ServoQuad;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -177,6 +178,8 @@ public class QuadFactory {
                 return new SIQA4_2(x, y);
             case BCQ1_1:
                 return new BCQ1_1(x, y);
+            case SERVO_QUAD:
+                return new ServoQuad(x, y);
         }
         return new EmptyQuad(x, y);
     }

@@ -13,8 +13,4 @@ public class Wagon extends AbstractMovableObject implements Serializable {
         super(id);
     }
 
-    @Override
-    public String getModules() {
-        return "";
-    }
 }

@@ -5,7 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public abstract class TracksideObject implements Serializable, Controllable, Listenable {
+public abstract class TracksideObject implements Serializable, Listenable {
     static final long serialVersionUID = 1L;
 
     protected transient PropertyChangeSupport propertyChangeSupport;
@@ -22,8 +22,6 @@ public abstract class TracksideObject implements Serializable, Controllable, Lis
         }
 
     }
-
-
 
     public String getId() {
         return id;

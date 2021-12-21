@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.mosaicRedactor.MosaicRedactorFxController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.mosaicRedactor.MosaicRedactorFxController">
    <left>
       <Accordion maxHeight="600.0" minHeight="400.0" prefHeight="402.0" prefWidth="150.0" BorderPane.alignment="TOP_CENTER">
         <panes>
@@ -46,9 +46,9 @@
                   <ScrollPane fx:id="trackControlIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </TitledPane>
-            <TitledPane fx:id="CustomElementIcons" animated="false" layoutX="10.0" layoutY="110.0" text="Специальные элементы">
+            <TitledPane  animated="false" layoutX="10.0" layoutY="110.0" text="Специальные элементы">
                <content>
-                  <Pane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                   <ScrollPane fx:id="customQuadsIcons" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </TitledPane>
         </panes>

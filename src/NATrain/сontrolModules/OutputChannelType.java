@@ -6,4 +6,5 @@ public enum OutputChannelType {
     SWITCH_TO_PLUS,
     SWITCH_TO_MINUS,
     STATE_REQUEST,
+    PWM,
 }

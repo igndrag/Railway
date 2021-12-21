@@ -50,8 +50,6 @@ public class MosaicRedactorFxController {
     @FXML
     private CheckBox gridLinesCheckBox;
 
-    @FXML
-    private TitledPane CustomElementIcons;
 
     @FXML
     private TableColumn<BaseQuad, String> propNameCol;
@@ -88,6 +86,9 @@ public class MosaicRedactorFxController {
 
     @FXML
     private ScrollPane trackControlIcons;
+
+    @FXML
+    private ScrollPane customQuadsIcons;
 
     public static void setPrimaryStage(Stage mainStage) {
         primaryStage = mainStage;
@@ -134,6 +135,7 @@ public class MosaicRedactorFxController {
         VBox BTQVbox = new VBox();
         VBox BSQVbox = new VBox();
         VBox BCQVbox = new VBox();
+        VBox customQuadVBox = new VBox();
 
         eraserToggleButton.setToggleGroup(toggleGroup);
         eraserToggleButton.setOnAction(event -> {
@@ -182,6 +184,13 @@ public class MosaicRedactorFxController {
                             BCQVbox.getChildren().add(button);
                             break;
                     }
+                    // custom quads
+                    switch (quadType) {
+                        case SERVO_QUAD:
+                            customQuadVBox.getChildren().add(button);
+                            break;
+                    }
+
 
                 }
         );
@@ -192,6 +201,7 @@ public class MosaicRedactorFxController {
         BTQVbox.setPadding(new Insets(0, 0, 0, 15));
         BSQVbox.setPadding(new Insets(0, 0, 0, 15));
         BCQVbox.setPadding(new Insets(0, 0, 0, 15));
+        customQuadVBox.setPadding(new Insets(0, 0, 0, 15));
 
         simpleTrackSectionIcons.setContent(STQVBox);
         doubleTrackSectionIcons.setContent(DTQVBox);
@@ -200,6 +210,8 @@ public class MosaicRedactorFxController {
         blockSectionIcons.setContent(BTQVbox);
         trackSignalIcons.setContent(BSQVbox);
         trackControlIcons.setContent(BCQVbox);
+        customQuadsIcons.setContent(customQuadVBox);
+
 
         //*** grid pane panel initializing ***//
 

@@ -1,6 +1,7 @@
 package NATrain.trackSideObjects.trackSections;
 
 
+import NATrain.trackSideObjects.Controllable;
 import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.switches.Switch;
@@ -8,7 +9,7 @@ import NATrain.trackSideObjects.switches.Switch;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class TrackSection extends TracksideObject {
+public class TrackSection extends TracksideObject implements Controllable {
 
     static final long serialVersionUID = 1L;
 

@@ -1,6 +1,7 @@
 package NATrain.trackSideObjects.movableObjects;
 
 import NATrain.routes.RouteDirection;
+import NATrain.trackSideObjects.Controllable;
 import NATrain.сontrolModules.AbstractLocomotiveModule;
 import NATrain.сontrolModules.ControlModule;
 import NATrain.сontrolModules.MQTTLocomotiveModule;
@@ -10,7 +11,7 @@ import java.io.Serializable;
 import static NATrain.сontrolModules.AbstractLocomotiveModule.*;
 import static javafx.animation.Animation.Status.PAUSED;
 
-public class Locomotive extends AbstractMovableObject implements Serializable{
+public class Locomotive extends AbstractMovableObject implements Controllable {
     static final long serialVersionUID = 1L;
 
     private ControlModule controlModule;

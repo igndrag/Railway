@@ -6,6 +6,8 @@ public enum QuadType {
     EMPTY_QUAD,
     DEMO_QUAD,
 
+    SERVO_QUAD,
+
     STQ1_1,
     STQ1_2,
     STQ2_1,

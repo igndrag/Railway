@@ -88,4 +88,9 @@ public class RFIDTag implements Serializable, Listenable {
     public String toString() {
         return String.format("%s %s %s %s", uid[0], uid[1], uid[2], uid[3]);
     }
+
+    @Override
+    public void deactivateListeners() {
+       //do nothing
+    }
 }
