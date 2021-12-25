@@ -14,6 +14,9 @@ public enum ControlAction {
     CHANGE_SWITCH_POSITION,
     CHANGE_TRACK_LINE_DIRECTION,
     OPEN_ON_BLINKED_WHITE,
+
+    OPEN_GATE,
+    CLOSE_GATE,
     ;
 
     public String getDescription() {
@@ -80,6 +83,20 @@ public enum ControlAction {
                         return "Пригласительный сигнал";
                     case ENG:
                         return "Open on blinked white";
+                }
+            case OPEN_GATE:
+                switch (AppConfigController.getLanguage()) {
+                    case RU:
+                        return "Открыть ворота";
+                    case ENG:
+                        return "Open gate";
+                }
+            case CLOSE_GATE:
+                switch (AppConfigController.getLanguage()) {
+                    case RU:
+                        return "Закрыть ворота";
+                    case ENG:
+                        return "Close gate";
                 }
             default: return "None";
         }

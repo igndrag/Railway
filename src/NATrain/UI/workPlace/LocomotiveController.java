@@ -144,8 +144,6 @@ public class LocomotiveController {
             }
         });
 
-
-
         this.quad = new LocomotivePanelQuad();
         this.locomotive = locomotive;
 

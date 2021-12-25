@@ -2,8 +2,9 @@ package NATrain.UI.mosaicRedactor;
 
 import NATrain.UI.AppConfigController;
 import NATrain.UI.NavigatorFxController;
+import NATrain.connectionService.MQTTConnectionService;
 import NATrain.quads.*;
-import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.quads.custom.ServoQuad;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -299,10 +300,31 @@ public class MosaicRedactorFxController {
     }
 
     private static void toQuadConfigurator(int x, int y) throws IOException {
-        if (Model.getMainGrid()[y][x].isEmpty())
+        Quad expectedQuad = Model.getMainGrid()[y][x];
+        if (expectedQuad.isEmpty())
             return;
         FXMLLoader loader;
-        if (Model.getMainGrid()[y][x] instanceof BlockingBaseQuad) {
+        if (expectedQuad instanceof ServoQuad) {
+            switch (AppConfigController.getLanguage()) {
+               // case RU:
+                //    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
+                //    break;
+                default:
+                    loader = new FXMLLoader(ServoQuadConfiguratorController.class.getResource("ServoQuadConfigurator.fxml"));
+            }
+            ServoQuad servoQuad = (ServoQuad) expectedQuad;
+            Stage servoQuadConfigurator = new Stage();
+            servoQuadConfigurator.setTitle("Servo Quad Configurator");
+            servoQuadConfigurator.setScene(new Scene(loader.load(), 300, 290));
+            servoQuadConfigurator.setResizable(false);
+            ServoQuadConfiguratorController controller = loader.getController();
+            controller.init(servoQuad.getServo(), servoQuad);
+            servoQuadConfigurator.initModality(Modality.WINDOW_MODAL);
+            servoQuadConfigurator.initOwner(primaryStage);
+            servoQuadConfigurator.show();
+            servoQuadConfigurator.setOnCloseRequest((event) -> MQTTConnectionService.disconnect());
+
+        } else if (expectedQuad instanceof BlockingBaseQuad) {
             switch (AppConfigController.getLanguage()) {
                 case RU:
                     loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
@@ -319,7 +341,7 @@ public class MosaicRedactorFxController {
             trackQuadConfigurator.initModality(Modality.WINDOW_MODAL);
             trackQuadConfigurator.initOwner(primaryStage);
             trackQuadConfigurator.show();
-        } else if (Model.getMainGrid()[y][x] instanceof ArrivalSignalQuad) {
+        } else if (expectedQuad instanceof ArrivalSignalQuad) {
             switch (AppConfigController.getLanguage()) {
                 case RU:
                     loader = new FXMLLoader(ArrivalSignalQuadConfiguratorFxController.class.getResource("ArrivalSignalQuadConfigurator_RU.fxml"));

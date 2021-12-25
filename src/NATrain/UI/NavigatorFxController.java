@@ -80,7 +80,7 @@ public class NavigatorFxController {
         controller.activateKeyListeners();
         //controller.initialize();
         mosaicRedactor.setOnCloseRequest(event -> {
-                Model.saveOnDisk();
+            //Model.saveOnDisk();
             primaryStage.show();
             if (controller.getSelectedQuad() != null) {
                 controller.getSelectedQuad().unselect();

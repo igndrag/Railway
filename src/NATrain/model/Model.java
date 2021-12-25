@@ -8,8 +8,10 @@ import NATrain.routes.Track;
 import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
+import NATrain.trackSideObjects.customObjects.Gate;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.movableObjects.Wagon;
+import NATrain.trackSideObjects.customObjects.Servo;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.switches.Switch;
@@ -27,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 public enum Model implements Serializable {
 
-    INSTANCE;
+     INSTANCE;
 
     protected static Integer xSize = 20; //default size
     protected static Integer ySize = 20;
@@ -54,7 +56,20 @@ public enum Model implements Serializable {
 
     private static Map<Long, RFIDTag> tags;
 
+    private static Set<Servo> servos;
+
+    private static Set<Gate> gates;
+
     public static Set<Scenario> scenarios = new HashSet<>();
+
+    static {
+        servos = new CopyOnWriteArraySet<>();
+        servos.add(Servo.TEST_SERVO);
+        servos.add(Servo.TEST_SERVO_2);
+        servos.add(Servo.EMPTY_SERVO);
+        gates = new CopyOnWriteArraySet<>();
+        gates.add(Gate.TEST_GATE);
+    }
 
     public static void initEmptyModel() {
 
@@ -79,6 +94,10 @@ public enum Model implements Serializable {
         tracks = new CopyOnWriteArraySet<>();
 
         tags = new HashMap<>();
+
+        servos = new CopyOnWriteArraySet<>();
+
+        gates = new CopyOnWriteArraySet<>();
 
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++ ) {
@@ -129,6 +148,14 @@ public enum Model implements Serializable {
         return tags;
     }
 
+    public static Set<Servo> getServos() {
+        return servos;
+    }
+
+    public static Set<Gate> getGates() {
+        return gates;
+    }
+
     public static void refreshAll() {
         Arrays.stream(mainGrid).flatMap(Arrays::stream).parallel().forEach(Quad::refresh);
     }
@@ -160,6 +187,8 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(locomotives);
             objectOutputStream.writeObject(wagons);
             objectOutputStream.writeObject(routeTable);
+            //objectOutputStream.writeObject(servos);
+            //objectOutputStream.writeObject(gates);
             tracks.forEach(track -> { // change EMPTY_SIGNALs to null fow writing
                 track.getBlockSections().forEach(blockSection -> {
                     if (blockSection.getNormalDirectionSignal() == Signal.EMPTY_SIGNAL) {
@@ -205,7 +234,7 @@ public enum Model implements Serializable {
     public static void loadFromDisk() {
         try {
             Path path = Paths.get(AppConfigController.getModelURL());
-            if (path.toFile().exists()) {
+            if (path.toFile().exists() && path.toFile().length() > 100) {
                 File modelFile = new File(AppConfigController.getModelURL());
                 FileInputStream fileInputStream = new FileInputStream(modelFile);
                 ObjectInputStream inputStream = new ObjectInputStream(fileInputStream);
@@ -220,7 +249,7 @@ public enum Model implements Serializable {
                 switches.values().forEach(TracksideObject::addPropertyChangeSupport);
                 controlModules = (Map<String ,ControlModule>) inputStream.readObject();
                 stationTracks = (Map<String, StationTrack>) inputStream.readObject();
-                stationTracks.values().forEach(TracksideObject::addPropertyChangeSupport);
+                stationTracks.values().stream().forEach(TracksideObject::addPropertyChangeSupport);
                 locomotives = (Map<String, Locomotive>) inputStream.readObject();
                 locomotives.values().forEach(TracksideObject::addPropertyChangeSupport);
                 wagons = (Map<String, Wagon>) inputStream.readObject();

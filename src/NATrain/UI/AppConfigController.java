@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 public class AppConfigController {
 
 
+
     private Stage primaryStage;
     private static final String configURL = "config.ntc";
     public static int comPortNumber = 1;
@@ -31,6 +32,8 @@ public class AppConfigController {
     private TextField portNumberTextField;
     @FXML
     private Button testConnectionButton;
+    @FXML
+    public Button newButton;
     @FXML
     private ChoiceBox<Lang> languageChoiceBox;
 
@@ -65,8 +68,28 @@ public class AppConfigController {
         FileChooser.ExtensionFilter extFilter =
                 new FileChooser.ExtensionFilter("NATrains model files (*.ntm)", "*.ntm");//Расширение
         fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showOpenDialog(primaryStage);//Указываем текущую сцену CodeNote.mainStage
+        if (file != null) {
+            modelPathTextField.setText(file.getAbsolutePath());
+        } else {
+            UIUtils.showAlert("Wrong model location!");
+        }
+    }
+
+    @FXML
+    private void create() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Model Directory");//Заголовок диалога
+        FileChooser.ExtensionFilter extFilter =
+                new FileChooser.ExtensionFilter("NATrains model files (*.ntm)", "*.ntm");//Расширение
+        fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(primaryStage);//Указываем текущую сцену CodeNote.mainStage
         if (file != null) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             modelPathTextField.setText(file.getAbsolutePath());
         } else {
             UIUtils.showAlert("Wrong model location!");
@@ -106,9 +129,6 @@ public class AppConfigController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Model.saveOnDisk();
-            } else {
-                Model.loadFromDisk();
             }
             int expectedPortNumber = UtilFunctions.parseIfPositiveNumeric(portNumberTextField.getText());
             if (expectedPortNumber >= 0) {

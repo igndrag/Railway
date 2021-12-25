@@ -42,13 +42,24 @@ public class Main extends Application {
     private static boolean checkModelURLConfigured() {
         if (AppConfigController.getModelURL() != null) {
             File expectedModelFile = new File(AppConfigController.getModelURL());
-            if (expectedModelFile.exists()) {
-                Model.loadFromDisk();
-                return true;
+            if (expectedModelFile.exists() && expectedModelFile.length() > 100) {
+                try {
+                    Model.loadFromDisk();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Model.initEmptyModel();
+                }
             } else {
+                try {
+                    if (!expectedModelFile.exists()) {
+                        expectedModelFile.createNewFile();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Model.initEmptyModel();
-                return false;
             }
+            return true;
         } else {
             Model.initEmptyModel();
             return false;

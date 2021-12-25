@@ -59,9 +59,21 @@ public class OutputChannel implements Serializable {
            // command.put("chNumber", chNumber);
            // command.put("commandCode", commandCode);
             lastCommandCode = commandCode;
-            module.sendCommandToChannel(chNumber, String.format("%02d:%03d_", chNumber, commandCode));
+            module.sendCommandToChannel(chNumber, String.format("%02d:%02d:000_", chNumber, commandCode));
         }
     }
+
+    public void sendCommandWithValue(int commandCode, int commandValue) {
+        if (module != null) {
+            // JSONObject command = new JSONObject();
+            // command.put("chNumber", chNumber);
+            // command.put("commandCode", commandCode);
+            lastCommandCode = commandCode;
+            module.sendCommandToChannel(chNumber, String.format("%02d:%02d:%03d_", chNumber, commandCode, commandValue));
+        }
+    }
+
+
 
     public void sendLastCommandAgain() {
         module.sendCommandToChannel(chNumber, String.format("%02d:%03d_", chNumber, lastCommandCode));

@@ -1,11 +1,14 @@
 package NATrain.UI.tracksideObjectRedactor;
 
 import NATrain.UI.AppConfigController;
-import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.tracksideObjectRedactor.TSORedactors.*;
 import NATrain.model.Model;
 import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.customObjects.AbstractCustomObject;
+import NATrain.trackSideObjects.customObjects.CustomObjectType;
+import NATrain.trackSideObjects.customObjects.Gate;
+import NATrain.trackSideObjects.customObjects.Servo;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.movableObjects.MovableObjectType;
 import NATrain.trackSideObjects.movableObjects.Wagon;
@@ -28,7 +31,6 @@ import java.io.IOException;
 import java.util.Comparator;
 
 public class TracksideObjectNavigatorController {
-
 
     @FXML
     private TableView<TracksideObject> switchTableView;
@@ -114,12 +116,26 @@ public class TracksideObjectNavigatorController {
     @FXML
     private Button deleteWagonButton;
 
+    @FXML
+    private TableView<TracksideObject> customObjectTableView;
+    @FXML
+    private TableColumn<AbstractCustomObject, String> customObjectIdCol;
+    @FXML
+    private TableColumn<AbstractCustomObject, CustomObjectType> customObjectTypeCol;
+    @FXML
+    private Button newCustomButton;
+    @FXML
+    private Button editCustomButton;
+    @FXML
+    private Button deleteCustomButton;
+
     protected ObservableList<TracksideObject> trackSectionList;
     protected ObservableList<TracksideObject> stationTrackList;
     protected ObservableList<TracksideObject> switchList;
     protected ObservableList<TracksideObject> signalList;
     protected ObservableList<TracksideObject> locomotiveList;
     protected ObservableList<TracksideObject> wagonList;
+    protected ObservableList<TracksideObject> customObjectList;
 
     private static Stage primaryStage;
 
@@ -134,6 +150,7 @@ public class TracksideObjectNavigatorController {
         initStationTrackTab();
         initLocomotiveTab();
         initWagonTab();
+        initCustomObjectsTab();
     }
 
     protected void toTrackSectionRedactor (TrackSection trackSection) throws IOException {
@@ -574,5 +591,77 @@ public class TracksideObjectNavigatorController {
                 deleteWagonButton.setDisable(false);
             }
         });
+    }
+
+    public void initCustomObjectsTab() {
+        customObjectIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        customObjectTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        editCustomButton.setDisable(true);
+        deleteCustomButton.setDisable(true);
+        customObjectList = FXCollections.observableArrayList(Model.getServos());
+        customObjectList.addAll(Model.getGates());
+        customObjectTableView.setItems(customObjectList);
+
+        newCustomButton.setOnMouseClicked(event -> {
+            try {
+                toCustomObjectSelector();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        deleteCustomButton.setOnAction(event -> {
+            AbstractCustomObject objectForDelete = (AbstractCustomObject) customObjectTableView.getSelectionModel().getSelectedItem();
+            switch (objectForDelete.getType()) {
+                case SERVO:
+                    //Servo servo = (Servo) objectForDelete;
+                    Model.getServos().remove(objectForDelete);
+                    break;
+                case GATES:
+                    Model.getGates().remove(objectForDelete);
+                    break;
+            }
+            customObjectList.remove(objectForDelete);
+            // if (objectForDelete.getControlModule() != null)
+            //      objectForDelete.getControlModule().deleteTrackSideObjectFromChannel(objectForDelete.getChannel());
+            //  objectForDelete.setControlModule(null);
+
+            if (customObjectList.size() == 0) {
+                editCustomButton.setDisable(true);
+                deleteCustomButton.setDisable(true);
+            }
+        });
+
+        editCustomButton.setOnAction(event -> {
+            try {
+                AbstractCustomObject objectForEdit = (AbstractCustomObject) customObjectTableView.getSelectionModel().getSelectedItem();
+                switch (objectForEdit.getType()) {
+                    case SERVO:
+                        toServoRedactor((Servo)objectForEdit);
+                        break;
+                    case GATES:
+                        toGatesRedactor((Gate)objectForEdit);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        customObjectTableView.setOnMouseClicked(event -> {
+            if (customObjectTableView.getSelectionModel().getSelectedItem() != null) {
+                editCustomButton.setDisable(false);
+                deleteCustomButton.setDisable(false);
+            }
+        });
+    }
+
+    private void toGatesRedactor (Gate gates) throws IOException {
+    }
+
+    private void toServoRedactor (Servo servo) throws IOException {
+    }
+
+    private void toCustomObjectSelector()  throws IOException{
+
     }
 }

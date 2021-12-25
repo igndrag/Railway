@@ -4,6 +4,7 @@ import NATrain.UI.UIUtils;
 import NATrain.model.Model;
 import NATrain.routes.Track;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.customObjects.Servo;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalLampType;
 import NATrain.trackSideObjects.switches.Switch;
@@ -84,6 +85,8 @@ public class CMEditorController {
         ObservableList<TracksideObject> switches = FXCollections.observableArrayList(Model.getSwitches().values());
         ObservableList<TracksideObject> signals = FXCollections.observableArrayList(Model.getSignals().values());
         ObservableList<Track> tracks = FXCollections.observableArrayList(Model.getTracks());
+        ObservableList<TracksideObject> servos = FXCollections.observableArrayList(Model.getServos());
+
         inputTypeChoiceBox.setItems(FXCollections.observableArrayList(InputChannelType.values()));
 
         inputTrackChoiceBox.setItems(tracks);
@@ -135,12 +138,12 @@ public class CMEditorController {
                 case SWITCH_TO_MINUS:
                     lampTypeChoiceBox.getSelectionModel().clearSelection();
                     lampTypeChoiceBox.setDisable(true);
-                    outputObjectChoiceBox.setItems(FXCollections.observableArrayList(switches));
+                    outputObjectChoiceBox.setItems(switches);
                     outputTrackChoiceBox.getSelectionModel().clearSelection();
                     outputTrackChoiceBox.setDisable(true);
                     break;
                 case SIGNAL_LAMP_OUTPUT:
-                    outputObjectChoiceBox.setItems(FXCollections.observableArrayList(signals));
+                    outputObjectChoiceBox.setItems(signals);
                     lampTypeChoiceBox.setDisable(false);
                     outputTrackChoiceBox.getSelectionModel().clearSelection();
                     outputTrackChoiceBox.setDisable(true);
@@ -151,6 +154,13 @@ public class CMEditorController {
                     lampTypeChoiceBox.getItems().clear();
                     lampTypeChoiceBox.setDisable(false);
                     outputTrackChoiceBox.setDisable(false);
+                    break;
+                case PWM:
+                    lampTypeChoiceBox.getSelectionModel().clearSelection();
+                    lampTypeChoiceBox.setDisable(true);
+                    outputObjectChoiceBox.setItems(servos);
+                    outputTrackChoiceBox.getSelectionModel().clearSelection();
+                    outputTrackChoiceBox.setDisable(true);
                     break;
             }
         });
@@ -313,6 +323,9 @@ public class CMEditorController {
                 break;
             case SWITCH_TO_MINUS:
                 outputChannel = ((Switch) object).getMinusOutputChannel();
+                break;
+            case PWM:
+                outputChannel = ((Servo) object).getOutputChannel();
                 break;
         }
 

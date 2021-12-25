@@ -3,7 +3,7 @@ package NATrain.quads.custom;
 import NATrain.quads.AbstractQuad;
 import NATrain.quads.QuadType;
 import NATrain.trackSideObjects.ControlAction;
-import NATrain.trackSideObjects.servos.Servo;
+import NATrain.trackSideObjects.customObjects.Servo;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
@@ -24,11 +24,11 @@ public class ServoQuad extends AbstractQuad {
     }
 
 
-    public Servo getAssociatedServo() {
+    public Servo getServo() {
         return associatedServo;
     }
 
-    public void setAssociatedServo(Servo associatedServo) {
+    public void setServo(Servo associatedServo) {
         this.associatedServo = associatedServo;
     }
 
