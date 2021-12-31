@@ -12,7 +12,6 @@ import javafx.scene.text.TextAlignment;
 public class BSQ4_1 extends BlockingSignalQuad {
     public BSQ4_1(int x, int y) {
         super(x, y);
-        paintView();
         quadType = QuadType.BSQ4_1;
     }
 

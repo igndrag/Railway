@@ -102,7 +102,6 @@ public enum ControlAction {
         }
     }
 
-
     @Override
     public String toString() {
         return getDescription();

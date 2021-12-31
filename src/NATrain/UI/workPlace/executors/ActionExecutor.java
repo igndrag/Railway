@@ -2,13 +2,12 @@ package NATrain.UI.workPlace.executors;
 
 import NATrain.UI.AppConfigController;
 import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
-import NATrain.UI.workPlace.LocatorController;
 import NATrain.UI.workPlace.LocomotiveSelectorController;
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
 import NATrain.quads.*;
+import NATrain.quads.custom.GateQuad;
 import NATrain.routes.Route;
-import NATrain.routes.StationTrack;
 import NATrain.routes.Track;
 import NATrain.routes.TrackDirection;
 import NATrain.trackSideObjects.ControlAction;
@@ -124,6 +123,16 @@ public enum ActionExecutor {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+                break;
+            case OPEN_GATE:
+                if (firstSelectedQuad instanceof GateQuad) {
+                    ((GateQuad) firstSelectedQuad).getGate().openGate();
+                }
+                break;
+            case CLOSE_GATE:
+                if (firstSelectedQuad instanceof GateQuad) {
+                    ((GateQuad) firstSelectedQuad).getGate().closeGate();
                 }
                 break;
         }

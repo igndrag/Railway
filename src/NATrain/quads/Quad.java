@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import java.util.List;
 
 public interface Quad { // that's the price of bad design((
+    GlobalQuadType getGlobalQuadType();
     QuadType getType();
     boolean isEmpty();
     void refresh();

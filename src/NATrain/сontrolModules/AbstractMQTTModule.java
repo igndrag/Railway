@@ -9,8 +9,6 @@ public abstract class AbstractMQTTModule extends AbstractModule{
 
     protected static final String commandTopicRoot = "NATrain/controlModules/commands/";
 
-
-
     @Override
     public void sendCommandToChannel(int channelNumber, String command) {
         MQTTConnectionService.publish(commandTopicRoot + id, command);

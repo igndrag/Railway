@@ -15,7 +15,9 @@ public abstract class DoubleTrackQuad extends BaseQuad implements FirstTrackConf
     protected Shape borderElement = null;
     protected Shape secondTrackElement;
 
-    public DoubleTrackQuad(int x, int y) { super(x, y);
+    public DoubleTrackQuad(int x, int y) {
+        super(x, y);
+        paintView();
     }
 
     @Override

@@ -118,7 +118,9 @@ public class ServoQuadConfiguratorController {
             newServo.setPositionTwo((int) positionTwoSlider.getValue());
             newServo.setSpeed((int) speedSlider.getValue());
         }
-        MQTTConnectionService.disconnect();
+        if (MQTTConnectionService.getClient().isConnected()) {
+            MQTTConnectionService.disconnect();
+        }
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
     }

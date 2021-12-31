@@ -4,6 +4,7 @@ import NATrain.UI.AppConfigController;
 import NATrain.UI.NavigatorFxController;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.quads.*;
+import NATrain.quads.custom.PolarityChangerQuad;
 import NATrain.quads.custom.ServoQuad;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
@@ -188,6 +189,10 @@ public class MosaicRedactorFxController {
                     // custom quads
                     switch (quadType) {
                         case SERVO_QUAD:
+                        case V_GATE_QUAD:
+                        case H_GATE_QUAD:
+                        case HPCQ:
+                        case VPCQ:
                             customQuadVBox.getChildren().add(button);
                             break;
                     }
@@ -304,6 +309,26 @@ public class MosaicRedactorFxController {
         if (expectedQuad.isEmpty())
             return;
         FXMLLoader loader;
+        if (expectedQuad instanceof PolarityChangerQuad) {
+
+            switch (AppConfigController.getLanguage()) {
+                // case RU:
+                //    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
+                //    break;
+                default:
+                    loader = new FXMLLoader(PolarityChangerQuadConfiguratorController.class.getResource("PolarityChangerQuadConfigurator.fxml"));
+            }
+            PolarityChangerQuad polarityChangerQuad = (PolarityChangerQuad) expectedQuad;
+            Stage polarityChangerQuadConfigurator = new Stage();
+            polarityChangerQuadConfigurator.setTitle("Polarity Changer Configurator");
+            polarityChangerQuadConfigurator.setScene(new Scene(loader.load(), 250, 200));
+            polarityChangerQuadConfigurator.setResizable(false);
+            PolarityChangerQuadConfiguratorController controller = loader.getController();
+            controller.init(polarityChangerQuad.getPolarityChanger(), polarityChangerQuad);
+            polarityChangerQuadConfigurator.initModality(Modality.WINDOW_MODAL);
+            polarityChangerQuadConfigurator.initOwner(primaryStage);
+            polarityChangerQuadConfigurator.show();
+        } else
         if (expectedQuad instanceof ServoQuad) {
             switch (AppConfigController.getLanguage()) {
                // case RU:

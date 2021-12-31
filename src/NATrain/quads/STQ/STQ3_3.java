@@ -9,7 +9,6 @@ public class STQ3_3 extends SimpleTrackQuad {
 
     public STQ3_3(int x, int y) {
         super(x, y);
-        paintView();
         quadType = QuadType.STQ3_3;
     }
 

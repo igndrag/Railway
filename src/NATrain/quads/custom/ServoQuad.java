@@ -6,12 +6,14 @@ import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.customObjects.Servo;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.util.Collections;
 import java.util.List;
 
 public class ServoQuad extends AbstractQuad {
     private Servo associatedServo;
+    private Text descriptionLabel;
     private Text positionOneText;
     private Text positionTwoText;
     private Button positionOneButton;
@@ -44,7 +46,14 @@ public class ServoQuad extends AbstractQuad {
 
     @Override
     public void paintView() {
-        quadType = QuadType.SERVO_QUAD;
+        descriptionLabel = new Text();
+        descriptionLabel.setText("Servo ID");
+        descriptionLabel.setTextAlignment(TextAlignment.CENTER);
+        descriptionLabel.setWrappingWidth(70);
+        descriptionLabel.setX(10);
+        descriptionLabel.setY(10);
+        addToQuadView(descriptionLabel);
+
         positionOneButton = new Button();
         positionOneButton.setLayoutX(20);
         positionOneButton.setLayoutY(20);

@@ -9,7 +9,6 @@ import javafx.scene.shape.Rectangle;
 public class DTQ2_1 extends DoubleTrackQuad {
     public DTQ2_1(int x, int y) {
         super(x, y);
-        paintView();
         quadType = QuadType.DTQ2_1;
     }
 

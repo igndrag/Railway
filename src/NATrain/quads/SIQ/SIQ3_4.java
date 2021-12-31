@@ -12,7 +12,6 @@ import javafx.scene.text.TextAlignment;
 public class SIQ3_4 extends SignalQuad {
     public SIQ3_4(int x, int y) {
         super(x, y);
-        paintView();
         quadType = QuadType.SIQ3_4;
     }
 

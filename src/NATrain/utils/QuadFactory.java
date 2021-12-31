@@ -11,7 +11,10 @@ import NATrain.quads.BCQ.*;
 import NATrain.quads.SIQ.*;
 import NATrain.quads.STQ.*;
 import NATrain.quads.SWQ.*;
+import NATrain.quads.custom.HGateQuad;
+import NATrain.quads.custom.HPolarityChangerQuad;
 import NATrain.quads.custom.ServoQuad;
+import NATrain.quads.custom.VGateQuad;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -180,6 +183,12 @@ public class QuadFactory {
                 return new BCQ1_1(x, y);
             case SERVO_QUAD:
                 return new ServoQuad(x, y);
+            case V_GATE_QUAD:
+                return new VGateQuad(x, y);
+            case H_GATE_QUAD:
+                return new HGateQuad(x,y);
+            case HPCQ:
+                return new HPolarityChangerQuad(x,y);
         }
         return new EmptyQuad(x, y);
     }

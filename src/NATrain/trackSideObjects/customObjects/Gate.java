@@ -3,12 +3,12 @@ package NATrain.trackSideObjects.customObjects;
 public class Gate extends AbstractCustomObject{
     static final long serialVersionUID = 1L;
 
-
     private GatePosition position = GatePosition.OPENED;
-    private Servo firstServo;
-    private Servo secondServo;
+    private Servo firstServo = Servo.EMPTY_SERVO;
+    private Servo secondServo = Servo.EMPTY_SERVO;
 
     public static Gate TEST_GATE = new Gate("TEST_GATE");
+    public static final Gate EMPTY_GATE = new Gate("None");
 
     static {
         TEST_GATE.addPropertyChangeSupport();
@@ -58,5 +58,4 @@ public class Gate extends AbstractCustomObject{
         position = GatePosition.CLOSED;
         propertyChangeSupport.firePropertyChange("position",GatePosition.OPENED, GatePosition.CLOSED);
     }
-
 }

@@ -103,7 +103,7 @@ public class NavigatorFxController {
         }
         Stage tracksideObjectRedactor = new Stage();
         tracksideObjectRedactor.setTitle("Trackside Object Navigator");
-        tracksideObjectRedactor.setScene(new Scene(loader.load(), 530, 500));
+        tracksideObjectRedactor.setScene(new Scene(loader.load(), 620, 500));
         tracksideObjectRedactor.setResizable(false);
         TracksideObjectNavigatorController.setPrimaryStage(tracksideObjectRedactor);
         tracksideObjectRedactor.setOnCloseRequest(event -> {

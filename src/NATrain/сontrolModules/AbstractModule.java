@@ -20,6 +20,10 @@ public abstract class AbstractModule implements ControlModule, Serializable {
     protected Map<Integer, InputChannel> inputChannels;
     protected Map<Integer, OutputChannel> outputChannels;
     public static final String GLOBAL_REQUEST_COMMAND_CODE = "99";
+
+    public  static final int TOGGLE_OUTPUT_ON = 90;
+
+    public static final int SET_SERVO_ACTUAL_ANGLE = 92;
     public static final int SWITCH_STATE_REQUEST_CODE = 96;
     public static final int SET_SERVO_POSITION_COMMAND_CODE = 94;
 

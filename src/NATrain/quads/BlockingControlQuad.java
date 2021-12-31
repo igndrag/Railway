@@ -21,6 +21,7 @@ public abstract class BlockingControlQuad extends BlockingBaseQuad {
 
     public BlockingControlQuad(int x, int y) {
         super(x, y);
+        paintView();
     }
 
     @Override

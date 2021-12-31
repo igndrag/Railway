@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class AbstractQuad implements Quad, Paintable {
+    public static final Color CONFIGURED_CUSTOM_OBJECT_COLOR = Color.DARKGREY;
+    public static final Color DEFAULT_CUSTOM_OBJECT_COLOR = Color.BROWN;
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
     public static final Color SELECTED_BACKGROUND_COLOR = Color.LIGHTBLUE;
     public static final Color CONFIGURED_ELEMENT_COLOR = Color.VIOLET;
@@ -35,6 +37,8 @@ public abstract class AbstractQuad implements Quad, Paintable {
     public static final Color TRACK_REVERSED_DIRECTION_RAW_COLOR = Color.DARKRED;
     public static Color YELLOW_BLINKER = Color.YELLOW;
     public static Color WHITE_BLINKER = Color.WHITE;
+
+    protected GlobalQuadType globalQuadType;
 
     protected String id;
     protected int x;
@@ -69,6 +73,11 @@ public abstract class AbstractQuad implements Quad, Paintable {
 
     protected void addToQuadView(Shape shape) {
         quadView.getChildren().add(shape);
+    }
+
+    @Override
+    public GlobalQuadType getGlobalQuadType() {
+        return globalQuadType;
     }
 
     @Override
@@ -116,7 +125,7 @@ public abstract class AbstractQuad implements Quad, Paintable {
     }
 
     protected static void refreshTrackSectionState(TrackSection associatedTrack, Shape trackSectionElement) {
-        if (associatedTrack == TrackSection.EMPTY_TRACK_SECTION) {
+        if (associatedTrack == null || associatedTrack == TrackSection.EMPTY_TRACK_SECTION) {
             trackSectionElement.setFill(UNDEFINED_ELEMENT_COLOR);
         } else {
             switch (associatedTrack.getVacancyState()) {

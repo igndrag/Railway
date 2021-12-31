@@ -21,6 +21,12 @@ public abstract class ArrivalSignalQuad extends DoubleTrackQuad implements Signa
         availableActions.add(ControlAction.SET_ROUT_FROM);
     }
 
+    public ArrivalSignalQuad(int x, int y) {
+        super(x, y);
+        globalQuadType = GlobalQuadType.ARRIVAL_SIGNAL_QUAD;
+        paintView();
+    }
+
     @Override
     public Signal getAssociatedSignal() {
         return associatedSignal;
@@ -31,10 +37,6 @@ public abstract class ArrivalSignalQuad extends DoubleTrackQuad implements Signa
         this.associatedSignal = associatedSignal;
     }
 
-    public ArrivalSignalQuad(int x, int y) {
-        super(x, y);
-        paintView();
-    }
 
     @Override
     public void refresh() {

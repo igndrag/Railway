@@ -14,6 +14,7 @@ public abstract class BlockingTrackQuad extends BlockingBaseQuad implements Bloc
 
     public BlockingTrackQuad(int x, int y) {
         super(x, y);
+        paintView();
     }
 
     protected Shape firstTrackElement;

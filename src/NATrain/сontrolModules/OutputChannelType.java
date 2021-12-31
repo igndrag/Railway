@@ -7,4 +7,7 @@ public enum OutputChannelType {
     SWITCH_TO_MINUS,
     STATE_REQUEST,
     PWM,
+    IMPULSE,
+    ON_OFF,
+    TOGGLE,
 }

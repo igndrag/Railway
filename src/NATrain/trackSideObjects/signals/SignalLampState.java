@@ -3,7 +3,8 @@ package NATrain.trackSideObjects.signals;
 public enum SignalLampState {
     NOT_LIGHT (0),
     LIGHT (1),
-    BLINKING (2);
+    BLINKING (2),
+    INVERTED_BLINKING (3);
 
     private int stateCode;
 

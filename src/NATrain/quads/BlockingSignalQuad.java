@@ -19,6 +19,7 @@ public abstract class BlockingSignalQuad extends BlockingTrackQuad implements Bl
 
     public BlockingSignalQuad(int x, int y) {
         super(x, y);
+        paintView();
     }
 
     @Override

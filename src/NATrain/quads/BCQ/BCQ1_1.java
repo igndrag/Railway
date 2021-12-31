@@ -15,7 +15,6 @@ public class BCQ1_1 extends BlockingControlQuad {
 
     public BCQ1_1(int x, int y) {
         super(x, y);
-        paintView();
         quadType = QuadType.BCQ1_1;
     }
 

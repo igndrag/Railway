@@ -4,6 +4,7 @@ import NATrain.UI.UIUtils;
 import NATrain.model.Model;
 import NATrain.routes.Track;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.customObjects.PolarityChanger;
 import NATrain.trackSideObjects.customObjects.Servo;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalLampType;
@@ -86,6 +87,7 @@ public class CMEditorController {
         ObservableList<TracksideObject> signals = FXCollections.observableArrayList(Model.getSignals().values());
         ObservableList<Track> tracks = FXCollections.observableArrayList(Model.getTracks());
         ObservableList<TracksideObject> servos = FXCollections.observableArrayList(Model.getServos());
+        ObservableList<TracksideObject> polarityChangers = FXCollections.observableArrayList(Model.getPolarityChangers());
 
         inputTypeChoiceBox.setItems(FXCollections.observableArrayList(InputChannelType.values()));
 
@@ -162,6 +164,12 @@ public class CMEditorController {
                     outputTrackChoiceBox.getSelectionModel().clearSelection();
                     outputTrackChoiceBox.setDisable(true);
                     break;
+                case TOGGLE:
+                    lampTypeChoiceBox.getSelectionModel().clearSelection();
+                    lampTypeChoiceBox.setDisable(true);
+                    outputObjectChoiceBox.setItems(polarityChangers);
+                    outputTrackChoiceBox.getSelectionModel().clearSelection();
+                    outputTrackChoiceBox.setDisable(true);
             }
         });
 
@@ -327,8 +335,19 @@ public class CMEditorController {
             case PWM:
                 outputChannel = ((Servo) object).getOutputChannel();
                 break;
+            case TOGGLE:
+                outputTypeChoiceBox.setValue(OutputChannelType.ON_OFF);
+                if (object instanceof PolarityChanger) {
+                    PolarityChanger polarityChanger = (PolarityChanger) object;
+                    checkOutputAndAdd(chNumber, polarityChanger.getNormalPolarityOutput());
+                    checkOutputAndAdd(chNumber + 1, polarityChanger.getReversedPolarityOutput());
+                }
+                return;
         }
+        checkOutputAndAdd(chNumber, outputChannel);
+    }
 
+    private void checkOutputAndAdd(Integer chNumber, OutputChannel outputChannel) {
         if (outputsTableView.getItems().contains(outputChannel)) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText(String.format("This channel is already configured on %d channel.", chNumber));

@@ -90,7 +90,10 @@ public class AppConfigController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Model.initEmptyModel();
             modelPathTextField.setText(file.getAbsolutePath());
+            modelURL = modelPathTextField.getText();
+            Model.saveOnDisk();
         } else {
             UIUtils.showAlert("Wrong model location!");
         }

@@ -7,6 +7,11 @@ public enum QuadType {
     DEMO_QUAD,
 
     SERVO_QUAD,
+    V_GATE_QUAD,
+    H_GATE_QUAD,
+
+    HPCQ,
+    VPCQ,
 
     STQ1_1,
     STQ1_2,

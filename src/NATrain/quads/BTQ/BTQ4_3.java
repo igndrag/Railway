@@ -11,7 +11,6 @@ public class BTQ4_3 extends BlockingTrackQuad {
 
     public BTQ4_3(int x, int y) {
         super(x, y);
-        paintView();
         quadType = QuadType.BTQ4_3;
     }
 

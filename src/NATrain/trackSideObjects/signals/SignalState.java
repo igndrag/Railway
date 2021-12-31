@@ -5,6 +5,7 @@ import java.util.*;
 public enum SignalState {
 
     NOT_LIGHT (Collections.EMPTY_MAP),
+    CROSSING_SIGNAL_CLOSED(new HashMap<>()),
     GREEN (new HashMap<>()),
     RED (new HashMap<>()),
     YELLOW (new HashMap<>()),
@@ -17,6 +18,9 @@ public enum SignalState {
     UNDEFINED (Collections.EMPTY_MAP);
 
     static {
+        CROSSING_SIGNAL_CLOSED.getLampStates().put(SignalLampType.CROSSING_SIGNAL_FIRST_RED_LAMP, SignalLampState.BLINKING);
+        CROSSING_SIGNAL_CLOSED.getLampStates().put(SignalLampType.CROSSING_SIGNAL_SECOND_RED_LAMP, SignalLampState.INVERTED_BLINKING);
+
         GREEN.getLampStates().put(SignalLampType.GREEN_LAMP, SignalLampState.LIGHT);
         RED.getLampStates().put(SignalLampType.RED_LAMP, SignalLampState.LIGHT);
         YELLOW.getLampStates().put(SignalLampType.YELLOW_LAMP, SignalLampState.LIGHT);

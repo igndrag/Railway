@@ -9,6 +9,7 @@ import NATrain.routes.TrackBlockSection;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
 import NATrain.trackSideObjects.customObjects.Gate;
+import NATrain.trackSideObjects.customObjects.PolarityChanger;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.movableObjects.Wagon;
 import NATrain.trackSideObjects.customObjects.Servo;
@@ -60,6 +61,8 @@ public enum Model implements Serializable {
 
     private static Set<Gate> gates;
 
+    private static Set<PolarityChanger> polarityChangers;
+
     public static Set<Scenario> scenarios = new HashSet<>();
 
     static {
@@ -69,6 +72,9 @@ public enum Model implements Serializable {
         servos.add(Servo.EMPTY_SERVO);
         gates = new CopyOnWriteArraySet<>();
         gates.add(Gate.TEST_GATE);
+
+        polarityChangers = new CopyOnWriteArraySet<>();
+        polarityChangers.add(PolarityChanger.TEST_POLARITY_CHANGER);
     }
 
     public static void initEmptyModel() {
@@ -154,6 +160,10 @@ public enum Model implements Serializable {
 
     public static Set<Gate> getGates() {
         return gates;
+    }
+
+    public static Set<PolarityChanger> getPolarityChangers() {
+        return polarityChangers;
     }
 
     public static void refreshAll() {
