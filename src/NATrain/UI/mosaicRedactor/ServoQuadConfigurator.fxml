@@ -3,22 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane prefHeight="290.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.mosaicRedactor.ServoQuadConfiguratorController">
+<Pane prefHeight="130.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.mosaicRedactor.ServoQuadConfiguratorController">
    <children>
-      <Slider fx:id="positionOneSlider" layoutX="25.0" layoutY="101.0" />
-      <Slider fx:id="positionTwoSlider" layoutX="25.0" layoutY="155.0" />
-      <Slider fx:id="speedSlider" layoutX="25.0" layoutY="207.0" />
-      <Label layoutX="25.0" layoutY="68.0" text="Position 1" />
-      <TextField fx:id="positionOneTextField" layoutX="179.0" layoutY="96.0" prefHeight="25.0" prefWidth="43.0" />
-      <Label layoutX="25.0" layoutY="127.0" text="Position 2" />
-      <Label layoutX="25.0" layoutY="182.0" text="Speed " />
       <Label layoutX="25.0" layoutY="29.0" text="Servo" />
       <ChoiceBox fx:id="servoChoiceBox" layoutX="114.0" layoutY="25.0" prefHeight="25.0" prefWidth="170.0" />
-      <TextField fx:id="positionTwoTextField" layoutX="179.0" layoutY="150.0" prefHeight="25.0" prefWidth="43.0" />
-      <TextField fx:id="speedTextField" layoutX="179.0" layoutY="202.0" prefHeight="25.0" prefWidth="43.0" />
-      <Button fx:id="positionOneSetButton" layoutX="234.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Set" />
-      <Button fx:id="positionTwoSetButton" layoutX="234.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Set" />
-      <Button fx:id="initialPositionSetButton" layoutX="234.0" layoutY="202.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="To init" />
-      <Button fx:id="saveButton" layoutX="234.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Save" />
+      <Button fx:id="saveButton" layoutX="232.0" layoutY="86.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Save" />
    </children>
 </Pane>

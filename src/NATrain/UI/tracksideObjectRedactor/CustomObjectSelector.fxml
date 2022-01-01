@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.CustomObjectSelectorController">
+   <children>
+      <Button fx:id="createButton" layoutX="128.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Create" />
+      <ToggleButton fx:id="servoToggleButton" layoutX="32.0" layoutY="37.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Servo" />
+      <ToggleButton fx:id="gatesToggleButton" layoutX="32.0" layoutY="77.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Gates" />
+      <ToggleButton fx:id="switchPolarityChangerToggleButton" layoutX="32.0" layoutY="116.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Switch Polarity Changer" />
+      <ToggleButton fx:id="sectionPolarityChangerToggleButton" layoutX="32.0" layoutY="158.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Section Polarity Changer" />
+      <ToggleButton fx:id="pwmSliderToggleButton" layoutX="32.0" layoutY="199.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="PWM Slider" />
+   </children>
+</Pane>

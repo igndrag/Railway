@@ -36,7 +36,7 @@ public class GateQuadConfiguratorController {
             firstTrackSectionChoiceBox.setValue(firstTrackSectionChoiceBox.getValue());
         }
 
-        ObservableList<Gate> gates = FXCollections.observableArrayList(Model.getGates());
+        ObservableList<Gate> gates = FXCollections.observableArrayList(Model.getGates().values());
         gates.add(Gate.EMPTY_GATE);
         gateChoiceBox.setItems(gates);
 

@@ -35,7 +35,7 @@ public class PolarityChangerQuadConfiguratorController {
             firstTrackSectionChoiceBox.setValue(firstTrackSectionChoiceBox.getValue());
         }
 
-        ObservableList<PolarityChanger> polarityChangers = FXCollections.observableArrayList(Model.getPolarityChangers());
+        ObservableList<PolarityChanger> polarityChangers = FXCollections.observableArrayList(Model.getPolarityChangers().values());
         polarityChangers.add(PolarityChanger.EMPTY_POLARITY_CHANGER);
         polarityChangerChoiceBox.setItems(polarityChangers);
 

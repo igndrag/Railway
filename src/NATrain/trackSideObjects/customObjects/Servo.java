@@ -13,6 +13,8 @@ public class Servo extends AbstractCustomObject implements Controllable {
     private int actualPosition = 0;
     private int speed = 5;
 
+    public static final String INITIAL_SERVO_NAME = "New servo";
+
     public static final Servo EMPTY_SERVO = new Servo("None");
     public static Servo TEST_SERVO = new Servo("TEST SERVO");
     public static Servo TEST_SERVO_2 = new Servo("TEST_SERVO_2");
@@ -25,7 +27,7 @@ public class Servo extends AbstractCustomObject implements Controllable {
         TEST_SERVO_2.setPositionTwo(0);
     }
 
-    private final OutputChannel outputChannel = new OutputChannel(OutputChannelType.PWM, this, null);
+    private final OutputChannel outputChannel = new OutputChannel(OutputChannelType.SERVO, this, null);
 
     public Servo(String id) {
         super(id);

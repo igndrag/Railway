@@ -340,7 +340,7 @@ public class MosaicRedactorFxController {
             ServoQuad servoQuad = (ServoQuad) expectedQuad;
             Stage servoQuadConfigurator = new Stage();
             servoQuadConfigurator.setTitle("Servo Quad Configurator");
-            servoQuadConfigurator.setScene(new Scene(loader.load(), 300, 290));
+            servoQuadConfigurator.setScene(new Scene(loader.load(), 300, 130));
             servoQuadConfigurator.setResizable(false);
             ServoQuadConfiguratorController controller = loader.getController();
             controller.init(servoQuad.getServo(), servoQuad);

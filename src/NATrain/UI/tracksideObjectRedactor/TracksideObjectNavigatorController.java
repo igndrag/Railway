@@ -2,6 +2,7 @@ package NATrain.UI.tracksideObjectRedactor;
 
 import NATrain.UI.AppConfigController;
 import NATrain.UI.tracksideObjectRedactor.TSORedactors.*;
+import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.*;
@@ -27,6 +28,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.eclipse.paho.client.mqttv3.MqttException;
+
 import java.io.IOException;
 import java.util.Comparator;
 
@@ -275,6 +278,35 @@ public class TracksideObjectNavigatorController {
         wagonRedactor.initOwner(primaryStage);
         wagonRedactor.show();
     }
+
+    protected void toServoRedactor(Servo servo, boolean edit) throws IOException {
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+               // loader = new FXMLLoader(WagonRedactorController.class.getResource("WagonRedactor_RU.fxml"));
+               // break;
+            default:
+                loader = new FXMLLoader(WagonRedactorController.class.getResource("ServoRedactor.fxml"));
+        }
+        Stage servoRedactor = new Stage();
+        servoRedactor.setTitle("Servo Redactor");
+        servoRedactor.setScene(new Scene(loader.load(), 300, 290));
+        servoRedactor.setResizable(false);
+        ServoRedactorController controller = loader.getController();
+        controller.init(servo, customObjectTableView, customObjectList);
+        controller.edit = edit;
+        servoRedactor.initModality(Modality.WINDOW_MODAL);
+        servoRedactor.initOwner(primaryStage);
+        servoRedactor.show();
+        servoRedactor.setOnCloseRequest(event -> {
+            if (MQTTConnectionService.getClient().isConnected()) {
+                  MQTTConnectionService.disconnect();
+                //System.out.println("MQTT Service disconnected");
+            }
+        });
+    }
+
+
 
     public void initTrackSectionsTab() {
         trackSectionIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -598,8 +630,8 @@ public class TracksideObjectNavigatorController {
         customObjectTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         editCustomButton.setDisable(true);
         deleteCustomButton.setDisable(true);
-        customObjectList = FXCollections.observableArrayList(Model.getServos());
-        customObjectList.addAll(Model.getGates());
+        customObjectList = FXCollections.observableArrayList(Model.getServos().values());
+        customObjectList.addAll(Model.getGates().values());
         customObjectTableView.setItems(customObjectList);
 
         newCustomButton.setOnMouseClicked(event -> {
@@ -637,7 +669,7 @@ public class TracksideObjectNavigatorController {
                 AbstractCustomObject objectForEdit = (AbstractCustomObject) customObjectTableView.getSelectionModel().getSelectedItem();
                 switch (objectForEdit.getType()) {
                     case SERVO:
-                        toServoRedactor((Servo)objectForEdit);
+                        toServoRedactor((Servo)objectForEdit, true);
                         break;
                     case GATES:
                         toGatesRedactor((Gate)objectForEdit);
@@ -658,10 +690,23 @@ public class TracksideObjectNavigatorController {
     private void toGatesRedactor (Gate gates) throws IOException {
     }
 
-    private void toServoRedactor (Servo servo) throws IOException {
-    }
-
     private void toCustomObjectSelector()  throws IOException{
-
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                //loader = new FXMLLoader(CustomObjectSelectorController.class.getResource("SwitchRedactor_RU.fxml"));
+                //break;
+            default:
+                loader = new FXMLLoader(CustomObjectSelectorController.class.getResource("CustomObjectSelector.fxml"));
+        }
+        Stage customObjectSelector = new Stage();
+        customObjectSelector.setTitle("Custom Object Selector");
+        customObjectSelector.setScene(new Scene(loader.load(), 220, 330));
+        customObjectSelector.setResizable(false);
+        CustomObjectSelectorController controller = loader.getController();
+        controller.init(this);
+        customObjectSelector.initModality(Modality.WINDOW_MODAL);
+        customObjectSelector.initOwner(primaryStage);
+        customObjectSelector.show();
     }
 }

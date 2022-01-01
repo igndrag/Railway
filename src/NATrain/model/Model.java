@@ -57,24 +57,23 @@ public enum Model implements Serializable {
 
     private static Map<Long, RFIDTag> tags;
 
-    private static Set<Servo> servos;
+    private static Map<String, Servo> servos;
 
-    private static Set<Gate> gates;
+    private static Map<String, Gate> gates;
 
-    private static Set<PolarityChanger> polarityChangers;
+    private static Map<String, PolarityChanger> polarityChangers;
 
     public static Set<Scenario> scenarios = new HashSet<>();
 
     static {
-        servos = new CopyOnWriteArraySet<>();
-        servos.add(Servo.TEST_SERVO);
-        servos.add(Servo.TEST_SERVO_2);
-        servos.add(Servo.EMPTY_SERVO);
-        gates = new CopyOnWriteArraySet<>();
-        gates.add(Gate.TEST_GATE);
+        servos = new ConcurrentHashMap<>();
+        servos.put(Servo.TEST_SERVO.getId(), Servo.TEST_SERVO);
+        servos.put(Servo.TEST_SERVO_2.getId(), Servo.TEST_SERVO_2);
+        gates = new ConcurrentHashMap<>();
+        gates.put(Gate.TEST_GATE.getId(), Gate.TEST_GATE);
 
-        polarityChangers = new CopyOnWriteArraySet<>();
-        polarityChangers.add(PolarityChanger.TEST_POLARITY_CHANGER);
+        polarityChangers = new ConcurrentHashMap<>();
+        polarityChangers.put(PolarityChanger.TEST_POLARITY_CHANGER.getId(), PolarityChanger.TEST_POLARITY_CHANGER);
     }
 
     public static void initEmptyModel() {
@@ -101,9 +100,11 @@ public enum Model implements Serializable {
 
         tags = new HashMap<>();
 
-        servos = new CopyOnWriteArraySet<>();
+        servos = new ConcurrentHashMap<>();
 
-        gates = new CopyOnWriteArraySet<>();
+        gates = new ConcurrentHashMap<>();
+
+        polarityChangers = new ConcurrentHashMap<>();
 
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++ ) {
@@ -154,15 +155,15 @@ public enum Model implements Serializable {
         return tags;
     }
 
-    public static Set<Servo> getServos() {
+    public static Map<String, Servo> getServos() {
         return servos;
     }
 
-    public static Set<Gate> getGates() {
+    public static Map<String, Gate> getGates() {
         return gates;
     }
 
-    public static Set<PolarityChanger> getPolarityChangers() {
+    public static Map<String, PolarityChanger> getPolarityChangers() {
         return polarityChangers;
     }
 

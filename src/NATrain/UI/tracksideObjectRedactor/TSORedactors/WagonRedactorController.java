@@ -196,10 +196,11 @@ public class WagonRedactorController extends TracksideObjectRedactorController i
     @FXML
     @Override
     public void saveAndClose(ActionEvent actionEvent) {
-        wagon.setId(textField.getText());
         if (!isNameValid(Model.getWagons(), Wagon.INITIAL_WAGON_NAME)) {
             return;
         }
+
+        wagon.setId(textField.getText());
 
         if (!frontTagTextField1.isDisabled()) {
             if (!isUidValid(frontTagTextField1.getText(),
