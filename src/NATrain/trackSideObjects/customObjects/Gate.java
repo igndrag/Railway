@@ -4,8 +4,10 @@ public class Gate extends AbstractCustomObject{
     static final long serialVersionUID = 1L;
 
     private GatePosition position = GatePosition.OPENED;
-    private Servo firstServo = Servo.EMPTY_SERVO;
-    private Servo secondServo = Servo.EMPTY_SERVO;
+    private Servo firstServo = null;
+    private Servo secondServo = null;
+
+    public static final String INITIAL_GATE_NAME = "New gate";
 
     public static Gate TEST_GATE = new Gate("TEST_GATE");
     public static final Gate EMPTY_GATE = new Gate("None");
@@ -18,7 +20,7 @@ public class Gate extends AbstractCustomObject{
 
     public Gate(String id) {
         super(id);
-        this.type = CustomObjectType.GATES;
+        this.type = CustomObjectType.GATE;
     }
 
     public Servo getFirstServo() {

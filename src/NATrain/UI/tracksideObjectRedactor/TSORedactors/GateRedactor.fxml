@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="240.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.GateRedactorController">
+    <children>
+        <Label layoutX="27.0" layoutY="80.0" text="Left door servo" />
+        <Label layoutX="27.0" layoutY="134.0" text="Right door servo" />
+        <Label layoutX="27.0" layoutY="14.0" text="ID" />
+        <Button fx:id="saveButton" layoutX="123.0" layoutY="198.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Save" />
+        <TextField fx:id="textField" layoutX="25.0" layoutY="35.0" />
+      <ChoiceBox fx:id="leftDoorServoChoiceBox" layoutX="24.0" layoutY="101.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="rightDoorServoChoiceBox" layoutX="24.0" layoutY="155.0" prefWidth="150.0" />
+    </children>
+</Pane>

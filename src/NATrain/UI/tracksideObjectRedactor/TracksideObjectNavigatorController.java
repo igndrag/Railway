@@ -28,7 +28,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -304,6 +303,27 @@ public class TracksideObjectNavigatorController {
                 //System.out.println("MQTT Service disconnected");
             }
         });
+    }
+
+    protected void toGateRedactor(Gate gate, boolean edit) throws IOException {
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+              //  loader = new FXMLLoader(GateRedactorController.class.getResource("GateRedactor_RU.fxml"));
+              //  break;
+            default:
+                loader = new FXMLLoader(GateRedactorController.class.getResource("GateRedactor.fxml"));
+        }
+        Stage gateRedactor = new Stage();
+        gateRedactor.setTitle("Gate Redactor");
+        gateRedactor.setScene(new Scene(loader.load(), 200, 240));
+        gateRedactor.setResizable(false);
+        GateRedactorController controller = loader.getController();
+        controller.init(gate, customObjectTableView, customObjectList);
+        controller.edit = edit;
+        gateRedactor.initModality(Modality.WINDOW_MODAL);
+        gateRedactor.initOwner(primaryStage);
+        gateRedactor.show();
     }
 
 
@@ -649,7 +669,7 @@ public class TracksideObjectNavigatorController {
                     //Servo servo = (Servo) objectForDelete;
                     Model.getServos().remove(objectForDelete);
                     break;
-                case GATES:
+                case GATE:
                     Model.getGates().remove(objectForDelete);
                     break;
             }
@@ -671,8 +691,8 @@ public class TracksideObjectNavigatorController {
                     case SERVO:
                         toServoRedactor((Servo)objectForEdit, true);
                         break;
-                    case GATES:
-                        toGatesRedactor((Gate)objectForEdit);
+                    case GATE:
+                        toGateRedactor((Gate)objectForEdit, true);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -685,9 +705,6 @@ public class TracksideObjectNavigatorController {
                 deleteCustomButton.setDisable(false);
             }
         });
-    }
-
-    private void toGatesRedactor (Gate gates) throws IOException {
     }
 
     private void toCustomObjectSelector()  throws IOException{

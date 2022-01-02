@@ -1,11 +1,10 @@
 package NATrain.UI.tracksideObjectRedactor;
 
-import NATrain.model.Model;
 import NATrain.trackSideObjects.customObjects.CustomObjectType;
+import NATrain.trackSideObjects.customObjects.Gate;
 import NATrain.trackSideObjects.customObjects.Servo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
@@ -49,7 +48,7 @@ public class CustomObjectSelectorController {
 
         gatesToggleButton.setOnAction(event -> {
             if (gatesToggleButton.isSelected()) {
-                objectType = CustomObjectType.GATES;
+                objectType = CustomObjectType.GATE;
             }
         });
 
@@ -85,6 +84,14 @@ public class CustomObjectSelectorController {
                     e.printStackTrace();
                 }
                 break;
+            case GATE:
+                try {
+                    parentController.toGateRedactor(new Gate(Gate.INITIAL_GATE_NAME), false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
         }
 
     }
