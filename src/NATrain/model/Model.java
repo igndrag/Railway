@@ -4,8 +4,8 @@ import NATrain.UI.AppConfigController;
 import NATrain.UI.scenario.Scenario;
 import NATrain.routes.StationTrack;
 import NATrain.routes.Route;
-import NATrain.routes.Track;
-import NATrain.routes.TrackBlockSection;
+import NATrain.routes.Trackline;
+import NATrain.routes.TracklineBlockSection;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
 import NATrain.trackSideObjects.customObjects.Gate;
@@ -53,7 +53,7 @@ public enum Model implements Serializable {
 
     private static Map<String, Wagon> wagons;
 
-    private static Set<Track> tracks;
+    private static Set<Trackline> tracklines;
 
     private static Map<Long, RFIDTag> tags;
 
@@ -96,7 +96,7 @@ public enum Model implements Serializable {
 
         wagons = new ConcurrentHashMap<>();
 
-        tracks = new CopyOnWriteArraySet<>();
+        tracklines = new CopyOnWriteArraySet<>();
 
         tags = new HashMap<>();
 
@@ -147,8 +147,8 @@ public enum Model implements Serializable {
 
     public static Map<String, Wagon> getWagons() {return wagons;}
 
-    public static Set<Track> getTracks() {
-        return tracks;
+    public static Set<Trackline> getTracklines() {
+        return tracklines;
     }
 
     public static Map<Long, RFIDTag> getTags() {
@@ -198,9 +198,10 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(locomotives);
             objectOutputStream.writeObject(wagons);
             objectOutputStream.writeObject(routeTable);
-            //objectOutputStream.writeObject(servos);
-            //objectOutputStream.writeObject(gates);
-            tracks.forEach(track -> { // change EMPTY_SIGNALs to null fow writing
+            objectOutputStream.writeObject(servos);
+            objectOutputStream.writeObject(gates);
+            objectOutputStream.writeObject(polarityChangers);
+            tracklines.forEach(track -> { // change EMPTY_SIGNALs to null fow writing
                 track.getBlockSections().forEach(blockSection -> {
                     if (blockSection.getNormalDirectionSignal() == Signal.EMPTY_SIGNAL) {
                         blockSection.setNormalDirectionSignal(null);
@@ -210,8 +211,8 @@ public enum Model implements Serializable {
                     }
                 });
             });
-            objectOutputStream.writeObject(tracks);
-            tracks.forEach(track -> { // return EMPTY_SIGNALs back
+            objectOutputStream.writeObject(tracklines);
+            tracklines.forEach(track -> { // return EMPTY_SIGNALs back
                 track.getBlockSections().forEach(blockSection -> {
                     if (blockSection.getNormalDirectionSignal() == null) {
                         blockSection.setNormalDirectionSignal(Signal.EMPTY_SIGNAL);
@@ -265,15 +266,21 @@ public enum Model implements Serializable {
                 locomotives.values().forEach(TracksideObject::addPropertyChangeSupport);
                 wagons = (Map<String, Wagon>) inputStream.readObject();
                 routeTable = (CopyOnWriteArraySet<Route>) inputStream.readObject();
-                tracks = (Set<Track>) inputStream.readObject();
+                servos = (Map<String, Servo>) inputStream.readObject();
+                servos.values().forEach(TracksideObject::addPropertyChangeSupport);
+                gates = (Map<String, Gate>) inputStream.readObject();
+                gates.values().forEach(TracksideObject::addPropertyChangeSupport);
+                polarityChangers = (Map<String, PolarityChanger>) inputStream.readObject();
+                polarityChangers.values().forEach(TracksideObject::addPropertyChangeSupport);
+                tracklines = (Set<Trackline>) inputStream.readObject();
                 tags = (Map<Long, RFIDTag>) inputStream.readObject();
+                tags.values().forEach(RFIDTag::addPropertyChangeSupport);
                 trackSections.values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.UNDEFINED));
                 signals.values().forEach(signal -> signal.setSignalState(SignalState.UNDEFINED));
                 switches.values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.UNDEFINED));
                 stationTracks.values().forEach(track -> track.setVacancyState(TrackSectionState.UNDEFINED));
 
-
-                tracks.forEach(track -> {
+                tracklines.forEach(track -> {
                     track.init();
                     track.getBlockSections().forEach(blockSection -> {
                         blockSection.addPropertyChangeSupport();
@@ -329,7 +336,7 @@ public enum Model implements Serializable {
     }
 
     public static void allObjectsToDefault() {
-        tracks.forEach(track -> {
+        tracklines.forEach(track -> {
             track.getBlockSections().forEach(blockSection -> {
                 Signal normalDirectionSignal = blockSection.getNormalDirectionSignal();
                 if (normalDirectionSignal != null && normalDirectionSignal != Signal.EMPTY_SIGNAL) {
@@ -339,7 +346,7 @@ public enum Model implements Serializable {
                 if (reversedDirectionSignal != null && reversedDirectionSignal != Signal.EMPTY_SIGNAL) {
                     reversedDirectionSignal.setSignalState(SignalState.UNDEFINED);
                 }
-                if (blockSection != TrackBlockSection.EMPTY_BLOCK_SECTION) {
+                if (blockSection != TracklineBlockSection.EMPTY_BLOCK_SECTION) {
                     blockSection.setVacancyState(TrackSectionState.UNDEFINED);
                 }
             });

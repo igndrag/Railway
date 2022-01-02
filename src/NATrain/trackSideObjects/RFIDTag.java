@@ -6,6 +6,8 @@ import NATrain.utils.UtilFunctions;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RFIDTag implements Serializable, Listenable {
     static final long serialVersionUID = 1L;
@@ -35,6 +37,7 @@ public class RFIDTag implements Serializable, Listenable {
         uid[3] = b4;
         decUid = UtilFunctions.convertUidToLong(b1, b2, b3, b4);
         this.tagType = tagType;
+        addPropertyChangeSupport();
     }
 
     public TrackSection getTagLocation() {
@@ -69,12 +72,8 @@ public class RFIDTag implements Serializable, Listenable {
     }
 
     @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) { //only one listener
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
         if (propertyChangeSupport != null) {
-              if (propertyChangeSupport.getPropertyChangeListeners() != null && propertyChangeSupport.getPropertyChangeListeners().length > 0) {
-                  PropertyChangeListener previousListener = propertyChangeSupport.getPropertyChangeListeners()[0];
-                  propertyChangeSupport.removePropertyChangeListener(previousListener);
-              }
             propertyChangeSupport.addPropertyChangeListener(listener);
         }
     }
@@ -91,6 +90,7 @@ public class RFIDTag implements Serializable, Listenable {
 
     @Override
     public void deactivateListeners() {
-       //do nothing
+        ArrayList<PropertyChangeListener> listeners = new ArrayList<PropertyChangeListener>(Arrays.asList(propertyChangeSupport.getPropertyChangeListeners()));
+        listeners.forEach(this::removePropertyChangeListener);
     }
 }

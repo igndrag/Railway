@@ -2,7 +2,6 @@ package NATrain.UI.workPlace;
 
 import NATrain.UI.AppConfigController;
 import NATrain.UI.NavigatorFxController;
-import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.workPlace.executors.ActionExecutor;
 import NATrain.UI.workPlace.executors.AbstractRouteExecutor;
 import NATrain.UI.workPlace.executors.RouteExecutor;
@@ -10,7 +9,7 @@ import NATrain.UI.workPlace.executors.RouteStatus;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.quads.*;
-import NATrain.routes.Track;
+import NATrain.routes.Trackline;
 import NATrain.trackSideObjects.*;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
@@ -114,7 +113,7 @@ public class WorkPlaceController {
         Model.getStationTracks().values().forEach(TrackSection::updateVacancyState);
         Model.getTrackSections().values().forEach(TrackSection::updateVacancyState);
         Model.getSwitches().values().forEach(aSwitch -> aSwitch.setSwitchState(SwitchState.PLUS));// TODO change it to global request for tests on real model
-        Model.getTracks().forEach(track -> {
+        Model.getTracklines().forEach(track -> {
             track.getBlockSections().forEach(blockSection -> {
                 if (blockSection.getNormalDirectionSignal() != null) {
                     blockSection.getNormalDirectionSignal().init();
@@ -178,7 +177,7 @@ public class WorkPlaceController {
             }
         }
 
-        Model.getTracks().forEach(Track::activateSignalListeners);
+        Model.getTracklines().forEach(Trackline::activateSignalListeners);
 
         workArea.setContent(gridPane);
 
@@ -203,7 +202,7 @@ public class WorkPlaceController {
             Model.getSignals().values().forEach(signal -> {
                 signal.setSignalState(signal.getSignalState());
             });
-            Model.getTracks().forEach(track -> {
+            Model.getTracklines().forEach(track -> {
                 track.getBlockSections().forEach(blockSection -> {
                     Signal normalDirectionSignal = blockSection.getNormalDirectionSignal();
                     Signal reversedDirectionSignal = blockSection.getReversedDirectionSignal();
@@ -219,7 +218,7 @@ public class WorkPlaceController {
 
         //   ConnectionService connectionService = new ConnectionService("COM5");
         //   connectionService.start();
-
+        Model.getLocomotives().values().forEach(Locomotive::init);
         log("Work Place initialized");
         log("Good Lock!!!");
     }
@@ -271,10 +270,10 @@ public class WorkPlaceController {
     }
 
     public static void deactivateTrackSignalAutoselectors() {
-        Model.getTracks().forEach(Track::deactivateSignalListeners);
+        Model.getTracklines().forEach(Trackline::deactivateSignalListeners);
     }
 
-    public static void deactivateTracksideObjectStateListeners() {
+    public static void deactivateQuadListeners() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 Pane quadPane = new Pane();

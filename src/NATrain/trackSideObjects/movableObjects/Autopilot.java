@@ -15,5 +15,5 @@ public interface Autopilot {
     void disable();
     AutopilotMode getMode();
     void checkPreparedRoute();
-    //void executeTrackLineMovement(Track track);
+    //void executeTrackLineMovement(Trackline trackline);
 }

@@ -2,10 +2,13 @@ package NATrain.trackSideObjects.movableObjects;
 
 import NATrain.routes.RouteDirection;
 import NATrain.trackSideObjects.Controllable;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.сontrolModules.AbstractLocomotiveModule;
 import NATrain.сontrolModules.ControlModule;
 import NATrain.сontrolModules.MQTTLocomotiveModule;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 
 import static NATrain.сontrolModules.AbstractLocomotiveModule.*;
@@ -14,12 +17,14 @@ import static javafx.animation.Animation.Status.PAUSED;
 public class Locomotive extends AbstractMovableObject implements Controllable {
     static final long serialVersionUID = 1L;
 
+    private Boolean RFID = true;
     private ControlModule controlModule;
     private LocomotiveState actualState = LocomotiveState.NOT_MOVING;
     protected int restrictedSpeed = 0; // mm/sec
     protected int fullSpeed = 0; // mm/sec
 
     private transient Autopilot autopilot;
+    private transient TrackSection location;
     private int speed = 0;
     public boolean frontLight = false;
     public boolean rearLight = false;
@@ -41,7 +46,6 @@ public class Locomotive extends AbstractMovableObject implements Controllable {
     public ControlModule getControlModule() {
         return controlModule;
     }
-
 
     public RouteDirection getForwardDirection() {
         return forwardDirection;
@@ -171,8 +175,46 @@ public class Locomotive extends AbstractMovableObject implements Controllable {
         return (actualState == LocomotiveState.MOVING_FORWARD || actualState == LocomotiveState.MOVING_BACKWARD) && speed > 0;
     }
 
+    public Boolean isRFID() {
+        return RFID;
+    }
+
+    public void init() { //should be called after quad listeners inits!!
+        if (RFID) {
+            setLocation(frontTag.getTagLocation());
+            PropertyChangeListener frontTagListener = new locoRFIDLocator();
+            frontTag.addPropertyChangeListener(frontTagListener);
+            PropertyChangeListener rearTagListener = new locoRFIDLocator();
+            rearTag.addPropertyChangeListener(rearTagListener);
+        }
+    }
+
+    public TrackSection getLocation() {
+        return location;
+    }
+
+    public void setLocation(TrackSection newLocation) {
+        if (propertyChangeSupport != null && newLocation != null) {
+            propertyChangeSupport.firePropertyChange("location", this.location, newLocation);
+        }
+        this.location = newLocation;
+    }
+
+    public void setRFID(Boolean RFID) {
+        this.RFID = RFID;
+    }
+
     @Override
     public String getModules() {
         return getModule().getId();
+    }
+
+    private class locoRFIDLocator implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (getFrontTagLocation() == getRearTagLocation()) { //check all axles in section (for polarity loco polarity changer)
+                setLocation(getFrontTagLocation());
+            }
+        }
     }
 }

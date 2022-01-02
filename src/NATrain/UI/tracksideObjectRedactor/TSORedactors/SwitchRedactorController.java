@@ -72,7 +72,7 @@ public class SwitchRedactorController extends TracksideObjectRedactorController 
             return;
         if (trackSectionChoiceBox.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("It's necessary to set track section for correct interlock switch in route.");
+            alert.setContentText("It's necessary to set trackline section for correct interlock switch in route.");
             alert.show();
             return;
         } else {

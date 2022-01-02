@@ -4,21 +4,19 @@ import NATrain.quads.BlockingBaseQuad;
 import NATrain.trackSideObjects.*;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
-import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.trackSideObjects.trackSections.TrackSectionState;
 
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 
 import static NATrain.routes.RouteDirection.*;
 
-public class Track implements Serializable {
+public class Trackline implements Serializable {
 
     static final long serialVersionUID = 1L;
-    public static final Track EMPTY_TRACK = new Track("none");
+    public static final Trackline EMPTY_TRACKLINE = new Trackline("none");
     private transient Map<PropertyChangeListener, Set<TracksideObject>> activeSignalListeners;
     private transient Set<BlockingBaseQuad> signalQuads;
 
@@ -26,7 +24,7 @@ public class Track implements Serializable {
     private String id;
     private TrackDirection trackDirection = TrackDirection.NORMAL;
     private boolean bidirectional = false;
-    private final List<TrackBlockSection> blockSections = new CopyOnWriteArrayList<>();
+    private final List<TracklineBlockSection> blockSections = new CopyOnWriteArrayList<>();
     private TrackBlockingType trackBlockingType = TrackBlockingType.AUTOMATIC_THREE_SIGNAL_BLOCKING;
     private Signal normalDirectionArrivalSignal = Signal.EMPTY_SIGNAL;
     private Signal reversedDirectionArrivalSignal = Signal.EMPTY_SIGNAL;
@@ -39,7 +37,7 @@ public class Track implements Serializable {
         this.normalDirection = normalDirection;
     }
 
-    public Track(String id) {
+    public Trackline(String id) {
         this.id = id;
     }
 
@@ -65,7 +63,7 @@ public class Track implements Serializable {
         return UNDEFINED;
     }
 
-    public List<TrackBlockSection> getBlockSections() {
+    public List<TracklineBlockSection> getBlockSections() {
         return blockSections;
     }
 
@@ -101,10 +99,10 @@ public class Track implements Serializable {
                 this.trackDirection = trackDirection;
                 activateSignalListeners();
             } else {
-                //WorkPlaceController.getActiveController().log(String.format("Track direction change of %s is impossible. Track isn't free.", this.id));
+                //WorkPlaceController.getActiveController().log(String.format("Trackline direction change of %s is impossible. Trackline isn't free.", this.id));
             }
         } else {
-            System.out.println("Try to set direction for specialized track");
+            System.out.println("Try to set direction for specialized trackline");
         }
     }
 
@@ -153,7 +151,7 @@ public class Track implements Serializable {
     }
 
     public boolean isAllBlockSectionsFree() {
-        for (TrackBlockSection blockSection : blockSections) {
+        for (TracklineBlockSection blockSection : blockSections) {
             if (blockSection.getVacancyState() == TrackSectionState.OCCUPIED)
                 return false;
         }
@@ -173,14 +171,14 @@ public class Track implements Serializable {
                 object.removePropertyChangeListener(listener);
             });
         });
-        getBlockSections().stream().map(TrackBlockSection::getNormalDirectionSignal).forEach(signal -> {signal.setSignalState(SignalState.NOT_LIGHT);});
-        getBlockSections().stream().map(TrackBlockSection::getReversedDirectionSignal).forEach(signal -> {signal.setSignalState(SignalState.NOT_LIGHT);});
+        getBlockSections().stream().map(TracklineBlockSection::getNormalDirectionSignal).forEach(signal -> {signal.setSignalState(SignalState.NOT_LIGHT);});
+        getBlockSections().stream().map(TracklineBlockSection::getReversedDirectionSignal).forEach(signal -> {signal.setSignalState(SignalState.NOT_LIGHT);});
         activeSignalListeners.clear();
     }
 
     public List<Signal> getSignals() {
         List<Signal> result = new ArrayList<>();
-        for (TrackBlockSection blockSection : blockSections) {
+        for (TracklineBlockSection blockSection : blockSections) {
             Signal normalDirectionSignal = blockSection.getNormalDirectionSignal();
             if (normalDirectionSignal != null && normalDirectionSignal != Signal.EMPTY_SIGNAL) {
                 result.add(normalDirectionSignal);
@@ -194,14 +192,14 @@ public class Track implements Serializable {
         return result;
     }
 
-    public TrackBlockSection getFirstSectionInActualDirection() {
+    public TracklineBlockSection getFirstSectionInActualDirection() {
         if (trackDirection == TrackDirection.NORMAL) {
             return blockSections.get(0);
         } else {
             return blockSections.get(blockSections.size() - 1);
         }
     }
-    public TrackBlockSection getLastSectionInActualDirection() {
+    public TracklineBlockSection getLastSectionInActualDirection() {
         if (trackDirection == TrackDirection.NORMAL) {
             return blockSections.get(blockSections.size() - 1);
         } else {

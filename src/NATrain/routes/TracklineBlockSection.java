@@ -5,25 +5,25 @@ import NATrain.trackSideObjects.trackSections.TrackSection;
 
 import java.io.Serializable;
 
-public class TrackBlockSection extends TrackSection implements Serializable {
+public class TracklineBlockSection extends TrackSection implements Serializable {
     static final long serialVersionUID = 1L;
 
-    public static final TrackBlockSection EMPTY_BLOCK_SECTION = new TrackBlockSection(Track.EMPTY_TRACK, "None");
+    public static final TracklineBlockSection EMPTY_BLOCK_SECTION = new TracklineBlockSection(Trackline.EMPTY_TRACKLINE, "None");
 
-    private final Track track;
+    private final Trackline trackline;
     private Signal normalDirectionSignal = Signal.EMPTY_SIGNAL;
     private Signal reversedDirectionSignal = Signal.EMPTY_SIGNAL;
     private boolean bidirectional = false;
     private boolean lastInNormalDirection = false;
     private boolean lastInReverseDirection = false;
 
-    public TrackBlockSection(Track track, String id) {
+    public TracklineBlockSection(Trackline trackline, String id) {
         super(id);
-        this.track = track;
+        this.trackline = trackline;
     }
 
-    public Track getTrack() {
-        return track;
+    public Trackline getTrack() {
+        return trackline;
     }
 
     public Signal getNormalDirectionSignal() {

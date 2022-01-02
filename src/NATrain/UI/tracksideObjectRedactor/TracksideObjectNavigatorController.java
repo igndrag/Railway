@@ -6,10 +6,7 @@ import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.*;
-import NATrain.trackSideObjects.customObjects.AbstractCustomObject;
-import NATrain.trackSideObjects.customObjects.CustomObjectType;
-import NATrain.trackSideObjects.customObjects.Gate;
-import NATrain.trackSideObjects.customObjects.Servo;
+import NATrain.trackSideObjects.customObjects.*;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.movableObjects.MovableObjectType;
 import NATrain.trackSideObjects.movableObjects.Wagon;
@@ -165,7 +162,7 @@ public class TracksideObjectNavigatorController {
                 loader = new FXMLLoader(TrackSectionRedactorController.class.getResource("TrackSectionRedactor.fxml"));
         }
         Stage trackSectionRedactor = new Stage();
-        trackSectionRedactor.setTitle("Track Section Redactor");
+        trackSectionRedactor.setTitle("Trackline Section Redactor");
         trackSectionRedactor.setScene(new Scene(loader.load(), 240, 220));
         trackSectionRedactor.setResizable(false);
         TrackSectionRedactorController controller = loader.getController();
@@ -225,7 +222,7 @@ public class TracksideObjectNavigatorController {
                 loader = new FXMLLoader(StationTrackRedactorController.class.getResource("StationTrackRedactor.fxml"));
         }
         Stage stationTrackRedactor = new Stage();
-        stationTrackRedactor.setTitle("Station Track Redactor");
+        stationTrackRedactor.setTitle("Station Trackline Redactor");
         stationTrackRedactor.setScene(new Scene(loader.load(), 220, 350));
         stationTrackRedactor.setResizable(false);
         StationTrackRedactorController controller = loader.getController();
@@ -247,7 +244,7 @@ public class TracksideObjectNavigatorController {
         }
         Stage locomotiveRedactor = new Stage();
         locomotiveRedactor.setTitle("Locomotive Redactor");
-        locomotiveRedactor.setScene(new Scene(loader.load(), 270, 320));
+        locomotiveRedactor.setScene(new Scene(loader.load(), 290, 330));
         locomotiveRedactor.setResizable(false);
         LocomotiveRedactorController controller = loader.getController();
         controller.init(locomotive, locomotiveTableView, locomotiveList);
@@ -325,6 +322,28 @@ public class TracksideObjectNavigatorController {
         gateRedactor.initOwner(primaryStage);
         gateRedactor.show();
     }
+
+    protected void toPolarityChangerRedactor(PolarityChanger polarityChanger, boolean edit) throws IOException {
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                //  loader = new FXMLLoader(GateRedactorController.class.getResource("GateRedactor_RU.fxml"));
+                //  break;
+            default:
+                loader = new FXMLLoader(GateRedactorController.class.getResource("PolarityChangerRedactor.fxml"));
+        }
+        Stage polarityChangerRedactor = new Stage();
+        polarityChangerRedactor.setTitle("Polarity Changer Redactor");
+        polarityChangerRedactor.setScene(new Scene(loader.load(), 290, 320));
+        polarityChangerRedactor.setResizable(false);
+        PolarityChangerRedactorController controller = loader.getController();
+        controller.init(polarityChanger, customObjectTableView, customObjectList);
+        controller.edit = edit;
+        polarityChangerRedactor.initModality(Modality.WINDOW_MODAL);
+        polarityChangerRedactor.initOwner(primaryStage);
+        polarityChangerRedactor.show();
+    }
+
 
 
 
@@ -652,6 +671,7 @@ public class TracksideObjectNavigatorController {
         deleteCustomButton.setDisable(true);
         customObjectList = FXCollections.observableArrayList(Model.getServos().values());
         customObjectList.addAll(Model.getGates().values());
+        customObjectList.addAll(Model.getPolarityChangers().values());
         customObjectTableView.setItems(customObjectList);
 
         newCustomButton.setOnMouseClicked(event -> {
@@ -671,6 +691,11 @@ public class TracksideObjectNavigatorController {
                     break;
                 case GATE:
                     Model.getGates().remove(objectForDelete);
+                    break;
+                case SECTION_POLARITY_CHANGER:
+                case SWITCH_POLARITY_CHANGER:
+                case LOCO_POLARITY_CHANGER:
+                    Model.getPolarityChangers().remove(objectForDelete);
                     break;
             }
             customObjectList.remove(objectForDelete);
@@ -693,6 +718,12 @@ public class TracksideObjectNavigatorController {
                         break;
                     case GATE:
                         toGateRedactor((Gate)objectForEdit, true);
+                        break;
+                    case SWITCH_POLARITY_CHANGER:
+                    case SECTION_POLARITY_CHANGER:
+                    case LOCO_POLARITY_CHANGER:
+                        toPolarityChangerRedactor((PolarityChanger)objectForEdit, true);
+                        break;
                 }
             } catch (IOException e) {
                 e.printStackTrace();

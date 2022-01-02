@@ -20,6 +20,12 @@ public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfig
         availableActions.add(ControlAction.CHANGE_SWITCH_POSITION);
     }
 
+
+    public SwitchQuad(int x, int y) {
+        super(x, y);
+        globalQuadType = GlobalQuadType.SWITCH_QUAD;
+    }
+
     @Override
     public Switch getAssociatedSwitch() {
         return associatedSwitch;
@@ -30,9 +36,6 @@ public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfig
         this.associatedSwitch = associatedSwitch;
     }
 
-    public SwitchQuad(int x, int y) {
-        super(x, y);
-    }
 
     @Override
     public void refresh() {
@@ -50,7 +53,11 @@ public abstract class SwitchQuad extends SimpleTrackQuad implements SwitchConfig
 
     @Override
     public boolean isBorderShown() {
-        return borderElement.isVisible();
+        if (borderElement != null) {
+            return borderElement.isVisible();
+        } else {
+            return false;
+        }
     }
 
     @Override

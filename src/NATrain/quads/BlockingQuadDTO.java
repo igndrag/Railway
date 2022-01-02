@@ -1,7 +1,7 @@
 package NATrain.quads;
 
-import NATrain.routes.Track;
-import NATrain.routes.TrackBlockSection;
+import NATrain.routes.Trackline;
+import NATrain.routes.TracklineBlockSection;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.utils.QuadFactory;
 
@@ -14,9 +14,9 @@ public class BlockingQuadDTO implements Serializable {
     int x;
     int y;
     private QuadType quadType;
-    private Track track;
-    private TrackBlockSection firstBlockSection = TrackBlockSection.EMPTY_BLOCK_SECTION;
-    private TrackBlockSection secondBlockSection = TrackBlockSection.EMPTY_BLOCK_SECTION;
+    private Trackline trackline;
+    private TracklineBlockSection firstBlockSection = TracklineBlockSection.EMPTY_BLOCK_SECTION;
+    private TracklineBlockSection secondBlockSection = TracklineBlockSection.EMPTY_BLOCK_SECTION;
     private Signal firstSignal = Signal.EMPTY_SIGNAL;
     private Signal secondSignal = Signal.EMPTY_SIGNAL;
     private boolean descriptionShown = false;
@@ -33,19 +33,19 @@ public class BlockingQuadDTO implements Serializable {
             descriptionShown = true;
         }
 
-        if (originalQuad.track == Track.EMPTY_TRACK) {
-            this.track = null;
+        if (originalQuad.trackline == Trackline.EMPTY_TRACKLINE) {
+            this.trackline = null;
         } else {
-            this.track = originalQuad.track;
+            this.trackline = originalQuad.trackline;
         }
 
-        if (originalQuad.firstBlockSection == TrackBlockSection.EMPTY_BLOCK_SECTION) {
+        if (originalQuad.firstBlockSection == TracklineBlockSection.EMPTY_BLOCK_SECTION) {
             this.firstBlockSection = null;
         } else {
             this.firstBlockSection = originalQuad.firstBlockSection;
         }
 
-        if (originalQuad.secondBlockSection == TrackBlockSection.EMPTY_BLOCK_SECTION) {
+        if (originalQuad.secondBlockSection == TracklineBlockSection.EMPTY_BLOCK_SECTION) {
             this.secondBlockSection = null;
         } else {
             this.secondBlockSection = originalQuad.secondBlockSection;
@@ -81,20 +81,20 @@ public class BlockingQuadDTO implements Serializable {
         baseQuad.showBlockSectionName (quadDTO.descriptionShown);
 
 
-        if (quadDTO.track == null) {
-            baseQuad.track = Track.EMPTY_TRACK;
+        if (quadDTO.trackline == null) {
+            baseQuad.trackline = Trackline.EMPTY_TRACKLINE;
         } else {
-            baseQuad.track = quadDTO.track;
+            baseQuad.trackline = quadDTO.trackline;
         }
 
         if (quadDTO.firstBlockSection == null) {
-            baseQuad.firstBlockSection = TrackBlockSection.EMPTY_BLOCK_SECTION;
+            baseQuad.firstBlockSection = TracklineBlockSection.EMPTY_BLOCK_SECTION;
         } else {
             baseQuad.firstBlockSection = quadDTO.firstBlockSection;
         }
 
         if (quadDTO.secondBlockSection == null) {
-            baseQuad.secondBlockSection = TrackBlockSection.EMPTY_BLOCK_SECTION;
+            baseQuad.secondBlockSection = TracklineBlockSection.EMPTY_BLOCK_SECTION;
         } else {
             baseQuad.secondBlockSection = quadDTO.secondBlockSection;
         }

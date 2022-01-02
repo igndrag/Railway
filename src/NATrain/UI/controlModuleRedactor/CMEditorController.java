@@ -2,7 +2,7 @@ package NATrain.UI.controlModuleRedactor;
 
 import NATrain.UI.UIUtils;
 import NATrain.model.Model;
-import NATrain.routes.Track;
+import NATrain.routes.Trackline;
 import NATrain.trackSideObjects.*;
 import NATrain.trackSideObjects.customObjects.PolarityChanger;
 import NATrain.trackSideObjects.customObjects.Servo;
@@ -25,9 +25,9 @@ import java.util.Optional;
 public class CMEditorController {
 
     @FXML
-    private ChoiceBox<Track> inputTrackChoiceBox;
+    private ChoiceBox<Trackline> inputTrackChoiceBox;
     @FXML
-    private ChoiceBox<Track> outputTrackChoiceBox;
+    private ChoiceBox<Trackline> outputTrackChoiceBox;
     @FXML
     private TableView<InputChannel> inputsTableView;
     @FXML
@@ -85,13 +85,13 @@ public class CMEditorController {
         ObservableList<TracksideObject> stationTracks = FXCollections.observableArrayList(Model.getStationTracks().values());
         ObservableList<TracksideObject> switches = FXCollections.observableArrayList(Model.getSwitches().values());
         ObservableList<TracksideObject> signals = FXCollections.observableArrayList(Model.getSignals().values());
-        ObservableList<Track> tracks = FXCollections.observableArrayList(Model.getTracks());
+        ObservableList<Trackline> tracklines = FXCollections.observableArrayList(Model.getTracklines());
         ObservableList<TracksideObject> servos = FXCollections.observableArrayList(Model.getServos().values());
         ObservableList<TracksideObject> polarityChangers = FXCollections.observableArrayList(Model.getPolarityChangers().values());
 
         inputTypeChoiceBox.setItems(FXCollections.observableArrayList(InputChannelType.values()));
 
-        inputTrackChoiceBox.setItems(tracks);
+        inputTrackChoiceBox.setItems(tracklines);
         inputTrackChoiceBox.setDisable(true);
 
         inputTypeChoiceBox.setOnAction(event -> {
@@ -131,7 +131,7 @@ public class CMEditorController {
         outputTypeChoiceBox.setItems(FXCollections.observableArrayList(OutputChannelType.values()));
         lampTypeChoiceBox.setDisable(true);
 
-        outputTrackChoiceBox.setItems(tracks);
+        outputTrackChoiceBox.setItems(tracklines);
         outputTrackChoiceBox.setDisable(true);
 
         outputTypeChoiceBox.setOnAction(event -> {

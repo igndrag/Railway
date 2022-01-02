@@ -1,6 +1,7 @@
 package NATrain.quads.custom;
 
 import NATrain.UI.workPlace.WorkPlaceController;
+import NATrain.quads.GlobalQuadType;
 import NATrain.quads.SimpleTrackQuad;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.customObjects.Gate;
@@ -30,6 +31,7 @@ public abstract class GateQuad extends SimpleTrackQuad {
 
     public GateQuad(int x, int y) {
         super(x, y);
+        globalQuadType = GlobalQuadType.GATE_QUAD;
     }
 
     public Gate getGate() {
@@ -110,6 +112,16 @@ public abstract class GateQuad extends SimpleTrackQuad {
                 leftDoorOpenedElement.setFill(CONFIGURED_CUSTOM_OBJECT_COLOR);
             }
         }
+    }
+
+    @Override
+    public Object getCustomObject() {
+        return gate;
+    }
+
+    @Override
+    public void setCustomObject(Object object) {
+        this.gate = (Gate) object;
     }
 
     private class GateListener implements PropertyChangeListener {

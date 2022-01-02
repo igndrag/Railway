@@ -47,7 +47,7 @@ public enum ControlAction {
                     case RU:
                         return "Задать маршрут на путь";
                     case ENG:
-                        return "Set route to track";
+                        return "Set route to trackline";
                 }
             case SET_ROUTE_TO_TRACK_LINE:
                 switch (AppConfigController.getLanguage()) {
@@ -75,7 +75,7 @@ public enum ControlAction {
                     case RU:
                         return "Сменить направление на перегоне";
                     case ENG:
-                        return "Change track line direction";
+                        return "Change trackline line direction";
                 }
             case OPEN_ON_BLINKED_WHITE:
                 switch (AppConfigController.getLanguage()) {

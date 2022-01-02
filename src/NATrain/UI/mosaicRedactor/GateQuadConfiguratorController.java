@@ -2,9 +2,7 @@ package NATrain.UI.mosaicRedactor;
 
 import NATrain.model.Model;
 import NATrain.quads.custom.GateQuad;
-import NATrain.quads.custom.PolarityChangerQuad;
 import NATrain.trackSideObjects.customObjects.Gate;
-import NATrain.trackSideObjects.customObjects.PolarityChanger;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +31,7 @@ public class GateQuadConfiguratorController {
         if (quad.getFirstAssociatedTrack() == null || quad.getFirstAssociatedTrack() == TrackSection.EMPTY_TRACK_SECTION) {
            firstTrackSectionChoiceBox.setValue(TrackSection.EMPTY_TRACK_SECTION);
         } else {
-            firstTrackSectionChoiceBox.setValue(firstTrackSectionChoiceBox.getValue());
+            firstTrackSectionChoiceBox.setValue(quad.getFirstAssociatedTrack());
         }
 
         ObservableList<Gate> gates = FXCollections.observableArrayList(Model.getGates().values());

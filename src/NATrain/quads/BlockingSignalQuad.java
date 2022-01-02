@@ -5,7 +5,6 @@ import NATrain.quads.configurableInterfaces.BlockSignalConfigurable;
 import NATrain.routes.TrackDirection;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.signals.Signal;
-import NATrain.trackSideObjects.signals.SignalState;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import java.util.Collections;
@@ -19,6 +18,7 @@ public abstract class BlockingSignalQuad extends BlockingTrackQuad implements Bl
 
     public BlockingSignalQuad(int x, int y) {
         super(x, y);
+        globalQuadType = GlobalQuadType.BLOCKING_SIGNAL_QUAD;
         paintView();
     }
 
@@ -50,7 +50,7 @@ public abstract class BlockingSignalQuad extends BlockingTrackQuad implements Bl
 
     @Override
     public void updateSignalView() {
-        if (track.getTrackDirection() == TrackDirection.NORMAL) {
+        if (trackline.getTrackDirection() == TrackDirection.NORMAL) {
             if (reversedSignalView) {
                 updateBlockSignalView(firstSignal, firstSignalLampElement);
             } else {

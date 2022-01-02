@@ -3,20 +3,19 @@ package NATrain.UI;
 import NATrain.UI.controlModuleRedactor.CMNavigatorController;
 import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.routeTable.RouteTableController;
-import NATrain.UI.tracks.TrackSelectorController;
+import NATrain.UI.tracklines.TracklineSelectorController;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController;
 import NATrain.UI.workPlace.Blinker;
 import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
-import NATrain.utils.ModelMock;
+import NATrain.trackSideObjects.RFIDTag;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
@@ -183,7 +182,8 @@ public class NavigatorFxController {
         workPlace.setOnCloseRequest(event -> {
             WorkPlaceController.setInactiveMode();
             WorkPlaceController.deactivateTrackSignalAutoselectors();
-            WorkPlaceController.deactivateTracksideObjectStateListeners();
+            WorkPlaceController.deactivateQuadListeners();
+            Model.getTags().values().forEach(RFIDTag::deactivateListeners);
             Model.allObjectsToDefault();
             try {
                 MQTTConnectionService.getClient().disconnect();
@@ -224,15 +224,15 @@ public class NavigatorFxController {
         FXMLLoader loader;
         switch (AppConfigController.getLanguage()) {
             case RU:
-                loader = new FXMLLoader(TrackSelectorController.class.getResource("TrackSelector_RU.fxml"));
+                loader = new FXMLLoader(TracklineSelectorController.class.getResource("TracklineSelector_RU.fxml"));
                 break;
             default:
-                loader = new FXMLLoader(TrackSelectorController.class.getResource("TrackSelector.fxml"));
+                loader = new FXMLLoader(TracklineSelectorController.class.getResource("TracklineSelector.fxml"));
         }
         Stage trackSelector = new Stage();
-        trackSelector.setTitle("Track Selector");
+        trackSelector.setTitle("Trackline Selector");
         trackSelector.setScene(new Scene(loader.load(), 600, 300));
-        TrackSelectorController controller = loader.getController();
+        TracklineSelectorController controller = loader.getController();
         controller.setPrimaryStage(trackSelector);
         trackSelector.setOnCloseRequest(event -> {
             primaryStage.show();

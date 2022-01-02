@@ -2,8 +2,7 @@ package NATrain.UI.mosaicRedactor;
 
 import NATrain.model.Model;
 import NATrain.quads.ArrivalSignalQuad;
-import NATrain.routes.Track;
-import NATrain.routes.TrackBlockSection;
+import NATrain.routes.Trackline;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.utils.QuadFactory;
@@ -16,8 +15,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.util.stream.Collectors;
-
 public class ArrivalSignalQuadConfiguratorFxController {
 
     @FXML
@@ -27,7 +24,7 @@ public class ArrivalSignalQuadConfiguratorFxController {
     @FXML
     private ChoiceBox<TrackSection> blockSectionChoiceBox;
     @FXML
-    private ChoiceBox<Track> trackChoiceBox;
+    private ChoiceBox<Trackline> trackChoiceBox;
 
     @FXML
     private Pane quadViewPane;
@@ -52,8 +49,8 @@ public class ArrivalSignalQuadConfiguratorFxController {
         eventHandler = quadView.getOnMouseClicked();
         quadView.setOnMouseClicked(null);
 
-        trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracks()));
-        trackChoiceBox.getItems().add(Track.EMPTY_TRACK);
+        trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracklines()));
+        trackChoiceBox.getItems().add(Trackline.EMPTY_TRACKLINE);
         trackChoiceBox.getSelectionModel().select(quadForConfig.getTrack());
         blockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
         trackChoiceBox.setOnAction(event -> {

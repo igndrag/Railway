@@ -62,7 +62,7 @@ public class QuadConfiguratorFxController {
         eventHandler = quadView.getOnMouseClicked();
         quadView.setOnMouseClicked(null);
 
-        // *** first track choice box init
+        // *** first trackline choice box init
         if (quadForConfig instanceof FirstTrackConfigurable) {
             FirstTrackConfigurable firstTrackConfigurable = (FirstTrackConfigurable) quadForConfig;
             firstTrackSectionChoiceBox.setValue(firstTrackConfigurable.getFirstAssociatedTrack());
@@ -78,7 +78,7 @@ public class QuadConfiguratorFxController {
             firstTrackSectionChoiceBox.setDisable(true);
         }
 
-        // *** second track choice box init
+        // *** second trackline choice box init
         if (quadForConfig instanceof SecondTrackConfigurable) {
             SecondTrackConfigurable secondTrackConfigurable = (SecondTrackConfigurable) quadForConfig;
             secondTrackSectionChoiceBox.setValue(secondTrackConfigurable.getSecondAssociatedTrack());
@@ -129,7 +129,7 @@ public class QuadConfiguratorFxController {
             showDescriptionCheckBox.setDisable(true);
         }
 
-        ///*** show track borders
+        ///*** show trackline borders
         if (configurable.hasBorder()) {
             trackSectionBorderCheckBox.setSelected(configurable.isBorderShown());
             trackSectionBorderCheckBox.setOnMouseClicked(event ->

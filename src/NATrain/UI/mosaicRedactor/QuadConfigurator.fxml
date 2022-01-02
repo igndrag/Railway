@@ -16,8 +16,8 @@
       <CheckBox fx:id="showDescriptionCheckBox" layoutX="22.0" layoutY="214.0" mnemonicParsing="false" text="Show description" />
       <CheckBox fx:id="trackSectionBorderCheckBox" layoutX="22.0" layoutY="245.0" mnemonicParsing="false" text="Track section border" />
       <ChoiceBox fx:id="firstTrackSectionChoiceBox" layoutX="220.0" layoutY="40.0" prefWidth="150.0" />
-      <Label layoutX="225.0" layoutY="20.0" text="Associated track section 1" />
-      <Label layoutX="225.0" layoutY="78.0" text="Associated track section 2" />
+      <Label layoutX="225.0" layoutY="20.0" text="Associated trackline section 1" />
+      <Label layoutX="225.0" layoutY="78.0" text="Associated trackline section 2" />
       <ChoiceBox fx:id="secondTrackSectionChoiceBox" layoutX="220.0" layoutY="100.0" prefWidth="150.0" />
       <Label layoutX="225.0" layoutY="136.0" text="Associated signal" />
       <ChoiceBox fx:id="signalChoiceBox" layoutX="220.0" layoutY="158.0" prefWidth="150.0" />

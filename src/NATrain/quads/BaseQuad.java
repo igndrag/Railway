@@ -1,7 +1,7 @@
 package NATrain.quads;
 
 import NATrain.quads.configurableInterfaces.Configurable;
-import NATrain.routes.Track;
+import NATrain.routes.Trackline;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.switches.Switch;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public abstract class BaseQuad extends AbstractQuad implements Configurable {
 
-    protected Track track = Track.EMPTY_TRACK;
+    protected Trackline trackline = Trackline.EMPTY_TRACKLINE;
     protected TrackSection firstAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
     protected TrackSection secondAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
     protected Switch associatedSwitch = Switch.EMPTY_SWITCH;
@@ -25,12 +25,12 @@ public abstract class BaseQuad extends AbstractQuad implements Configurable {
         super(x, y);
     }
 
-    public Track getTrack() {
-        return track;
+    public Trackline getTrack() {
+        return trackline;
     }
 
-    public void setTrack(Track track) {
-        this.track = track;
+    public void setTrack(Trackline trackline) {
+        this.trackline = trackline;
     }
 
     public Text getDescriptionLabel() {

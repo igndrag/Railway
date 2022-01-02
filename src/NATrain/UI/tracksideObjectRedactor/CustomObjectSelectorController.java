@@ -2,6 +2,7 @@ package NATrain.UI.tracksideObjectRedactor;
 
 import NATrain.trackSideObjects.customObjects.CustomObjectType;
 import NATrain.trackSideObjects.customObjects.Gate;
+import NATrain.trackSideObjects.customObjects.PolarityChanger;
 import NATrain.trackSideObjects.customObjects.Servo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -24,6 +25,8 @@ public class CustomObjectSelectorController {
     @FXML
     private ToggleButton sectionPolarityChangerToggleButton;
     @FXML
+    private ToggleButton locoPolarityChangerToggleButton;
+    @FXML
     private ToggleButton pwmSliderToggleButton;
 
     CustomObjectType objectType = CustomObjectType.SERVO;
@@ -38,6 +41,7 @@ public class CustomObjectSelectorController {
         switchPolarityChangerToggleButton.setToggleGroup(toggleGroup);
         sectionPolarityChangerToggleButton.setToggleGroup(toggleGroup);
         pwmSliderToggleButton.setToggleGroup(toggleGroup);
+        locoPolarityChangerToggleButton.setToggleGroup(toggleGroup);
         servoToggleButton.setSelected(true);
 
         servoToggleButton.setOnAction(event -> {
@@ -60,7 +64,13 @@ public class CustomObjectSelectorController {
 
         sectionPolarityChangerToggleButton.setOnAction(event -> {
             if (sectionPolarityChangerToggleButton.isSelected()) {
-                objectType =CustomObjectType.SECTION_POLARITY_CHANGER;
+                objectType = CustomObjectType.SECTION_POLARITY_CHANGER;
+            }
+        });
+
+        locoPolarityChangerToggleButton.setOnAction(event -> {
+            if (locoPolarityChangerToggleButton.isSelected()) {
+                objectType = CustomObjectType.LOCO_POLARITY_CHANGER;
             }
         });
 
@@ -91,7 +101,26 @@ public class CustomObjectSelectorController {
                     e.printStackTrace();
                 }
                 break;
-
+            case SWITCH_POLARITY_CHANGER:
+                try {
+                    parentController.toPolarityChangerRedactor(new PolarityChanger(PolarityChanger.INITIAL_POLARITY_CHANGER_NAME, CustomObjectType.SWITCH_POLARITY_CHANGER), false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case SECTION_POLARITY_CHANGER:
+                try {
+                    parentController.toPolarityChangerRedactor(new PolarityChanger(PolarityChanger.INITIAL_POLARITY_CHANGER_NAME, CustomObjectType.SECTION_POLARITY_CHANGER), false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case LOCO_POLARITY_CHANGER:
+                try {
+                    parentController.toPolarityChangerRedactor(new PolarityChanger(PolarityChanger.INITIAL_POLARITY_CHANGER_NAME, CustomObjectType.LOCO_POLARITY_CHANGER), false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
 
     }

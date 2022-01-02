@@ -1,15 +1,14 @@
-package NATrain.UI.tracks;
+package NATrain.UI.tracklines;
 
 import NATrain.UI.UIUtils;
 import NATrain.model.Model;
 import NATrain.routes.RouteDirection;
-import NATrain.routes.Track;
-import NATrain.routes.TrackBlockSection;
+import NATrain.routes.Trackline;
+import NATrain.routes.TracklineBlockSection;
 import NATrain.routes.TrackBlockingType;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalLampType;
 import NATrain.trackSideObjects.signals.SignalType;
-import NATrain.trackSideObjects.trackSections.TrackSection;
 import NATrain.сontrolModules.OutputChannel;
 import NATrain.сontrolModules.OutputChannelType;
 import javafx.collections.FXCollections;
@@ -19,7 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class TrackRedactorController {
+public class TracklineRedactorController {
 
     @FXML
     private ToggleButton oddToggleButton;
@@ -50,77 +49,77 @@ public class TrackRedactorController {
     @FXML
     private ChoiceBox<Signal> reversedDirectionArrivalSignalChoiceBox;
     @FXML
-    private TableView<TrackBlockSection> blockSectionsTableView;
+    private TableView<TracklineBlockSection> blockSectionsTableView;
     @FXML
-    private TableColumn<TrackBlockSection, String> idColumn;
+    private TableColumn<TracklineBlockSection, String> idColumn;
     @FXML
-    private TableColumn<TrackBlockSection, String> normalDirectionSignalColumn;
+    private TableColumn<TracklineBlockSection, String> normalDirectionSignalColumn;
     @FXML
-    private TableColumn<TrackBlockSection, String> reversedDirectionSignalColumn;
+    private TableColumn<TracklineBlockSection, String> reversedDirectionSignalColumn;
     @FXML
     private Button saveButton;
 
-    private Track track;
+    private Trackline trackline;
     private String initialName;
-    private TableView<Track> trackTableView;
+    private TableView<Trackline> trackTableView;
 
-    public void initialize(Track track, TableView<Track> trackTableView) {
-        this.track = track;
-        this.initialName = track.getId();
+    public void initialize(Trackline trackline, TableView<Trackline> trackTableView) {
+        this.trackline = trackline;
+        this.initialName = trackline.getId();
         this.trackTableView = trackTableView;
 
         ToggleGroup toggleGroup = new ToggleGroup();
         evenToggleButton.setToggleGroup(toggleGroup);
         oddToggleButton.setToggleGroup(toggleGroup);
-        if (track.getNormalDirection() == RouteDirection.EVEN) {
+        if (trackline.getNormalDirection() == RouteDirection.EVEN) {
             evenToggleButton.setSelected(true);
         } else {
             oddToggleButton.setSelected(true);
         }
 
-        if (track.getBlockSections().size() > 0) {
+        if (trackline.getBlockSections().size() > 0) {
             evenToggleButton.setDisable(true);
             oddToggleButton.setDisable(true);
         }
 
         evenToggleButton.setOnAction(event -> {
             if (evenToggleButton.isSelected()) {
-                track.setNormalDirection(RouteDirection.EVEN);
+                trackline.setNormalDirection(RouteDirection.EVEN);
             }
         });
 
         oddToggleButton.setOnAction(event -> {
             if (oddToggleButton.isSelected()) {
-                track.setNormalDirection(RouteDirection.ODD);
+                trackline.setNormalDirection(RouteDirection.ODD);
             }
         });
 
-        trackNameTextField.setText(track.getId());
-        bidirectionalRadioButton.setSelected(track.isBidirectional());
-        if (!track.isBidirectional()) {
+        trackNameTextField.setText(trackline.getId());
+        bidirectionalRadioButton.setSelected(trackline.isBidirectional());
+        if (!trackline.isBidirectional()) {
             reversedDirectionArrivalSignalChoiceBox.setDisable(true);
         }
         bidirectionalRadioButton.setOnAction(event -> {
             if (bidirectionalRadioButton.isSelected()) {
-                track.setBidirectional(true);
+                trackline.setBidirectional(true);
                 reversedDirectionArrivalSignalChoiceBox.setDisable(false);
             } else {
-                track.setBidirectional(false);
+                trackline.setBidirectional(false);
                 reversedDirectionArrivalSignalChoiceBox.getSelectionModel().clearSelection();
                 reversedDirectionArrivalSignalChoiceBox.setDisable(true);
             }
         });
 
-        blockingTypeChoiceBox.getSelectionModel().select(track.getTrackBlockingType());
+        blockingTypeChoiceBox.getSelectionModel().select(trackline.getTrackBlockingType());
         addButton.setOnAction(event -> {
             createBlockSections();
         });
 
         ObservableList<Signal> signals = FXCollections.observableArrayList(Model.getSignals().values());
         normalDirectionArrivalSignalChoiceBox.setItems(signals);
-        normalDirectionArrivalSignalChoiceBox.getSelectionModel().select(track.getNormalDirectionArrivalSignal());
+        normalDirectionArrivalSignalChoiceBox.getSelectionModel().select(trackline.getNormalDirectionArrivalSignal());
         reversedDirectionArrivalSignalChoiceBox.setItems(signals);
-        reversedDirectionArrivalSignalChoiceBox.getSelectionModel().select(track.getReversedDirectionArrivalSignal());
+        reversedDirectionArrivalSignalChoiceBox.getSelectionModel().select(trackline.getReversedDirectionArrivalSignal());
 
         blockingTypeChoiceBox.setItems(FXCollections.observableArrayList(TrackBlockingType.values()));
 
@@ -128,7 +127,7 @@ public class TrackRedactorController {
         normalDirectionSignalColumn.setCellValueFactory(new PropertyValueFactory<>("normalDirectionSignal"));
         reversedDirectionSignalColumn.setCellValueFactory(new PropertyValueFactory<>("reversedDirectionSignal"));
 
-        blockSectionsTableView.setItems(FXCollections.observableArrayList(track.getBlockSections()));
+        blockSectionsTableView.setItems(FXCollections.observableArrayList(trackline.getBlockSections()));
     }
 
     private void createBlockSections() {
@@ -149,7 +148,7 @@ public class TrackRedactorController {
                     blockSectionName.append(2*i -1);
                 }
                 blockSectionName.append(blockSectionSuffixTextField.getText());
-                TrackBlockSection blockSection = new TrackBlockSection(track, blockSectionName.toString());
+                TracklineBlockSection blockSection = new TracklineBlockSection(trackline, blockSectionName.toString());
                 if (i != sectionsCount) {
                     StringBuilder normalDirectionSignalName = new StringBuilder();
                     normalDirectionSignalName.append(signalPrefixTextField.getText());
@@ -200,10 +199,10 @@ public class TrackRedactorController {
                     }
                 }
                 blockSectionsTableView.getItems().add(blockSection);
-                track.getBlockSections().add(blockSection);
+                trackline.getBlockSections().add(blockSection);
              }
-            track.getBlockSections().get(track.getBlockSectionCount() - 1).setLastInNormalDirection(true);
-            track.getBlockSections().get(0).setLastInReversedDirection(true);
+            trackline.getBlockSections().get(trackline.getBlockSectionCount() - 1).setLastInNormalDirection(true);
+            trackline.getBlockSections().get(0).setLastInReversedDirection(true);
             blockSectionsTableView.refresh();
             evenToggleButton.setDisable(true);
             oddToggleButton.setDisable(true);
@@ -217,11 +216,11 @@ public class TrackRedactorController {
         if (!isTrackNameValid()) {
             return;
         }
-        track.setId(trackNameTextField.getText());
-        track.setBidirectional(bidirectionalRadioButton.isSelected());
-        track.setTrackBlockingType(blockingTypeChoiceBox.getValue());
-        track.setNormalDirectionArrivalSignal(normalDirectionArrivalSignalChoiceBox.getValue());
-        track.setReversedDirectionArrivalSignal(reversedDirectionArrivalSignalChoiceBox.getValue());
+        trackline.setId(trackNameTextField.getText());
+        trackline.setBidirectional(bidirectionalRadioButton.isSelected());
+        trackline.setTrackBlockingType(blockingTypeChoiceBox.getValue());
+        trackline.setNormalDirectionArrivalSignal(normalDirectionArrivalSignalChoiceBox.getValue());
+        trackline.setReversedDirectionArrivalSignal(reversedDirectionArrivalSignalChoiceBox.getValue());
         trackTableView.refresh();
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
@@ -229,9 +228,9 @@ public class TrackRedactorController {
 
     @FXML
     private void deleteLast() {
-        int lastSectionIndex = track.getBlockSectionCount() - 1;
+        int lastSectionIndex = trackline.getBlockSectionCount() - 1;
         if (lastSectionIndex > 0) {
-            track.getBlockSections().remove(lastSectionIndex);
+            trackline.getBlockSections().remove(lastSectionIndex);
             blockSectionsTableView.getItems().remove(lastSectionIndex);
         } else {
             evenToggleButton.setDisable(false);
@@ -241,7 +240,7 @@ public class TrackRedactorController {
 
     @FXML
     private void deleteAll() {
-        track.getBlockSections().clear();
+        trackline.getBlockSections().clear();
         blockSectionsTableView.getItems().clear();
         evenToggleButton.setDisable(false);
         oddToggleButton.setDisable(false);
@@ -249,8 +248,8 @@ public class TrackRedactorController {
 
     private boolean isTrackNameValid() {
         String newTrackName = trackNameTextField.getText();
-        if (Model.getTracks().stream().filter(tr -> tr != track).map(Track::getId).anyMatch(name -> name.equals(newTrackName))) {
-            UIUtils.showAlert(String.format("Track %s already exists.", newTrackName));
+        if (Model.getTracklines().stream().filter(tr -> tr != trackline).map(Trackline::getId).anyMatch(name -> name.equals(newTrackName))) {
+            UIUtils.showAlert(String.format("Trackline %s already exists.", newTrackName));
             return false;
         }
         return true;

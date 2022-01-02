@@ -8,7 +8,7 @@ import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.quads.custom.GateQuad;
 import NATrain.routes.Route;
-import NATrain.routes.Track;
+import NATrain.routes.Trackline;
 import NATrain.routes.TrackDirection;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.signals.Signal;
@@ -109,9 +109,9 @@ public enum ActionExecutor {
                 aSwitch.changePosition();
                 break;
             case CHANGE_TRACK_LINE_DIRECTION:
-                Track track = ((BlockingControlQuad) firstSelectedQuad).getTrack();
-                TrackDirection newDirection = track.getTrackDirection() == TrackDirection.NORMAL ? TrackDirection.REVERSED : TrackDirection.NORMAL;
-                track.setTrackDirection(newDirection);
+                Trackline trackline = ((BlockingControlQuad) firstSelectedQuad).getTrack();
+                TrackDirection newDirection = trackline.getTrackDirection() == TrackDirection.NORMAL ? TrackDirection.REVERSED : TrackDirection.NORMAL;
+                trackline.setTrackDirection(newDirection);
                 firstSelectedQuad.refresh();
                 break;
             case ALLOCATE_MOVABLE_MODEl:
@@ -163,10 +163,10 @@ public enum ActionExecutor {
         return FXCollections.observableArrayList(result);
     }
 
-    private static ObservableList<Route> findRoutsToTrackLine(Signal signal, Track track) {
+    private static ObservableList<Route> findRoutsToTrackLine(Signal signal, Trackline trackline) {
         List<Route> result = Model.getRouteTable().stream()
                 .filter(route -> route.getSignal() == signal)
-                .filter(route -> route.getDestinationTrackLine() == track)
+                .filter(route -> route.getDestinationTrackLine() == trackline)
                 .collect(Collectors.toList());
         return FXCollections.observableArrayList(result);
     }

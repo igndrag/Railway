@@ -57,11 +57,11 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
             occupationalOrder.add(route.getDestinationTrackSection());
         }
 
-        if (route.getRouteType() == RouteType.SHUNTING && occupationalOrder.getFirst() == route.getDepartureTrackSection()) { // if shunting route from usual track section
+        if (route.getRouteType() == RouteType.SHUNTING && occupationalOrder.getFirst() == route.getDepartureTrackSection()) { // if shunting route from usual trackline section
             occupationalOrder.pollFirst();                                                                                      // we don't need to interlock this section in occupational order
         }
 
-        if (route.getRouteType() == RouteType.SHUNTING && occupationalOrder.getLast() == route.getDestinationTrackSection()) { // if shunting route to usual track section
+        if (route.getRouteType() == RouteType.SHUNTING && occupationalOrder.getLast() == route.getDestinationTrackSection()) { // if shunting route to usual trackline section
             occupationalOrder.pollLast();                                                                                      // we don't need to interlock this section in occupational order
         }
         this.departureSection = route.getDepartureTrackSection();
@@ -143,15 +143,15 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
             strongLock = true;
         for (TrackSection trackSection : occupationalOrder) {
             if (trackSection.getVacancyState() == OCCUPIED || trackSection.isInterlocked()) {
-                workPlaceController.log("   Track Sections check failed. " + trackSection.getId() + " is occupied or interlocked in route.");
+                workPlaceController.log("   Trackline Sections check failed. " + trackSection.getId() + " is occupied or interlocked in route.");
                 return false;
             }
         }
         if (route.getRouteType() != RouteType.SHUNTING && destinationSection.getVacancyState() == OCCUPIED) {
-            workPlaceController.log("   Track Sections check failed. Last section isn't free in not shunting route.");
+            workPlaceController.log("   Trackline Sections check failed. Last section isn't free in not shunting route.");
             return false;
         }
-        workPlaceController.log("   Track Sections checked.");
+        workPlaceController.log("   Trackline Sections checked.");
         return true;
     }
 

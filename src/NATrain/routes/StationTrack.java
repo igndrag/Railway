@@ -5,7 +5,7 @@ import NATrain.trackSideObjects.trackSections.TrackSection;
 
 public class StationTrack extends TrackSection {
 
-    public static final String INITIAL_STATION_TRACK_NAME = "New Station Track";
+    public static final String INITIAL_STATION_TRACK_NAME = "New Station Trackline";
 
 
 

@@ -1,6 +1,6 @@
 package NATrain.quads;
 
-import NATrain.routes.Track;
+import NATrain.routes.Trackline;
 import NATrain.routes.TrackDirection;
 import NATrain.trackSideObjects.ControlAction;
 import javafx.scene.shape.Shape;
@@ -22,6 +22,7 @@ public abstract class BlockingControlQuad extends BlockingBaseQuad {
     public BlockingControlQuad(int x, int y) {
         super(x, y);
         paintView();
+        globalQuadType = GlobalQuadType.BLOCKING_TRACK_QUAD;
     }
 
     @Override
@@ -37,15 +38,15 @@ public abstract class BlockingControlQuad extends BlockingBaseQuad {
     @Override
     public void refresh() {
         if (blockSectionName != null) {
-            if (track != Track.EMPTY_TRACK) {
-                if (track.getTrackDirection() == TrackDirection.NORMAL) {
+            if (trackline != Trackline.EMPTY_TRACKLINE) {
+                if (trackline.getTrackDirection() == TrackDirection.NORMAL) {
                     firstRawElement.setFill(TRACK_NORMAL_DIRECTION_RAW_COLOR);
                     secondRawElement.setFill(TRACK_DIRECTION_RAW_BACKGROUND_COLOR);
                 } else {
                     firstRawElement.setFill(TRACK_DIRECTION_RAW_BACKGROUND_COLOR);
                     secondRawElement.setFill(TRACK_REVERSED_DIRECTION_RAW_COLOR);
                 }
-                blockSectionName.setText(track.getId());
+                blockSectionName.setText(trackline.getId());
             } else {
                 firstRawElement.setFill(TRACK_DIRECTION_RAW_BACKGROUND_COLOR);
                 secondRawElement.setFill(TRACK_DIRECTION_RAW_BACKGROUND_COLOR);

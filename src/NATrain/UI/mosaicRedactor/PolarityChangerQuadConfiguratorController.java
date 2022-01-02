@@ -1,6 +1,5 @@
 package NATrain.UI.mosaicRedactor;
 
-import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.quads.custom.PolarityChangerQuad;
 import NATrain.trackSideObjects.customObjects.PolarityChanger;
@@ -32,7 +31,7 @@ public class PolarityChangerQuadConfiguratorController {
         if (quad.getFirstAssociatedTrack() == null || quad.getFirstAssociatedTrack() == TrackSection.EMPTY_TRACK_SECTION) {
            firstTrackSectionChoiceBox.setValue(TrackSection.EMPTY_TRACK_SECTION);
         } else {
-            firstTrackSectionChoiceBox.setValue(firstTrackSectionChoiceBox.getValue());
+            firstTrackSectionChoiceBox.setValue(quad.getFirstAssociatedTrack());
         }
 
         ObservableList<PolarityChanger> polarityChangers = FXCollections.observableArrayList(Model.getPolarityChangers().values());

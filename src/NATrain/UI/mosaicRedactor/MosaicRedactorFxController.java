@@ -4,8 +4,10 @@ import NATrain.UI.AppConfigController;
 import NATrain.UI.NavigatorFxController;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.quads.*;
+import NATrain.quads.custom.GateQuad;
 import NATrain.quads.custom.PolarityChangerQuad;
 import NATrain.quads.custom.ServoQuad;
+import NATrain.trackSideObjects.customObjects.Gate;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -63,7 +65,7 @@ public class MosaicRedactorFxController {
     private TextField columnsNumber;
 
     @FXML
-    private TextField rawsNumber;
+    private TextField rowsNumber;
 
     @FXML
     private TableView<BaseQuad> propertyTable;
@@ -182,7 +184,7 @@ public class MosaicRedactorFxController {
                         case ("BSQ"):
                             BSQVbox.getChildren().add(button);
                             break;
-                        case ("BCQ") :
+                        case ("BCQ"):
                             BCQVbox.getChildren().add(button);
                             break;
                     }
@@ -225,7 +227,7 @@ public class MosaicRedactorFxController {
 
         gridLinesCheckBox.setSelected(NavigatorFxController.showGridLines);
 
-        log("Track redactor initialized.");
+        log("Trackline redactor initialized.");
         log("Choice quad from left panel.");
 
     }
@@ -309,97 +311,123 @@ public class MosaicRedactorFxController {
         if (expectedQuad.isEmpty())
             return;
         FXMLLoader loader;
-        if (expectedQuad instanceof PolarityChangerQuad) {
-
-            switch (AppConfigController.getLanguage()) {
-                // case RU:
-                //    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
-                //    break;
-                default:
-                    loader = new FXMLLoader(PolarityChangerQuadConfiguratorController.class.getResource("PolarityChangerQuadConfigurator.fxml"));
-            }
-            PolarityChangerQuad polarityChangerQuad = (PolarityChangerQuad) expectedQuad;
-            Stage polarityChangerQuadConfigurator = new Stage();
-            polarityChangerQuadConfigurator.setTitle("Polarity Changer Configurator");
-            polarityChangerQuadConfigurator.setScene(new Scene(loader.load(), 250, 200));
-            polarityChangerQuadConfigurator.setResizable(false);
-            PolarityChangerQuadConfiguratorController controller = loader.getController();
-            controller.init(polarityChangerQuad.getPolarityChanger(), polarityChangerQuad);
-            polarityChangerQuadConfigurator.initModality(Modality.WINDOW_MODAL);
-            polarityChangerQuadConfigurator.initOwner(primaryStage);
-            polarityChangerQuadConfigurator.show();
-        } else
-        if (expectedQuad instanceof ServoQuad) {
-            switch (AppConfigController.getLanguage()) {
-               // case RU:
-                //    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
-                //    break;
-                default:
-                    loader = new FXMLLoader(ServoQuadConfiguratorController.class.getResource("ServoQuadConfigurator.fxml"));
-            }
-            ServoQuad servoQuad = (ServoQuad) expectedQuad;
-            Stage servoQuadConfigurator = new Stage();
-            servoQuadConfigurator.setTitle("Servo Quad Configurator");
-            servoQuadConfigurator.setScene(new Scene(loader.load(), 300, 130));
-            servoQuadConfigurator.setResizable(false);
-            ServoQuadConfiguratorController controller = loader.getController();
-            controller.init(servoQuad.getServo(), servoQuad);
-            servoQuadConfigurator.initModality(Modality.WINDOW_MODAL);
-            servoQuadConfigurator.initOwner(primaryStage);
-            servoQuadConfigurator.show();
-            servoQuadConfigurator.setOnCloseRequest((event) -> MQTTConnectionService.disconnect());
-
-        } else if (expectedQuad instanceof BlockingBaseQuad) {
-            switch (AppConfigController.getLanguage()) {
-                case RU:
-                    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
-                    break;
-                default:
-                    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator.fxml"));
-            }
-            Stage trackQuadConfigurator = new Stage();
-            trackQuadConfigurator.setTitle("Track Quad Configurator");
-            trackQuadConfigurator.setScene(new Scene(loader.load(), 400, 240));
-            trackQuadConfigurator.setResizable(false);
-            TrackQuadConfiguratorFxController controller = loader.getController();
-            controller.initialize(x, y);
-            trackQuadConfigurator.initModality(Modality.WINDOW_MODAL);
-            trackQuadConfigurator.initOwner(primaryStage);
-            trackQuadConfigurator.show();
-        } else if (expectedQuad instanceof ArrivalSignalQuad) {
-            switch (AppConfigController.getLanguage()) {
-                case RU:
-                    loader = new FXMLLoader(ArrivalSignalQuadConfiguratorFxController.class.getResource("ArrivalSignalQuadConfigurator_RU.fxml"));
-                    break;
-                default:
-                    loader = new FXMLLoader(ArrivalSignalQuadConfiguratorFxController.class.getResource("ArrivalSignalQuadConfigurator.fxml"));
-            }
-            Stage quadConfigurator = new Stage();
-            quadConfigurator.setTitle("Quad Configurator");
-            quadConfigurator.setScene(new Scene(loader.load(), 400, 240));
-            quadConfigurator.setResizable(false);
-            ArrivalSignalQuadConfiguratorFxController controller = loader.getController();
-            controller.initialize(x, y);
-            quadConfigurator.initModality(Modality.WINDOW_MODAL);
-            quadConfigurator.initOwner(primaryStage);
-            quadConfigurator.show();
-        } else {
-            switch (AppConfigController.getLanguage()) {
-                case RU:
-                    loader = new FXMLLoader(QuadConfiguratorFxController.class.getResource("QuadConfigurator_RU.fxml"));
-                    break;
-                default:
-                    loader = new FXMLLoader(QuadConfiguratorFxController.class.getResource("QuadConfigurator.fxml"));
-            }
-            Stage quadConfigurator = new Stage();
-            quadConfigurator.setTitle("Quad Configurator");
-            quadConfigurator.setScene(new Scene(loader.load(), 400, 300));
-            quadConfigurator.setResizable(false);
-            QuadConfiguratorFxController controller = loader.getController();
-            controller.initialize(x, y);
-            quadConfigurator.initModality(Modality.WINDOW_MODAL);
-            quadConfigurator.initOwner(primaryStage);
-            quadConfigurator.show();
+        switch (expectedQuad.getGlobalQuadType()) {
+            case GATE_QUAD:
+                switch (AppConfigController.getLanguage()) {
+                    // case RU:
+                    //    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
+                    //    break;
+                    default:
+                        loader = new FXMLLoader(GateQuadConfiguratorController.class.getResource("GateQuadConfigurator.fxml"));
+                }
+                GateQuad gateQuad = (GateQuad) expectedQuad;
+                Stage gateQuadConfigurator = new Stage();
+                gateQuadConfigurator.setTitle("Gate Quad Configurator");
+                gateQuadConfigurator.setScene(new Scene(loader.load(), 250, 200));
+                gateQuadConfigurator.setResizable(false);
+                GateQuadConfiguratorController gateQuadConfiguratorController = loader.getController();
+                gateQuadConfiguratorController.init(gateQuad.getGate(), gateQuad);
+                gateQuadConfigurator.initModality(Modality.WINDOW_MODAL);
+                gateQuadConfigurator.initOwner(primaryStage);
+                gateQuadConfigurator.show();
+                break;
+            case POLARITY_CHANGER_QUAD:
+                switch (AppConfigController.getLanguage()) {
+                    // case RU:
+                    //    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
+                    //    break;
+                    default:
+                        loader = new FXMLLoader(PolarityChangerQuadConfiguratorController.class.getResource("PolarityChangerQuadConfigurator.fxml"));
+                }
+                PolarityChangerQuad polarityChangerQuad = (PolarityChangerQuad) expectedQuad;
+                Stage polarityChangerQuadConfigurator = new Stage();
+                polarityChangerQuadConfigurator.setTitle("Polarity Changer Configurator");
+                polarityChangerQuadConfigurator.setScene(new Scene(loader.load(), 250, 200));
+                polarityChangerQuadConfigurator.setResizable(false);
+                PolarityChangerQuadConfiguratorController controller = loader.getController();
+                controller.init(polarityChangerQuad.getPolarityChanger(), polarityChangerQuad);
+                polarityChangerQuadConfigurator.initModality(Modality.WINDOW_MODAL);
+                polarityChangerQuadConfigurator.initOwner(primaryStage);
+                polarityChangerQuadConfigurator.show();
+                break;
+            case SERVO_QUAD:
+                switch (AppConfigController.getLanguage()) {
+                    // case RU:
+                    //    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
+                    //    break;
+                    default:
+                        loader = new FXMLLoader(ServoQuadConfiguratorController.class.getResource("ServoQuadConfigurator.fxml"));
+                }
+                ServoQuad servoQuad = (ServoQuad) expectedQuad;
+                Stage servoQuadConfigurator = new Stage();
+                servoQuadConfigurator.setTitle("Servo Quad Configurator");
+                servoQuadConfigurator.setScene(new Scene(loader.load(), 300, 130));
+                servoQuadConfigurator.setResizable(false);
+                ServoQuadConfiguratorController servoQuadConfiguratorController = loader.getController();
+                servoQuadConfiguratorController.init(servoQuad.getServo(), servoQuad);
+                servoQuadConfigurator.initModality(Modality.WINDOW_MODAL);
+                servoQuadConfigurator.initOwner(primaryStage);
+                servoQuadConfigurator.show();
+                servoQuadConfigurator.setOnCloseRequest((event) -> MQTTConnectionService.disconnect());
+                break;
+            case BLOCKING_TRACK_QUAD:
+            case BLOCKING_SIGNAL_QUAD:
+                switch (AppConfigController.getLanguage()) {
+                    case RU:
+                        loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
+                        break;
+                    default:
+                        loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator.fxml"));
+                }
+                Stage trackQuadConfigurator = new Stage();
+                trackQuadConfigurator.setTitle("Trackline Quad Configurator");
+                trackQuadConfigurator.setScene(new Scene(loader.load(), 400, 240));
+                trackQuadConfigurator.setResizable(false);
+                TrackQuadConfiguratorFxController trackQuadConfiguratorFxController = loader.getController();
+                trackQuadConfiguratorFxController.initialize(x, y);
+                trackQuadConfigurator.initModality(Modality.WINDOW_MODAL);
+                trackQuadConfigurator.initOwner(primaryStage);
+                trackQuadConfigurator.show();
+                break;
+            case ARRIVAL_SIGNAL_QUAD:
+                switch (AppConfigController.getLanguage()) {
+                    case RU:
+                        loader = new FXMLLoader(ArrivalSignalQuadConfiguratorFxController.class.getResource("ArrivalSignalQuadConfigurator_RU.fxml"));
+                        break;
+                    default:
+                        loader = new FXMLLoader(ArrivalSignalQuadConfiguratorFxController.class.getResource("ArrivalSignalQuadConfigurator.fxml"));
+                }
+                Stage arrivalSignalQuadConfigurator = new Stage();
+                arrivalSignalQuadConfigurator.setTitle("Arrival Signal Quad Configurator");
+                arrivalSignalQuadConfigurator.setScene(new Scene(loader.load(), 400, 240));
+                arrivalSignalQuadConfigurator.setResizable(false);
+                ArrivalSignalQuadConfiguratorFxController arrivalSignalQuadConfiguratorFxController = loader.getController();
+                arrivalSignalQuadConfiguratorFxController.initialize(x, y);
+                arrivalSignalQuadConfigurator.initModality(Modality.WINDOW_MODAL);
+                arrivalSignalQuadConfigurator.initOwner(primaryStage);
+                arrivalSignalQuadConfigurator.show();
+                break;
+            case SIMPLE_TRACK_QUAD:
+            case DOUBLE_TRACK_QUAD:
+            case SWITCH_QUAD:
+            case SIGNAL_QUAD:
+                switch (AppConfigController.getLanguage()) {
+                    case RU:
+                        loader = new FXMLLoader(QuadConfiguratorFxController.class.getResource("QuadConfigurator_RU.fxml"));
+                        break;
+                    default:
+                        loader = new FXMLLoader(QuadConfiguratorFxController.class.getResource("QuadConfigurator.fxml"));
+                }
+                Stage quadConfigurator = new Stage();
+                quadConfigurator.setTitle("Quad Configurator");
+                quadConfigurator.setScene(new Scene(loader.load(), 400, 300));
+                quadConfigurator.setResizable(false);
+                QuadConfiguratorFxController quadConfiguratorFxController = loader.getController();
+                quadConfiguratorFxController.initialize(x, y);
+                quadConfigurator.initModality(Modality.WINDOW_MODAL);
+                quadConfigurator.initOwner(primaryStage);
+                quadConfigurator.show();
+                break;
         }
     }
 

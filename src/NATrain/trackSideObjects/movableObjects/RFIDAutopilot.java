@@ -6,6 +6,7 @@ import NATrain.UI.workPlace.executors.ActionExecutor;
 import NATrain.UI.workPlace.executors.RouteExecutor;
 import NATrain.UI.workPlace.executors.RouteStatus;
 import NATrain.routes.*;
+import NATrain.trackSideObjects.RFIDTag;
 import NATrain.trackSideObjects.signals.GlobalSignalState;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
@@ -13,6 +14,8 @@ import NATrain.trackSideObjects.trackSections.TrackSection;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RFIDAutopilot implements Autopilot {
 
@@ -96,7 +99,7 @@ public class RFIDAutopilot implements Autopilot {
             boolean passed = occupiedSection == locomotive.getRearTagLocation() && nextSignal != route.getSignal(); //avoid pass checking in start section
             //SECTION PASSED LOGIC
             if (passed) { //SECTION PASSED!!! GOOD TRICK ALWAYS WORKS))
-                if ((occupiedSection instanceof TrackBlockSection &&
+                if ((occupiedSection instanceof TracklineBlockSection &&
                         occupiedSection == route.getDestinationTrackLine().getLastSectionInActualDirection())
                         || occupiedSection == route.getDestinationTrackSection()) {
                     if (nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) {
@@ -116,11 +119,11 @@ public class RFIDAutopilot implements Autopilot {
                     nextSignal.removePropertyChangeListener(nextSignalListener);
                     switch (route.getRouteType()) {
                         case DEPARTURE:
-                            Track track = route.getDestinationTrackLine();
+                            Trackline trackline = route.getDestinationTrackLine();
                             if (route.getRouteDirection() == RouteDirection.EVEN) {
-                                nextSignal = track.getFirstSignalInEvenDirection();
+                                nextSignal = trackline.getFirstSignalInEvenDirection();
                             } else {
-                                nextSignal = track.getFirstSignalInOddDirection();
+                                nextSignal = trackline.getFirstSignalInOddDirection();
                             }
                             break;
                         case ARRIVAL:
@@ -131,30 +134,30 @@ public class RFIDAutopilot implements Autopilot {
                             }
                             break;
                     }
-                } else if (occupiedSection instanceof TrackBlockSection) {
+                } else if (occupiedSection instanceof TracklineBlockSection) {
                     signalChanged = true;
                     status = AutopilotStatus.MOVING_ON_TRACKLINE;
                     nextSignal.removePropertyChangeListener(nextSignalListener);
-                    TrackBlockSection blockSection = (TrackBlockSection) occupiedSection;
-                    Track track = blockSection.getTrack();
-                    if (blockSection != track.getFirstSectionInActualDirection()) {
-                        if (blockSection != track.getLastSectionInActualDirection()) {
-                            TrackBlockSection nextBlockSection;
-                            if (track.getTrackDirection() == TrackDirection.NORMAL) {
-                                nextBlockSection = track.getBlockSections().get(track.getBlockSections().indexOf(occupiedSection) + 1); //TODO add index in block section class!!
+                    TracklineBlockSection blockSection = (TracklineBlockSection) occupiedSection;
+                    Trackline trackline = blockSection.getTrack();
+                    if (blockSection != trackline.getFirstSectionInActualDirection()) {
+                        if (blockSection != trackline.getLastSectionInActualDirection()) {
+                            TracklineBlockSection nextBlockSection;
+                            if (trackline.getTrackDirection() == TrackDirection.NORMAL) {
+                                nextBlockSection = trackline.getBlockSections().get(trackline.getBlockSections().indexOf(occupiedSection) + 1); //TODO add index in block section class!!
                             } else {
-                                nextBlockSection = track.getBlockSections().get(track.getBlockSections().indexOf(occupiedSection) - 1);
+                                nextBlockSection = trackline.getBlockSections().get(trackline.getBlockSections().indexOf(occupiedSection) - 1);
                             }
                             if (blockSection.getTrack().getTrackDirection() == TrackDirection.NORMAL) {
                                 nextSignal = nextBlockSection.getNormalDirectionSignal();
                             } else {
                                 nextSignal = nextBlockSection.getReversedDirectionSignal();
                             }
-                        } else { //last in track!!!!
-                            if (track.getTrackDirection() == TrackDirection.NORMAL) {
-                                nextSignal = track.getNormalDirectionArrivalSignal();
+                        } else { //last in trackline!!!!
+                            if (trackline.getTrackDirection() == TrackDirection.NORMAL) {
+                                nextSignal = trackline.getNormalDirectionArrivalSignal();
                             } else {
-                                nextSignal = track.getReversedDirectionArrivalSignal();
+                                nextSignal = trackline.getReversedDirectionArrivalSignal();
                             }
                         }
                     }

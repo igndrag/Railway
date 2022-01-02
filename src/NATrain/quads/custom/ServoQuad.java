@@ -1,6 +1,7 @@
 package NATrain.quads.custom;
 
 import NATrain.quads.AbstractQuad;
+import NATrain.quads.GlobalQuadType;
 import NATrain.quads.QuadType;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.customObjects.Servo;
@@ -12,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ServoQuad extends AbstractQuad {
-    private Servo associatedServo;
+    private Servo servo;
     private Text descriptionLabel;
     private Text positionOneText;
     private Text positionTwoText;
@@ -22,16 +23,17 @@ public class ServoQuad extends AbstractQuad {
     public ServoQuad (int x, int y) {
         super(x, y);
         paintView();
+        globalQuadType = GlobalQuadType.SERVO_QUAD;
         quadType = QuadType.SERVO_QUAD;
     }
 
 
     public Servo getServo() {
-        return associatedServo;
+        return servo;
     }
 
     public void setServo(Servo associatedServo) {
-        this.associatedServo = associatedServo;
+        this.servo = associatedServo;
     }
 
     @Override
@@ -108,4 +110,14 @@ public class ServoQuad extends AbstractQuad {
     public void updateSwitchView() {
         //do nothing
     }
+
+    @Override
+    public Object getCustomObject() {
+        return servo;
+    }
+
+    @Override
+    public void setCustomObject(Object object) {
+        this.servo = (Servo) object;
+     }
 }

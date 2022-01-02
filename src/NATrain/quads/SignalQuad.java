@@ -21,6 +21,13 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
         availableActions.add(ControlAction.SET_ROUT_TO);
     }
 
+
+    public SignalQuad(int x, int y) {
+        super(x, y);
+        globalQuadType = GlobalQuadType.SIGNAL_QUAD;
+        paintView();
+    }
+
     @Override
     public Signal getAssociatedSignal() {
         return associatedSignal;
@@ -31,10 +38,6 @@ public abstract class SignalQuad extends DoubleTrackQuad implements SignalConfig
         this.associatedSignal = associatedSignal;
     }
 
-    public SignalQuad(int x, int y) {
-        super(x, y);
-        paintView();
-    }
 
     @Override
     public void refresh() {

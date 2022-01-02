@@ -1,9 +1,8 @@
-package NATrain.UI.tracks;
+package NATrain.UI.tracklines;
 
 import NATrain.UI.AppConfigController;
-import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.model.Model;
-import NATrain.routes.Track;
+import NATrain.routes.Trackline;
 import NATrain.routes.TrackBlockingType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,21 +19,21 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Comparator;
 
-public class TrackSelectorController {
+public class TracklineSelectorController {
 
     private Stage primaryStage;
 
-    ObservableList<Track> tracks;
+    ObservableList<Trackline> tracklines;
     @FXML
-    private TableView <Track> tracksTableView;
+    private TableView <Trackline> tracksTableView;
     @FXML
-    private TableColumn <Track, String> idColumn;
+    private TableColumn <Trackline, String> idColumn;
     @FXML
-    private TableColumn <Track, TrackBlockingType> blockingTypeColumn;
+    private TableColumn <Trackline, TrackBlockingType> blockingTypeColumn;
     @FXML
-    private TableColumn <Track, Integer> blockSectionCountColumn;
+    private TableColumn <Trackline, Integer> blockSectionCountColumn;
     @FXML
-    private TableColumn <Track, Boolean> bidirectionalColumn;
+    private TableColumn <Trackline, Boolean> bidirectionalColumn;
     @FXML
     private Button newButton;
     @FXML
@@ -55,15 +54,15 @@ public class TrackSelectorController {
         editButton.setDisable(true);
         deleteButton.setDisable(true);
 
-        tracks = FXCollections.observableArrayList(Model.getTracks());
-        tracks.sort(Comparator.comparing(Track::getId));
-        tracksTableView.setItems(tracks);
+        tracklines = FXCollections.observableArrayList(Model.getTracklines());
+        tracklines.sort(Comparator.comparing(Trackline::getId));
+        tracksTableView.setItems(tracklines);
 
         newButton.setOnMouseClicked(event -> {
             try {
-                Track newTrack = new Track("New Track");
-                addTrack(newTrack);
-                toTrackRedactor(newTrack);
+                Trackline newTrackline = new Trackline("New Trackline");
+                addTrack(newTrackline);
+                toTrackRedactor(newTrackline);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -71,7 +70,7 @@ public class TrackSelectorController {
 
         deleteButton.setOnAction(event -> {
             deleteTrack(tracksTableView.getSelectionModel().getSelectedItem());
-            if (tracks.size() == 0) {
+            if (tracklines.size() == 0) {
                 editButton.setDisable(true);
                 deleteButton.setDisable(true);
             }
@@ -93,21 +92,21 @@ public class TrackSelectorController {
         });
     }
 
-    private void toTrackRedactor(Track track) throws IOException {
+    private void toTrackRedactor(Trackline trackline) throws IOException {
         FXMLLoader loader;
         switch (AppConfigController.getLanguage()) {
             case RU:
-                loader = new FXMLLoader(TrackRedactorController.class.getResource("TrackRedactor_RU.fxml"));
+                loader = new FXMLLoader(TracklineRedactorController.class.getResource("TracklineRedactor_RU.fxml"));
                 break;
             default:
-                loader = new FXMLLoader(TrackRedactorController.class.getResource("TrackRedactor.fxml"));
+                loader = new FXMLLoader(TracklineRedactorController.class.getResource("TracklineRedactor.fxml"));
         }
         Stage trackRedactor = new Stage();
-        trackRedactor.setTitle("Track Redactor");
+        trackRedactor.setTitle("Trackline Redactor");
         trackRedactor.setScene(new Scene(loader.load(), 500, 480));
         trackRedactor.setResizable(false);
-        TrackRedactorController controller = loader.getController();
-        controller.initialize(track, tracksTableView);
+        TracklineRedactorController controller = loader.getController();
+        controller.initialize(trackline, tracksTableView);
         trackRedactor.initModality(Modality.WINDOW_MODAL);
         trackRedactor.initOwner(primaryStage);
         trackRedactor.show();
@@ -117,15 +116,15 @@ public class TrackSelectorController {
         });
     }
 
-    private void addTrack(Track track) {
-        Model.getTracks().add(track);
-        tracksTableView.getItems().add(track);
+    private void addTrack(Trackline trackline) {
+        Model.getTracklines().add(trackline);
+        tracksTableView.getItems().add(trackline);
         tracksTableView.refresh();
     }
 
-    private void deleteTrack(Track track) {
-        Model.getTracks().remove(track);
-        tracksTableView.getItems().remove(track);
+    private void deleteTrack(Trackline trackline) {
+        Model.getTracklines().remove(trackline);
+        tracksTableView.getItems().remove(trackline);
         tracksTableView.refresh();
     }
 

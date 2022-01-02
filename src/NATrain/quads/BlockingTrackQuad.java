@@ -1,10 +1,8 @@
 package NATrain.quads;
 
 import NATrain.quads.configurableInterfaces.BlockSectionConfigurable;
-import NATrain.routes.TrackBlockSection;
+import NATrain.routes.TracklineBlockSection;
 import NATrain.trackSideObjects.ControlAction;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
@@ -14,6 +12,7 @@ public abstract class BlockingTrackQuad extends BlockingBaseQuad implements Bloc
 
     public BlockingTrackQuad(int x, int y) {
         super(x, y);
+        globalQuadType = GlobalQuadType.BLOCKING_TRACK_QUAD;
         paintView();
     }
 
@@ -41,7 +40,7 @@ public abstract class BlockingTrackQuad extends BlockingBaseQuad implements Bloc
     @Override
     public void refresh() {
         updateFirstTrackView();
-        if (firstBlockSection != null && firstBlockSection != TrackBlockSection.EMPTY_BLOCK_SECTION) {
+        if (firstBlockSection != null && firstBlockSection != TracklineBlockSection.EMPTY_BLOCK_SECTION) {
             blockSectionName.setText(firstBlockSection.getId());
         }
     }

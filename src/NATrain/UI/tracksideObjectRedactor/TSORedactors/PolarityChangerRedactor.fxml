@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="320.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.PolarityChangerRedactorController">
+    <children>
+        <Label layoutX="25.0" layoutY="61.0" text="Loop switch" />
+        <Label layoutX="25.0" layoutY="9.0" text="ID" />
+        <Button fx:id="saveButton" layoutX="218.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Save" />
+        <TextField fx:id="textField" layoutX="23.0" layoutY="30.0" />
+      <ChoiceBox fx:id="switchChoiceBox" layoutX="22.0" layoutY="82.0" prefWidth="150.0" />
+      <Label layoutX="25.0" layoutY="165.0" text="Left section" />
+      <ChoiceBox fx:id="leftSectionChoiceBox" layoutX="22.0" layoutY="186.0" prefWidth="150.0" />
+      <Label layoutX="25.0" layoutY="215.0" text="Right section" />
+      <ChoiceBox fx:id="rightSectionChoiceBox" layoutX="22.0" layoutY="236.0" prefWidth="150.0" />
+      <CheckBox fx:id="leftSectionOnTracklineCheckBox" layoutX="187.0" layoutY="190.0" mnemonicParsing="false" text="on trackline" />
+      <ChoiceBox fx:id="tracklineChoiceBox" layoutX="22.0" layoutY="136.0" prefWidth="150.0" />
+      <CheckBox fx:id="rightSectionOnTracklineCheckBox" layoutX="187.0" layoutY="240.0" mnemonicParsing="false" text="on trackline" />
+      <Label layoutX="23.0" layoutY="114.0" text="Trackline" />
+    </children>
+</Pane>

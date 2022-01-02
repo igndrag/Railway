@@ -1,8 +1,8 @@
 package NATrain.UI.workPlace;
 
 import NATrain.model.Model;
-import NATrain.routes.Track;
-import NATrain.routes.TrackBlockSection;
+import NATrain.routes.Trackline;
+import NATrain.routes.TracklineBlockSection;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.switches.Switch;
@@ -18,9 +18,9 @@ import javafx.scene.control.ToggleGroup;
 public class ActionEmulatorController {
 
     @FXML
-    private ChoiceBox<Track> trackLineChoiceBox;
+    private ChoiceBox<Trackline> trackLineChoiceBox;
     @FXML
-    private ChoiceBox<TrackBlockSection> blockSectionChoiceBox;
+    private ChoiceBox<TracklineBlockSection> blockSectionChoiceBox;
     @FXML
     private ToggleButton occupiedBlockSectionToggleButton;
     @FXML
@@ -48,7 +48,7 @@ public class ActionEmulatorController {
         trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTrackSections().values()));
         switchChoiceBox.setItems(FXCollections.observableArrayList(Model.getSwitches().values()));
         signalChoiceBox.setItems(FXCollections.observableArrayList(Model.getSignals().values()));
-        trackLineChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracks()));
+        trackLineChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracklines()));
 
         trackChoiceBox.getItems().addAll(Model.getStationTracks().values());
 

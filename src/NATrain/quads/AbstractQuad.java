@@ -2,7 +2,7 @@ package NATrain.quads;
 import NATrain.UI.NavigatorFxController;
 import NATrain.UI.workPlace.Blinker;
 import NATrain.routes.StationTrack;
-import NATrain.routes.TrackBlockSection;
+import NATrain.routes.TracklineBlockSection;
 import NATrain.trackSideObjects.TracksideObject;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
@@ -14,7 +14,6 @@ import javafx.scene.shape.Shape;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Map;
-import java.util.Set;
 
 public abstract class AbstractQuad implements Quad, Paintable {
     public static final Color CONFIGURED_CUSTOM_OBJECT_COLOR = Color.DARKGREY;
@@ -150,7 +149,7 @@ public abstract class AbstractQuad implements Quad, Paintable {
     }
 
     protected static void refreshBlockSectionState(TrackSection associatedTrackSection, Shape blockSectionElement) {
-        if (associatedTrackSection == null || associatedTrackSection == TrackBlockSection.EMPTY_BLOCK_SECTION || associatedTrackSection == TrackSection.EMPTY_TRACK_SECTION) {
+        if (associatedTrackSection == null || associatedTrackSection == TracklineBlockSection.EMPTY_BLOCK_SECTION || associatedTrackSection == TrackSection.EMPTY_TRACK_SECTION) {
             blockSectionElement.setFill(BaseQuad.TRACK_UNDEFINED_ELEMENT_COLOR);
         } else {
             switch (associatedTrackSection.getVacancyState()) {
@@ -205,5 +204,15 @@ public abstract class AbstractQuad implements Quad, Paintable {
             }
             updateSignalView();
         }
+    }
+
+    @Override
+    public Object getCustomObject() {
+        return null;
+    }
+
+    @Override
+    public void setCustomObject(Object object) {
+        //do nothing
     }
 }

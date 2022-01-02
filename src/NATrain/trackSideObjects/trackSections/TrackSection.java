@@ -22,7 +22,7 @@ public class TrackSection extends TracksideObject implements Controllable {
         EMPTY_TRACK_SECTION.deallocationFixed = true;
     }
 
-    public static final String INITIAL_TRACK_SECTION_NAME = "New Track Section";
+    public static final String INITIAL_TRACK_SECTION_NAME = "New Trackline Section";
 
     private final ArrayList<Switch> switches = new ArrayList<>();
     private final HashSet<RFIDTag> tags = new HashSet<>();
@@ -78,7 +78,7 @@ public class TrackSection extends TracksideObject implements Controllable {
             occupationFixed = false;
             deallocationFixed = false;
         }
-        if (switches.size() > 0) {                                                          // if some switches located on track section
+        if (switches.size() > 0) {                                                          // if some switches located on trackline section
             switches.forEach(aSwitch -> aSwitch.setSwitchState(aSwitch.getSwitchState())); // set them to the same position for right view in control module
         }
     }
@@ -91,7 +91,7 @@ public class TrackSection extends TracksideObject implements Controllable {
         TrackSectionState oldState = this.vacancyState;
         this.vacancyState = vacancyState;
         propertyChangeSupport.firePropertyChange("occupationalProperty", oldState, vacancyState);
-        if (switches.size() > 0) {                                                          // if some switches located on track section
+        if (switches.size() > 0) {                                                          // if some switches located on trackline section
             switches.forEach(aSwitch -> aSwitch.setSwitchState(aSwitch.getSwitchState())); // set them to the same position for right view in control module
         }
     }

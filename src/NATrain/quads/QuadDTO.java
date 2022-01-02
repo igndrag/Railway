@@ -1,6 +1,8 @@
 package NATrain.quads;
 
-import NATrain.routes.Track;
+import NATrain.quads.configurableInterfaces.Configurable;
+import NATrain.quads.custom.ServoQuad;
+import NATrain.routes.Trackline;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.trackSections.TrackSection;
@@ -12,28 +14,31 @@ public class QuadDTO implements Serializable {
     int x;
     int y;
     private QuadType quadType;
-    private final Track track;
+    private final Trackline trackline;
     private final TrackSection firstAssociatedTrack;
     private final TrackSection secondAssociatedTrack;
     private final Switch associatedSwitch;
     private final Signal associatedSignal;
     private boolean descriptionShown = false;
-
+    private boolean borderShown = false;
+    private final Object customObject;
 
 
     private QuadDTO (BaseQuad originalQuad) {
         this.x = originalQuad.x;
         this.y = originalQuad.y;
         this.quadType = originalQuad.quadType;
+        this.customObject = originalQuad.getCustomObject();
+        this.borderShown = originalQuad.isBorderShown();
 
         if (originalQuad.descriptionLabel != null && originalQuad.descriptionLabel.isVisible()) {
             descriptionShown = true;
         }
 
-        if (originalQuad.track == Track.EMPTY_TRACK) {
-            this.track = null;
+        if (originalQuad.trackline == Trackline.EMPTY_TRACKLINE) {
+            this.trackline = null;
         } else {
-            this.track = originalQuad.track;
+            this.trackline = originalQuad.trackline;
         }
 
         if (originalQuad.firstAssociatedTrack == TrackSection.EMPTY_TRACK_SECTION)
@@ -71,10 +76,10 @@ public class QuadDTO implements Serializable {
 
     public static Quad castToQuad(QuadDTO quadDTO) {
         BaseQuad baseQuad = (BaseQuad) QuadFactory.createQuad(quadDTO.x, quadDTO.y, quadDTO.quadType);
-        if (quadDTO.track == null) {
-            baseQuad.track = Track.EMPTY_TRACK;
+        if (quadDTO.trackline == null) {
+            baseQuad.trackline = Trackline.EMPTY_TRACKLINE;
         } else {
-            baseQuad.track = quadDTO.track;
+            baseQuad.trackline = quadDTO.trackline;
         }
         if (quadDTO.firstAssociatedTrack == null)
             baseQuad.firstAssociatedTrack = TrackSection.EMPTY_TRACK_SECTION;
@@ -96,9 +101,11 @@ public class QuadDTO implements Serializable {
         else
             baseQuad.associatedSignal = quadDTO.associatedSignal;
 
-        if (!quadDTO.descriptionShown) {
-            baseQuad.showDescription(false);
-        }
+        baseQuad.showDescription(quadDTO.descriptionShown);
+
+        baseQuad.showTrackBorder(quadDTO.borderShown);
+
+        baseQuad.setCustomObject(quadDTO.customObject);
 
         return baseQuad;
     }

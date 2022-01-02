@@ -17,6 +17,7 @@ public abstract class DoubleTrackQuad extends BaseQuad implements FirstTrackConf
 
     public DoubleTrackQuad(int x, int y) {
         super(x, y);
+        globalQuadType = GlobalQuadType.DOUBLE_TRACK_QUAD;
         paintView();
     }
 

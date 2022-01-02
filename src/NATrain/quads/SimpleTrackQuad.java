@@ -30,6 +30,7 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
 
     public SimpleTrackQuad(int x, int y) {
         super(x, y);
+        globalQuadType = GlobalQuadType.SIMPLE_TRACK_QUAD;
         paintView();
     }
 
@@ -75,7 +76,11 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
 
     @Override
     public boolean isBorderShown() {
-        return borderElement.isVisible();
+        if (borderElement != null) {
+            return borderElement.isVisible();
+        } else {
+            return false;
+        }
     }
 
     @Override

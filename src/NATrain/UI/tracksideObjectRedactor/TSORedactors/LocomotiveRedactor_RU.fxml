@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="270.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.LocomotiveRedactorController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.LocomotiveRedactorController">
    <children>
-      <Button layoutX="193.0" layoutY="285.0" mnemonicParsing="false" onAction="#saveAndClose" prefWidth="60.0" text="Save" />
-      <TextField fx:id="textField" layoutX="17.0" layoutY="31.0" prefHeight="25.0" prefWidth="183.0" />
+      <Button layoutX="175.0" layoutY="282.0" mnemonicParsing="false" onAction="#saveAndClose" prefHeight="25.0" prefWidth="89.0" text="Сохранить" />
+      <TextField fx:id="textField" layoutX="17.0" layoutY="31.0" prefHeight="25.0" prefWidth="112.0" />
       <Label layoutX="17.0" layoutY="11.0" text="ID" />
       <Label layoutX="18.0" layoutY="62.0" text="Полная скорость" />
       <TextField fx:id="fullSpeedTextField" layoutX="16.0" layoutY="79.0" prefHeight="25.0" prefWidth="112.0" />
@@ -23,9 +22,10 @@
       <TextField fx:id="rearTagTextField4" layoutX="146.0" layoutY="241.0" prefHeight="25.0" prefWidth="36.0" />
       <Label layoutX="21.0" layoutY="165.0" text="Передняя метка" />
       <Label layoutX="21.0" layoutY="219.0" text="Задняя метка" />
-      <Button fx:id="frontReadButton" layoutX="193.0" layoutY="190.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Чтение" />
-      <Button fx:id="rearReadButton" layoutX="194.0" layoutY="240.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Чтение" />
       <Label layoutX="139.0" layoutY="84.0" text="0...1024" />
       <Label layoutX="139.0" layoutY="135.0" text="0...1024" />
+      <CheckBox fx:id="rfidCheckBox" layoutX="136.0" layoutY="35.0" mnemonicParsing="false" text="RFID" />
+      <Button fx:id="frontTagClearButton" layoutX="204.0" layoutY="190.0" mnemonicParsing="false" prefWidth="60.0" text="Удалить" />
+      <Button fx:id="rearTagClearButton" layoutX="204.0" layoutY="241.0" mnemonicParsing="false"  prefWidth="60.0" text="Удалить" />
    </children>
 </Pane>

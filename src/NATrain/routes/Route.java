@@ -24,9 +24,9 @@ public class Route implements Serializable {
     private TrackSection destinationTrackSection;
     private TrackBlockingType trackAutomationType;
     private Boolean withManeuver = false;
-    private TrackBlockSection TVDS1;
-    private TrackBlockSection TVDS2;
-    private Track destinationTrackLine;
+    private TracklineBlockSection TVDS1;
+    private TracklineBlockSection TVDS2;
+    private Trackline destinationTracklineLine;
     private StationTrack destinationTrack;
 
     private Sound routeReadySound;
@@ -53,12 +53,12 @@ public class Route implements Serializable {
         this.destinationTrack = destinationTrack;
     }
 
-    public Track getDestinationTrackLine() {
-        return destinationTrackLine;
+    public Trackline getDestinationTrackLine() {
+        return destinationTracklineLine;
     }
 
-    public void setDestinationTrackLine(Track destinationTrackLine) {
-        this.destinationTrackLine = destinationTrackLine;
+    public void setDestinationTrackLine(Trackline destinationTracklineLine) {
+        this.destinationTracklineLine = destinationTracklineLine;
     }
 
     public RouteDirection getRouteDirection() {
@@ -166,19 +166,19 @@ public class Route implements Serializable {
         this.withManeuver = withManeuver;
     }
 
-    public TrackBlockSection getTVDS1() {
+    public TracklineBlockSection getTVDS1() {
         return TVDS1;
     }
 
-    public void setTVDS1(TrackBlockSection TVDS1) {
+    public void setTVDS1(TracklineBlockSection TVDS1) {
         this.TVDS1 = TVDS1;
     }
 
-    public TrackBlockSection getTVDS2() {
+    public TracklineBlockSection getTVDS2() {
         return TVDS2;
     }
 
-    public void setTVDS2(TrackBlockSection TVDS2) {
+    public void setTVDS2(TracklineBlockSection TVDS2) {
         this.TVDS2 = TVDS2;
     }
 

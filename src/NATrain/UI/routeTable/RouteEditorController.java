@@ -53,7 +53,7 @@ public class RouteEditorController {
     @FXML
     private ChoiceBox<Signal> signalChoiceBox;
     @FXML
-    private ChoiceBox<Track> trackLineChoiceBox;
+    private ChoiceBox<Trackline> trackLineChoiceBox;
     @FXML
     private CheckBox maneuverCheckBox;
     @FXML
@@ -192,17 +192,17 @@ public class RouteEditorController {
             signalChoiceBox.setValue(route.getSignal());
         }
 
-        ObservableList<Track> TrackObservableList = FXCollections.observableArrayList(Model.getTracks());
-        TrackObservableList.sort(Comparator.comparing(Track::getId));
-        trackLineChoiceBox.setItems(TrackObservableList);
+        ObservableList<Trackline> tracklineObservableList = FXCollections.observableArrayList(Model.getTracklines());
+        tracklineObservableList.sort(Comparator.comparing(Trackline::getId));
+        trackLineChoiceBox.setItems(tracklineObservableList);
 
-        if (route.getDestinationTrackSection() instanceof TrackBlockSection) {
-            Track track = ((TrackBlockSection) route.getDestinationTrackSection()).getTrack();
-                trackLineChoiceBox.getSelectionModel().select(track);
+        if (route.getDestinationTrackSection() instanceof TracklineBlockSection) {
+            Trackline trackline = ((TracklineBlockSection) route.getDestinationTrackSection()).getTrack();
+                trackLineChoiceBox.getSelectionModel().select(trackline);
             }
-        if (route.getDepartureTrackSection() instanceof TrackBlockSection) {
-            Track track = ((TrackBlockSection) route.getDepartureTrackSection()).getTrack();
-                trackLineChoiceBox.getSelectionModel().select(track);
+        if (route.getDepartureTrackSection() instanceof TracklineBlockSection) {
+            Trackline trackline = ((TracklineBlockSection) route.getDepartureTrackSection()).getTrack();
+                trackLineChoiceBox.getSelectionModel().select(trackline);
         }
 
         if (route.getDestinationTrackSection() instanceof StationTrack) {
@@ -252,13 +252,13 @@ public class RouteEditorController {
             route.setSwitchStatePositions(switchStatePositionsMap);
             route.setWithManeuver(maneuverCheckBox.isSelected());
             if (!trackLineChoiceBox.getSelectionModel().isEmpty()) {
-                Track destinationTrack = trackLineChoiceBox.getValue();
+                Trackline destinationTrackline = trackLineChoiceBox.getValue();
                 if (reversedRadioButton.isSelected()) {
-                    route.setTVDS1(destinationTrack.getBlockSections().get(destinationTrack.getBlockSections().size() - 1));
-                    route.setTVDS2(destinationTrack.getBlockSections().get(destinationTrack.getBlockSections().size() - 2));
+                    route.setTVDS1(destinationTrackline.getBlockSections().get(destinationTrackline.getBlockSections().size() - 1));
+                    route.setTVDS2(destinationTrackline.getBlockSections().get(destinationTrackline.getBlockSections().size() - 2));
                 } else {
-                    route.setTVDS1(destinationTrack.getBlockSections().get(0));
-                    route.setTVDS2(destinationTrack.getBlockSections().get(1));
+                    route.setTVDS1(destinationTrackline.getBlockSections().get(0));
+                    route.setTVDS2(destinationTrackline.getBlockSections().get(1));
                 }
             }
 
@@ -278,11 +278,11 @@ public class RouteEditorController {
                     route.setDestinationTrackSection(arrivalTrackChoiceBox.getValue());
                     route.setDestinationTrack(arrivalTrackChoiceBox.getValue());
                     //occupationalOrder.add(arrivalTrackChoiceBox.getValue());
-                    Track track = trackLineChoiceBox.getValue();
-                    if (route.getRouteDirection() == track.getNormalDirection()) {
-                        route.setDepartureTrackSection(track.getBlockSections().get(track.getBlockSections().size() - 1));
+                    Trackline trackline = trackLineChoiceBox.getValue();
+                    if (route.getRouteDirection() == trackline.getNormalDirection()) {
+                        route.setDepartureTrackSection(trackline.getBlockSections().get(trackline.getBlockSections().size() - 1));
                     } else {
-                        route.setDepartureTrackSection(track.getBlockSections().get(0));
+                        route.setDepartureTrackSection(trackline.getBlockSections().get(0));
                     }
                     break;
                 case SHUNTING:
@@ -331,7 +331,7 @@ public class RouteEditorController {
 
         if (selectedTrackListView.getItems().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Please, create occupational order at least of one track sections!");
+            alert.setContentText("Please, create occupational order at least of one trackline sections!");
             alert.show();
             return false;
         }

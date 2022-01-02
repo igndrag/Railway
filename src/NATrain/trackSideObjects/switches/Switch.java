@@ -13,7 +13,7 @@ public class Switch extends TracksideObject implements Controllable {
     static final long serialVersionUID = 1L;
 
     public static final int CONTROL_IMPULSE_COMMAND_CODE = 8;
-    public static final Switch EMPTY_SWITCH = new Switch("");
+    public static final Switch EMPTY_SWITCH = new Switch("None");
     public static final String INITIAL_SWITCH_NAME = "New Switch";
 
     private SwitchState normalState = SwitchState.PLUS;

@@ -4,8 +4,8 @@ import NATrain.model.Model;
 import NATrain.quads.BlockingBaseQuad;
 import NATrain.quads.BlockingControlQuad;
 import NATrain.quads.configurableInterfaces.*;
-import NATrain.routes.Track;
-import NATrain.routes.TrackBlockSection;
+import NATrain.routes.Trackline;
+import NATrain.routes.TracklineBlockSection;
 import NATrain.utils.QuadFactory;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
@@ -20,15 +20,15 @@ import javafx.stage.Stage;
 public class TrackQuadConfiguratorFxController {
 
     @FXML
-    private ChoiceBox<TrackBlockSection> firstBlockSectionChoiceBox;
+    private ChoiceBox<TracklineBlockSection> firstBlockSectionChoiceBox;
     @FXML
-    private ChoiceBox<TrackBlockSection> secondBlockSectionChoiceBox;
+    private ChoiceBox<TracklineBlockSection> secondBlockSectionChoiceBox;
     @FXML
     private CheckBox showBlockSectionNameCheckBox;
     @FXML
     private CheckBox reverseCheckBox;
     @FXML
-    private ChoiceBox<Track> trackChoiceBox;
+    private ChoiceBox<Trackline> trackChoiceBox;
 
     @FXML
     private Pane quadViewPane;
@@ -53,10 +53,10 @@ public class TrackQuadConfiguratorFxController {
         eventHandler = quadView.getOnMouseClicked();
         quadView.setOnMouseClicked(null);
 
-        trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracks()));
+        trackChoiceBox.setItems(FXCollections.observableArrayList(Model.getTracklines()));
         trackChoiceBox.getSelectionModel().select(quadForConfig.getTrack());
 
-        if (quadForConfig.getTrack() == Track.EMPTY_TRACK) {
+        if (quadForConfig.getTrack() == Trackline.EMPTY_TRACKLINE) {
             firstBlockSectionChoiceBox.setDisable(true);
             secondBlockSectionChoiceBox.setDisable(true);
         }
@@ -66,10 +66,10 @@ public class TrackQuadConfiguratorFxController {
             firstBlockSectionChoiceBox.setDisable(true);
             secondBlockSectionChoiceBox.setDisable(true);
             trackChoiceBox.setOnAction(event -> {
-                if (trackChoiceBox.getValue() != Track.EMPTY_TRACK) {
+                if (trackChoiceBox.getValue() != Trackline.EMPTY_TRACKLINE) {
                     quadForConfig.setTrack(trackChoiceBox.getValue());
                 } else {
-                    quadForConfig.setTrack(Track.EMPTY_TRACK);
+                    quadForConfig.setTrack(Trackline.EMPTY_TRACKLINE);
                 }
                 quadForConfig.refresh();
             });
@@ -77,7 +77,7 @@ public class TrackQuadConfiguratorFxController {
 
         if (quadForConfig instanceof BlockSectionConfigurable) {
             secondBlockSectionChoiceBox.setDisable(true);
-            if (trackChoiceBox.getValue() != Track.EMPTY_TRACK) {
+            if (trackChoiceBox.getValue() != Trackline.EMPTY_TRACKLINE) {
                 quadForConfig.setTrack(trackChoiceBox.getValue());
                 firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
                 firstBlockSectionChoiceBox.setDisable(false);
@@ -86,13 +86,13 @@ public class TrackQuadConfiguratorFxController {
                     secondBlockSectionChoiceBox.setDisable(false);
                 }
             } else {
-                quadForConfig.setTrack(Track.EMPTY_TRACK);
+                quadForConfig.setTrack(Trackline.EMPTY_TRACKLINE);
                 firstBlockSectionChoiceBox.setDisable(true);
                 secondBlockSectionChoiceBox.setDisable(true);
             }
             trackChoiceBox.setOnAction(event -> {
                 quadForConfig.setTrack(trackChoiceBox.getValue());
-                if (trackChoiceBox.getValue() != Track.EMPTY_TRACK) {
+                if (trackChoiceBox.getValue() != Trackline.EMPTY_TRACKLINE) {
                     firstBlockSectionChoiceBox.setItems(FXCollections.observableArrayList(trackChoiceBox.getValue().getBlockSections()));
                     firstBlockSectionChoiceBox.setDisable(false);
                     if (quadForConfig instanceof BlockSignalConfigurable) {
@@ -118,7 +118,7 @@ public class TrackQuadConfiguratorFxController {
                 }
                 quadForConfig.refresh();
             } else {
-                quadForConfig.setFirstBlockSection(TrackBlockSection.EMPTY_BLOCK_SECTION);
+                quadForConfig.setFirstBlockSection(TracklineBlockSection.EMPTY_BLOCK_SECTION);
             }
         });
 
@@ -134,7 +134,7 @@ public class TrackQuadConfiguratorFxController {
                     selectSecondSignal();
                     quadForConfig.refresh();
                 } else {
-                    quadForConfig.setSecondBlockSection(TrackBlockSection.EMPTY_BLOCK_SECTION);
+                    quadForConfig.setSecondBlockSection(TracklineBlockSection.EMPTY_BLOCK_SECTION);
                 }
             }));
             reverseCheckBox.setSelected(quadForConfig.getReversedSignalView());

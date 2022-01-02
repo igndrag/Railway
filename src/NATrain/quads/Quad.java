@@ -20,6 +20,8 @@ public interface Quad { // that's the price of bad design((
     void updateSecondTrackView();
     void updateSignalView();
     void updateSwitchView();
+    Object getCustomObject();
+    void setCustomObject(Object object);
 
     List<ControlAction> getAvailableActions();
 

@@ -41,5 +41,4 @@ public abstract class AbstractCustomQuad extends AbstractQuad { //excluding usel
     public void updateSwitchView() {
         //do nothing
     }
-
 }
