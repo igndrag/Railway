@@ -36,6 +36,8 @@ public abstract class AbstractQuad implements Quad, Paintable {
     public static final Color TRACK_REVERSED_DIRECTION_RAW_COLOR = Color.DARKRED;
     public static Color YELLOW_BLINKER = Color.YELLOW;
     public static Color WHITE_BLINKER = Color.WHITE;
+    public static Color RED_BLINKER_1 = Color.RED;
+    public static Color RED_BLINKER_2 = SIGNAL_LAMP_BACKGROUND_COLOR;
 
     protected GlobalQuadType globalQuadType;
 
@@ -120,6 +122,14 @@ public abstract class AbstractQuad implements Quad, Paintable {
             WHITE_BLINKER = SIGNAL_LAMP_BACKGROUND_COLOR;
         } else {
             WHITE_BLINKER = Color.WHITE;
+        }
+
+        if (RED_BLINKER_1 == Color.RED) {
+            RED_BLINKER_1 = SIGNAL_LAMP_BACKGROUND_COLOR;
+            RED_BLINKER_2 = Color.RED;
+        } else {
+            RED_BLINKER_1 = Color.RED;
+            RED_BLINKER_2 = SIGNAL_LAMP_BACKGROUND_COLOR;
         }
     }
 

@@ -25,6 +25,8 @@ import java.util.regex.Pattern;
 public class SignalRedactorController extends TracksideObjectRedactorController {
 
     @FXML
+    private ToggleButton roadCrossingToggleButton;
+    @FXML
     private CheckBox yellowLampCheckBox;
     @FXML
     private CheckBox greenLampCheckBox;
@@ -67,11 +69,18 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         ToggleGroup toggleGroup = new ToggleGroup();
         trimmerToggleButton.setToggleGroup(toggleGroup);
         stationToggleButton.setToggleGroup(toggleGroup);
+        roadCrossingToggleButton.setToggleGroup(toggleGroup);
 
         stationToggleButton.setSelected(true);
 
         switch (signal.getSignalType()) {
+            case ROAD_CROSSING_SIGNAL:
+                redLampCheckBox.setDisable(true);
+                //don't put break here!
             case TRIMMER:
+                if (signal.getClosedSignalState() == SignalState.RED) {
+                    trimmerRedLampCheckBox.setSelected(true);
+                }
                 trimmerToggleButton.setSelected(true);
                 yellowLampCheckBox.setDisable(true);
                 greenLampCheckBox.setDisable(true);
@@ -130,9 +139,37 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
             greenLineCheckBox.setDisable(false);
         });
 
-        if (signal.getClosedSignalState() == SignalState.RED) {
-            trimmerRedLampCheckBox.setSelected(true);
-        }
+        roadCrossingToggleButton.setOnAction(event -> {
+            trimmerRedLampCheckBox.setDisable(true);
+            signal.getLamps().clear();
+            yellowLampCheckBox.setSelected(false);
+            yellowLampCheckBox.setDisable(true);
+            setNotActive(yellowLampElement);
+            greenLampCheckBox.setSelected(false);
+            greenLampCheckBox.setDisable(true);
+            setNotActive(greenLampElement);
+            redLampCheckBox.setSelected(false);
+            redLampCheckBox.setDisable(true);
+            setNotActive(redLampElement);
+            secondYellowLampCheckBox.setSelected(false);
+            secondYellowLampCheckBox.setDisable(true);
+            setNotActive(secondYellowLampElement);
+            secondGreenLampCheckBox.setSelected(false);
+            secondGreenLampCheckBox.setDisable(true);
+            setNotActive(secondGreenLampElement);
+            whiteLampCheckBox.setSelected(false);
+            whiteLampCheckBox.setDisable(true);
+            setNotActive(whiteLampElement);
+            greenLineCheckBox.setSelected(false);
+            greenLineCheckBox.setDisable(true);
+            setNotActive(greenLineElement);
+
+            signal.getLamps().put(SignalLampType.WHITE_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.WHITE_LAMP));
+            signal.getLamps().put(SignalLampType.CROSSING_SIGNAL_FIRST_RED_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.CROSSING_SIGNAL_FIRST_RED_LAMP));
+            signal.getLamps().put(SignalLampType.CROSSING_SIGNAL_SECOND_RED_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.CROSSING_SIGNAL_SECOND_RED_LAMP));
+        });
+
+
 
         trimmerRedLampCheckBox.setOnAction(event -> {
             if (trimmerRedLampCheckBox.isSelected()) {

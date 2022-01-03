@@ -73,11 +73,18 @@ public enum SignalState {
             UNDEFINED
     ));
 
+    public static final Set<SignalState> STANDARD_ROAD_CROSSING_SIGNAL_STATES = new HashSet<>(Arrays.asList(
+            NOT_LIGHT,
+            WHITE,
+            CROSSING_SIGNAL_CLOSED
+    ));
+
     public boolean isBlinking() {
         switch (this) {
             case BLINKED_WHITE:
             case YELLOW_AND_BLINKED_YELLOW:
             case BLINKED_YELLOW:
+            case CROSSING_SIGNAL_CLOSED:
                 return true;
             default: return false;
         }

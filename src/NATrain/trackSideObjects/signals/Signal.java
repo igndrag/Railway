@@ -71,6 +71,10 @@ public class Signal extends TracksideObject implements Controllable {
                 approvedSignals = STANDARD_TRACK_SIGNAL_STATES;
                 closedSignalState = RED;
                 break;
+            case ROAD_CROSSING_SIGNAL:
+                approvedSignals = STANDARD_ROAD_CROSSING_SIGNAL_STATES;
+                closedSignalState = CROSSING_SIGNAL_CLOSED;
+                break;
         }
     }
 
