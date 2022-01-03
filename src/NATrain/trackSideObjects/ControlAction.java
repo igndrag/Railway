@@ -17,6 +17,9 @@ public enum ControlAction {
 
     OPEN_GATE,
     CLOSE_GATE,
+
+    OPEN_CROSSING,
+    CLOSE_CROSSING,
     ;
 
     public String getDescription() {
@@ -97,6 +100,20 @@ public enum ControlAction {
                         return "Закрыть ворота";
                     case ENG:
                         return "Close gate";
+                }
+            case OPEN_CROSSING:
+                switch (AppConfigController.getLanguage()) {
+                    case RU:
+                        return "Открыть переезд";
+                    case ENG:
+                        return "Open crossing";
+                }
+            case CLOSE_CROSSING:
+                switch (AppConfigController.getLanguage()) {
+                    case RU:
+                        return "Закрыть переезд";
+                    case ENG:
+                        return "Close crossing";
                 }
             default: return "None";
         }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="370.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.RoadCrossingRedactorController">
+    <children>
+        <Label layoutX="25.0" layoutY="61.0" text="First signal" />
+        <Label layoutX="25.0" layoutY="9.0" text="ID" />
+        <Button fx:id="saveButton" layoutX="289.0" layoutY="331.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Save" />
+        <TextField fx:id="textField" layoutX="23.0" layoutY="30.0" />
+      <ChoiceBox fx:id="firstSignalChoiceBox" layoutX="22.0" layoutY="82.0" prefWidth="150.0" />
+      <Label layoutX="25.0" layoutY="219.0" text="Left section" />
+      <ChoiceBox fx:id="leftSectionChoiceBox" layoutX="22.0" layoutY="240.0" prefWidth="150.0" />
+      <Label layoutX="25.0" layoutY="269.0" text="Right section" />
+      <ChoiceBox fx:id="rightSectionChoiceBox" layoutX="22.0" layoutY="290.0" prefWidth="150.0" />
+      <CheckBox fx:id="leftSectionOnTracklineCheckBox" layoutX="187.0" layoutY="244.0" mnemonicParsing="false" text="on trackline" />
+      <ChoiceBox fx:id="tracklineChoiceBox" layoutX="22.0" layoutY="190.0" prefWidth="150.0" />
+      <CheckBox fx:id="rightSectionOnTracklineCheckBox" layoutX="187.0" layoutY="294.0" mnemonicParsing="false" text="on trackline" />
+      <Label layoutX="23.0" layoutY="168.0" text="Trackline" />
+      <Label layoutX="25.0" layoutY="114.0" text="Second signal" />
+      <ChoiceBox fx:id="secondSignalChoiceBox" layoutX="22.0" layoutY="135.0" prefWidth="150.0" />
+      <Label layoutX="194.0" layoutY="61.0" text="First servo" />
+      <ChoiceBox fx:id="firstServoChoiceBox" layoutX="191.0" layoutY="82.0" prefWidth="150.0" />
+      <Label layoutX="194.0" layoutY="114.0" text="Second servo" />
+      <ChoiceBox fx:id="secondServoChoiceBox" layoutX="191.0" layoutY="135.0" prefWidth="150.0" />
+    </children>
+</Pane>

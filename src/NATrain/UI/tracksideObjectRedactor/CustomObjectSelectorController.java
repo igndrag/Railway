@@ -1,9 +1,6 @@
 package NATrain.UI.tracksideObjectRedactor;
 
-import NATrain.trackSideObjects.customObjects.CustomObjectType;
-import NATrain.trackSideObjects.customObjects.Gate;
-import NATrain.trackSideObjects.customObjects.PolarityChanger;
-import NATrain.trackSideObjects.customObjects.Servo;
+import NATrain.trackSideObjects.customObjects.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
@@ -14,6 +11,8 @@ import java.io.IOException;
 
 public class CustomObjectSelectorController {
 
+    @FXML
+    private ToggleButton roadCrossingToggleButton;
     @FXML
     private Button createButton;
     @FXML
@@ -42,6 +41,7 @@ public class CustomObjectSelectorController {
         sectionPolarityChangerToggleButton.setToggleGroup(toggleGroup);
         pwmSliderToggleButton.setToggleGroup(toggleGroup);
         locoPolarityChangerToggleButton.setToggleGroup(toggleGroup);
+        roadCrossingToggleButton.setToggleGroup(toggleGroup);
         servoToggleButton.setSelected(true);
 
         servoToggleButton.setOnAction(event -> {
@@ -53,6 +53,12 @@ public class CustomObjectSelectorController {
         gatesToggleButton.setOnAction(event -> {
             if (gatesToggleButton.isSelected()) {
                 objectType = CustomObjectType.GATE;
+            }
+        });
+
+        roadCrossingToggleButton.setOnAction(event -> {
+            if (roadCrossingToggleButton.isSelected()) {
+                objectType =CustomObjectType.ROAD_CROSSING;
             }
         });
 
@@ -121,6 +127,14 @@ public class CustomObjectSelectorController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                break;
+            case ROAD_CROSSING:
+                try {
+                    parentController.toRoadCrossingRedactor(new RoadCrossing(RoadCrossing.INITIAL_ROAD_CROSSING_NAME), false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
 
     }

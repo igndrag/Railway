@@ -10,6 +10,7 @@ import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
 import NATrain.trackSideObjects.customObjects.Gate;
 import NATrain.trackSideObjects.customObjects.PolarityChanger;
+import NATrain.trackSideObjects.customObjects.RoadCrossing;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.movableObjects.Wagon;
 import NATrain.trackSideObjects.customObjects.Servo;
@@ -63,6 +64,8 @@ public enum Model implements Serializable {
 
     private static Map<String, PolarityChanger> polarityChangers;
 
+    private static Map<String, RoadCrossing> roadCrossings;
+
     public static Set<Scenario> scenarios = new HashSet<>();
 
     static {
@@ -105,6 +108,8 @@ public enum Model implements Serializable {
         gates = new ConcurrentHashMap<>();
 
         polarityChangers = new ConcurrentHashMap<>();
+
+        roadCrossings = new ConcurrentHashMap<>();
 
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++ ) {
@@ -167,6 +172,10 @@ public enum Model implements Serializable {
         return polarityChangers;
     }
 
+    public static Map<String, RoadCrossing> getRoadCrossings() {
+        return roadCrossings;
+    }
+
     public static void refreshAll() {
         Arrays.stream(mainGrid).flatMap(Arrays::stream).parallel().forEach(Quad::refresh);
     }
@@ -201,6 +210,7 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(servos);
             objectOutputStream.writeObject(gates);
             objectOutputStream.writeObject(polarityChangers);
+            objectOutputStream.writeObject(roadCrossings);
             tracklines.forEach(track -> { // change EMPTY_SIGNALs to null fow writing
                 track.getBlockSections().forEach(blockSection -> {
                     if (blockSection.getNormalDirectionSignal() == Signal.EMPTY_SIGNAL) {
@@ -272,6 +282,8 @@ public enum Model implements Serializable {
                 gates.values().forEach(TracksideObject::addPropertyChangeSupport);
                 polarityChangers = (Map<String, PolarityChanger>) inputStream.readObject();
                 polarityChangers.values().forEach(TracksideObject::addPropertyChangeSupport);
+                roadCrossings = (Map<String, RoadCrossing>) inputStream.readObject();
+                roadCrossings.values().forEach(TracksideObject::addPropertyChangeSupport);
                 tracklines = (Set<Trackline>) inputStream.readObject();
                 tags = (Map<Long, RFIDTag>) inputStream.readObject();
                 tags.values().forEach(RFIDTag::addPropertyChangeSupport);

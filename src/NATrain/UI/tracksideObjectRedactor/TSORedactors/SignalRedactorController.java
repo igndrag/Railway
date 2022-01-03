@@ -71,7 +71,22 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         stationToggleButton.setToggleGroup(toggleGroup);
         roadCrossingToggleButton.setToggleGroup(toggleGroup);
 
-        stationToggleButton.setSelected(true);
+        if (!signal.getId().equals(Signal.INITIAL_SIGNAL_NAME)) {
+            trimmerToggleButton.setDisable(true);
+            stationToggleButton.setDisable(true);
+            roadCrossingToggleButton.setDisable(true);
+            switch (signal.getSignalType()) {
+                case ROAD_CROSSING_SIGNAL:
+                    roadCrossingToggleButton.setSelected(true);
+                    break;
+                case STATION:
+                    stationToggleButton.setSelected(true);
+                case TRIMMER:
+                    trimmerToggleButton.setSelected(true);
+            }
+        } else {
+            stationToggleButton.setSelected(true);
+        }
 
         switch (signal.getSignalType()) {
             case ROAD_CROSSING_SIGNAL:
@@ -129,6 +144,7 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         });
         stationToggleButton.setOnAction(event -> {
             signal.getLamps().clear();
+            trimmerRedLampCheckBox.setSelected(false);
             trimmerRedLampCheckBox.setDisable(true);
             yellowLampCheckBox.setDisable(false);
             greenLampCheckBox.setDisable(false);
@@ -140,6 +156,7 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         });
 
         roadCrossingToggleButton.setOnAction(event -> {
+            trimmerRedLampCheckBox.setSelected(false);
             trimmerRedLampCheckBox.setDisable(true);
             signal.getLamps().clear();
             yellowLampCheckBox.setSelected(false);
@@ -170,7 +187,6 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
         });
 
 
-
         trimmerRedLampCheckBox.setOnAction(event -> {
             if (trimmerRedLampCheckBox.isSelected()) {
                 signal.getLamps().put(SignalLampType.RED_LAMP, new OutputChannel(OutputChannelType.SIGNAL_LAMP_OUTPUT, signal, SignalLampType.RED_LAMP));
@@ -179,10 +195,6 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
             }
         });
 
-        if (!signal.getId().equals(Signal.INITIAL_SIGNAL_NAME)) {
-            trimmerToggleButton.setDisable(true);
-            stationToggleButton.setDisable(true);
-        }
         // init preview pane
         createPreview();
 
@@ -398,15 +410,18 @@ public class SignalRedactorController extends TracksideObjectRedactorController 
             return;
         if (trimmerToggleButton.isSelected())
             signal.setSignalType(SignalType.TRIMMER);
-        else
+        else if (stationToggleButton.isSelected())
             signal.setSignalType(SignalType.STATION);
+        else if (roadCrossingToggleButton.isSelected()) {
+            signal.setSignalType(SignalType.ROAD_CROSSING_SIGNAL);
+        }
 
         if (trimmerRedLampCheckBox.isSelected()) {
             signal.setClosedSignalState(SignalState.RED);
         }
 
         Pattern pattern = Pattern.compile("\\d+$");
-        
+
 
         updateModelAndClose(Model.getSignals(), signal);
     }

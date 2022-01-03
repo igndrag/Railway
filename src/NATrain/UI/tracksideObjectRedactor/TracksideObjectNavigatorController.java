@@ -163,7 +163,7 @@ public class TracksideObjectNavigatorController {
         }
         Stage trackSectionRedactor = new Stage();
         trackSectionRedactor.setTitle("Trackline Section Redactor");
-        trackSectionRedactor.setScene(new Scene(loader.load(), 240, 220));
+        trackSectionRedactor.setScene(new Scene(loader.load(), 220, 240));
         trackSectionRedactor.setResizable(false);
         TrackSectionRedactorController controller = loader.getController();
         controller.init(trackSection, trackSectionsTableView, trackSectionList);
@@ -330,7 +330,7 @@ public class TracksideObjectNavigatorController {
                 //  loader = new FXMLLoader(GateRedactorController.class.getResource("GateRedactor_RU.fxml"));
                 //  break;
             default:
-                loader = new FXMLLoader(GateRedactorController.class.getResource("PolarityChangerRedactor.fxml"));
+                loader = new FXMLLoader(PolarityChangerRedactorController.class.getResource("PolarityChangerRedactor.fxml"));
         }
         Stage polarityChangerRedactor = new Stage();
         polarityChangerRedactor.setTitle("Polarity Changer Redactor");
@@ -342,6 +342,27 @@ public class TracksideObjectNavigatorController {
         polarityChangerRedactor.initModality(Modality.WINDOW_MODAL);
         polarityChangerRedactor.initOwner(primaryStage);
         polarityChangerRedactor.show();
+    }
+
+    protected void toRoadCrossingRedactor(RoadCrossing roadCrossing, boolean edit) throws IOException {
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                //  loader = new FXMLLoader(GateRedactorController.class.getResource("GateRedactor_RU.fxml"));
+                //  break;
+            default:
+                loader = new FXMLLoader(RoadCrossingRedactorController.class.getResource("RoadCrossingRedactor.fxml"));
+        }
+        Stage roadCrossingRedactor = new Stage();
+        roadCrossingRedactor.setTitle("Road Crossing Redactor");
+        roadCrossingRedactor.setScene(new Scene(loader.load(), 360, 370));
+        roadCrossingRedactor.setResizable(false);
+        RoadCrossingRedactorController controller = loader.getController();
+        controller.init(roadCrossing, customObjectTableView, customObjectList);
+        controller.edit = edit;
+        roadCrossingRedactor.initModality(Modality.WINDOW_MODAL);
+        roadCrossingRedactor.initOwner(primaryStage);
+        roadCrossingRedactor.show();
     }
 
 
@@ -672,6 +693,7 @@ public class TracksideObjectNavigatorController {
         customObjectList = FXCollections.observableArrayList(Model.getServos().values());
         customObjectList.addAll(Model.getGates().values());
         customObjectList.addAll(Model.getPolarityChangers().values());
+        customObjectList.addAll(Model.getRoadCrossings().values());
         customObjectTableView.setItems(customObjectList);
 
         newCustomButton.setOnMouseClicked(event -> {
@@ -687,15 +709,18 @@ public class TracksideObjectNavigatorController {
             switch (objectForDelete.getType()) {
                 case SERVO:
                     //Servo servo = (Servo) objectForDelete;
-                    Model.getServos().remove(objectForDelete);
+                    Model.getServos().remove(objectForDelete.getId());
                     break;
                 case GATE:
-                    Model.getGates().remove(objectForDelete);
+                    Model.getGates().remove(objectForDelete.getId());
                     break;
                 case SECTION_POLARITY_CHANGER:
                 case SWITCH_POLARITY_CHANGER:
                 case LOCO_POLARITY_CHANGER:
-                    Model.getPolarityChangers().remove(objectForDelete);
+                    Model.getPolarityChangers().remove(objectForDelete.getId());
+                    break;
+                case ROAD_CROSSING:
+                    Model.getRoadCrossings().remove(objectForDelete.getId());
                     break;
             }
             customObjectList.remove(objectForDelete);
@@ -724,6 +749,8 @@ public class TracksideObjectNavigatorController {
                     case LOCO_POLARITY_CHANGER:
                         toPolarityChangerRedactor((PolarityChanger)objectForEdit, true);
                         break;
+                    case ROAD_CROSSING:
+                        toRoadCrossingRedactor((RoadCrossing) objectForEdit, true);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -749,7 +776,7 @@ public class TracksideObjectNavigatorController {
         }
         Stage customObjectSelector = new Stage();
         customObjectSelector.setTitle("Custom Object Selector");
-        customObjectSelector.setScene(new Scene(loader.load(), 220, 330));
+        customObjectSelector.setScene(new Scene(loader.load(), 220, 350));
         customObjectSelector.setResizable(false);
         CustomObjectSelectorController controller = loader.getController();
         controller.init(this);
