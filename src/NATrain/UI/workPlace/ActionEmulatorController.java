@@ -52,7 +52,6 @@ public class ActionEmulatorController {
 
         trackChoiceBox.getItems().addAll(Model.getStationTracks().values());
 
-
         ToggleGroup toggleGroup = new ToggleGroup();
         plusToggleButton.setToggleGroup(toggleGroup);
         minusToggleButton.setToggleGroup(toggleGroup);

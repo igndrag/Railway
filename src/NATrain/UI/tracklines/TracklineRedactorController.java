@@ -157,7 +157,7 @@ public class TracklineRedactorController {
                     } else {
                         normalDirectionSignalName.append(2*i - 1);
                     }
-                    normalDirectionSignalName.append("ND");
+                    //normalDirectionSignalName.append("ND");
                     Signal normalDirectionSignal = new Signal(normalDirectionSignalName.toString(), SignalType.TRACK);
                     switch (blockingTypeChoiceBox.getValue()) {
                         case AUTOMATIC_THREE_SIGNAL_BLOCKING: {
@@ -181,7 +181,7 @@ public class TracklineRedactorController {
                         } else {
                             reversedDirectionSignalName.append(2*sectionsCount - 2*(i-1));
                         }
-                        reversedDirectionSignalName.append("RD");
+                        //reversedDirectionSignalName.append("RD");
                         blockSection.setBidirectional(true);
                         Signal reversedDirectionSignal = new Signal(reversedDirectionSignalName.toString(), SignalType.TRACK);
                         switch (blockingTypeChoiceBox.getValue()) {

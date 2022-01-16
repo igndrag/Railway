@@ -228,12 +228,12 @@ public abstract class PolarityChangerQuad extends SimpleTrackQuad {
         }
     }
 
-    private class SwitchStateChanger implements PropertyChangeListener { //add to associated switch trackline section
+    private class SwitchStateChanger implements PropertyChangeListener { //add to associated switch track section
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (firstAssociatedTrack.getVacancyState() == TrackSectionState.OCCUPIED
-                    && polarityChanger.getAssociatedSwitch().getTrackSection().getVacancyState() == TrackSectionState.FREE) {
-                associatedSwitch.changePosition();
+                    && evt.getNewValue() == TrackSectionState.FREE) {
+                polarityChanger.getAssociatedSwitch().changePosition();
             }
         }
     }

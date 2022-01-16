@@ -139,7 +139,7 @@ public class Signal extends TracksideObject implements Controllable {
                     if (outputChannel.getModule() == controlModule) {
                         int commandCode = signalState.getLampStates().getOrDefault(signalLampType, SignalLampState.NOT_LIGHT).getCode();
                         outputChannel.setLastCommandCode(commandCode);
-                        sb.append(String.format("%02d:%02d_", outputChannel.getChNumber(), commandCode));
+                        sb.append(String.format("%02d:%02d:000_", outputChannel.getChNumber(), commandCode));
                     }
                 });
                 controlModule.sendMultipleCommand(sb.toString());
@@ -148,6 +148,9 @@ public class Signal extends TracksideObject implements Controllable {
     }
 
     public static GlobalSignalState getGlobalStatusForState(SignalState signalState) {
+        if (signalState == null) {
+            return GlobalSignalState.NOT_ACTIVE;
+        }
         switch (signalState) {
             case RED:
             case BLUE:

@@ -53,17 +53,21 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
     public AbstractRouteExecutor(Route route) {
         this.route = route;
         occupationalOrder = new ConcurrentLinkedDeque<>(route.getOccupationalOrder()); // create copy for processing
-        if (route.getRouteType() == RouteType.ARRIVAL) {
-            occupationalOrder.add(route.getDestinationTrackSection());
+        switch (route.getRouteType()) {
+            case ARRIVAL:
+               // occupationalOrder.add(route.getDestinationTrackSection());
+                break;
+            case SHUNTING:
+                if (occupationalOrder.getFirst() == route.getDepartureTrackSection()) { // if shunting route from usual track section
+                    occupationalOrder.pollFirst();                                      // we don't need to interlock this section in occupational order
+                }
+
+                if (occupationalOrder.getLast() == route.getDestinationTrackSection()) { // if shunting route to occupied usual track section
+                    occupationalOrder.pollLast();                                        // we don't need to interlock this section in occupational order
+                }
+                break;
         }
 
-        if (route.getRouteType() == RouteType.SHUNTING && occupationalOrder.getFirst() == route.getDepartureTrackSection()) { // if shunting route from usual trackline section
-            occupationalOrder.pollFirst();                                                                                      // we don't need to interlock this section in occupational order
-        }
-
-        if (route.getRouteType() == RouteType.SHUNTING && occupationalOrder.getLast() == route.getDestinationTrackSection()) { // if shunting route to usual trackline section
-            occupationalOrder.pollLast();                                                                                      // we don't need to interlock this section in occupational order
-        }
         this.departureSection = route.getDepartureTrackSection();
         this.destinationSection = route.getDestinationTrackSection();
     }
@@ -115,12 +119,17 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                         thisSection.fixDeallocation();
                     }
                 }
-                    if (previousSection.notInterlocked()
+                    if (    thisSection != destinationSection &&
+                            previousSection.notInterlocked()
                             && thisSection.isOccupationFixed()
-                            && thisSection.isDeallocationFixed()
-                            && (nextSection.isOccupationFixed() || (route.getRouteType() == RouteType.ARRIVAL && nextSection == destinationSection && destinationSection.getVacancyState() == OCCUPIED)) ||
-                            (route.getRouteType() == RouteType.ARRIVAL && thisSection == destinationSection && previousSection.isOccupationFixed())) {
+                            && (thisSection.isDeallocationFixed())
+                            && (nextSection.isOccupationFixed() || nextSection == destinationSection)) {
+                        //   || (route.getRouteType() == RouteType.ARRIVAL && nextSection == destinationSection && destinationSection.getVacancyState() == OCCUPIED)) ||
+                        //   || (route.getRouteType() != RouteType.DEPARTURE && thisSection == destinationSection && !previousSection.isInterlocked()) ) {
                         thisSection.setInterlocked(false);
+                        if (route.getRouteType() != RouteType.DEPARTURE && nextSection == destinationSection && nextSection.getVacancyState() == OCCUPIED) {
+                            nextSection.setInterlocked(false);
+                        }
                         thisSection.removePropertyChangeListener(this);
                         trackSectionUnlockerMap.remove(thisSection);
                         if (trackSectionUnlockerMap.isEmpty()) {
@@ -198,6 +207,9 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
 
     private void interlock() {
         occupationalOrder.forEach(trackSection -> trackSection.setInterlocked(true));
+        if (route.getRouteType() != RouteType.DEPARTURE) {
+            destinationSection.setInterlocked(true);
+        }
         workPlaceController.log(route.getDescription() + " is ready. Sections are interlocked.");
         routeStatus = RouteStatus.READY;
         if (route.getDepartureTrackSection().getVacancyState() == OCCUPIED) {
@@ -251,7 +263,7 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
         assert firstSection != null;
         TrackSection secondSection;
         if (occupationalOrder.isEmpty()) { // for too short route
-            secondSection = TrackSection.EMPTY_TRACK_SECTION;
+            secondSection = destinationSection;
         } else {
             secondSection = occupationalOrder.getFirst();
         }
@@ -321,12 +333,14 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
                         routeStatus = RouteStatus.READY;
                         autoselectSignalState();
                         createListeners();
-                        TrackSection departureSection = route.getDepartureTrackSection();
-                        Optional<Locomotive> locomotive = Model.getLocomotives().values().stream().filter(
-                                loco -> (loco.getFrontTag().getTagLocation() == departureSection
-                                        && loco.getForwardDirection() == route.getRouteDirection())).findFirst();
-                        if (locomotive.isPresent() && locomotive.get().getAutopilot() != null) {
-                            locomotive.get().getAutopilot().executeRoute(route);
+                        if (route.getRouteType() != RouteType.SHUNTING) {
+                            TrackSection departureSection = route.getDepartureTrackSection();
+                            Optional<Locomotive> locomotive = Model.getLocomotives().values().stream().filter(
+                                    loco -> (loco.getFrontTag().getTagLocation() == departureSection
+                                            && loco.getForwardDirection() == route.getRouteDirection())).findFirst();
+                            if (locomotive.isPresent() && locomotive.get().getAutopilot() != null) {
+                                locomotive.get().getAutopilot().executeRoute(route);
+                            }
                         }
                         service.shutdown();
                     }

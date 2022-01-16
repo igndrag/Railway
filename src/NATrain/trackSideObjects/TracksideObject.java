@@ -33,12 +33,17 @@ public abstract class TracksideObject implements Serializable, Listenable {
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
+        if (propertyChangeSupport == null) {
+            addPropertyChangeSupport();
+        }
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
     @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
+        if (propertyChangeSupport != null) {
+            propertyChangeSupport.removePropertyChangeListener(listener);
+        }
     }
 
     @Override

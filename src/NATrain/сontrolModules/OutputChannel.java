@@ -76,6 +76,6 @@ public class OutputChannel implements Serializable {
 
 
     public void sendLastCommandAgain() {
-        module.sendCommandToChannel(chNumber, String.format("%02d:%03d_", chNumber, lastCommandCode));
+        module.sendCommandToChannel(chNumber, String.format("%02d:%02d:000_", chNumber, lastCommandCode));
     }
 }
