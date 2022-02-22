@@ -275,7 +275,8 @@ public abstract class AbstractRouteExecutor implements RouteExecutor {
             TrackSection trackSection = occupationalOrder.pollFirst();
             TrackSection nextSection;
             if (occupationalOrder.isEmpty()) {
-                nextSection = TrackSection.EMPTY_TRACK_SECTION;
+                nextSection = destinationSection;
+                //nextSection = TrackSection.EMPTY_TRACK_SECTION;
             } else {
                 nextSection = occupationalOrder.getFirst();
             }

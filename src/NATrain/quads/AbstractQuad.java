@@ -38,6 +38,7 @@ public abstract class AbstractQuad implements Quad, Paintable {
     public static Color WHITE_BLINKER = Color.WHITE;
     public static Color RED_BLINKER_1 = Color.RED;
     public static Color RED_BLINKER_2 = SIGNAL_LAMP_BACKGROUND_COLOR;
+    public static final Color LAMP_LIGHT_COLOR = Color.YELLOW;
 
     protected GlobalQuadType globalQuadType;
 

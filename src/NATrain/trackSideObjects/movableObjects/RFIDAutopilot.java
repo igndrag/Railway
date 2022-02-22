@@ -101,7 +101,8 @@ public class RFIDAutopilot implements Autopilot {
             if (passed) { //SECTION PASSED!!! GOOD TRICK ALWAYS WORKS))
                 if ((occupiedSection instanceof TracklineBlockSection &&
                         occupiedSection == route.getDestinationTrackLine().getLastSectionInActualDirection())
-                        || occupiedSection == route.getDestinationTrackSection()) {
+                        || occupiedSection == route.getDestinationTrackSection()
+                        || occupiedSection == route.getDestinationTrack()) {
                     if (nextSignal.getGlobalStatus() == GlobalSignalState.CLOSED) {
                         locomotive.stop();
                         locomotive.setActualState(LocomotiveState.NOT_MOVING);
@@ -202,7 +203,7 @@ public class RFIDAutopilot implements Autopilot {
             case CLOSED:
                 if (status == AutopilotStatus.WAITING) {
                     break;
-                } else if (nextSignal != route.getSignal()) {
+                } else if (locomotive.getLocation() instanceof  TracklineBlockSection || locomotive.getLocation() == route.getDestinationTrack()) {
                     locomotive.setSpeed(SUPER_RESTRICTED_SPEED);
                     System.out.printf("Signal: %s superrestricted!", nextSignal.getId());
                     locomotive.run();

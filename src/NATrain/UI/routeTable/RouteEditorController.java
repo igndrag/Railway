@@ -280,9 +280,9 @@ public class RouteEditorController {
                     //occupationalOrder.add(arrivalTrackChoiceBox.getValue());
                     Trackline trackline = trackLineChoiceBox.getValue();
                     if (route.getRouteDirection() == trackline.getNormalDirection()) {
-                        route.setDepartureTrackSection(trackline.getBlockSections().get(trackline.getBlockSections().size() - 1));
-                    } else {
                         route.setDepartureTrackSection(trackline.getBlockSections().get(0));
+                    } else {
+                        route.setDepartureTrackSection(trackline.getBlockSections().get(trackline.getBlockSections().size() - 1));
                     }
                     break;
                 case SHUNTING:

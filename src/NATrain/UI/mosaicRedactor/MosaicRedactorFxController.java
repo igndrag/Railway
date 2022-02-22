@@ -7,7 +7,6 @@ import NATrain.quads.*;
 import NATrain.quads.custom.GateQuad;
 import NATrain.quads.custom.PolarityChangerQuad;
 import NATrain.quads.custom.ServoQuad;
-import NATrain.trackSideObjects.customObjects.Gate;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -195,6 +194,7 @@ public class MosaicRedactorFxController {
                         case H_GATE_QUAD:
                         case HPCQ:
                         case VPCQ:
+                        case LMPQ:
                             customQuadVBox.getChildren().add(button);
                             break;
                     }

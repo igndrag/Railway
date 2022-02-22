@@ -13,4 +13,5 @@ public enum GlobalQuadType {
     POLARITY_CHANGER_QUAD,
     BUTTON_QUAD,
     SLIDER_QUAD,
+    ON_OFF_QUAD,
 }

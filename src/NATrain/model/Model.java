@@ -8,12 +8,9 @@ import NATrain.routes.Trackline;
 import NATrain.routes.TracklineBlockSection;
 import NATrain.trackSideObjects.*;
 import NATrain.quads.*;
-import NATrain.trackSideObjects.customObjects.Gate;
-import NATrain.trackSideObjects.customObjects.PolarityChanger;
-import NATrain.trackSideObjects.customObjects.RoadCrossing;
+import NATrain.trackSideObjects.customObjects.*;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.movableObjects.Wagon;
-import NATrain.trackSideObjects.customObjects.Servo;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
 import NATrain.trackSideObjects.switches.Switch;
@@ -66,6 +63,8 @@ public enum Model implements Serializable {
 
     private static Map<String, RoadCrossing> roadCrossings;
 
+    private static Map<String, OnOffObject> onOffObjects;
+
     public static Set<Scenario> scenarios = new HashSet<>();
 
     static {
@@ -110,6 +109,8 @@ public enum Model implements Serializable {
         polarityChangers = new ConcurrentHashMap<>();
 
         roadCrossings = new ConcurrentHashMap<>();
+
+        onOffObjects = new ConcurrentHashMap<>();
 
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++ ) {
@@ -176,6 +177,10 @@ public enum Model implements Serializable {
         return roadCrossings;
     }
 
+    public static Map<String, OnOffObject> getOnOffObjects() {
+        return onOffObjects;
+    }
+
     public static void refreshAll() {
         Arrays.stream(mainGrid).flatMap(Arrays::stream).parallel().forEach(Quad::refresh);
     }
@@ -211,6 +216,7 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(gates);
             objectOutputStream.writeObject(polarityChangers);
             objectOutputStream.writeObject(roadCrossings);
+            objectOutputStream.writeObject(onOffObjects);
             tracklines.forEach(track -> { // change EMPTY_SIGNALs to null fow writing
                 track.getBlockSections().forEach(blockSection -> {
                     if (blockSection.getNormalDirectionSignal() == Signal.EMPTY_SIGNAL) {
@@ -284,6 +290,8 @@ public enum Model implements Serializable {
                 polarityChangers.values().forEach(TracksideObject::addPropertyChangeSupport);
                 roadCrossings = (Map<String, RoadCrossing>) inputStream.readObject();
                 roadCrossings.values().forEach(TracksideObject::addPropertyChangeSupport);
+                onOffObjects = (Map<String, OnOffObject>) inputStream.readObject();
+                onOffObjects.values().forEach(TracksideObject::addPropertyChangeSupport);
                 tracklines = (Set<Trackline>) inputStream.readObject();
                 tags = (Map<Long, RFIDTag>) inputStream.readObject();
                 tags.values().forEach(RFIDTag::addPropertyChangeSupport);

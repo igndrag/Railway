@@ -12,6 +12,8 @@ import java.io.IOException;
 public class CustomObjectSelectorController {
 
     @FXML
+    private ToggleButton onOffObjectToggleButton;
+    @FXML
     private ToggleButton roadCrossingToggleButton;
     @FXML
     private Button createButton;
@@ -42,6 +44,7 @@ public class CustomObjectSelectorController {
         pwmSliderToggleButton.setToggleGroup(toggleGroup);
         locoPolarityChangerToggleButton.setToggleGroup(toggleGroup);
         roadCrossingToggleButton.setToggleGroup(toggleGroup);
+        onOffObjectToggleButton.setToggleGroup(toggleGroup);
         servoToggleButton.setSelected(true);
 
         servoToggleButton.setOnAction(event -> {
@@ -82,7 +85,13 @@ public class CustomObjectSelectorController {
 
         pwmSliderToggleButton.setOnAction(event -> {
             if (pwmSliderToggleButton.isSelected()) {
-                objectType= CustomObjectType.PWM_SLIDER;
+                objectType = CustomObjectType.PWM_SLIDER;
+            }
+        });
+
+        onOffObjectToggleButton.setOnAction(event -> {
+            if (onOffObjectToggleButton.isSelected()) {
+                objectType = CustomObjectType.ON_OFF_OBJECT;
             }
         });
 
@@ -135,8 +144,13 @@ public class CustomObjectSelectorController {
                     e.printStackTrace();
                 }
                 break;
+            case ON_OFF_OBJECT:
+                try {
+                    parentController.toOnOffObjectRedactor(new OnOffObject(OnOffObject.INITIAL_ON_OFF_OBJECT_NAME), false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+               break;
         }
-
     }
-
 }

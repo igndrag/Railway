@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane prefHeight="290.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.ServoRedactorController">
+<Pane prefHeight="290.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.OnOffObjectRedactorController">
     <children>
         <Slider fx:id="positionOneSlider" layoutX="25.0" layoutY="101.0" />
         <Slider fx:id="positionTwoSlider" layoutX="25.0" layoutY="155.0" />

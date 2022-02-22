@@ -20,6 +20,9 @@ public enum ControlAction {
 
     OPEN_CROSSING,
     CLOSE_CROSSING,
+
+    ON,
+    OFF,
     ;
 
     public String getDescription() {
@@ -115,7 +118,21 @@ public enum ControlAction {
                     case ENG:
                         return "Close crossing";
                 }
-            default: return "None";
+            case ON:
+                switch (AppConfigController.getLanguage()) {
+                    case RU:
+                        return "Включить";
+                    case ENG:
+                        return "On";
+                }
+            case OFF:
+                switch (AppConfigController.getLanguage()) {
+                    case RU:
+                        return "Отключить";
+                    case ENG:
+                        return "Off";
+                }
+                default: return "None";
         }
     }
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane minHeight="0.0" minWidth="0.0" prefHeight="120.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.mosaicRedactor.OnOffObjectQuadConfiguratorController">
+
+   <children>
+      <ChoiceBox fx:id="onOffObjectChoiceBox" layoutX="17.0" layoutY="41.0" prefHeight="25.0" prefWidth="207.0" />
+      <Label layoutX="22.0" layoutY="20.0" text="ON/OFF object" />
+      <Button fx:id="saveButton" graphicTextGap="10.0" layoutX="159.0" layoutY="80.0" mnemonicParsing="false" onAction="#saveAndClose" text="Save">
+         <padding>
+            <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+         </padding>
+      </Button>
+   </children>
+</Pane>

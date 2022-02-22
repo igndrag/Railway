@@ -288,7 +288,7 @@ public class TracksideObjectNavigatorController {
         servoRedactor.setTitle("Servo Redactor");
         servoRedactor.setScene(new Scene(loader.load(), 300, 290));
         servoRedactor.setResizable(false);
-        ServoRedactorController controller = loader.getController();
+        OnOffObjectRedactorController controller = loader.getController();
         controller.init(servo, customObjectTableView, customObjectList);
         controller.edit = edit;
         servoRedactor.initModality(Modality.WINDOW_MODAL);
@@ -365,8 +365,26 @@ public class TracksideObjectNavigatorController {
         roadCrossingRedactor.show();
     }
 
-
-
+    protected void toOnOffObjectRedactor(OnOffObject onOffObject, boolean edit) throws IOException {
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                //  loader = new FXMLLoader(GateRedactorController.class.getResource("GateRedactor_RU.fxml"));
+                //  break;
+            default:
+                loader = new FXMLLoader(OnOffObjectRedactorController.class.getResource("OnOffObjectRedactor.fxml"));
+        }
+        Stage onOffObjectRedactorController = new Stage();
+        onOffObjectRedactorController.setTitle("ON/OFF Object Redactor");
+        onOffObjectRedactorController.setScene(new Scene(loader.load(), 200, 120));
+        onOffObjectRedactorController.setResizable(false);
+        OnOffObjectRedactorController controller = loader.getController();
+        controller.init(onOffObject, customObjectTableView, customObjectList);
+        controller.edit = edit;
+        onOffObjectRedactorController.initModality(Modality.WINDOW_MODAL);
+        onOffObjectRedactorController.initOwner(primaryStage);
+        onOffObjectRedactorController.show();
+    }
 
     public void initTrackSectionsTab() {
         trackSectionIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -694,6 +712,7 @@ public class TracksideObjectNavigatorController {
         customObjectList.addAll(Model.getGates().values());
         customObjectList.addAll(Model.getPolarityChangers().values());
         customObjectList.addAll(Model.getRoadCrossings().values());
+        customObjectList.addAll(Model.getOnOffObjects().values());
         customObjectTableView.setItems(customObjectList);
 
         newCustomButton.setOnMouseClicked(event -> {
@@ -721,6 +740,9 @@ public class TracksideObjectNavigatorController {
                     break;
                 case ROAD_CROSSING:
                     Model.getRoadCrossings().remove(objectForDelete.getId());
+                    break;
+                case ON_OFF_OBJECT:
+                    Model.getOnOffObjects().remove(objectForDelete.getId());
                     break;
             }
             customObjectList.remove(objectForDelete);
@@ -776,7 +798,7 @@ public class TracksideObjectNavigatorController {
         }
         Stage customObjectSelector = new Stage();
         customObjectSelector.setTitle("Custom Object Selector");
-        customObjectSelector.setScene(new Scene(loader.load(), 220, 350));
+        customObjectSelector.setScene(new Scene(loader.load(), 220, 380));
         customObjectSelector.setResizable(false);
         CustomObjectSelectorController controller = loader.getController();
         controller.init(this);

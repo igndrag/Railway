@@ -13,6 +13,8 @@ public enum QuadType {
     HPCQ,
     VPCQ,
 
+    LMPQ,
+
     STQ1_1,
     STQ1_2,
     STQ2_1,

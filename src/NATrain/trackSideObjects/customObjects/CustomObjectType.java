@@ -11,4 +11,5 @@ public enum CustomObjectType {
     TOGGLE_BUTTON,
     IMPULSE_BUTTON,
     MOTOR,
+    ON_OFF_OBJECT,
 }
