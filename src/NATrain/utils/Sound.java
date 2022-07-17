@@ -3,7 +3,9 @@ package NATrain.utils;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.sound.sampled.*;
+import java.io.BufferedInputStream;
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class Sound {
@@ -44,7 +46,8 @@ public class Sound {
     public Sound(String fileName, float volume) {
 
         try {
-                AudioInputStream sound = AudioSystem.getAudioInputStream(Sound.class.getResourceAsStream(fileName));
+                BufferedInputStream stream = new BufferedInputStream(Objects.requireNonNull(Sound.class.getResourceAsStream(fileName)));
+                AudioInputStream sound = AudioSystem.getAudioInputStream(stream);
                 // load the sound into memory (a Clip)
                 clip = AudioSystem.getClip();
                 clip.open(sound);

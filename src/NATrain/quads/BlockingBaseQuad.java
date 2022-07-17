@@ -87,7 +87,7 @@ public abstract class BlockingBaseQuad extends AbstractQuad {
         if (quadListeners == null) {
             quadListeners = new HashMap<>();
         }
-        if (this instanceof BlockingSignalQuad) {
+        if (this instanceof BlockingSignalQuad && trackline != Trackline.EMPTY_TRACKLINE && trackline != null) {
             trackline.getSignalQuads().add(this);
         }
         activateBlockSectionsListeners();

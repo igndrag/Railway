@@ -282,13 +282,13 @@ public class TracksideObjectNavigatorController {
                // loader = new FXMLLoader(WagonRedactorController.class.getResource("WagonRedactor_RU.fxml"));
                // break;
             default:
-                loader = new FXMLLoader(WagonRedactorController.class.getResource("ServoRedactor.fxml"));
+                loader = new FXMLLoader(ServoRedactorController.class.getResource("ServoRedactor.fxml"));
         }
         Stage servoRedactor = new Stage();
         servoRedactor.setTitle("Servo Redactor");
         servoRedactor.setScene(new Scene(loader.load(), 300, 290));
         servoRedactor.setResizable(false);
-        OnOffObjectRedactorController controller = loader.getController();
+        ServoRedactorController controller = loader.getController();
         controller.init(servo, customObjectTableView, customObjectList);
         controller.edit = edit;
         servoRedactor.initModality(Modality.WINDOW_MODAL);

@@ -3,21 +3,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane prefHeight="290.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.OnOffObjectRedactorController">
+<Pane prefHeight="290.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.tracksideObjectRedactor.TSORedactors.ServoRedactorController">
     <children>
-        <Slider fx:id="positionOneSlider" layoutX="25.0" layoutY="101.0" />
-        <Slider fx:id="positionTwoSlider" layoutX="25.0" layoutY="155.0" />
-        <Slider fx:id="speedSlider" layoutX="25.0" layoutY="207.0" />
+        <Slider fx:id="positionOneSlider" blockIncrement="1.0" layoutX="25.0" layoutY="101.0" majorTickUnit="10.0" max="180.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" value="90.0" />
+        <Slider fx:id="positionTwoSlider" blockIncrement="1.0" layoutX="25.0" layoutY="155.0" majorTickUnit="10.0" max="180.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" value="90.0" />
+        <Slider fx:id="speedSlider" blockIncrement="1.0" layoutX="25.0" layoutY="216.0" majorTickUnit="1.0" max="10.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="5.0" />
         <Label layoutX="25.0" layoutY="80.0" text="Position 1" />
         <TextField fx:id="positionOneTextField" layoutX="179.0" layoutY="96.0" prefHeight="25.0" prefWidth="43.0" />
         <Label layoutX="25.0" layoutY="134.0" text="Position 2" />
-        <Label layoutX="25.0" layoutY="184.0" text="Speed " />
+        <Label layoutX="25.0" layoutY="193.0" text="Speed " />
         <Label layoutX="25.0" layoutY="14.0" text="ID" />
         <TextField fx:id="positionTwoTextField" layoutX="179.0" layoutY="150.0" prefHeight="25.0" prefWidth="43.0" />
-        <TextField fx:id="speedTextField" layoutX="179.0" layoutY="202.0" prefHeight="25.0" prefWidth="43.0" />
-        <Button fx:id="positionOneSetButton" layoutX="234.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Set" />
-        <Button fx:id="positionTwoSetButton" layoutX="234.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Set" />
-        <Button fx:id="saveButton" layoutX="234.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="Save" />
+        <Button fx:id="saveButton" layoutX="209.0" layoutY="251.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Save" />
       <TextField fx:id="textField" layoutX="23.0" layoutY="35.0" />
+      <Button fx:id="setOnePositionButton" disable="true" layoutX="235.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="43.0" text="Set" />
+      <Button fx:id="setTwoPositionButton" disable="true" layoutX="237.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="43.0" text="Set" />
     </children>
 </Pane>

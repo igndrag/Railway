@@ -1,5 +1,6 @@
 package NATrain.trackSideObjects.customObjects;
 
+import NATrain.connectionService.MQTTConnectionService;
 import NATrain.trackSideObjects.Controllable;
 import NATrain.сontrolModules.AbstractModule;
 import NATrain.сontrolModules.OutputChannel;
@@ -81,9 +82,16 @@ public class Servo extends AbstractCustomObject implements Controllable {
         outputChannel.sendCommandWithValue(AbstractModule.SET_SERVO_POSITION_COMMAND_CODE, positionTwo);
     }
 
+    public void sendSpeed() {
+        outputChannel.sendCommandWithValue(AbstractModule.SET_SERVO_SPEED, speed);
+    }
+
     public void init() {
         outputChannel.sendCommandWithValue(AbstractModule.SET_SERVO_ACTUAL_ANGLE, actualPosition);
+        sendSpeed();
     }
+
+
 
     @Override
     public String getModules() {

@@ -18,7 +18,7 @@ public class CMCreatorController {
     @FXML
     private ToggleButton switchToggleButton;
     @FXML
-    private ToggleButton reverseLoopToggleButton;
+    private ToggleButton universalAdapterToggleButton;
     @FXML
     private ToggleButton checkConnectionButton;
     @FXML
@@ -36,7 +36,7 @@ public class CMCreatorController {
         ToggleGroup toggleGroup = new ToggleGroup();
         signalToggleButton.setToggleGroup(toggleGroup);
         switchToggleButton.setToggleGroup(toggleGroup);
-        reverseLoopToggleButton.setToggleGroup(toggleGroup);
+        universalAdapterToggleButton.setToggleGroup(toggleGroup);
 
         signalToggleButton.setSelected(true);
 
@@ -48,8 +48,8 @@ public class CMCreatorController {
             selectedType = ControlModuleType.SWITCH_MQTT_CONTROLLER;
         });
 
-        reverseLoopToggleButton.setOnAction(event -> {
-            selectedType = ControlModuleType.REVERSE_LOOP_MQTT_CONTROLLER;
+        universalAdapterToggleButton.setOnAction(event -> {
+            selectedType = ControlModuleType.UNIVERSAL_MQTT_MODULE;
         });
     }
 
@@ -80,6 +80,9 @@ public class CMCreatorController {
                     break;
                 case SWITCH_MQTT_CONTROLLER:
                     controlModule = new SwitchMQTTController(address);
+                    break;
+                case UNIVERSAL_MQTT_MODULE:
+                    controlModule = new UniversalMQTTModule(address);
                     break;
                 default:
                     Alert a = new Alert(Alert.AlertType.WARNING);

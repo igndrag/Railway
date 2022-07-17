@@ -13,6 +13,8 @@ public class Switch extends TracksideObject implements Controllable {
     static final long serialVersionUID = 1L;
 
     public static final int CONTROL_IMPULSE_COMMAND_CODE = 8;
+    public static final int IMPULSE_COMMAND_CODE = 88;
+    public static final int INVERTED_IMPULSE_COMMAND_CODE = 87;
     public static final Switch EMPTY_SWITCH = new Switch("None");
     public static final String INITIAL_SWITCH_NAME = "New Switch";
 
@@ -110,10 +112,15 @@ public class Switch extends TracksideObject implements Controllable {
 
     public void changePosition() {
         if (isChangePositionAvailable()) {
-            if (switchState == SwitchState.PLUS)
+            if (switchState == SwitchState.PLUS) {
                 sendOutputCommand(SwitchState.MINUS);
-            else if (switchState == SwitchState.MINUS)
+                setSwitchState(SwitchState.MINUS);// TODO create 2 switch types (control or not)
+            }
+            else if (switchState == SwitchState.MINUS) {
                 sendOutputCommand(SwitchState.PLUS);
+                setSwitchState(SwitchState.PLUS);
+            }
+
         } else {
             WorkPlaceController.getActiveController().log("Position change isn't available!");
         }
@@ -133,11 +140,11 @@ public class Switch extends TracksideObject implements Controllable {
         switch (switchState) {
             case PLUS:
                 switchSound.play();
-                plusOutputChannel.sendCommandCode(CONTROL_IMPULSE_COMMAND_CODE);
+                plusOutputChannel.sendCommandCode(IMPULSE_COMMAND_CODE);
                 break;
             case MINUS:
                 switchSound.play();
-                minusOutputChannel.sendCommandCode(CONTROL_IMPULSE_COMMAND_CODE);
+                minusOutputChannel.sendCommandCode(IMPULSE_COMMAND_CODE);
                 break;
         }
     }

@@ -7,6 +7,7 @@ import NATrain.trackSideObjects.movableObjects.LocomotiveState;
 import NATrain.trackSideObjects.switches.Switch;
 import NATrain.trackSideObjects.switches.SwitchState;
 import NATrain.trackSideObjects.trackSections.TrackSection;
+import NATrain.trackSideObjects.trackSections.TrackSectionState;
 
 import java.io.Serializable;
 
@@ -104,6 +105,14 @@ public class InputChannel implements Serializable {
                     locomotive.setActualState(LocomotiveState.NOT_MOVING);
                 }
                 break;
+            case TRACK_SECTION:
+            case BLOCK_SECTION:
+                TrackSection trackSection = (TrackSection) tracksideObject;
+                if (statusCode == TrackSectionState.FREE.getCode()) {
+                    trackSection.setVacancyState(TrackSectionState.FREE);
+                } else if (statusCode == TrackSectionState.OCCUPIED.getCode()) {
+                    trackSection.setVacancyState(TrackSectionState.OCCUPIED);
+                }
         }
     }
 

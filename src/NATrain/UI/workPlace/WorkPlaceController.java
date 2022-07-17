@@ -11,6 +11,7 @@ import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.routes.Trackline;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.customObjects.Servo;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.signals.Signal;
 import NATrain.trackSideObjects.signals.SignalState;
@@ -139,6 +140,10 @@ public class WorkPlaceController {
             signal.init();
             signal.close();
         });
+
+        for(Servo servo : Model.getServos().values()) {
+            servo.init();
+        }
 
         //sendApprovedTags();
 

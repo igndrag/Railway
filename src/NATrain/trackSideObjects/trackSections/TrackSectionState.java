@@ -5,7 +5,7 @@ public enum TrackSectionState {
     OCCUPIED (0),
     UNDEFINED (-1);
 
-    private int stateCode;
+    private final int stateCode;
 
     private TrackSectionState (int stateCode) {
         this.stateCode = stateCode;

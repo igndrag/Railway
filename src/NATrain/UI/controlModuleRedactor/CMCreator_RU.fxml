@@ -7,9 +7,9 @@
    <children>
       <Button layoutX="193.0" layoutY="231.0" mnemonicParsing="false" onAction="#saveAndClose" prefHeight="23.0" prefWidth="72.0" text="Создать" />
       <Label layoutX="31.0" layoutY="11.0" text="Тип" />
-      <ToggleButton fx:id="signalToggleButton" layoutX="28.0" layoutY="36.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="242.0" text="RFID MQTT универсальный контроллер " />
+      <ToggleButton fx:id="signalToggleButton" layoutX="28.0" layoutY="36.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="242.0" text="RFID MQTT котроллер" />
       <ToggleButton fx:id="switchToggleButton" layoutX="28.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="242.0" text="MQTT контроллер стрелки" />
-      <ToggleButton fx:id="reverseLoopToggleButton" layoutX="28.0" layoutY="106.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="242.0" text="Зарезервировано" />
+      <ToggleButton fx:id="universalAdapterToggleButton" layoutX="28.0" layoutY="106.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="242.0" text="Универсальный MQTT адаптер" />
       <ToggleButton fx:id="checkConnectionButton" layoutX="28.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Запросить статус" />
       <TextField fx:id="addressTextField" layoutX="28.0" layoutY="161.0" />
       <Label layoutX="31.0" layoutY="139.0" text="ID модуля" />

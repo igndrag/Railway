@@ -29,7 +29,9 @@ public abstract class AbstractModule implements ControlModule, Serializable {
 
     public  static final int TOGGLE_OUTPUT_ON = 90;
 
+    public static final int SET_SERVO_SPEED = 91;
     public static final int SET_SERVO_ACTUAL_ANGLE = 92;
+
     public static final int SWITCH_STATE_REQUEST_CODE = 96;
     public static final int SET_SERVO_POSITION_COMMAND_CODE = 94;
 
