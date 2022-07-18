@@ -7,6 +7,7 @@ import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.model.Model;
 import NATrain.quads.*;
 import NATrain.quads.custom.GateQuad;
+import NATrain.quads.custom.OnOffObjectQuad;
 import NATrain.routes.Route;
 import NATrain.routes.Trackline;
 import NATrain.routes.TrackDirection;
@@ -134,6 +135,12 @@ public enum ActionExecutor {
                 if (firstSelectedQuad instanceof GateQuad) {
                     ((GateQuad) firstSelectedQuad).getGate().closeGate();
                 }
+                break;
+            case ON:
+                ((OnOffObjectQuad) firstSelectedQuad).getOnOffObject().on();
+                break;
+            case OFF:
+                ((OnOffObjectQuad) firstSelectedQuad).getOnOffObject().off();
                 break;
         }
         clearSelection();

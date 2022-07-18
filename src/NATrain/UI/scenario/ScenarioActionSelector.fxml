@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="188.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="109.0" layoutY="270.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Create" />
+      <ToggleButton layoutX="43.0" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Set route" />
+      <ToggleButton layoutX="43.0" layoutY="65.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Send command" />
+      <ToggleButton layoutX="43.0" layoutY="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Setup sound" />
+      <ToggleButton layoutX="43.0" layoutY="144.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Setup timer" />
+      <ToggleButton layoutX="43.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Reserved" />
+      <ToggleButton layoutX="43.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Reserved" />
+   </children>
+</Pane>

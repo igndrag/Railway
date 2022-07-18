@@ -5,8 +5,10 @@ import NATrain.UI.NavigatorFxController;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.quads.*;
 import NATrain.quads.custom.GateQuad;
+import NATrain.quads.custom.OnOffObjectQuad;
 import NATrain.quads.custom.PolarityChangerQuad;
 import NATrain.quads.custom.ServoQuad;
+import NATrain.trackSideObjects.customObjects.OnOffObject;
 import NATrain.utils.QuadFactory;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -427,6 +429,25 @@ public class MosaicRedactorFxController {
                 quadConfigurator.initModality(Modality.WINDOW_MODAL);
                 quadConfigurator.initOwner(primaryStage);
                 quadConfigurator.show();
+                break;
+            case ON_OFF_QUAD:
+                switch (AppConfigController.getLanguage()) {
+                    // case RU:
+                    //    loader = new FXMLLoader(TrackQuadConfiguratorFxController.class.getResource("TrackQuadConfigurator_RU.fxml"));
+                    //    break;
+                    default:
+                        loader = new FXMLLoader(ServoQuadConfiguratorController.class.getResource("OnOffQuadConfigurator.fxml"));
+                }
+                OnOffObjectQuad onOffQuad = (OnOffObjectQuad) expectedQuad;
+                Stage onOffQuadConfigurator = new Stage();
+                onOffQuadConfigurator.setTitle("On/Off Quad Configurator");
+                onOffQuadConfigurator.setScene(new Scene(loader.load(), 300, 130));
+                onOffQuadConfigurator.setResizable(false);
+                OnOffQuadConfiguratorController onOffQuadConfiguratorController = loader.getController();
+                onOffQuadConfiguratorController.init((OnOffObject) onOffQuad.getCustomObject(), onOffQuad);
+                onOffQuadConfigurator.initModality(Modality.WINDOW_MODAL);
+                onOffQuadConfigurator.initOwner(primaryStage);
+                onOffQuadConfigurator.show();
                 break;
         }
     }

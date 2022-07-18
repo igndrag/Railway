@@ -1,7 +1,9 @@
 package NATrain.сontrolModules;
 import NATrain.UI.workPlace.LocatorController;
 import NATrain.model.Model;
+import NATrain.quads.custom.OnOffState;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.customObjects.OnOffObject;
 import NATrain.trackSideObjects.movableObjects.Locomotive;
 import NATrain.trackSideObjects.movableObjects.LocomotiveState;
 import NATrain.trackSideObjects.switches.Switch;
@@ -113,7 +115,14 @@ public class InputChannel implements Serializable {
                 } else if (statusCode == TrackSectionState.OCCUPIED.getCode()) {
                     trackSection.setVacancyState(TrackSectionState.OCCUPIED);
                 }
+                break;
+            case ON_OFF_SELF_CHECK:
+                OnOffObject onOffObject = (OnOffObject) tracksideObject;
+                if (statusCode == 1) {
+                    onOffObject.setState(OnOffState.ON);
+                } else {
+                    onOffObject.setState(OnOffState.OFF);
+                }
         }
     }
-
 }

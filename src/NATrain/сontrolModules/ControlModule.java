@@ -26,6 +26,18 @@ public interface ControlModule {
 
     int getOutputsCount();
 
+    default InputChannel getInputChannel(int i) { //for output self check purposes (self check input number = output number + 30)
+        if (i < 30) {
+            return getInputChannels().get(i);
+        } else {
+            OutputChannel selfCheckedOutput = getOutputChannels().get(i - 30);
+            if (selfCheckedOutput != null) {
+                return selfCheckedOutput.getSelfCheckInput();
+            }
+        }
+        return null;
+    };
+
     default String getObjectNames() {
         TreeSet<String> trackSectionNames = new TreeSet<>();
         TreeSet<String> signalNames = new TreeSet<>();
@@ -83,4 +95,6 @@ public interface ControlModule {
         resultString.append(" ");
         return resultString.toString();
     }
+
+
 }

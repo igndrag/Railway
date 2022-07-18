@@ -24,7 +24,7 @@ public abstract class OnOffObjectQuad extends SimpleTrackQuad {
 
     protected OnOffObject onOffObject;
 
-    private static final List<ControlAction> availableActions = new ArrayList<>();
+    protected static final List<ControlAction> availableActions = new ArrayList<>();
 
     static {
         availableActions.add(ControlAction.ON);
@@ -41,11 +41,12 @@ public abstract class OnOffObjectQuad extends SimpleTrackQuad {
     }
 
 
-    public void setOnOffObject() {
+    public void setOnOffObject(OnOffObject onOffObject) {
         if (onOffObject == null || onOffObject == OnOffObject.EMPTY_ON_OFF_OBJECT) {
             this.onOffObject = null;
             descriptionLabel.setText("");
         } else {
+            this.onOffObject = onOffObject;
             descriptionLabel.setText(onOffObject.getId());
         }
     }

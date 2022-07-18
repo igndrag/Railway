@@ -8,4 +8,5 @@ public enum InputChannelType {
     SWITCH_PLUS,
     SWITCH_MINUS,
     LOCOMOTIVE,
+    ON_OFF_SELF_CHECK,
 }

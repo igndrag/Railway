@@ -2,6 +2,7 @@ package NATrain.connectionService;
 
 import NATrain.model.Model;
 import NATrain.сontrolModules.ControlModule;
+import NATrain.сontrolModules.InputChannel;
 import NATrain.сontrolModules.OutputChannel;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
@@ -48,7 +49,10 @@ public class MQTTConnectionService {
                     } else {
                         if (statusParts[2].length() < 2) {
                             int inputStateCode = Integer.parseInt(statusParts[2]);
-                            controlModule.getInputChannels().get(portNumber).setActualState(inputStateCode);
+                            InputChannel inputChannel = controlModule.getInputChannel(portNumber);
+                            if (inputChannel != null) {
+                                inputChannel.setActualState(inputStateCode);
+                            }
                         } else {
                             long decUid = 0;
                             try {
@@ -56,7 +60,7 @@ public class MQTTConnectionService {
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                             }
-                            System.out.printf("%s: %d:%d\n", controlModule.getId(), portNumber, decUid);
+                            System.out.printf("%s:%d:%d\n", controlModule.getId(), portNumber, decUid);
                             controlModule.getInputChannels().get(portNumber).moveTag(decUid);
                         }
                     }

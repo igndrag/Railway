@@ -1,5 +1,6 @@
 package NATrain.quads;
 
+import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.quads.configurableInterfaces.FirstTrackConfigurable;
 import NATrain.routes.StationTrack;
 import NATrain.trackSideObjects.ControlAction;
@@ -17,8 +18,8 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
     protected Shape borderElement;
     protected Shape isolatorElement;
 
-    private static final List<ControlAction> availableActions = new ArrayList<>();
-    private static final List<ControlAction> availableActionsForStationTrack = new ArrayList<>();
+    protected static final List<ControlAction> availableActions = new ArrayList<>();
+    protected static final List<ControlAction> availableActionsForStationTrack = new ArrayList<>();
 
     static {
         availableActions.add(ControlAction.SET_ROUTE_TO_TRACK);
@@ -38,7 +39,7 @@ public abstract class SimpleTrackQuad extends BaseQuad implements FirstTrackConf
     @Override
     public void refresh() {
         updateFirstTrackView();
-        if (firstAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) { // TODO do it only in constructor mode
+        if (!WorkPlaceController.isActiveMode() && firstAssociatedTrack != TrackSection.EMPTY_TRACK_SECTION) {
             descriptionLabel.setText(firstAssociatedTrack.getId());
         }
     }

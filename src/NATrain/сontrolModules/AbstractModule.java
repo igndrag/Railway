@@ -22,8 +22,13 @@ public abstract class AbstractModule implements ControlModule, Serializable {
     public static final String GLOBAL_REQUEST_COMMAND_CODE = "99";
 
 
-    public static final int ON_COMMAND_CODE = 87;
-    public static final int OFF_COMMAND_CODE = 88;
+    public static final int ON_COMMAND_CODE = 85;
+    public static final int OFF_COMMAND_CODE = 86;
+
+
+    public static int INVERTED_IMPULSE_COMMAND_CODE = 87;
+    public static int IMPULSE_COMMAND_CODE = 88;
+
 
     public static final int  SET_PWM_COMMAND_CODE = 89;
 

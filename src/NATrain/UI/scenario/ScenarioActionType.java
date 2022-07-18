@@ -8,4 +8,5 @@ public enum ScenarioActionType {
     PLAY_SOUND,
     PLAY_SOUND_LOOP,
     STOP_SOUND,
+    TIMER_START,
 }

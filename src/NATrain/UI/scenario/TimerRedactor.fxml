@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="221.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.scenario.TimerRedactorController">
+   <children>
+      <Spinner fx:id="timerValSpinner_1" layoutX="26.0" layoutY="48.0" />
+      <Spinner fx:id="timerValSpinner_2" layoutX="26.0" layoutY="107.0" />
+      <RadioButton fx:id="randomRadioButton" layoutX="26.0" layoutY="149.0" mnemonicParsing="false" text="Random" />
+      <Button fx:id="createButton" layoutX="123.0" layoutY="176.0" mnemonicParsing="false" text="Create" />
+      <Label fx:id="delayLabel" layoutX="26.0" layoutY="27.0" text="Delay from" />
+      <Label fx:id="toLabel" layoutX="26.0" layoutY="90.0" text="to" />
+   </children>
+</AnchorPane>

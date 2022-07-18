@@ -1,6 +1,9 @@
 package NATrain.quads.custom;
 
 import NATrain.quads.AbstractQuad;
+import NATrain.trackSideObjects.ControlAction;
+
+import java.util.List;
 
 public abstract class AbstractCustomQuad extends AbstractQuad { //excluding useless function of Quad interface
     public AbstractCustomQuad(int x, int y) {

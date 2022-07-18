@@ -31,6 +31,12 @@ public class ServoQuadConfiguratorController {
         servos.add(Servo.EMPTY_SERVO);
 
         servoChoiceBox.setItems(servos);
+
+        if (servo != null) {
+            servoChoiceBox.setValue(servo);
+        }
+
+        saveButton.setOnAction(event -> saveAndClose());
     }
 
 

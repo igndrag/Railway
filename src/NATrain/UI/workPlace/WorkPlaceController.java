@@ -9,6 +9,7 @@ import NATrain.UI.workPlace.executors.RouteStatus;
 import NATrain.connectionService.MQTTConnectionService;
 import NATrain.model.Model;
 import NATrain.quads.*;
+import NATrain.quads.custom.OnOffState;
 import NATrain.routes.Trackline;
 import NATrain.trackSideObjects.*;
 import NATrain.trackSideObjects.customObjects.Servo;
@@ -146,6 +147,8 @@ public class WorkPlaceController {
         }
 
         //sendApprovedTags();
+
+        Model.getOnOffObjects().values().forEach(onOffObject -> onOffObject.setState(OnOffState.OFF));
 
         Model.getSwitches().values().forEach(Switch::init);
 

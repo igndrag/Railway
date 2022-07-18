@@ -8,5 +8,4 @@ public enum ScenarioEventType {
     TIMER_ENDED,
     DELAY_ENDED,
     INPUT_HANDLED,
-
 }

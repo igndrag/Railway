@@ -1,10 +1,9 @@
 package NATrain.UI.scenario;
 
-public class ScenarioAction implements Runnable{
+public abstract class ScenarioAction{
    private ScenarioActionType actionType;
 
-    @Override
-    public void run() {
+   abstract void execute ();
 
-    }
+
 }

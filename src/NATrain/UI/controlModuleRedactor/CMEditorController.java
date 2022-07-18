@@ -4,6 +4,7 @@ import NATrain.UI.UIUtils;
 import NATrain.model.Model;
 import NATrain.routes.Trackline;
 import NATrain.trackSideObjects.*;
+import NATrain.trackSideObjects.customObjects.OnOffObject;
 import NATrain.trackSideObjects.customObjects.PolarityChanger;
 import NATrain.trackSideObjects.customObjects.Servo;
 import NATrain.trackSideObjects.signals.Signal;
@@ -88,8 +89,10 @@ public class CMEditorController {
         ObservableList<Trackline> tracklines = FXCollections.observableArrayList(Model.getTracklines());
         ObservableList<TracksideObject> servos = FXCollections.observableArrayList(Model.getServos().values());
         ObservableList<TracksideObject> polarityChangers = FXCollections.observableArrayList(Model.getPolarityChangers().values());
+        ObservableList<TracksideObject> onOffObjects = FXCollections.observableArrayList(Model.getOnOffObjects().values());
 
         inputTypeChoiceBox.setItems(FXCollections.observableArrayList(InputChannelType.values()));
+        inputTypeChoiceBox.getItems().remove(InputChannelType.ON_OFF_SELF_CHECK);
 
         inputTrackChoiceBox.setItems(tracklines);
         inputTrackChoiceBox.setDisable(true);
@@ -170,6 +173,14 @@ public class CMEditorController {
                     outputObjectChoiceBox.setItems(polarityChangers);
                     outputTrackChoiceBox.getSelectionModel().clearSelection();
                     outputTrackChoiceBox.setDisable(true);
+                    break;
+                case ON_OFF:
+                    lampTypeChoiceBox.getSelectionModel().clearSelection();
+                    lampTypeChoiceBox.setDisable(true);
+                    outputObjectChoiceBox.setItems(onOffObjects);
+                    outputTrackChoiceBox.getSelectionModel().clearSelection();
+                    outputTrackChoiceBox.setDisable(true);
+                    break;
             }
         });
 
@@ -334,6 +345,9 @@ public class CMEditorController {
                 break;
             case SERVO:
                 outputChannel = ((Servo) object).getOutputChannel();
+                break;
+            case ON_OFF:
+                outputChannel = ((OnOffObject) object).getOutputChannel();
                 break;
             case TOGGLE:
                 outputTypeChoiceBox.setValue(OutputChannelType.ON_OFF);

@@ -1,10 +1,12 @@
 package NATrain.quads.custom;
 
+import NATrain.UI.workPlace.WorkPlaceController;
 import NATrain.quads.BaseQuad;
 import NATrain.quads.GlobalQuadType;
 import NATrain.quads.QuadType;
 import NATrain.trackSideObjects.ControlAction;
 import NATrain.trackSideObjects.customObjects.OnOffObject;
+import NATrain.trackSideObjects.trackSections.TrackSection;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -26,8 +28,7 @@ public class LampQuad extends OnOffObjectQuad {
         super(x, y);
         quadType = QuadType.LMPQ;
         paintView();
-    }
-
+    };
 
     @Override
     public void activateListeners() {
@@ -40,25 +41,39 @@ public class LampQuad extends OnOffObjectQuad {
     }
 
     private void updateLampView() {
-        if (onOffObject != null) {
-            if (onOffObject.getState() == OnOffState.ON) {
-                lampRays.setVisible(true);
-            } else {
-                lampRays.setVisible(false);
+        if (onOffObject != null && onOffObject != OnOffObject.EMPTY_ON_OFF_OBJECT) {
+            lampBulb.setFill(CONFIGURED_CUSTOM_OBJECT_COLOR);
+            switch (onOffObject.getState()) {
+                case ON:
+                    lampBulb.setFill(Color.YELLOW);
+                    lampRays.setVisible(true);
+                    break;
+                case OFF:
+                case UNDEFINED:
+                    lampBulb.setFill(CONFIGURED_CUSTOM_OBJECT_COLOR);
+                    lampRays.setVisible(false);
+                    break;
             }
+        } else {
+            lampBulb.setFill(UNDEFINED_ELEMENT_COLOR);
+            lampRays.setVisible(false);
         }
     }
+
+
 
     @Override
     public void refresh() {
         updateLampView();
+        if (!WorkPlaceController.isActiveMode() && onOffObject != null) {
+            descriptionLabel.setText(onOffObject.getId());
+        }
     }
 
     @Override
     public void paintView() {
         lampRays = new Group();
         descriptionLabel = new Text();
-        descriptionLabel.setText("Lamp ID");
         descriptionLabel.setY(75);
         quadView.getChildren().add(descriptionLabel);
         descriptionLabel.setTextAlignment(TextAlignment.CENTER);
@@ -106,6 +121,11 @@ public class LampQuad extends OnOffObjectQuad {
         lampRays.getChildren().add(ray6);
         lampRays.setVisible(false);
         quadView.getChildren().add(lampRays);
+    }
+
+    @Override
+    public List<ControlAction> getAvailableActions() {
+        return availableActions;
     }
 }
      

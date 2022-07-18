@@ -13,12 +13,21 @@ public class OutputChannel implements Serializable {
     private ControlModule module;
     private TracksideObject tracksideObject;
     private SignalLampType lampType;
+    private InputChannel selfCheckInput;
     private int lastCommandCode;
 
     public OutputChannel(OutputChannelType channelType, TracksideObject tracksideObject, SignalLampType lampType) {
         this.channelType = channelType;
         this.tracksideObject = tracksideObject;
         this.lampType = lampType;
+    }
+
+    public void setSelfCheckInput(InputChannel selfCheckInput) {
+        this.selfCheckInput = selfCheckInput;
+    }
+
+    public InputChannel getSelfCheckInput() {
+        return selfCheckInput;
     }
 
     public void setLastCommandCode(int lastCommandCode) {

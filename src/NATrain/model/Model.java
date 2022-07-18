@@ -2,6 +2,7 @@ package NATrain.model;
 
 import NATrain.UI.AppConfigController;
 import NATrain.UI.scenario.Scenario;
+import NATrain.quads.custom.OnOffState;
 import NATrain.routes.StationTrack;
 import NATrain.routes.Route;
 import NATrain.routes.Trackline;
@@ -375,5 +376,9 @@ public enum Model implements Serializable {
         Model.getSignals().values().forEach(signal -> signal.setSignalState(SignalState.UNDEFINED));
         Model.getTrackSections().values().forEach(trackSection -> trackSection.setVacancyState(TrackSectionState.UNDEFINED));
         Model.getStationTracks().values().forEach(stationTrack -> stationTrack.setVacancyState(TrackSectionState.UNDEFINED));
+        Model.getOnOffObjects().values().forEach(onOffObject -> {
+            onOffObject.off();
+            onOffObject.setState(OnOffState.UNDEFINED);
+        });
     }
 }
