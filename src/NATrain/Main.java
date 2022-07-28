@@ -31,7 +31,7 @@ public class Main extends Application {
         }
         Parent root = loader.load();
         primaryStage.setTitle("NATrain");
-        primaryStage.setScene(new Scene(root, 1030, 140));
+        primaryStage.setScene(new Scene(root, 1175, 140));
         NavigatorFxController controller = loader.getController();
         NavigatorFxController.setPrimaryStage(primaryStage);
         primaryStage.setResizable(false);

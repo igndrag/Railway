@@ -3,6 +3,7 @@ package NATrain.UI;
 import NATrain.UI.controlModuleRedactor.CMNavigatorController;
 import NATrain.UI.mosaicRedactor.MosaicRedactorFxController;
 import NATrain.UI.routeTable.RouteTableController;
+import NATrain.UI.scenario.ScenarioNavigatorController;
 import NATrain.UI.tracklines.TracklineSelectorController;
 import NATrain.UI.tracksideObjectRedactor.TracksideObjectNavigatorController;
 import NATrain.UI.workPlace.Blinker;
@@ -25,6 +26,9 @@ public class NavigatorFxController {
 
     private static Stage primaryStage;
     public static Boolean showGridLines = true;
+
+    @FXML
+    private Button scenarioButton;
 
     @FXML
     private Button controlButton;
@@ -126,8 +130,8 @@ public class NavigatorFxController {
         controlModuleNavigator.setTitle("Control Module Navigator");
         controlModuleNavigator.setScene(new Scene(loader.load(), 1000, 415));
         controlModuleNavigator.setResizable(false);
-        CMNavigatorController controller = loader.getController();
-        //controller.initialize();
+        ScenarioNavigatorController controller = loader.getController();
+        controller.init();
         controller.setPrimaryStage(controlModuleNavigator);
         controlModuleNavigator.setOnCloseRequest(event -> {
             primaryStage.show();
@@ -196,6 +200,31 @@ public class NavigatorFxController {
         primaryStage.hide();
         workPlace.show();
     }
+
+    @FXML
+    private void toScenarioRedactor(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader;
+        switch (AppConfigController.getLanguage()) {
+            case RU:
+                //loader = new FXMLLoader(ScenarioNavigatorController.class.getResource("ScenarioNavigator.fxml"));
+                //break;
+            default:
+                loader = new FXMLLoader(ScenarioNavigatorController.class.getResource("ScenarioNavigator.fxml"));
+        }
+        Stage scenarioModuleNavigator = new Stage();
+        scenarioModuleNavigator.setTitle("Scenario Navigator");
+        scenarioModuleNavigator.setScene(new Scene(loader.load(), 700, 350));
+        scenarioModuleNavigator.setResizable(false);
+        ScenarioNavigatorController controller = loader.getController();
+        //controller.initialize();
+        controller.setPrimaryStage(scenarioModuleNavigator);
+        scenarioModuleNavigator.setOnCloseRequest(event -> {
+            primaryStage.show();
+        });
+        primaryStage.hide();
+        scenarioModuleNavigator.show();
+    }
+
 
     @FXML
     public void toAppConfig() throws IOException {

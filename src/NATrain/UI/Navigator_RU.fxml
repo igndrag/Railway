@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="140.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.NavigatorFxController">
+<AnchorPane prefHeight="140.0" prefWidth="1175.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.NavigatorFxController">
    <children>
       <Button fx:id="mosaicRedactorButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="28.0" layoutY="20.0" mnemonicParsing="false" onAction="#toMosaicRedactor" prefHeight="100.0" prefWidth="120.0" text="Редактор модели" textAlignment="CENTER">
          <graphic>
@@ -65,7 +65,19 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="settingButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="888.0" layoutY="20.0" mnemonicParsing="false" onAction="#toAppConfig" prefHeight="100.0" prefWidth="120.0" text="Настройки" textAlignment="CENTER">
+      <Button fx:id="scenarioButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="888.0" layoutY="20.0" mnemonicParsing="false" onAction="#toScenarioRedactor" prefHeight="100.0" prefWidth="120.0" text="Сценарии" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/scenario_icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button fx:id="settingButton" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="1033.0" layoutY="20.0" mnemonicParsing="false" onAction="#toAppConfig" prefHeight="100.0" prefWidth="120.0" text="Настройки" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>

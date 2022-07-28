@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NATrain.UI.scenario.ScenarioNavigatorController">
+   <children>
+      <ListView fx:id="scenarioListView" layoutX="19.0" layoutY="36.0" prefHeight="293.0" prefWidth="149.0" />
+      <Label layoutX="20.0" layoutY="11.0" text="Scenario" />
+      <ListView fx:id="actionsListView" layoutX="201.0" layoutY="36.0" prefHeight="293.0" prefWidth="413.0" />
+      <Label layoutX="201.0" layoutY="11.0" text="Actions" />
+      <Button fx:id="createButton" layoutX="626.0" layoutY="36.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Create" />
+      <Button fx:id="deleteButton" layoutX="626.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Delete" />
+      <Button fx:id="upButton" layoutX="626.0" layoutY="130.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="UP" />
+      <Button fx:id="downButton" layoutX="626.0" layoutY="168.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="DOWN" />
+   </children>
+</Pane>

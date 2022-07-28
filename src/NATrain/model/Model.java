@@ -66,7 +66,7 @@ public enum Model implements Serializable {
 
     private static Map<String, OnOffObject> onOffObjects;
 
-    public static Set<Scenario> scenarios = new HashSet<>();
+    public static Map<String, Scenario>scenarios;
 
     static {
         servos = new ConcurrentHashMap<>();
@@ -112,6 +112,8 @@ public enum Model implements Serializable {
         roadCrossings = new ConcurrentHashMap<>();
 
         onOffObjects = new ConcurrentHashMap<>();
+
+        scenarios = new ConcurrentHashMap<>();
 
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++ ) {
@@ -182,6 +184,10 @@ public enum Model implements Serializable {
         return onOffObjects;
     }
 
+    public static Map<String, Scenario> getScenarios() {
+        return scenarios;
+    }
+
     public static void refreshAll() {
         Arrays.stream(mainGrid).flatMap(Arrays::stream).parallel().forEach(Quad::refresh);
     }
@@ -218,6 +224,7 @@ public enum Model implements Serializable {
             objectOutputStream.writeObject(polarityChangers);
             objectOutputStream.writeObject(roadCrossings);
             objectOutputStream.writeObject(onOffObjects);
+            objectOutputStream.writeObject(scenarios);
             tracklines.forEach(track -> { // change EMPTY_SIGNALs to null fow writing
                 track.getBlockSections().forEach(blockSection -> {
                     if (blockSection.getNormalDirectionSignal() == Signal.EMPTY_SIGNAL) {
@@ -293,6 +300,7 @@ public enum Model implements Serializable {
                 roadCrossings.values().forEach(TracksideObject::addPropertyChangeSupport);
                 onOffObjects = (Map<String, OnOffObject>) inputStream.readObject();
                 onOffObjects.values().forEach(TracksideObject::addPropertyChangeSupport);
+                scenarios = (Map<String, Scenario>) inputStream.readObject();
                 tracklines = (Set<Trackline>) inputStream.readObject();
                 tags = (Map<Long, RFIDTag>) inputStream.readObject();
                 tags.values().forEach(RFIDTag::addPropertyChangeSupport);
